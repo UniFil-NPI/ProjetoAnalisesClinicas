@@ -1,14 +1,16 @@
 # Pedidos do Investidor - Projeto de Análises Clínicas
 
-## Versão 1.0
+## Versão 1.1
 
 ### Histórico da Revisão
 
 | Data | Versão | Descrição | Autor |
 | ------ | ------ | ------ | ------ |
 | 28/02/2024 | 1.0 | Primeira versão da entrevista | Guilherme Rafael Faraco Vieira |
+| 09/03/2024 | 1.1 | Após a coleta de informações sobre os aparelhos | Guilherme Rafael Faraco Vieira |
 
 ## Índice
+
 1. Introdução	4
     1. Objetivo	4
     2.	Escopo	4
@@ -49,8 +51,17 @@ Consultar glossário.
 ### 1.4 Referências
 
 **Análises Clínicas - Rede D’Or. Disponível em:**
-https://www.rededorsaoluiz.com.br/exames-e-procedimentos/analises-clinicas
+https://www.rededorsaoluiz.com.br/exames-e-procedimentos/analises-clinicas  
 Acesso feito em 02 de março de 2024.
+
+**Manual do usuário - VIDA COUNT 380**  
+Acesso feito em 07 de março de 2024.
+
+**Manual do usuário VIDA S1600**  
+Acesso feito em 07 de março de 2024.
+
+**EC Series Auto Hematology Analyzer HL7 Interface User's Manual_20220122**  
+Acesso feito em 07 de março de 2024.
 
 ### 1.5 Visão Geral
 
@@ -74,7 +85,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Para quais problemas faltam boas soluções?**  Uma forma de receber e gerar o laudo automaticamente e também um cadastro, onde o usuário irá inserir suas informações básicas e login onde terá acesso ao laudo e terá a possibilidade de agendar seu exame.
 
-- **Quais são elas?** Fazer um site que contenha a solução para todos os problemas apresentados.
+- **Quais são elas?** Fazer um sistema web que contenha a solução para todos os problemas apresentados.
 
 #### Para cada problema, pergunte:
 
@@ -96,13 +107,13 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Quais plataformas estão em uso?** Word, telefone e e-mail.
 
-- **Quais são seus planos para plataformas futuras?** Um site.
+- **Quais são seus planos para plataformas futuras?** Um sistema web.
 
-- **Quais aplicativos adicionais você utiliza com os quais nós precisamos fazer interface?** Software do aparelho do laboratório. Ainda em análise mais informações.
+- **Quais aplicativos adicionais você utiliza com os quais nós precisamos fazer interface?** Software do aparelho do laboratório.
 
-- **Quais são suas expectativas para o tempo de treinamento?** Pouco ou nenhum treinamento.
+- **Quais são suas expectativas para o tempo de treinamento?** Não se aplica.
 
-- **De quais tipos de documentação impressa e on-line você precisa?** Em análise.
+- **De quais tipos de documentação impressa e on-line você precisa?** Manual online.
 
 ## 5. Recapitulação para Entendimento
 
@@ -122,32 +133,57 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Quais, se houver, problemas estão associados com:**
 
-    - Sistema para agendar as consultas.
+    - *Um local onde o usuário possa ter todos seus exames armazenados e prontos para download se necessário.*
+
+        **- Este é um problema real?**    
+
+        Sim.
+
+        **- Quais são os motivos para este problema?**   
+
+        Não ter um sistema web onde contém os laudos armazenados.
+
+        **- Como você resolve o problema atualmente?**   
+
+        Atualmente estão em fase inicial, portanto não estão realizando os exames ainda.
+
+        **- Como você gostaria de resolver o problema?**    
+
+        Criar uma página que contenha todas as informações vinculadas ao usuário.
+
+        **- Como você classificaria a resolução desses problemas em comparação com outros mencionados?**    
+
+        Alta.
    
-    - Um local onde o usuário possa ter todos seus exames armazenados e prontos para download se necessário.
+    - *Gerar os laudos de maneira automatica.*
+
+        **- Este é um problema real?**     
+
+        Sim.
+
+        **- Quais são os motivos para este problema?**  
+
+        Ter que transcrever manualmente as informações geradas pelo exame para outro documento para poder gerar os laudos.
+
+        **- Como você resolve o problema atualmente?**     
+
+        Os dados são copiados manualmente para um documento no Word.
+
+        **- Como você gostaria de resolver o problema?**    
+
+        Codificar um sistema para automatizar esse processo.
+
+        **- Como você classificaria a resolução desses problemas em comparação com outros mencionados?**    
+        Principal.
    
-    - Um local onde o biomédico possa acessar os laudos dos exames de qualquer paciente se necessário.
-   
-    - Um aviso para o paciente sobre algumas observações do exame(Se é necessário jejum, ou algo do tipo).
-
-- **Para cada problema sugerido, pergunte:**
-
-    - Este é um problema real? 
-
-    - Quais são os motivos para este problema? 
-
-    - Como você resolve o problema atualmente?
-
-    - Como você gostaria de resolver o problema?
-
-    - Como você classificaria a resolução desses problemas em comparação com outros mencionados?
 
 ## 7. Avaliando Sua Solução (se aplicável)
 
 - **E se você pudesse…**
     - agilizar o processo e facilitar a usabilidade?
+    - realizar um sistema de agendamento?
  
-- **Como você classificaria a importância deles?** alta
+- **Como você classificaria a importância deles?** média.
 
 ## 8. Avaliando a Oportunidade
 
@@ -159,9 +195,9 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 ## 9. Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte
 
-- **Quais são suas expectativas para confiabilidade?** Alta.
+- **Quais são suas expectativas para confiabilidade?** Entregar os resultados gerados pelo aparelho com segurança.
 
-- **Quais são suas expectativas para desempenho?** Alta.
+- **Quais são suas expectativas para desempenho?** Um sistema 24/7 dentro de um servidor.
 - **Você ou outras pessoas suportarão o produto?**  Será feito o suporte caso necessário.
 
 - **Você tem necessidades especiais para suporte?** E com relação ao acesso de manutenção e serviço? Em análise. 
@@ -170,15 +206,9 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Quais são os requisitos de instalação e configuração?** Em análise.
 
-- **Quais são os requisitos de licença especiais?** Em análise.
+- **Quais são os requisitos de licença especiais?** Não se aplica.
 
-- **Como o software será distribuído?** Em análise.
-
-### 9.1 Outros Requisitos
-
-- **Quais, se houver, requisitos ou padrões reguladores ou ambientais devem ser suportados?** Em análise.
-
-- **Você acha que há algum outro requisito que devemos saber?** Em análise.
+- **Como o software será distribuído?** Servidor do departamento de computação.
 
 ## 10. Wrap-Up
 
