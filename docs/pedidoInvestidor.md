@@ -5,29 +5,43 @@
 ### Histórico da Revisão
 
 | Data | Versão | Descrição | Autor |
-| ------ | ------ | ------ | ------ |
+| ---- | ------ | --------- | ----- |
 | 28/02/2024 | 1.0 | Primeira versão da entrevista | Guilherme Rafael Faraco Vieira |
 | 09/03/2024 | 1.1 | Após a coleta de informações sobre os aparelhos | Guilherme Rafael Faraco Vieira |
 
 ## Índice
 
-1. Introdução	4
-    1. Objetivo	4
-    2.	Escopo	4
-    3.	Definições, Acrônimos e Abreviações	4
-    4.	Referências	5
-    5.	Visão Geral	5
-2.	Estabelecer Perfil do Investidor ou do Usuário	5
-3.	Avaliando o Problema	5
-4.	Entendendo o Ambiente do Usuário	5
-5.	Recapitulação para Entendimento	5
-6.	Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)	6
-7.	Avaliando Sua Solução (se aplicável)	6
-8.	Avaliando a Oportunidade	6
-9.	Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte	6
-    1.	Outros Requisitos	7
-10.	Wrap-Up	7
-11.	Resumo do Analista	7
+- [1. Introdução](#1-introdução)	
+    
+    - [1. Objetivo](#11-objetivo)	
+    
+    - [2.	Escopo](#12-escopo)	
+    
+    - [3.	Definições, Acrônimos e Abreviações](#13-definições-acrônimos-e-abreviações)	
+    
+    - [4.	Referências](#14-referências)	
+    
+    - [5.	Visão Geral](#15-visão-geral)	
+
+- [2.	Estabelecer Perfil do Investidor ou do Usuário](#2-estabelecer-perfil-do-investidor-ou-do-usuário)	
+
+- [3.	Avaliando o Problema](#3-avaliando-o-problema)	
+
+- [4.	Entendendo o Ambiente do Usuário](#4-entendendo-o-ambiente-do-usuário)	
+
+- [5.	Recapitulação para Entendimento](#5-recapitulação-para-entendimento)	
+
+- [6.	Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#6-entradas-do-analista-no-problema-do-investidor-validar-ou-invalidar-premissas)	
+
+- [7.	Avaliando Sua Solução (se aplicável)](#7-avaliando-sua-solução-se-aplicável)	
+
+- [8.	Avaliando a Oportunidade](#8-avaliando-a-oportunidade)	
+
+- [9.	Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#9-avaliando-a-confiabilidade-o-desempenho-e-as-necessidades-de-suporte)		
+
+- [10.	Wrap-Up](#10-wrap-up)	
+
+- [11.	Resumo do Analista](#11-resumo-do-analista)
 
 # Pedidos do Investidor
 

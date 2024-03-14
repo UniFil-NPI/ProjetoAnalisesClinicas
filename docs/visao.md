@@ -1,6 +1,4 @@
-# Visão
-
-# Projeto de Análises Clínicas
+# Visão - Projeto de Análises Clínicas  
 
 ## 1. - Introdução
 
@@ -12,7 +10,7 @@ Este projeto se trata de um sistema de análise clínica, onde será colhido as 
 
 ### 2.1 - Instrução do Problema
 
-|  |  |
+|        |        |
 | ------ | ------ |
 | O problema de | Ter que realizar cálculos no excel caso seja o exame de paternidade, transcrever as informações à mão para gerar o laudo e não ter um local de acesso ao documento. |
 | afeta | Os biomédicos e clientes que fazem exames. |
@@ -22,7 +20,7 @@ Este projeto se trata de um sistema de análise clínica, onde será colhido as 
 
 ### 2.2 - Instrução sobre a Posição do Produto
 
-|  |  |
+|        |        |
 | ------ | ------ |
 | Para | Biomédicos e pacientes. |
 | Que | O processo é demorado e manual. |
