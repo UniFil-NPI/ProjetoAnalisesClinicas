@@ -17,7 +17,6 @@ Este projeto se trata de um sistema de análise clínica, onde será colhido as 
 | o impacto do qual é | Agilidade de produção e facilidade no acesso ao documento. |
 | uma solução bem-sucedida seria | Desenvolver um site que seja de fácil entendimento e conseguir gerar os documentos rapidamente. |
 
-
 ### 2.2 - Instrução sobre a Posição do Produto
 
 |        |        |
@@ -58,7 +57,6 @@ O sistema dependerá do acesso à informação concedida pelo software do aparel
 | Acesso ao aparelho | Alta | Aparelho e biomédica | Agendado |
 | Hospedagem | Média | Servidor | Em análise |
 
-
 ### 4.4 - Alternativas e Competição
 
 Existem sistemas para laboratórios disponíveis, a própria stakeholder citou um de fora do país, porém a usabilidade não é legal.
@@ -66,4 +64,3 @@ Existem sistemas para laboratórios disponíveis, a própria stakeholder citou u
 ## 5. - Outros Requisitos do Produto
 
 Agendamento de exames.
-

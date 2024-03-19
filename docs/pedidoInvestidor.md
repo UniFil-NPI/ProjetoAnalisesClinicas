@@ -11,39 +11,39 @@
 
 ## Índice
 
-- [1. Introdução](#1-introdução)	
-    
-    - [1. Objetivo](#11-objetivo)	
-    
-    - [2.	Escopo](#12-escopo)	
-    
-    - [3.	Definições, Acrônimos e Abreviações](#13-definições-acrônimos-e-abreviações)	
-    
-    - [4.	Referências](#14-referências)	
-    
-    - [5.	Visão Geral](#15-visão-geral)	
+- [1. Introdução](#1-introdução)
 
-- [2.	Estabelecer Perfil do Investidor ou do Usuário](#2-estabelecer-perfil-do-investidor-ou-do-usuário)	
+  - [1. Objetivo](#11-objetivo)
 
-- [3.	Avaliando o Problema](#3-avaliando-o-problema)	
+  - [2. Escopo](#12-escopo)
 
-- [4.	Entendendo o Ambiente do Usuário](#4-entendendo-o-ambiente-do-usuário)	
+  - [3. Definições, Acrônimos e Abreviações](#13-definições-acrônimos-e-abreviações)
 
-- [5.	Recapitulação para Entendimento](#5-recapitulação-para-entendimento)	
+  - [4. Referências](#14-referências)
 
-- [6.	Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#6-entradas-do-analista-no-problema-do-investidor-validar-ou-invalidar-premissas)	
+  - [5. Visão Geral](#15-visão-geral)
 
-- [7.	Avaliando Sua Solução (se aplicável)](#7-avaliando-sua-solução-se-aplicável)	
+- [2. Estabelecer Perfil do Investidor ou do Usuário](#2-estabelecer-perfil-do-investidor-ou-do-usuário)
 
-- [8.	Avaliando a Oportunidade](#8-avaliando-a-oportunidade)	
+- [3. Avaliando o Problema](#3-avaliando-o-problema)
 
-- [9.	Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#9-avaliando-a-confiabilidade-o-desempenho-e-as-necessidades-de-suporte)		
+- [4. Entendendo o Ambiente do Usuário](#4-entendendo-o-ambiente-do-usuário)
 
-- [10.	Wrap-Up](#10-wrap-up)	
+- [5. Recapitulação para Entendimento](#5-recapitulação-para-entendimento)
 
-- [11.	Resumo do Analista](#11-resumo-do-analista)
+- [6. Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#6-entradas-do-analista-no-problema-do-investidor-validar-ou-invalidar-premissas)
 
-# Pedidos do Investidor
+- [7. Avaliando Sua Solução (se aplicável)](#7-avaliando-sua-solução-se-aplicável)
+
+- [8. Avaliando a Oportunidade](#8-avaliando-a-oportunidade)
+
+- [9. Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#9-avaliando-a-confiabilidade-o-desempenho-e-as-necessidades-de-suporte)
+
+- [10. Wrap-Up](#10-wrap-up)
+
+- [11. Resumo do Analista](#11-resumo-do-analista)
+
+## Pedidos do Investidor
 
 ## 1. Introdução
 
@@ -65,7 +65,7 @@ Consultar glossário.
 ### 1.4 Referências
 
 **Análises Clínicas - Rede D’Or. Disponível em:**
-https://www.rededorsaoluiz.com.br/exames-e-procedimentos/analises-clinicas  
+<https://www.rededorsaoluiz.com.br/exames-e-procedimentos/analises-clinicas>  
 Acesso feito em 02 de março de 2024.
 
 **Manual do usuário - VIDA COUNT 380**  
@@ -83,7 +83,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 ## 2. Estabelecer Perfil do Investidor ou do Usuário
 
-- **Nome:** Carolina Ariza				
+- **Nome:** Carolina Ariza
 
 - **Empresa / Segmento de Mercado:** Biomedicina
 
@@ -101,7 +101,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Quais são elas?** Fazer um sistema web que contenha a solução para todos os problemas apresentados.
 
-#### Para cada problema, pergunte:
+**Para cada problema, pergunte:**
 
 - **Por que este problema existe?** Por falta de um sistema.
 
@@ -132,14 +132,14 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 ## 5. Recapitulação para Entendimento
 
 - **Você me disse:**
-    
-    - inserir manualmente os dados gerados pelo aparelho em um documento
-    
-    - geração de laudo manualmente
+
+  - inserir manualmente os dados gerados pelo aparelho em um documento
+
+  - geração de laudo manualmente
   
-    - ter o contato com alguém da clínica para poder pegar os dados do paciente
+  - ter o contato com alguém da clínica para poder pegar os dados do paciente
   
-    - o agendamento só é possível com de fazer ligando ou mandando mensagem
+  - o agendamento só é possível com de fazer ligando ou mandando mensagem
 
 - **Isso representa os problemas que você está tendo com a solução existente?** Sim.
 
@@ -147,56 +147,56 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Quais, se houver, problemas estão associados com:**
 
-    - *Um local onde o usuário possa ter todos seus exames armazenados e prontos para download se necessário.*
+  - ***Um local onde o usuário possa ter todos seus exames armazenados e prontos para download se necessário.***
 
-        **- Este é um problema real?**    
+    - **Este é um problema real?**
 
-        Sim.
+     Sim.
 
-        **- Quais são os motivos para este problema?**   
+    - **Quais são os motivos para este problema?**
 
-        Não ter um sistema web onde contém os laudos armazenados.
+      Não ter um sistema web onde contém os laudos armazenados.
 
-        **- Como você resolve o problema atualmente?**   
+    - **Como você resolve o problema atualmente?**
 
-        Atualmente estão em fase inicial, portanto não estão realizando os exames ainda.
+      Atualmente estão em fase inicial, portanto não estão realizando os exames ainda.
 
-        **- Como você gostaria de resolver o problema?**    
+    - **Como você gostaria de resolver o problema?**
 
-        Criar uma página que contenha todas as informações vinculadas ao usuário.
+      Criar uma página que contenha todas as informações vinculadas ao usuário.
 
-        **- Como você classificaria a resolução desses problemas em comparação com outros mencionados?**    
+    - **Como você classificaria a resolução desses problemas em comparação com outros mencionados?**
 
-        Alta.
-   
-    - *Gerar os laudos de maneira automatica.*
+      Alta.
 
-        **- Este é um problema real?**     
+  - ***Gerar os laudos de maneira automatica.***
 
-        Sim.
+    - **Este é um problema real?**
 
-        **- Quais são os motivos para este problema?**  
+      Sim.
 
-        Ter que transcrever manualmente as informações geradas pelo exame para outro documento para poder gerar os laudos.
+    - **Quais são os motivos para este problema?**  
 
-        **- Como você resolve o problema atualmente?**     
+      Ter que transcrever manualmente as informações geradas pelo exame para outro documento para poder gerar os laudos.
 
-        Os dados são copiados manualmente para um documento no Word.
+    - **Como você resolve o problema atualmente?**
 
-        **- Como você gostaria de resolver o problema?**    
+      Os dados são copiados manualmente para um documento no Word.
 
-        Codificar um sistema para automatizar esse processo.
+    - **Como você gostaria de resolver o problema?**
 
-        **- Como você classificaria a resolução desses problemas em comparação com outros mencionados?**    
-        Principal.
-   
+      Codificar um sistema para automatizar esse processo.
+
+    - **Como você classificaria a resolução desses problemas em comparação com outros mencionados?**
+
+      Principal.
 
 ## 7. Avaliando Sua Solução (se aplicável)
 
 - **E se você pudesse…**
-    - agilizar o processo e facilitar a usabilidade?
-    - realizar um sistema de agendamento?
- 
+  - agilizar o processo e facilitar a usabilidade?
+  - realizar um sistema de agendamento?
+
 - **Como você classificaria a importância deles?** média.
 
 ## 8. Avaliando a Oportunidade
@@ -214,7 +214,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 - **Quais são suas expectativas para desempenho?** Um sistema 24/7 dentro de um servidor.
 - **Você ou outras pessoas suportarão o produto?**  Será feito o suporte caso necessário.
 
-- **Você tem necessidades especiais para suporte?** E com relação ao acesso de manutenção e serviço? Em análise. 
+- **Você tem necessidades especiais para suporte?** E com relação ao acesso de manutenção e serviço? Em análise.
 
 - **Quais são os requisitos de segurança?** Manter o laudo e a conta dos usuários segura.
 
@@ -228,7 +228,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Se eu precisar fazer outras perguntas, posso telefonar para você?** Mandar e-mail ou WhatsApp (preferencialmente e-mail)
 
-- **Você estaria disposto a participar de uma revisão de requisitos?** Está disposta a ter outras reuniões e demonstrar na prática como é feito o exame atualmente. 
+- **Você estaria disposto a participar de uma revisão de requisitos?** Está disposta a ter outras reuniões e demonstrar na prática como é feito o exame atualmente.
 
 ## 11. Resumo do Analista
 
@@ -239,4 +239,3 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 - Coletar dados;
 
 - Enviar o laudo para o paciente.
-

@@ -3,3 +3,4 @@
 - [Visão](visao.md)
 - [Pedidos do investidor](pedidoInvestidor.md)
 - [Glossário](glossario.md)
+- [Workflow (AS-IS)](workflowasis.md)

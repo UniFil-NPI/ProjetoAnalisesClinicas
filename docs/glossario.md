@@ -2,43 +2,41 @@
 
 ## Versão 1.0
 
-## Histórico da Revisão 
+## Histórico da Revisão
 
 | Data | Versão | Descrição | Autor |
 | ---- | ------ | --------- | ----- |
 | 13/03/2024 | 1.0 | Criação do glossário | Guilherme Rafael Faraco Vieira|
 
-
 ## Índice
+
 - [1. Introdução](#1-introdução)
 
-    - [1.1	Objetivo](#11-objetivo)
+  - [1.1 Objetivo](#11-objetivo)
 
-    - [1.2	Escopo](#12-escopo)
+  - [1.2 Escopo](#12-escopo)
 
-    - [1.3	Referências](#13-referências)
+  - [1.3 Referências](#13-referências)
 
-    - [1.4	Visão Geral](#14-visão-geral)
+  - [1.4 Visão Geral](#14-visão-geral)
 
-- [2.	Definições](#2-definições)
+- [2. Definições](#2-definições)
 
-    - [2.1	\<aTerm>](#21-aterm)
+  - [2.1 \<aTerm>](#21-aterm)
 
-    - [2.2	\<anotherTerm>](#22-anotherterm)
+    - [2.2 \<anotherTerm>](#22-anotherterm)
 
-    - [2.3	\<aGroupofTerms>](#23-agroupofterms)
+    - [2.3 \<aGroupofTerms>](#23-agroupofterms)
 
-        - [2.3.1	\<aGroupTerm>](#231-agroupterm)
+    - [2.3.1 \<aGroupTerm>](#231-agroupterm)
 
-        - [2.3.2	\<anotherGroupTerm>](#232-anothergroupterm)
+    - [2.3.2 \<anotherGroupTerm>](#232-anothergroupterm)
 
-    - [2.4	\<aSecondGroupofTerms>](#24-asecondgroupofterms)
+    - [2.4 \<aSecondGroupofTerms>](#24-asecondgroupofterms)
 
-        - [2.4.1	\<yetAnotherGroupTerm>](#241-yetanothergroupterm)
-        
-        - [2.4.2	\<andAnotherGroupTerm>](#242-andanothergroupterm)
+    - [2.4.1 \<yetAnotherGroupTerm>](#241-yetanothergroupterm)
 
-# Glossário
+    - [2.4.2 \<andAnotherGroupTerm>](#242-andanothergroupterm)
 
 ## 1. Introdução
 
@@ -93,6 +91,6 @@ A definição para \<anotherTerm> é apresentada aqui. Devem ser apresentadas ta
 [A definição para o termo é apresentada aqui. Apresente tantas informações quantas forem necessárias para o leitor entender o conceito.]
 Estereótipos UML
 
-# 3.	Estereótipos UML	5
+## 3. Estereótipos UML 5
 
 [Esta seção contém ou faz referência a especificações de estereótipos UML (Linguagem de Modelagem Unificada) e suas implicações semânticas—uma descrição textual do significado e da importância do estereótipo e as limitações em sua utilização—para estereótipos já conhecidos ou descobertos como importantes para o sistema que está sendo modelado. A utilização desses estereótipos pode apenas ser recomendada ou talvez até ser obrigatória; por exemplo, quando sua utilização é requerida por um padrão imposto ou quando é percebido que sua utilização torna significativamente mais fácil o entendimento dos modelos. Esta seção poderá ficar vazia se nenhum estereótipo adicional, diferente daqueles predefinidos pela UML e pelo Rational Unified Process, for considerado necessário.]
