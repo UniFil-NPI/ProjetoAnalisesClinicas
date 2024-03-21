@@ -1,6 +1,4 @@
-# Glossário - Projeto de Análises Clínicas
-
-## Versão 1.0
+# Glossário </br> Projeto de Análises Clínicas </br> Versão 1.0
 
 ## Histórico da Revisão
 
@@ -23,44 +21,81 @@
 - [2. Definições](#2-definições)
 
   - [2.1 Bioquímica](#21-bioquímica)
+
     - [2.1.1 Laudo](#211-laudo)
+
     - [2.1.2 Análises clínicas](#212-análises-clínicas)
+
     - [2.1.3 Analisador hematológico](#213-analisador-hematológico)
+
     - [2.1.4 Análise genética](#214-análise-genética)
+
     - [2.1.5 DNA](#215-dna)
+
     - [2.1.6 Amostras biológicas](#216-amostras-biológicas)
+
     - [2.1.7 Vínculo genético](#217-vínculo-genético)
+
     - [2.1.8 Hemograma](#218-hemograma)
+
     - [2.1.9 Coágulo](#219-coágulo)
+
     - [2.1.10 Alelo](#2110-alelo)
+
     - [2.1.11 Heterozigoto](#2111-heterozigoto)
+
     - [2.1.12 Homozigoto](#2112-homozigoto)
 
   - [2.2 Computação](#22-computação)
+
     - [2.2.1 API](#221-api)
+
     - [2.2.2 Servidor](#222-servidor)
+
     - [2.2.3 Localmente](#223-localmente)
+
     - [2.2.4 Hospedagem](#224-hospedagem)
+
     - [2.2.5 Aplicação Web](#225-aplicação-web)
+
     - [2.2.6 Login](#226-login)
+
     - [2.2.7 Internet](#227-internet)
+
     - [2.2.8 Site](#228-site)
+
     - [2.2.9 Status](#229-status)
+
     - [2.2.10 URL](#2210-url)
+
     - [2.2.11 Código](#2211-código)
+
     - [2.2.12 Requisição](#2212-requisição)
+
     - [2.2.13 Resposta](#2213-resposta)
+
     - [2.2.14 Stakeholder](#2214-stakeholder)
+
     - [2.2.15 Linguagem de Programação](#2215-linguagem-de-programção)
+
     - [2.2.16 Banco de dados](#2216-banco-de-dados)
+
     - [2.2.17 MySQL](#2217-mysql)
+
     - [2.2.18 PHP](#2218-php)
+
     - [2.2.19 Laravel](#2219-laravel)
+
     - [2.2.20 HTML](#2220-html)
+
     - [2.2.21 CSS](#2221-css)
+
     - [2.2.22 JavaScript](#2222-javascript)
+
     - [2.2.23 React](#2223-react)
+
     - [2.2.24 Backend](#2224-backend)
+
     - [2.2.25 Frontend](#2225-frontend)
 
 ## 1. Introdução
@@ -82,6 +117,7 @@ O glossário explica os termos de todos os documentos, sendo eles:
 ### 1.3 Referências
 
 - <https://www.dicio.com.br/laudo/>
+
 - <https://aws.amazon.com/pt/what-is/api/#:~:text=API%20significa%20Application%20Programming%20Interface,de%20servi%C3%A7o%20entre%20duas%20aplica%C3%A7%C3%B5es.>
 
 ### 1.4 Visão Geral

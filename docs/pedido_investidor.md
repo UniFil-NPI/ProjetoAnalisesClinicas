@@ -1,8 +1,6 @@
-# Pedidos do Investidor - Projeto de Análises Clínicas
+# Pedidos do Investidor </br> Projeto de Análises Clínicas </br> Versão 1.1
 
-## Versão 1.1
-
-### Histórico da Revisão
+## Histórico da Revisão
 
 | Data | Versão | Descrição | Autor |
 | ---- | ------ | --------- | ----- |
