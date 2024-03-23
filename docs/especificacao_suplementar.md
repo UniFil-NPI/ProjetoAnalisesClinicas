@@ -21,28 +21,34 @@
   - [1.5 Visão Geral](#15-visão-geral)
 
 - [2. Funcionalidade](#2funcionalidade)
-  
-  - [2.1](#21-requisito-funcional-um)
 
 - [3. Utilidade](#3utilidade)
 
-  - [3.1](#31-requisito-de-utilidade-um)
+  - [3.1 Treinamento](#31-treinamento)
 
 - [4. Confiabilidade](#4confiabilidade)
 
-  - [4.1](#41-requisito-de-confiabilidade-um)
+  - [4.1 Disponibilidade](#41-disponibilidade)
+  
+  - [4.2 MTTR](#42-mttr-mean-time-to-repair)
+
+  - [4.3 Exatidão](#43-exatidão)
+  
+  - [4.4 Taxa de Erros ou Defeitos](#44-taxa-de-erros-ou-defeitos)
 
 - [5. Desempenho](#5desempenho)
 
-  - [5.1](#51-requisito-de-desempenho-um)
+  - [5.1 Capacidade](#51-capacidade)
 
 - [6. Suportabilidade](#6suportabilidade)
 
-  - [6.1](#61-requisito-de-suportabilidade-um)
+  - [6.1 Padrão de Codificação](#61-padrão-de-codificação)
 
 - [7. Restrições de Design](#7restrições-de-design)
 
-  - [7.1](#71-restrição-de-design-um)
+  - [7.1 Logo e Cores](#71-logo-e-cores)
+
+  - [7.1 Linguagem de Programação](#72-liguagem-de-programação)
 
 - [8. Documentação do Usuário On-line e Requisitos do Sistema de Ajuda](#8documentação-do-usuário-on-line-e-requisitos-do-sistema-de-ajuda)
 
@@ -66,15 +72,18 @@
 
 ## 1.Introdução
 
-[A introdução da Especificação Suplementar fornece uma visão geral de todo o documento. Ela inclui o objetivo, o escopo, as definições, os acrônimos, as abreviações, as referências e a visão geral desta Especificação Suplementar.
-A Especificação Suplementar captura os requisitos do sistema que não são prontamente capturados nos casos de uso do modelo de caso de uso. Entre os requisitos estão incluídos:
-Requisitos legais e de regulamentação, incluindo padrões de aplicativos.
-Atributos de qualidade do sistema a ser criado, incluindo requisitos de utilidade, confiabilidade, desempenho e suportabilidade.
-Outros requisitos como sistemas e ambientes operacionais, requisitos de compatibilidade e restrições de design.]
+O documento de Especificação Suplementar é responsável por capturar os requisitos do sistema que não são prontamente capturados nos casos de uso do modelo de caso de uso. Entre os requisitos estão incluídos:
+
+- Requisitos legais e de regulamentação, incluindo padrões de aplicativos.
+
+- Atributos de qualidade do sistema a ser criado, incluindo requisitos de utilidade, confiabilidade, desempenho e suportabilidade.
+
+- Outros requisitos como sistemas e ambientes operacionais, requisitos de 
+compatibilidade e restrições de design.
 
 ### 1.1 Objetivo
 
-[Especifique o objetivo desta Especificação Suplementar.]
+Esta especificação suplementar visa complementar o modelo caso de uso, juntos capturam todos os requisitos de software que precisam ser descritos.
 
 ### 1.2 Escopo
 
@@ -82,11 +91,15 @@ A Especificação Suplementar captura os requisitos do sistema que não são pro
 
 ### 1.3 Definições, Acrônimos e Abreviações
 
-[Esta subseção fornece as definições de todos os termos, acrônimos e abreviações requeridos para interpretar adequadamente a Especificação Suplementar. Essas informações podem ser fornecidas em relação ao Glossário do projeto.]
+Consultar o [glossário](glossario.md).
 
 ### 1.4 Referências
 
-[Esta subseção fornece uma lista completa de todos os documentos mencionados em outra parte na Especificação Suplementar. Identifique cada documento por título, número do relatório se aplicável, data e organização da publicação. Especifique as origens a partir das quais as referências podem ser obtidas. Essas informações podem ser fornecidas por um anexo ou outro documento.]
+ATLASSIAN. MTBF, MTTR, MTTF, MTTA: Understanding incident metrics. Disponível em: <https://www.atlassian.com/incident-management/kpis/common-metrics>. Acesso em: 23 mar. 2024.
+
+OLIVEIRA, M. Conheça os detalhes dos Estilos de Indentação. Disponível em: <https://terminalroot.com.br/2022/02/conheca-os-detalhes-dos-estilos-de-indentacao.html>. Acesso em: 23 mar. 2024.
+
+Convenções de nomenclatura: Camel, Pascal, Kebab e Snake case. Disponível em: <https://www.alura.com.br/artigos/convencoes-nomenclatura-camel-pascal-kebab-snake-case>. Acesso em: 23 mar. 2024.
 
 ### 1.5 Visão Geral
 
@@ -94,74 +107,63 @@ A Especificação Suplementar captura os requisitos do sistema que não são pro
 
 ## 2.Funcionalidade
 
-[Esta seção descreve os requisitos funcionais do sistema para os requisitos que são expressos no estilo do idioma nativo. Para muitos aplicativos, isso pode constituir o bulk do Pacote SRS e um conceito deve ser fornecido à organização desta seção. Esta seção é, geralmente, organizada por recurso, mas métodos de organização alternativos, por exemplo, organização por usuário ou organização por subsistema, também podem ser apropriados. Requisitos funcionais podem incluir conjuntos, recursos e segurança do recurso.
-Onde as ferramentas de desenvolvimento de aplicativo, como ferramentas de requisitos, ferramentas de modelagem e assim por diante, são empregadas para capturar a funcionalidade, esta seção do documento fará referência à disponibilidade desses dados, indicando o local e o nome da ferramenta utilizada para capturar os dados.]
-
-### 2.1 Requisito Funcional Um
-
-[A descrição do requisito.]
+Os requisitos funcionais do projeto estão disponíveis no [diagrama de caso de uso](caso_de_uso.png).
 
 ## 3.Utilidade
 
-[Esta seção deve incluir todos os requisitos que afetam a utilidade. Como exemplos, podemos citar o seguinte:
-especifique o tempo de treinamento requerido para que usuários normais e usuários potentes se tornem produtivos em operações particulares
-especifique tempos de tarefa mensuráveis para tarefas típicas ou
-especifique requisitos para conformidade com padrões de utilidade comuns, por exemplo, padrões CUA da IBM ou Padrões GUI da Microsoft]
+### 3.1 Treinamento
 
-### 3.1 Requisito de Utilidade Um
-
-A descrição do requisito.
+O sistema será feito de maneira intuitiva, para que não precise de nenhum treinamento, porém será feita uma documentação caso existam dúvidas.
 
 ## 4.Confiabilidade
 
-[Os requisitos de confiabilidade do sistema devem ser especificados aqui. A seguir, são apresentadas algumas sugestões:
-Disponibilidade – especifique a porcentagem de tempo disponível ( xx.xx%), as horas de utilização, o acesso de manutenção, as operações de modo degradado e similares.
-MTBF (Mean Time Between Failures) – este é, geralmente, especificado em horas, mas pode também ser especificado em dias, meses ou anos.
-MTTR (Mean Time To Repair)–por quanto tempo o sistema tem permissão para ficar fora de operação após ter falhado?
- Exatidão –especifique a precisão (resolução) e a exatidão (por algum padrão conhecido) requeridas na saída dos sistemas.
-Taxa máxima de erros ou defeitos –geralmente expressa em termos de erros/KLOC (mil linhas de código) ou erros/ponto de função.
-Taxa de erros ou defeitos –categorizada em termos de erros menores, significativos e críticos: o(s) requisito(s) deve(m) definir o que quer dizer um erro “crítico”; por exemplo, perda completa de dados ou uma inabilidade completa para utilizar determinadas partes da funcionalidade do sistema.]
+### 4.1 Disponibilidade
 
-### 4.1 Requisito de Confiabilidade Um
+O sistema deve estar disponivel 24/7.
 
-[A descrição do requisito.]
+### 4.2 MTTR (Mean Time To Repair)
+
+Caso o sistema falhe ele tem poucas horas para voltar ao ar.
+
+### 4.3 Exatidão
+
+O sistema deve capturar de forma exata o protocolo HL7, também deve realizar os cálculos do teste de paternidade e informa-los ao usuário.
+
+### 4.4 Taxa de Erros ou Defeitos
+
+Erro crítico: Perda de informações, imprecisão nos cálculos, falta de segurança.
 
 ## 5.Desempenho
 
-[As características do desempenho do sistema devem ser esboçadas nesta seção. Inclua tempos de resposta específicos. Onde aplicável, faça referência a Casos de Uso relacionados por nome.
-Tempo de resposta para uma transação (médio, máximo)
-Rendimento do processamento (por exemplo, transações por segundo)
-Capacidade (por exemplo, o número de clientes ou transações que o sistema pode acomodar)
-Modos de degradação (que é o modo aceitável de operação quando o sistema foi degradado de alguma maneira)
-Utilização de recursos: memória, disco, comunicações e assim por diante]
+### 5.1 Capacidade
 
-### 5.1 Requisito de Desempenho Um
-
-[A descrição do requisito.]
+O sistema deve ter a capacidade de armazenar uma grande quantidade de informações(Laudos) dos usuários e ter a capacidade de permitir inúmeros usuários utilizando o sistema ao mesmo tempo.
 
 ## 6.Suportabilidade
 
-[Esta seção indica os requisitos que aprimorarão a suportabilidade ou a capacidade de manutenção do sistema que está sendo construído, incluindo padrões de codificação, convenções de nomenclatura, bibliotecas de classe, acesso de manutenção, utilitários de manutenção.]
+### 6.1 Padrão de Codificação
 
-### 6.1 Requisito de Suportabilidade Um
+Será utilizado um padrão para definir nomes de variaveis e funções/métodos será usado o camelCase, classes será usado o PascalCase, constantes utilizarão o padrão Screaming snake case, a indentação do código deverá seguir o [estilo K&R](https://terminalroot.com.br/2022/02/conheca-os-detalhes-dos-estilos-de-indentacao.html).
 
-[A descrição do requisito.]
+As técnologias utilizadas no Front-end serão: HTML, CSS, JavaScript e React. No Back-end será usado: PHP, Laravel e o banco de dados MySQL.
 
 ## 7.Restrições de Design
 
-[Esta seção deve indicar as restrições de design no sistema que está sendo construído. As restrições de design representam decisões de design que foram obrigatórias e às quais deve-se aderir. Os exemplos incluem linguagens de software, requisitos de processo de software, utilização prescrita de ferramentas de desenvolvimento, restrições de arquitetura e design, componentes comprados, bibliotecas de classes e assim por diante.]
+### 7.1 Logo e Cores
 
-### 7.1 Restrição de Design Um
+O sistema deverá conter a logo da UniFil e seguir um padrão de cores descrito pela empresa.
 
-[A descrição do requisito.]
+### 7.2 Liguagem de Programação
+
+O sistema será desenvolvido com React utilizando a UI library PrimeFaces.
 
 ## 8.Documentação do Usuário On-line e Requisitos do Sistema de Ajuda
 
-[Descreve os requisitos, se houver, para a documentação do usuário on-line, sistemas de ajuda, ajuda sobre observações e assim por diante.]
+Qualquer dúvida que o usuário tenha será resolvida ligando para a clínica.
 
 ## 9.Componentes Comprados
 
-[Esta seção descreve os componentes comprados a serem utilizados com o sistema, as restrições aplicáveis de licença ou uso e os padrões associados de compatibilidade/interoperabilidade ou interface.]
+Não se aplica.
 
 ## 10.Interfaces
 
@@ -185,11 +187,11 @@ A descrição do requisito.
 
 ## 11.Requisitos de Licença
 
-[Define os requisitos de reforço de licença ou outros requisitos de restrição de uso que devem ser exibidos pelo software.]
+Não existe.
 
 ## 12.Observações Legais, sobre Direitos Autorais e Outras Observações
 
-[Esta seção descreve as isenções legais necessárias, garantias, observações sobre direitos autorais, observações sobre patente, wordmark, marca registrada ou problemas de conformidade de logotipo para o software.]
+O sistema terá as observações legais de acordo com os padrões da instituição UniFil.
 
 ## 13.Padrões Aplicáveis
 

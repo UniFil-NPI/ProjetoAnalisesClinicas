@@ -46,6 +46,8 @@
 
     - [2.1.12 Homozigoto](#2112-homozigoto)
 
+    - [2.1.13 Protocolo HL7](#2113-protocolo-hl7)
+
   - [2.2 Computação](#22-computação)
 
     - [2.2.1 API](#221-api)
@@ -153,6 +155,8 @@ Texto que contém um parecer técnico, uma opinião especializada, sobre determi
 #### 2.1.11 Heterozigoto
 
 #### 2.1.12 Homozigoto
+
+#### 2.1.13 Protocolo HL7
 
 ### 2.2 Computação
 
