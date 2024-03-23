@@ -114,13 +114,15 @@ O glossário explica os termos de todos os documentos, sendo eles:
 
 - [Visão](visao.md);
 
-- [Pedidos do investidor](pedidoInvestidor.md);
+- [Pedidos do Investidor](pedidoInvestidor.md);
+
+- [Especificação Suplementar](especificacao_suplementar.md);
 
 ### 1.3 Referências
 
-- <https://www.dicio.com.br/laudo/>
+Laudo. Disponível em: <https://www.dicio.com.br/laudo/>. Acesso em: 23 mar. 2024.
 
-- <https://aws.amazon.com/pt/what-is/api/#:~:text=API%20significa%20Application%20Programming%20Interface,de%20servi%C3%A7o%20entre%20duas%20aplica%C3%A7%C3%B5es.>
+Disponível em: <https://aws.amazon.com/pt/what-is/api/#:~:text=API%20significa%20Application%20Programming%20Interface,de%20servi%C3%A7o%20entre%20duas%20aplica%C3%A7%C3%B5es.>. Acesso em: 23 mar. 2024.
 
 ### 1.4 Visão Geral
 

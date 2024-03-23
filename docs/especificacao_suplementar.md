@@ -107,7 +107,7 @@ Convenções de nomenclatura: Camel, Pascal, Kebab e Snake case. Disponível em:
 
 ## 2.Funcionalidade
 
-Os requisitos funcionais do projeto estão disponíveis no [diagrama de caso de uso](caso_de_uso.png).
+Os requisitos funcionais do projeto estão disponíveis no [diagrama de caso de uso](diagramas/caso_de_uso.png).
 
 ## 3.Utilidade
 
