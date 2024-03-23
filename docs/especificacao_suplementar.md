@@ -29,12 +29,10 @@
 - [4. Confiabilidade](#4confiabilidade)
 
   - [4.1 Disponibilidade](#41-disponibilidade)
-  
-  - [4.2 MTTR](#42-mttr-mean-time-to-repair)
 
-  - [4.3 Exatidão](#43-exatidão)
+  - [4.2 Exatidão](#42-exatidão)
   
-  - [4.4 Taxa de Erros ou Defeitos](#44-taxa-de-erros-ou-defeitos)
+  - [4.3 Taxa de Erros ou Defeitos](#43-taxa-de-erros-ou-defeitos)
 
 - [5. Desempenho](#5desempenho)
 
@@ -56,13 +54,11 @@
 
 - [10. Interfaces](#10interfaces)
 
-  - [10.1 Interfaces com o Usuário](#101-interfaces-com-o-usuário)
+  - [10.1 Interfaces de Hardware](#101-interfaces-de-hardware)
 
-  - [10.2 Interfaces de Hardware](#102-interfaces-de-hardware)
+  - [10.2 Interfaces de Software](#102-interfaces-de-software)
 
-  - [10.3 Interfaces de Software](#103-interfaces-de-software)
-
-  - [10.4 Interfaces de Comunicações](#104-interfaces-de-comunicações)
+  - [10.3 Interfaces de Comunicações](#103-interfaces-de-comunicações)
 
 - [11. Requisitos de Licença](#11requisitos-de-licença)
 
@@ -95,15 +91,13 @@ Consultar o [glossário](glossario.md).
 
 ### 1.4 Referências
 
-ATLASSIAN. MTBF, MTTR, MTTF, MTTA: Understanding incident metrics. Disponível em: <https://www.atlassian.com/incident-management/kpis/common-metrics>. Acesso em: 23 mar. 2024.
-
 OLIVEIRA, M. Conheça os detalhes dos Estilos de Indentação. Disponível em: <https://terminalroot.com.br/2022/02/conheca-os-detalhes-dos-estilos-de-indentacao.html>. Acesso em: 23 mar. 2024.
 
 Convenções de nomenclatura: Camel, Pascal, Kebab e Snake case. Disponível em: <https://www.alura.com.br/artigos/convencoes-nomenclatura-camel-pascal-kebab-snake-case>. Acesso em: 23 mar. 2024.
 
 ### 1.5 Visão Geral
 
-[Esta subseção descreve o que o restante da Especificação Suplementar contém e explica como o documento é organizado.]
+As sessões abaixo detalham os requisitos do sistema, informações que não foram possíveis de identificar somente com os diagramas, sendo eles: Funcionalidade; utilidade; confiabilidade; desempenho; suportabilidade; restrições de design; documentação do usuário on-line e requisitos do sistema de ajuda; componentes comprados; interfaces; requisitos de licença; observações legais, sobre direitos autorais e outras observações; padrões aplicaveis.
 
 ## 2.Funcionalidade
 
@@ -121,15 +115,11 @@ O sistema será feito de maneira intuitiva, para que não precise de nenhum trei
 
 O sistema deve estar disponivel 24/7.
 
-### 4.2 MTTR (Mean Time To Repair)
+### 4.2 Exatidão
 
-Caso o sistema falhe ele tem poucas horas para voltar ao ar.
+O sistema deve ter uma exatidão nos cálculos
 
-### 4.3 Exatidão
-
-O sistema deve capturar de forma exata o protocolo HL7, também deve realizar os cálculos do teste de paternidade e informa-los ao usuário.
-
-### 4.4 Taxa de Erros ou Defeitos
+### 4.3 Taxa de Erros ou Defeitos
 
 Erro crítico: Perda de informações, imprecisão nos cálculos, falta de segurança.
 
@@ -159,7 +149,7 @@ O sistema será desenvolvido com React utilizando a UI library PrimeFaces.
 
 ## 8.Documentação do Usuário On-line e Requisitos do Sistema de Ajuda
 
-Qualquer dúvida que o usuário tenha será resolvida ligando para a clínica.
+O sistema conterá uma documentação on-line.
 
 ## 9.Componentes Comprados
 
@@ -167,27 +157,21 @@ Não se aplica.
 
 ## 10.Interfaces
 
-[Esta seção define as interfaces que devem ser suportadas pelo aplicativo. Ela deve conter especificidade adequada, protocolos, portas, endereços lógicos e assim por diante, para que o software possa ser desenvolvido e verificado em comparação com os requisitos da interface.]
+### 10.1 Interfaces de Hardware
 
-### 10.1 Interfaces com o Usuário
+Em análise.
 
-[Descreva as interfaces com o usuário que devem ser implementadas pelo software.]
+### 10.2 Interfaces de Software
 
-### 10.2 Interfaces de Hardware
+Em análise.
 
-[Esta seção define as interfaces de hardware que devem ser suportadas pelo software, incluindo estrutura lógica, endereços físicos, comportamento esperado e assim por diante.]
+### 10.3 Interfaces de Comunicações
 
-### 10.3 Interfaces de Software
-
-[Esta seção descreve as interfaces de software para outros componentes do sistema de software. Estas podem ser componentes comprados, componentes reutilizados de outro aplicativo ou componentes que estão sendo desenvolvidos para subsistemas fora do escopo desta SRS, mas com os quais este aplicativo de software deve interagir.]
-
-### 10.4 Interfaces de Comunicações
-
- [Descreva as interfaces de comunicações para outros sistemas ou dispositivos como redes locais, dispositivos seriais remotos e assim por diante.]
+Em análise.
 
 ## 11.Requisitos de Licença
 
-Não existe.
+Não se aplica.
 
 ## 12.Observações Legais, sobre Direitos Autorais e Outras Observações
 
@@ -195,4 +179,4 @@ O sistema terá as observações legais de acordo com os padrões da instituiç�
 
 ## 13.Padrões Aplicáveis
 
-[Esta seção descreve, por referência, os padrões aplicáveis e as seções específicas desses padrões que se aplicam ao sistema que está sendo descrito. Por exemplo, isso pode incluir padrões jurídicos, de qualidade e reguladores, padrões de mercado para utilidade, interoperabilidade, internacionalização, conformidade com o sistema operacional e assim por diante.]
+Não se aplica.

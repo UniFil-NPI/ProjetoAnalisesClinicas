@@ -6,7 +6,7 @@
 
 - [Caso de Uso](diagramas/caso_de_uso.png)
 
-- [Workflow (AS-IS)](diagramas/WorkflowASIS%20Diagrama.png)
+- [Workflow (AS-IS)](diagramas/WorkflowASIS.png)
 
 - [Especificação suplementar](especificacao_suplementar.md)
 
