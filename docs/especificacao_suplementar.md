@@ -78,7 +78,7 @@ O documento de Especificação Suplementar é responsável por capturar os requi
 
 - Atributos de qualidade do sistema a ser criado, incluindo requisitos de utilidade, confiabilidade, desempenho e suportabilidade.
 
-- Outros requisitos como sistemas e ambientes operacionais, requisitos de 
+- Outros requisitos como sistemas e ambientes operacionais, requisitos de
 compatibilidade e restrições de design.
 
 ### 1.1 Objetivo
