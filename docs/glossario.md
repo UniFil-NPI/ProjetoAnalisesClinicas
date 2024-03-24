@@ -46,59 +46,13 @@
 
     - [2.1.12 Homozigoto](#2112-homozigoto)
 
-    - [2.1.13 Protocolo HL7](#2113-protocolo-hl7)
-
   - [2.2 Computação](#22-computação)
 
     - [2.2.1 API](#221-api)
 
-    - [2.2.2 Servidor](#222-servidor)
+    - [2.2.2 Aplicação Web](#222-aplicação-web)
 
-    - [2.2.3 Localmente](#223-localmente)
-
-    - [2.2.4 Hospedagem](#224-hospedagem)
-
-    - [2.2.5 Aplicação Web](#225-aplicação-web)
-
-    - [2.2.6 Login](#226-login)
-
-    - [2.2.7 Internet](#227-internet)
-
-    - [2.2.8 Site](#228-site)
-
-    - [2.2.9 Status](#229-status)
-
-    - [2.2.10 URL](#2210-url)
-
-    - [2.2.11 Código](#2211-código)
-
-    - [2.2.12 Requisição](#2212-requisição)
-
-    - [2.2.13 Resposta](#2213-resposta)
-
-    - [2.2.14 Stakeholder](#2214-stakeholder)
-
-    - [2.2.15 Linguagem de Programação](#2215-linguagem-de-programção)
-
-    - [2.2.16 Banco de dados](#2216-banco-de-dados)
-
-    - [2.2.17 MySQL](#2217-mysql)
-
-    - [2.2.18 PHP](#2218-php)
-
-    - [2.2.19 Laravel](#2219-laravel)
-
-    - [2.2.20 HTML](#2220-html)
-
-    - [2.2.21 CSS](#2221-css)
-
-    - [2.2.22 JavaScript](#2222-javascript)
-
-    - [2.2.23 React](#2223-react)
-
-    - [2.2.24 Backend](#2224-backend)
-
-    - [2.2.25 Frontend](#2225-frontend)
+    - [2.2.3 Protocolo HL7](#223-protocolo-hl7)
 
 ## 1. Introdução
 
@@ -158,62 +112,12 @@ Texto que contém um parecer técnico, uma opinião especializada, sobre determi
 
 #### 2.1.12 Homozigoto
 
-#### 2.1.13 Protocolo HL7
-
 ### 2.2 Computação
 
 #### 2.2.1 API
 
 API significa Application Programming Interface (Interface de Programação de Aplicação). No contexto de APIs, a palavra Aplicação refere-se a qualquer software com uma função distinta. A interface pode ser pensada como um contrato de serviço entre duas aplicações. Esse contrato define como as duas se comunicam usando solicitações e respostas. A documentação de suas respectivas APIs contém informações sobre como os desenvolvedores devem estruturar essas solicitações e respostas.
 
-#### 2.2.2 Servidor
+#### 2.2.2 Aplicação Web
 
-#### 2.2.3 Localmente
-
-#### 2.2.4 Hospedagem
-
-#### 2.2.5 Aplicação Web
-
-#### 2.2.6 Login
-
-#### 2.2.7 Internet
-
-#### 2.2.8 Site
-
-#### 2.2.9 Status
-
-#### 2.2.10 URL
-
-#### 2.2.11 Código
-
-#### 2.2.12 Requisição
-
-#### 2.2.13 Resposta
-
-#### 2.2.14 Stakeholder
-
-#### 2.2.15 Linguagem de programção
-
-#### 2.2.16 Banco de dados
-
-#### 2.2.17 MySQL
-
-#### 2.2.18 PHP
-
-#### 2.2.19 Laravel
-
-#### 2.2.20 HTML
-
-#### 2.2.21 CSS
-
-#### 2.2.22 JavaScript
-
-#### 2.2.23 React
-
-#### 2.2.24 Backend
-
-#### 2.2.25 Frontend
-
-## 3. Estereótipos UML
-
-Não existe.
+#### 2.2.3 Protocolo HL7
