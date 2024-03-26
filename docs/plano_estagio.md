@@ -94,9 +94,13 @@ do município. (JUSTIFICATIVA)
 
 ## 2 DIAGRAMA DE CASO DE USO
 
+![Diagrama de caso de uso](./diagramas/caso_de_uso.png)
+
 ### 2.1 TELAS
 
 ## 3 WORKFLOW (AS IS) NA NOTAÇÃO BPMN
+
+![WorkflowASIS](./diagramas/WorkflowASIS.png)
 
 ## 4 RECURSOS E AMBIENTE DE DESENOVOLVIMENTO
 
