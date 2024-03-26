@@ -39,3 +39,5 @@
 ## Consultar laudos como Paciente
 
 ![Consultar laudos como Paciente](./telas/consultar_laudos_paciente.png)
+
+[Voltar](readme.md)

@@ -1,4 +1,4 @@
-# Curso de Bacharelado em Engenharia de Software </br></br> Guilherme Rafael Faraco Vieira </br></br> Projeto de Análises Clínicas </br></br> Londrina, 2024
+# CURSO DE BACHARELADO EM ENGENHARIA DE SOFTWARE </br>GUILHERME RAFAEL FARACO VIEIRA </br> PROJETO DE ANÁLISES CLÍNICAS </br> Londrina </br> 2024
 
 ## SUMÁRIO
 
@@ -139,3 +139,5 @@ No Back-end do sistema as técnologias utilizadas serão:
 ![Cronograma](/docs/img/Cronograma-de-projeto-Cronograma-de-projeto.png)
 
 ## REFERÊNCIAS
+
+[Voltar](readme.md)
