@@ -8,9 +8,9 @@
 
 - [Telas](telas.md)
 
-- [Caso de Uso](diagramas/caso_de_uso.png)
+- [Caso de Uso](caso_de_uso.md)
 
-- [Workflow (AS-IS)](diagramas/WorkflowASIS.png)
+- [Workflow (AS-IS)](workflow_asis.md)
 
 - [Especificação suplementar](especificacao_suplementar.md)
 

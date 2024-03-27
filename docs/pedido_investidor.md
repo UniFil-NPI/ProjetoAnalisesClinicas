@@ -49,8 +49,7 @@ O pedido do investidor é um documento que contém todas as informações necess
 
 ### 1.1 Objetivo
 
-O objetivo é fazer uma entrevista para entender todos os requisitos que o 
-stakeholder necessita para iniciar o desenvolvimento.
+O objetivo é fazer uma entrevista para entender todos os requisitos que o stakeholder necessita para iniciar o desenvolvimento.
 
 ### 1.2 Escopo
 

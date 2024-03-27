@@ -72,6 +72,8 @@ O glossário explica os termos de todos os documentos, sendo eles:
 
 - [Especificação Suplementar](especificacao_suplementar.md);
 
+- [Plano de Estágio](plano_estagio.md);
+
 ### 1.3 Referências
 
 Laudo. Disponível em: <https://www.dicio.com.br/laudo/>. Acesso em: 23 mar. 2024.

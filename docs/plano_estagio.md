@@ -1,4 +1,4 @@
-# CURSO DE BACHARELADO EM ENGENHARIA DE SOFTWARE </br>GUILHERME RAFAEL FARACO VIEIRA </br> PROJETO DE ANÁLISES CLÍNICAS </br> Londrina </br> 2024
+# CURSO DE BACHARELADO EM ENGENHARIA DE SOFTWARE </br> GUILHERME RAFAEL FARACO VIEIRA </br> PROJETO DE ANÁLISES CLÍNICAS </br> Londrina </br> 2024
 
 ## SUMÁRIO
 
@@ -94,13 +94,13 @@ do município. (JUSTIFICATIVA)
 
 ## 2 DIAGRAMA DE CASO DE USO
 
-![Diagrama de caso de uso](./diagramas/caso_de_uso.png)
+![Diagrama de caso de uso](./img/diagramas/caso_de_uso.png)
 
 ### 2.1 TELAS
 
 ## 3 WORKFLOW (AS IS) NA NOTAÇÃO BPMN
 
-![WorkflowASIS](./diagramas/WorkflowASIS.png)
+![WorkflowASIS](./img/diagramas/WorkflowASIS.png)
 
 ## 4 RECURSOS E AMBIENTE DE DESENOVOLVIMENTO
 
@@ -132,7 +132,7 @@ exibido na tela.
 
 No Back-end do sistema as técnologias utilizadas serão:
 
-  1. NestJS, um framework Node.js para construir aplicativos eficientes, confiáveis e escaláveis do lado do servidor.
+  1. FastAPI, um web framework para construir APIs com Python.
 
 ## 5 CRONOGRAMA
 
