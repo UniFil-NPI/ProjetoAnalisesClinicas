@@ -110,7 +110,7 @@ O sistema deve ter a capacidade de armazenar uma grande quantidade de informaç�
 
 Será utilizado um padrão para definir nomes de variaveis e funções/métodos será usado o camelCase, classes será usado o PascalCase, constantes utilizarão o padrão Screaming snake case, a indentação do código deverá seguir o [estilo K&R](https://terminalroot.com.br/2022/02/conheca-os-detalhes-dos-estilos-de-indentacao.html).
 
-As técnologias utilizadas no Front-end serão: HTML, CSS, JavaScript e [Vue.js](https://vuejs.org/). No Back-end será usado: [NestJS](https://nestjs.com/), [Node.js](https://nodejs.org/en) e o banco de dados MySQL.
+As técnologias utilizadas no Front-end serão: HTML, CSS, JavaScript e [Vue.js](https://vuejs.org/). No Back-end será usado: [Laravel](https://laravel.com/).
 
 ## 7. Restrições de Design
 

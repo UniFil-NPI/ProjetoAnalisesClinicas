@@ -132,7 +132,7 @@ exibido na tela.
 
 No Back-end do sistema as técnologias utilizadas serão:
 
-  1. FastAPI, um web framework para construir APIs com Python.
+  1. Laravel, um framework para construir aplicações web.
 
 ## 5 CRONOGRAMA
 
