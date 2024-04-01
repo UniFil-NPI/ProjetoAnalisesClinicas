@@ -1,4 +1,4 @@
-# ProjetoAnalisesClinicas
+# Projeto de Análises Clínicas
 
 Repositório do projeto de estágio.
 

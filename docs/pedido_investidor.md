@@ -9,57 +9,57 @@
 
 ## Índice
 
-- [1. Introdução](#1-introdução)
+1. [Introdução](#introdução)
 
-  - [1. Objetivo](#11-objetivo)
+    1. [Objetivo](#objetivo)
 
-  - [2. Escopo](#12-escopo)
+    2. [Escopo](#escopo)
 
-  - [3. Definições, Acrônimos e Abreviações](#13-definições-acrônimos-e-abreviações)
+    3. [Definições, Acrônimos e Abreviações](#definições-acrônimos-e-abreviações)
 
-  - [4. Referências](#14-referências)
+    4. [Referências](#referências)
 
-  - [5. Visão Geral](#15-visão-geral)
+    5. [Visão Geral](#visão-geral)
 
-- [2. Estabelecer Perfil do Investidor ou do Usuário](#2-estabelecer-perfil-do-investidor-ou-do-usuário)
+2. [Estabelecer Perfil do Investidor ou do Usuário](#estabelecer-perfil-do-investidor-ou-do-usuário)
 
-- [3. Avaliando o Problema](#3-avaliando-o-problema)
+3. [Avaliando o Problema](#avaliando-o-problema)
 
-- [4. Entendendo o Ambiente do Usuário](#4-entendendo-o-ambiente-do-usuário)
+4. [Entendendo o Ambiente do Usuário](#entendendo-o-ambiente-do-usuário)
 
-- [5. Recapitulação para Entendimento](#5-recapitulação-para-entendimento)
+5. [Recapitulação para Entendimento](#recapitulação-para-entendimento)
 
-- [6. Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#6-entradas-do-analista-no-problema-do-investidor-validar-ou-invalidar-premissas)
+6. [Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#entradas-do-analista-no-problema-do-investidor-validar-ou-invalidar-premissas)
 
-- [7. Avaliando Sua Solução (se aplicável)](#7-avaliando-sua-solução-se-aplicável)
+7. [Avaliando Sua Solução (se aplicável)](#avaliando-sua-solução-se-aplicável)
 
-- [8. Avaliando a Oportunidade](#8-avaliando-a-oportunidade)
+8. [Avaliando a Oportunidade](#avaliando-a-oportunidade)
 
-- [9. Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#9-avaliando-a-confiabilidade-o-desempenho-e-as-necessidades-de-suporte)
+9. [Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#avaliando-a-confiabilidade-o-desempenho-e-as-necessidades-de-suporte)
 
-- [10. Wrap-Up](#10-wrap-up)
+10. [Wrap-Up](#wrap-up)
 
-- [11. Resumo do Analista](#11-resumo-do-analista)
+11. [Resumo do Analista](#resumo-do-analista)
 
 ## Pedidos do Investidor
 
-## 1. Introdução
+## Introdução
 
 O pedido do investidor é um documento que contém todas as informações necessárias para fazer o sistema pedido.
 
-### 1.1 Objetivo
+### Objetivo
 
 O objetivo é fazer uma entrevista para entender todos os requisitos que o stakeholder necessita para iniciar o desenvolvimento.
 
-### 1.2 Escopo
+### Escopo
 
 O sistema irá agilizar, facilitar e aumentar a produção de exames feitos, basicamente consistirá em um site onde teremos o cadastro/login de usuário e dependendo do cargo ele terá acesso a algumas informações e funções, como consultar os laudos, fazer um exame, checar os laudos dos pacientes.
 
-### 1.3 Definições, Acrônimos e Abreviações
+### Definições, Acrônimos e Abreviações
 
 Consultar glossário.
 
-### 1.4 Referências
+### Referências
 
 **Análises Clínicas - Rede D’Or. Disponível em:**
 <https://www.rededorsaoluiz.com.br/exames-e-procedimentos/analises-clinicas>  
@@ -74,11 +74,11 @@ Acesso feito em 07 de março de 2024.
 **EC Series Auto Hematology Analyzer HL7 Interface User's Manual_20220122**  
 Acesso feito em 07 de março de 2024.
 
-### 1.5 Visão Geral
+### Visão Geral
 
 O capítulo um visa fornecer informações iniciais sobre o projeto, uma análise geral. O segundo capítulo fornece informações sobre o investidor. O terceiro capítulo fornece uma avaliação sobre os problemas citados pelo investidor. O quarto capítulo fornece informações sobre o background dos usuários. O quinto capítulo é uma recapitulação dos requisitos passados. O sexto capítulo é uma validação de premissas dos problemas. O sétimo capítulo avalia sua solução. O oitavo capítulo avalia as oportunidades, ou seja, quem utilizará e onde será usado. O nono capítulo contém as necessidades de confiabilidade, desempenho e necessidades de suporte. O décimo capítulo contém as formas de contato e se será possível outras reuniões com o investidor. E o último capítulo é um resumo.
 
-## 2. Estabelecer Perfil do Investidor ou do Usuário
+## Estabelecer Perfil do Investidor ou do Usuário
 
 - **Nome:** Carolina Ariza
 
@@ -92,7 +92,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Quais problemas interferem em seu sucesso?** Algum erro de digitação ou problemas com o aparelho do laboratório.
 
-## 3. Avaliando o Problema
+## Avaliando o Problema
 
 - **Para quais problemas faltam boas soluções?**  Uma forma de receber e gerar o laudo automaticamente e também um cadastro, onde o usuário irá inserir suas informações básicas e login onde terá acesso ao laudo e terá a possibilidade de agendar seu exame.
 
@@ -106,7 +106,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Como você gostaria de resolvê-lo?** De maneira automatizada e simples.
 
-## 4. Entendendo o Ambiente do Usuário
+## Entendendo o Ambiente do Usuário
 
 - **Quem são os usuários?** Biomedicos e pacientes
 
@@ -126,7 +126,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **De quais tipos de documentação impressa e on-line você precisa?** Manual online.
 
-## 5. Recapitulação para Entendimento
+## Recapitulação para Entendimento
 
 - **Você me disse:**
 
@@ -140,7 +140,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Isso representa os problemas que você está tendo com a solução existente?** Sim.
 
-## 6. Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)
+## Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)
 
 - **Quais, se houver, problemas estão associados com:**
 
@@ -188,7 +188,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
       Principal.
 
-## 7. Avaliando Sua Solução (se aplicável)
+## Avaliando Sua Solução (se aplicável)
 
 - **E se você pudesse…**
   - agilizar o processo e facilitar a usabilidade?
@@ -196,7 +196,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Como você classificaria a importância deles?** média.
 
-## 8. Avaliando a Oportunidade
+## Avaliando a Oportunidade
 
 - **Quem precisa deste aplicativo em sua organização?** O laboratório de biomedicina.
 
@@ -204,7 +204,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Como você avaliaria uma solução bem-sucedida?** Cumprir todos os requisitos pedidos.
 
-## 9. Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte
+## Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte
 
 - **Quais são suas expectativas para confiabilidade?** Entregar os resultados gerados pelo aparelho com segurança.
 
@@ -221,13 +221,13 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Como o software será distribuído?** Servidor do departamento de computação.
 
-## 10. Wrap-Up
+## Wrap-Up
 
 - **Se eu precisar fazer outras perguntas, posso telefonar para você?** Mandar e-mail ou WhatsApp (preferencialmente e-mail)
 
 - **Você estaria disposto a participar de uma revisão de requisitos?** Está disposta a ter outras reuniões e demonstrar na prática como é feito o exame atualmente.
 
-## 11. Resumo do Analista
+## Resumo do Analista
 
 - Gerar laudos;
 

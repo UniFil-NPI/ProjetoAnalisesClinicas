@@ -2,32 +2,33 @@
 
 ## SUMÁRIO
 
-- [1. INTRODUÇÃO](#1-introdução)
+1. [INTRODUÇÃO](#introdução)
 
-  - [1.1 PROPOSTA E OBJETIVOS](#11-proposta-e-objetivos)
+    1. [PROPOSTA E OBJETIVOS](#proposta-e-objetivos)
 
-  - [1.2 JUSTIFICATIVA](#12-justificativa)
+    2. [JUSTIFICATIVA](#justificativa)
 
-- [2 DIAGRAMA DE CASO DE USO](#2-diagrama-de-caso-de-uso)
-  - [2.1 TELAS](#21-telas)
+2. [DIAGRAMA DE CASO DE USO](#diagrama-de-caso-de-uso)
 
-- [3 WORKFLOW (AS IS) NA NOTAÇÃO BPMN](#3-workflow-as-is-na-notação-bpmn)
+3. [TELAS](#telas)
 
-- [4 RECURSOS E AMBIENTE DE DESENOVOLVIMENTO](#4-recursos-e-ambiente-de-desenovolvimento)
+4. [WORKFLOW (AS IS) NA NOTAÇÃO BPMN](#workflow-as-is-na-notação-bpmn)
 
-  - [4.1 LINGUAGEM DE PROGRAMAÇÃO](#41-linguagem-de-programação)
+5. [RECURSOS E AMBIENTE DE DESENOVOLVIMENTO](#recursos-e-ambiente-de-desenovolvimento)
 
-  - [4.2 BANCO DE DADOS](#42-banco-de-dados)
+    1. [LINGUAGEM DE PROGRAMAÇÃO](#linguagem-de-programação)
 
-  - [4.3 FRONT-END](#43-front-end)
+    2. [BANCO DE DADOS](#banco-de-dados)
 
-  - [4.4 BACK-END](#44-back-end)
+    3. [FRONT-END](#front-end)
 
-- [5 CRONOGRAMA](#5-cronograma)
+    4. [BACK-END](#back-end)
 
-- [REFERÊNCIAS](#referências)
+6. [CRONOGRAMA](#cronograma)
 
-## 1. INTRODUÇÃO
+7. [REFERÊNCIAS](#referências)
+
+## INTRODUÇÃO
 
 (MÍNIMO UMA PÁGINA)
 A introdução do trabalho deverá contextualizar a proposta de desenvolvimento
@@ -56,7 +57,7 @@ sistema a ser desenvolvido, faz um breve resgate da teoria que ampara o sistema
 proposto e apresenta o cronograma e ferramental de hardware e software estimado
 para o desenvolvimento do trabalho.
 
-### 1.1 PROPOSTA E OBJETIVOS
+### PROPOSTA E OBJETIVOS
 
 Quais objetivos (geralmente 1 objetivo geral e no mínimo 5 específicos) o aca-
 dêmico pretende atingir com o desenvolvimento do estágio.
@@ -72,7 +73,7 @@ bem quanto o acompanhamento on-line dos empenhos e pagamentos efetuados
 (os objetivos gerais e específicos poderão ser feitos na forma de tópicos se
 melhor convier ao aluno)
 
-### 1.2 JUSTIFICATIVA
+### JUSTIFICATIVA
 
 Qual é a proposta do seu sistema? Como (e porque) ela se justifica como uma
 proposta válida?
@@ -92,34 +93,35 @@ forma o presente projeto se justifica por atender a uma demanda da Prefeitura Mu
 cipal de Vale dos Sonhos buscando a transparência na gestão dos recursos públicos
 do município. (JUSTIFICATIVA)
 
-## 2 DIAGRAMA DE CASO DE USO
+## DIAGRAMA DE CASO DE USO
+
+Figura 1
 
 ![Diagrama de caso de uso](./img/diagramas/caso_de_uso.png)
 
-### 2.1 TELAS
+## TELAS
 
-## 3 WORKFLOW (AS IS) NA NOTAÇÃO BPMN
+## WORKFLOW (AS IS) NA NOTAÇÃO BPMN
+
+Figura x
 
 ![WorkflowASIS](./img/diagramas/WorkflowASIS.png)
 
-## 4 RECURSOS E AMBIENTE DE DESENOVOLVIMENTO
+## RECURSOS E AMBIENTE DE DESENOVOLVIMENTO
 
-### 4.1 LINGUAGEM DE PROGRAMAÇÃO
+### LINGUAGEM DE PROGRAMAÇÃO
 
-Descreve a metodologia, processo, banco de dados, e demais aspectos rela-
-cionados com os recursos que serão utilizados para o desenvolvimento e implemen-
-tação do projeto proposto.
+Descreve a metodologia, processo, banco de dados, e demais aspectos relacionados com os recursos que serão utilizados para o desenvolvimento e implementação do projeto proposto.
 
-### 4.2 BANCO DE DADOS
+### BANCO DE DADOS
 
 Será utilizado o sistema de gerenciamento de banco de dados Postgres.
 
-### 4.3 FRONT-END
+### FRONT-END
 
-No Front-end do sistema as técnologias utilizadas serão:
+No Front-end do sistema as tecnologias utilizadas serão:
 
-  1. HTML, Linguagem de Marcação de HiperTexto, responsável por definir a estru-
-tura do conteúdo da Web.
+  1. HTML, Linguagem de Marcação de HiperTexto, responsável por definir a estrutura do conteúdo da Web.
 
   2. CSS, Cascading Style Sheets, responsável por descrever como o conteúdo será
 exibido na tela.
@@ -128,13 +130,13 @@ exibido na tela.
 
   4. DaisyUI, uma biblioteca de componentes para Tailwind CSS.
 
-## 4.4 BACK-END
+### BACK-END
 
 No Back-end do sistema as técnologias utilizadas serão:
 
   1. Laravel, um framework para construir aplicações web.
 
-## 5 CRONOGRAMA
+## CRONOGRAMA
 
 ![Cronograma](/docs/img/Cronograma-de-projeto-Cronograma-de-projeto.png)
 
