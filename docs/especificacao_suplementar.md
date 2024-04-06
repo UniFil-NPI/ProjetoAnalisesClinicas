@@ -181,4 +181,6 @@ O sistema terá as observações legais de acordo com os padrões da instituiç�
 
 Não se aplica.
 
+---
+
 [Voltar](readme.md)

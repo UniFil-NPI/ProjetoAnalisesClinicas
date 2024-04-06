@@ -237,4 +237,6 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - Enviar o laudo para o paciente.
 
+---
+
 [Voltar](readme.md)

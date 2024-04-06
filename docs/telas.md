@@ -20,10 +20,6 @@
 
 ![Tela inicial logado como recepcionista](./img/telas/logado_como_recepcionista.png)
 
-## Tela inicial logado como coordenador(a)
-
-![Tela inicial logado como coordenador(a)](./img/telas/logado_como_coordenador.png)
-
 ## Tela inicial logado como biomédico(a) ou como paciente
 
 ![Tela inicial logado como biomédico(a) ou como paciente](./img/telas/logado_como_biomedico.png)
@@ -39,5 +35,7 @@
 ## Consultar laudos como Paciente
 
 ![Consultar laudos como Paciente](./img/telas/consultar_laudos_paciente.png)
+
+---
 
 [Voltar](readme.md)

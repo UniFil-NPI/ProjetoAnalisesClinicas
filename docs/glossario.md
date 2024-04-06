@@ -102,56 +102,58 @@ As definições serão separadas em dois grupos principais, serão eles: Bioquí
 
 #### Alelo
 
-> Os alelos são as formas alternativas de um determinado gene e ocupam um mesmo loco em cromossomos homólogos. Quando nos referimos a loco, estamos falando da posição do gene no cromossomo; quando falamos em cromossomos homólogos, referimo-nos a cromossomos que possuem genes para a mesma característica.
+Os alelos são as formas alternativas de um determinado gene e ocupam um mesmo loco em cromossomos homólogos. Quando nos referimos a loco, estamos falando da posição do gene no cromossomo; quando falamos em cromossomos homólogos, referimo-nos a cromossomos que possuem genes para a mesma característica.
 
 #### Amostras biológicas
 
-> Refere-se ao material utilizado para realizar a análise.
+Refere-se ao material utilizado para realizar a análise.
 
 #### Analisador Hematológico
 
-> O analisador hematológico, ou analisador de hematologia, destina-se a realizar hemogramas.
+O analisador hematológico, ou analisador de hematologia, destina-se a realizar hemogramas.
 
 #### Análises Clínicas
 
-> As análises clínicas são um conjunto de exames com a finalidade de verificar o estado de saúde de um paciente ou investigar doenças, como os chamados exames de rotina, check-ups, dentre outros.
+As análises clínicas são um conjunto de exames com a finalidade de verificar o estado de saúde de um paciente ou investigar doenças, como os chamados exames de rotina, check-ups, dentre outros.
 
 #### Coágulo
 
-> Um coágulo sanguíneo é um grumo de material que o corpo fabrica para tampar um sangramento dos vasos sanguíneos.
+Um coágulo sanguíneo é um grumo de material que o corpo fabrica para tampar um sangramento dos vasos sanguíneos.
 
 #### DNA
 
-> O DNA (ácido desoxirribonucleico) é um tipo de ácido nucleico relacionado com o armazenamento e transmissão das informações genéticas.
+O DNA (ácido desoxirribonucleico) é um tipo de ácido nucleico relacionado com o armazenamento e transmissão das informações genéticas.
 
 #### Hemograma
 
-> O hemograma ou hemograma completo é um exame avalia os três tipos de células que compõem o sangue: os glóbulos vermelhos, que transportam o oxigênio para o corpo; os glóbulos brancos, que servem para a defesa do organismo; e as plaquetas, que atuam na coagulação do sangue.
+O hemograma ou hemograma completo é um exame avalia os três tipos de células que compõem o sangue: os glóbulos vermelhos, que transportam o oxigênio para o corpo; os glóbulos brancos, que servem para a defesa do organismo; e as plaquetas, que atuam na coagulação do sangue.
 
 #### Heterozigoto
 
-> Denomina-se de heterozigoto, ou híbrido, o indivíduo que possui uma determinada característica condicionada por dois alelos diferentes.
+Denomina-se de heterozigoto, ou híbrido, o indivíduo que possui uma determinada característica condicionada por dois alelos diferentes.
 
 #### Homozigoto
 
-> Denomina-se de homozigoto, ou puro, aquele indivíduo que apresenta uma característica determinada por alelos iguais.
+Denomina-se de homozigoto, ou puro, aquele indivíduo que apresenta uma característica determinada por alelos iguais.
 
 #### Laudo
 
-> Texto que contém um parecer técnico, uma opinião especializada, sobre determinado assunto: laudo médico.
+Texto que contém um parecer técnico, uma opinião especializada, sobre determinado assunto: laudo médico.
 
 ### Computação
 
 #### API
 
-> API significa Application Programming Interface (Interface de Programação de Aplicação). No contexto de APIs, a palavra Aplicação refere-se a qualquer software com uma função distinta. A interface pode ser pensada como um contrato de serviço entre duas aplicações. Esse contrato define como as duas se comunicam usando solicitações e respostas. A documentação de suas respectivas APIs contém informações sobre como os desenvolvedores devem estruturar essas solicitações e respostas.
+API significa Application Programming Interface (Interface de Programação de Aplicação). No contexto de APIs, a palavra Aplicação refere-se a qualquer software com uma função distinta. A interface pode ser pensada como um contrato de serviço entre duas aplicações. Esse contrato define como as duas se comunicam usando solicitações e respostas. A documentação de suas respectivas APIs contém informações sobre como os desenvolvedores devem estruturar essas solicitações e respostas.
 
 #### Aplicação Web
 
-> Uma aplicação Web é um software que é executado em um navegador da Web.
+Uma aplicação Web é um software que é executado em um navegador da Web.
 
 #### Protocolo HL7
 
-> O HL7 (Health Level 7) é um "padrão" utilizado pelo setor de saúde para permitir a troca de informações em saúde através de mensagens, entre aplicações, como LIS para EHR, HIS para RIS e equipamentos médicos, por exemplo.
+O HL7 (Health Level 7) é um "padrão" utilizado pelo setor de saúde para permitir a troca de informações em saúde através de mensagens, entre aplicações, como LIS para EHR, HIS para RIS e equipamentos médicos, por exemplo.
+
+---
 
 [Voltar](readme.md)
