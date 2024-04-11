@@ -22,7 +22,7 @@
 
 ## Tela inicial logado como biomédico(a) ou como paciente
 
-![Tela inicial logado como biomédico(a) ou como paciente](./img/telas/logado_como_biomedico.png)
+![Tela inicial logado como biomédico(a) ou como paciente](./img/telas/logado_como_biomedico_ou_paciente.png)
 
 ## Consultar laudos como biomédico(a)
 
