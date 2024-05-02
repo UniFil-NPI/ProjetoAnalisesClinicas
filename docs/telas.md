@@ -10,11 +10,11 @@
 
 ## Tela de cadastro 1
 
-![Cadastro](./img/telas/cadastro.png)
+![Cadastro](./img/telas/cadastro1.png)
 
 ## Tela de cadastro 2
 
-![Cadastro continuação](./img/telas/cadastro_continuacao.png)
+![Cadastro continuação](./img/telas/cadastro2.png)
 
 ## Tela inicial logado como recepcionista
 
