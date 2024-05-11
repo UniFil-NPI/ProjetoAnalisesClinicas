@@ -1,7 +1,7 @@
 # Diagramas de Sequência
 
-- [Cronograma](cronograma.md)
+- [gerenciar_usuario](gerenciar_usuario.md)
 
 ---
 
-[Voltar](readme.md)
+[Voltar](../readme.md)

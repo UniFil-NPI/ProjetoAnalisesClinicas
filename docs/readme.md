@@ -22,7 +22,7 @@
 
 - [Diagrama de classes](diagrama_de_classes.md)
 
-- [Diagrama de implantação](diagrama_implantacao.md)
+- [Diagrama de implantação](diagrama_de_implantacao.md)
 
 - [Diagramas de Estado](diagramas_de_estado/readme.md)
 
