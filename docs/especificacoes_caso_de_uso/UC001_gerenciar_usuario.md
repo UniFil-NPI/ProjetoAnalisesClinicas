@@ -35,7 +35,7 @@
 
 9. [Informações Adicionais](#informações-adicionais)
 
-## Especificação de Caso de Uso: gerenciar_usuario
+## Especificação de Caso de Uso: UC001 - gerenciar_usuario
 
 Neste documento está contida as especificações dos requisitos do caso de uso estudado: gerenciar_usuario.
 
@@ -91,7 +91,17 @@ O caso de uso gerenciar_usuario engloba as funcionalidades *create*, *read* e *u
 
 ## Cenários Chave
 
-[Liste os cenários mais importantes do caso de uso. Simplesmente forneça um nome abreviado e uma descrição associada para identificar exclusivamente cada cenário chave. Haverá, potencialmente, muitos cenários possíveis com esta especificação de caso de uso: é importante focalizar nos cenários mais importantes ou mais freqüentemente discutidos que são exemplos desse caso de uso ou são de interesse ou de importância específica dos investidores do agente.]
+- UC001: gerenciar_usuario
+
+- UC002: gerenciar_pedido_do_exame
+
+- UC003: consultar_exames
+
+- UC004: gerenciar_laudo
+
+- UC005: consultar_dados_do_aparelho
+
+- UC006: inserir_dados_teste_paternidade
 
 ## Condições Prévias
 
@@ -109,7 +119,7 @@ Esse caso de uso não possui pontos de extensão.
 
 ### Criptografia
 
-Dentro da parte de cadastro, à principio será gerada uma senha aleatória que será enviada ao paciente, essa senha deve ser criptografada dentro do banco de dados para manter a segurança da aplicação.
+Dentro da parte de cadastro, à principio será gerada uma senha usando os 6 primeiros digitos do CPF do paciente, essa senha deve ser criptografada dentro do banco de dados para manter a segurança da aplicação.
 
 ## Informações Adicionais
 

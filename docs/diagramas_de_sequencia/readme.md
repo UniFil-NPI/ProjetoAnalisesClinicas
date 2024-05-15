@@ -1,6 +1,6 @@
 # Diagramas de Sequência
 
-- [gerenciar_usuario](gerenciar_usuario.md)
+- [gerenciar_usuario](UC001_gerenciar_usuario.md)
 
 ---
 
