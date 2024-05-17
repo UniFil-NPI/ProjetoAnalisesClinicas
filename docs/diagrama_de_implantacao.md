@@ -1,9 +1,6 @@
 # Diagrama de Implantação
 
-```mermaid
-
-
-```
+![DeployDiagram](./img/diagramas/estagioDeploymentDiagram.png)
 
 ---
 
