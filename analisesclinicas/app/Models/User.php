@@ -6,10 +6,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'cpf';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * The data type of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +41,19 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone_number',
+        'post_code',
+        'street',
+        'building_number',
+        'secondary_address',
+        'neighborhood',
+        'city',
+        'state',
+        'birth_date',
+        'health_insurance',
+        'biological_sex',
         'password',
+
     ];
 
     /**
@@ -43,5 +77,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function tests(): HasMany
+    {
+        return $this->hasMany(Test::class);
     }
 }
