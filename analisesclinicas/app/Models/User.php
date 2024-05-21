@@ -11,27 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'cpf';
-
-    /**
-     * Indicates if the model's ID is auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The data type of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
 
     /**
      * The attributes that are mass assignable.
@@ -39,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'cpf',
         'name',
         'email',
         'phone_number',
@@ -53,7 +33,6 @@ class User extends Authenticatable
         'health_insurance',
         'biological_sex',
         'password',
-
     ];
 
     /**

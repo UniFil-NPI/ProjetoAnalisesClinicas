@@ -1,5 +1,7 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
+import Navbar from "@/Components/Navbar.vue";
+import Footer from "@/Components/Footer.vue";
 
 defineProps({
     canLogin: {
@@ -13,91 +15,25 @@ defineProps({
 
 <template>
     <Head title="Welcome" />
-    <div class="">
-        <div class="">
-            <div class="">
-                <header class="">
-                    <div class=""></div>
-                    <nav
-                        v-if="canLogin"
-                        class="container h-[90px] mx-auto py-[15px]"
-                    >
-                        <button
-                            v-if="$page.props.auth.user"
-                            :href="route('dashboard')"
-                            class=""
-                        >
-                            Dashboard
-                        </button>
-
-                        <template v-else>
-                            <!-- nav -->
-                            <div class="flex flex-row">
-                                <div class="inline-flex">
-                                    <img
-                                        src="../assets/UniFil_Logo Isolado Horizontal-01.png"
-                                        height="60"
-                                        width="200"
-                                    />
-                                </div>
-
-                                <div class="grow"></div>
-
-                                <div class="flex justify-end">
-                                    <button
-                                        :href="route('login')"
-                                        class="h-[40px] w-[90px] my-[20px] bg-primary rounded-md text-white place-content-center text-center text-lg"
-                                    >
-                                        Entrar
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- <Link
-                                v-if="canRegister"
-                                :href="route('register')"
-                                class=""
-                            >
-                                Register
-                            </Link> -->
-                        </template>
-                    </nav>
-                </header>
-
-                <main class="container mx-auto pt-[92px]">
-                    <div class="grid grid-cols-2 gap-[170px]">
-                        <div
-                            class="grid grid-cols-1 gap-[28px] w-[509px] h-[457px]"
-                        >
-                            <div class="w-[509px] h-[165px]">
-                                <p class="font-bold text-5xl">
-                                    Projeto de Análises Clínicas
-                                </p>
-                            </div>
-                            <div class="w-[470px] h-[264px]">
-                                <p class="text-xl">
-                                    Lorem, ipsum dolor sit amet consectetur
-                                    adipisicing elit. Facere optio ratione id
-                                    sapiente ea sequi iste in expedita,
-                                    explicabo fugit sit voluptatum maxime velit
-                                    atque assumenda. Animi, error in repellat
-                                    minima quas itaque nostrum, perferendis
-                                    omnis quo amet impedit ea numquam ad libero,
-                                    earum sit odit hic aut. A, hic.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="w-[491px] h-[515px]">
-                            <img
-                                src="../assets/lab.jpg"
-                                class=" w-[491px] h-[515px] rounded-lg rounded-tl-[110px] object-cover"
-                            />
-                        </div>
-                    </div>
-                </main>
-
-                <footer></footer>
-            </div>
+    <Navbar :canLogin="canLogin" :canRegister="canRegister" />
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 mt-20 min-h-[70vh] max-md:px-10 ">
+        <div class="col-span-1 flex flex-col justify-center max-sm:items-center gap-8">
+            <h2 class="text-3xl max-sm:text-center md:text-6xl font-extrabold leading-none">Projeto
+             de Análises <br> Clínicas</h2>
+            <p class="text-lg max-sm:text-justify md:text-2xl md:max-w-[70%]">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque,
+                debitis.
+            </p>
+            <button class="md:self-start max-sm:w-full bg-amber-400 text-neutral-50 px-6 py-2 border-2xl text-xl">
+            Conhecer o Projeto</button>
+        </div>
+        <div class="flex md:justify-end col-span-1 md:h-full">
+            <img
+                draggable="false"
+                src="https://placehold.co/400x600"
+                class="rounded-lg md:rounded-tl-[6rem]  md:rounded-br-[6rem] rounded-tl-[4rem]  rounded-br-[4rem] shadow-md object-cover shadow-primary max-sm:max-w-[70%] max-sm:mx-auto"
+            />
         </div>
     </div>
+    <Footer/>
 </template>
