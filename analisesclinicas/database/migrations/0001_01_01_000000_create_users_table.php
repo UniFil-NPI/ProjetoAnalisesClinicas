@@ -17,17 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone_number')->nullable();
-            $table->string('post_code')->nullable();
-            $table->string('street')->nullable();
-            $table->string('building_number')->nullable();
-            $table->string('secondary_address')->nullable();
-            $table->string('neighborhood')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->string('health_insurance')->nullable();
-            $table->string('biological_sex')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

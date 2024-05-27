@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/vue3";
 
 export default {
     props: {
-        users: Object,
+        patients: Object,
     },
     components: {
         Head,
@@ -14,12 +14,12 @@ export default {
 };
 </script>
 <template>
-    <Head title="Usuários" />
+    <Head title="Pacientes" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Usuários
+                Pacientes
             </h2>
         </template>
 
@@ -70,13 +70,13 @@ export default {
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
-                            Gerenciamento de Usuários
+                            Gerenciamento de Pacientes
                         </h2>
                         <Link
-                            :href="route('user.create')"
+                            :href="route('patient.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
-                            New User
+                            Novo Paciente
                         </Link>
                     </div>
 
@@ -85,24 +85,22 @@ export default {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Email</th>
                                 <th>CPF</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(user, i) in users"
+                                v-for="(patient, i) in patients"
                                 :key="i"
                                 class="text-center "
                             >
-                                <td class="py-2">{{ user.id }}</td>
-                                <td class="py-2">{{ user.name }}</td>
-                                <td class="py-2">{{ user.email }}</td>
-                                <td class="py-2">{{ user.cpf }}</td>
+                                <td class="py-2">{{ patient.patient_id }}</td>
+                                <td class="py-2">{{ patient.name }}</td>
+                                <td class="py-2">{{ patient.cpf }}</td>
                                 <td class="py-2">
                                     <a
-                                        :href="route('user.edit', user.id)"
+                                        :href="route('patient.edit', patient.id)"
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar

@@ -32,7 +32,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        return redirect()->route('user.index');
+        return to_route('user.index');
     }
 
     public function edit($id){
@@ -46,10 +46,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         User::where('id', $id)->update([
-            'name' => $request->name == $user->name ? $user->name : $request->name,
-            'email' => $request->email == $user->email ? $user->email : $request->email,
-            'cpf' => $request->cpf == $user->cpf ? $user->cpf : $request->cpf,
-            'password' => Hash::make($request->password == $user->password ? $user->password : $request->password)
+            'name' => $request->name,
+            'email' => $request->email,
+            'cpf' => $request->cpf,
         ]);
+        return Inertia::render('User/Edit', ['user' => $user]);
     }
 }
