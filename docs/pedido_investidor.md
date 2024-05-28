@@ -94,7 +94,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 ## Avaliando o Problema
 
-- **Para quais problemas faltam boas soluções?**  Uma forma de receber e gerar o laudo automaticamente e também um cadastro, onde o usuário irá inserir suas informações básicas e login onde terá acesso ao laudo e terá a possibilidade de agendar seu exame.
+- **Para quais problemas faltam boas soluções?**  Uma forma de receber e gerar o laudo automaticamente e também um cadastro, onde o usuário irá inserir suas informações básicas e login onde terá acesso ao laudo.
 
 - **Quais são elas?** Fazer um sistema web que contenha a solução para todos os problemas apresentados.
 
@@ -108,7 +108,7 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 ## Entendendo o Ambiente do Usuário
 
-- **Quem são os usuários?** Biomedicos e pacientes
+- **Quem são os usuários?** Funcionários da clínica e pacientes
 
 - **Qual é seu background educacional?** Variado
 
@@ -116,15 +116,15 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **Os usuários têm experiência com este tipo de aplicativo?** Variado
 
-- **Quais plataformas estão em uso?** Word, telefone e e-mail.
+- **Quais plataformas estão em uso?** *Word*, telefone e e-mail.
 
-- **Quais são seus planos para plataformas futuras?** Um sistema web.
+- **Quais são seus planos para plataformas futuras?** Um sistema *web*.
 
 - **Quais aplicativos adicionais você utiliza com os quais nós precisamos fazer interface?** Software do aparelho do laboratório.
 
 - **Quais são suas expectativas para o tempo de treinamento?** Não se aplica.
 
-- **De quais tipos de documentação impressa e on-line você precisa?** Manual online.
+- **De quais tipos de documentação impressa e on-line você precisa?** Manual *online*.
 
 ## Recapitulação para Entendimento
 
@@ -192,7 +192,6 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - **E se você pudesse…**
   - agilizar o processo e facilitar a usabilidade?
-  - realizar um sistema de agendamento?
 
 - **Como você classificaria a importância deles?** média.
 
@@ -231,11 +230,9 @@ O capítulo um visa fornecer informações iniciais sobre o projeto, uma anális
 
 - Gerar laudos;
 
-- Agendar consulta;
-
 - Coletar dados;
 
-- Enviar o laudo para o paciente.
+- Disponibilizar o laudo para o paciente.
 
 ---
 

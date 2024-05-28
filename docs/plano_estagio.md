@@ -96,11 +96,11 @@ O sistema é um ator que representa a interação do próprio sistema com os cas
 
 #### consultar_exames
 
-O caso de uso consultar_exames por baixo dos panos, fará a segregação entre consultar exames de sangue e de paternidade, onde apenas o adm ou o próprio paciente terão acesso aos laudos de paternidade. Importante ressaltar que os pacientes somente poderão consultar os laudos próprios.
+O caso de uso consultar_exames por baixo dos panos, fará a segregação entre consultar exames de sangue e de paternidade, onde apenas o adm ou o próprio paciente terão acesso aos laudos de paternidade. Importante ressaltar que os pacientes somente poderão consultar os próprios laudos.
 
 #### \<\<CRUD\>\> gerenciar_usuario
 
-O caso de uso gerenciar_recepcionista, permite o gerenciamento das contas do tipo recepcionista, onde apenas o adm tem acesso.
+O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o adm tem acesso, A única excessão é a *role* paciente poderá ser editada pela recepcionista.
 
 #### \<\<CRUD\>\> gerenciar_pedido_do_exame
 
@@ -142,8 +142,6 @@ Figura 2
 
 A Figura 3 refere-se a tela de cadastro, os únicos tipos de usuário com acesso a elas são os recepcionistas e adm.
 
-O botão de função presente na Figura 3 serve para selecionar a o tipo de usuário e somente o adm poderá cadastrar outro adm.
-
 Figura 3
 
 ![tela_cadastro](img/telas/cadastro.png)
@@ -164,7 +162,7 @@ Se for um biomédico(a) ou um adm, os campos que aparecerão como informações 
 
 Figura 5
 
-![consultar_exames](img/telas/consultar_laudos_paciente.png)
+![consultar_exames](img/telas/consultar_exames.png)
 
 ## *WORKFLOW (AS IS)* NA NOTAÇÃO BPMN
 
@@ -195,8 +193,6 @@ No *Front-end* do sistema as tecnologias utilizadas serão:
 - ***[npm](https://www.npmjs.com/)*** v10.5.0,
 
 - ***[Tailwind CSS](https://tailwindcss.com/)*** v3.4.3,
-
-- ***[DaisyUI](https://daisyui.com/)*** v4.10.1, uma biblioteca de componentes para *Tailwind CSS*.
 
 #### *BACK-END*
 
