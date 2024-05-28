@@ -99,12 +99,12 @@ export default {
                                 <td class="py-2">{{ patient.name }}</td>
                                 <td class="py-2">{{ patient.cpf }}</td>
                                 <td class="py-2">
-                                    <a
-                                        :href="route('patient.edit', patient.id)"
+                                    <Link
+                                        :href="route('patient.edit', patient.patient_id)"
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </a>
+                                    </Link>
                                 </td>
                             </tr>
                         </tbody>

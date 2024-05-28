@@ -13,6 +13,6 @@ class TestSeeder extends Seeder
      */
     public function run(): void
     {
-        Test::factory()->count(15)->create();
+        // Test::factory()->count(15)->create();
     }
 }

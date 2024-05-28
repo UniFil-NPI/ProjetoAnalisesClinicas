@@ -1,6 +1,6 @@
 <script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 
 export default {
     components: {
@@ -9,31 +9,34 @@ export default {
         Link,
     },
     props: {
-        user: Object,
+        patient: Object,
     },
     data() {
         return {
-            form: {
-                name: this.user.name,
-                email: this.user.email,
-                cpf: this.user.cpf,
-                post_code: this.user.post_code,
-                street: this.user.street,
-                building_number: this.user.building_number,
-                secondary_address: this.user.secondary_address,
-                city: this.user.city,
-                state: this.user.state,
-                neighborhood: this.user.neighborhood,
-                birth_date: this.user.birth_date,
-                health_insurance: this.user.health_insurance == '0'? 'Nenhum' : this.user.health_insurance,
-                biological_sex: this.user.biological_sex == 'Masculino' ? 1 : 2,
-            },
+            form: useForm({
+                name: this.patient.name,
+                email: this.patient.email,
+                cpf: this.patient.cpf,
+                post_code: this.patient.post_code,
+                phone_number: this.patient.phone_number,
+                street: this.patient.street,
+                building_number: this.patient.building_number,
+                secondary_address: this.patient.secondary_address,
+                city: this.patient.city,
+                state: this.patient.state,
+                neighborhood: this.patient.neighborhood,
+                birth_date: this.patient.birth_date,
+                health_insurance: this.patient.health_insurance,
+                biological_sex: this.patient.biological_sex,
+            }),
         };
     },
     methods: {
-        async updatePatient() {
-            await axios.post("/user/update/" + this.user.id, this.form);
-            window.location.href = route("user.index");
+        save() {
+            this.form.post(
+                "/patient/update/" + this.patient.patient_id,
+                this.form
+            );
         },
         async getCep() {
             let response = await axios.get(route("cep", this.form.post_code));
@@ -63,11 +66,9 @@ export default {
                     <h2 class="text-2xl font-bold">
                         Editar cadastro do paciente
                     </h2>
-                    <form @submit.prevent="updatePatient">
+                    <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-
-                            <div class="grid grid-cols-5 gap-4">
-
+                            <div class="col-span-3 flex flex-col gap-2">
                                 <label for="name">Nome Completo</label>
                                 <input
                                     type="text"
@@ -75,11 +76,14 @@ export default {
                                     placeholder="Nome"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.name"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.name }}</span
+                                >
                             </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
-
                                 <label for="cpf">CPF</label>
                                 <input
                                     type="text"
@@ -87,11 +91,14 @@ export default {
                                     placeholder="CPF"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.cpf"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.cpf }}</span
+                                >
                             </div>
 
                             <div class="col-span-3 flex flex-col gap-2">
-
                                 <label for="name">Email</label>
                                 <input
                                     type="email"
@@ -99,11 +106,28 @@ export default {
                                     placeholder="Email"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.email"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.email }}</span
+                                >
                             </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
+                                <label for="name">Telefone</label>
+                                <input
+                                    type="text"
+                                    v-model="form.phone_number"
+                                    class="bg-neutral-200 border-none rounded-lg"
+                                />
+                                <span
+                                    v-if="form.errors.phone_number"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.phone_number }}</span
+                                >
+                            </div>
 
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">CEP</label>
                                 <input
                                     type="text"
@@ -112,11 +136,14 @@ export default {
                                     placeholder="CEP"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.post_code"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.post_code }}</span
+                                >
                             </div>
 
                             <div class="col-span-3 flex flex-col gap-2">
-
                                 <label for="name">Rua</label>
                                 <input
                                     type="text"
@@ -124,11 +151,14 @@ export default {
                                     placeholder="Rua"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.street"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.street }}</span
+                                >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
-
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Número</label>
                                 <input
                                     type="text"
@@ -136,11 +166,14 @@ export default {
                                     placeholder="Número"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.building_number"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.building_number }}</span
+                                >
                             </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
-
                                 <label for="name">Complemento</label>
                                 <input
                                     type="text"
@@ -148,11 +181,9 @@ export default {
                                     placeholder="Complemento"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
                             </div>
 
                             <div class="col-span-1 flex flex-col gap-2">
-
                                 <label for="name">Bairro</label>
                                 <input
                                     type="text"
@@ -160,11 +191,14 @@ export default {
                                     placeholder="Bairro"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.neighborhood"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.neighborhood }}</span
+                                >
                             </div>
 
                             <div class="col-span-1 flex flex-col gap-2">
-
                                 <label for="name">Cidade</label>
                                 <input
                                     type="text"
@@ -172,11 +206,14 @@ export default {
                                     placeholder="Cidade"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.city"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.city }}</span
+                                >
                             </div>
 
                             <div class="col-span-1 flex flex-col gap-2">
-
                                 <label for="name">Estado</label>
                                 <input
                                     type="text"
@@ -184,11 +221,14 @@ export default {
                                     placeholder="Estado"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.state"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.state }}</span
+                                >
                             </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
-
                                 <label for="name">Data de Nascimento</label>
                                 <input
                                     type="date"
@@ -196,11 +236,14 @@ export default {
                                     placeholder="Data de nascimento"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
-
+                                <span
+                                    v-if="form.errors.birth_date"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.birth_date }}</span
+                                >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
-
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Convênio</label>
                                 <select
                                     v-model="form.health_insurance"
@@ -209,6 +252,7 @@ export default {
                                     <option selected disabled value="0">
                                         Convênio
                                     </option>
+                                    <option value="Nenhum">Nenhum</option>
                                     <option value="Unimed">Unimed</option>
                                     <option value="Hausey">Hausey</option>
                                     <option value="SUS">SUS</option>
@@ -220,11 +264,16 @@ export default {
                                         Sulamérica
                                     </option>
                                 </select>
-
+                                <span
+                                    v-if="form.errors.health_insurance"
+                                    class="text-sm text-red-600"
+                                    >{{
+                                        form.errors.name.health_insurance
+                                    }}</span
+                                >
                             </div>
-
+                            
                             <div class="col-span-1 flex flex-col gap-2">
-
                                 <label for="name">Sexo</label>
                                 <select
                                     v-model="form.biological_sex"
@@ -236,16 +285,45 @@ export default {
                                     <option value="Masculino">Masculino</option>
                                     <option value="Feminino">Feminino</option>
                                 </select>
+                                <span
+                                    v-if="form.errors.biological_sex"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.biological_sex }}</span
+                                >
+                            </div>
 
+                            <div class="col-span-1 flex flex-col gap-2">
+                                <Label>Status</Label>
+                                <label
+                                    class="inline-flex items-center cursor-pointer"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        value=""
+                                        class="sr-only peer"
+                                    />
+                                    <div
+                                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                    ></div>
+                                    <span
+                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                        v-if="patient.status === true"
+                                        >Ativo</span
+                                    >
+                                    <span
+                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                        v-if="patient.status === false"
+                                        >Inativo</span
+                                    >
+                                </label>
                             </div>
 
                             <button
                                 type="submit"
-                                class="px-4 py-2 rounded-lg bg-primary text-white col-span-2 text-xl uppercase text-center font-semibold"
+                                class="px-4 py-2 rounded-lg bg-primary text-white col-span-5 text-xl uppercase text-center font-semibold"
                             >
                                 Salvar alterações
                             </button>
-
                         </div>
                     </form>
                 </div>

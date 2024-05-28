@@ -19,7 +19,7 @@ export default {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Usuários
+                Funcionários
             </h2>
         </template>
 
@@ -70,13 +70,13 @@ export default {
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
-                            Gerenciamento de Usuários
+                            Gerenciamento de funcionário
                         </h2>
                         <Link
                             :href="route('user.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
-                            New User
+                            Novo funcionário
                         </Link>
                     </div>
 

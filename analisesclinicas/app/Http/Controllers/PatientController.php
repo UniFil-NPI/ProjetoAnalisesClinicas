@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class PatientController extends Controller
@@ -16,8 +17,6 @@ class PatientController extends Controller
     {
 
         $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id' ,'patients.*', 'users.*')->get();
-
-        //dd($patients);
 
         return Inertia::render('Patient/Index', ['patients' => $patients]);
     }
@@ -35,22 +34,35 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'cpf' => 'required|cpf|formato_cpf',
+            'post_code' => 'required|formato_cep',
+            'street' => 'required',
+            'phone_number' => 'required|celular_com_ddd',
+            'building_number' => 'required',
+            'neighborhood' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'birth_date' => 'required',
+            'health_insurance' => 'required',
+            'biological_sex' => 'required',
+        ]);
 
-        // FAZER VALIDAÇÃO DE CPF
-
-        try {
         
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'cpf' => $request->cpf,
             'password' => Hash::make(substr($request->cpf, 0, 4))
-        ]);
+        ])->assignRole('patient');
 
         Patient::create([
             'user_id' => $user->id,
             'post_code' => $request->post_code,
             'street' => $request->street,
+            'phone_number' => $request->phone_number,
             'building_number' => $request->building_number,
             'secondary_address' => $request->secondary_address,
             'neighborhood' => $request->neighborhood,
@@ -60,30 +72,55 @@ class PatientController extends Controller
             'health_insurance' => $request->health_insurance,
             'biological_sex' => $request->biological_sex,
         ]);
-        } catch(Exception $e){
-            //FALTA MOSTRAR O ERRO NA TELA
-            return redirect()->back();
-        }
+
 
         return redirect()->route('patient.index');
     }
 
     public function edit($id){
 
-        $patient = Patient::findOrFail($id);
+        $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
+        ->where('patients.id', $id)
+        ->select('patients.id as patient_id' ,'patients.*', 'users.*')->first();
 
         return Inertia::render('Patient/Edit', ['patient' => $patient]);
     }
 
     public function update(Request $request, $id){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'cpf' => 'required|cpf|formato_cpf',
+            'post_code' => 'required|formato_cep',
+            'street' => 'required',
+            'phone_number' => 'required|celular_com_ddd',
+            'building_number' => 'required',
+            'neighborhood' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'birth_date' => 'required',
+            'health_insurance' => 'required',
+            'biological_sex' => 'required',
+        ]);
+        
         $patient = Patient::findOrFail($id);
 
-        Patient::where('id', $id)->update([
+        $user = User::where('id', $patient->user_id)->firstOrFail();
+
+        $user->updateOrFail([
             'name' => $request->name,
             'email' => $request->email,
             'cpf' => $request->cpf,
+            'password' => Hash::make(substr($request->cpf, 0, 4)),
+        ]);
+
+        $user_id = User::find($patient->user_id)->id;
+
+        Patient::where('id', $id)->update([
+            'user_id' => $user_id,
             'post_code' => $request->post_code,
             'street' => $request->street,
+            'phone_number' => $request->phone_number,
             'building_number' => $request->building_number,
             'secondary_address' => $request->secondary_address,
             'neighborhood' => $request->neighborhood,
@@ -94,6 +131,6 @@ class PatientController extends Controller
             'biological_sex' => $request->biological_sex,
         ]);
 
-        return Inertia::render('Patient/Edit', ['patient' => $patient]);
+        return redirect()->route('patient.index');
     }
 }

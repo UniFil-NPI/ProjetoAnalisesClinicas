@@ -29,7 +29,7 @@ export default {
         };
     },
     methods: {
-        createPatient() {
+        save() {
             this.form.post("/create/new/patient");
         },
         async getCep() {
@@ -48,7 +48,7 @@ export default {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Novo Paciente
+                Pacientes
             </h2>
         </template>
 
@@ -58,8 +58,9 @@ export default {
                     class="bg-white flex flex-col gap-8 shadow-sm shadow-primary sm:rounded-lg p-5"
                 >
                     <h2 class="text-2xl font-bold">Novo Paciente</h2>
-                    <form>
+                    <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
+
                             <div class="col-span-3 flex flex-col gap-2">
                                 <label for="name">Nome Completo</label>
                                 <input
@@ -68,7 +69,13 @@ export default {
                                     placeholder="Nome"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.name"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.name }}</span
+                                >
                             </div>
+
                             <div class="col-span-2 flex flex-col gap-2">
                                 <label for="cpf">CPF</label>
                                 <input
@@ -77,7 +84,13 @@ export default {
                                     placeholder="CPF"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.cpf"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.cpf }}</span
+                                >
                             </div>
+
                             <div class="col-span-3 flex flex-col gap-2">
                                 <label for="name">Email</label>
                                 <input
@@ -86,8 +99,28 @@ export default {
                                     placeholder="Email"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.email"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.email }}</span
+                                >
                             </div>
+
                             <div class="col-span-2 flex flex-col gap-2">
+                                <label for="name">Telefone</label>
+                                <input
+                                    type="text"
+                                    v-model="form.phone_number"
+                                    class="bg-neutral-200 border-none rounded-lg"
+                                />
+                                <span
+                                    v-if="form.errors.phone_number"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.phone_number }}</span
+                                >
+                            </div>
+
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">CEP</label>
                                 <input
                                     type="text"
@@ -96,7 +129,13 @@ export default {
                                     placeholder="CEP"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.post_code"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.post_code }}</span
+                                >
                             </div>
+
                             <div class="col-span-3 flex flex-col gap-2">
                                 <label for="name">Rua</label>
                                 <input
@@ -105,8 +144,14 @@ export default {
                                     placeholder="Rua"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.street"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.street }}</span
+                                >
                             </div>
-                            <div class="col-span-2 flex flex-col gap-2">
+
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Número</label>
                                 <input
                                     type="text"
@@ -114,7 +159,13 @@ export default {
                                     placeholder="Número"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.building_number"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.building_number }}</span
+                                >
                             </div>
+
                             <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Complemento</label>
                                 <input
@@ -123,7 +174,13 @@ export default {
                                     placeholder="Complemento"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.secondary_address"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.secondary_address }}</span
+                                >
                             </div>
+
                             <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Bairro</label>
                                 <input
@@ -132,7 +189,13 @@ export default {
                                     placeholder="Bairro"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.neighborhood"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.neighborhood }}</span
+                                >
                             </div>
+
                             <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Cidade</label>
                                 <input
@@ -141,7 +204,13 @@ export default {
                                     placeholder="Cidade"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.city"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.city }}</span
+                                >
                             </div>
+
                             <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Estado</label>
                                 <input
@@ -150,7 +219,13 @@ export default {
                                     placeholder="Estado"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.state"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.state }}</span
+                                >
                             </div>
+
                             <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Data de Nascimento</label>
                                 <input
@@ -159,7 +234,13 @@ export default {
                                     placeholder="Data de nascimento"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
+                                <span
+                                    v-if="form.errors.birth_date"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.birth_date }}</span
+                                >
                             </div>
+
                             <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Convênio</label>
                                 <select
@@ -169,6 +250,7 @@ export default {
                                     <option selected disabled value="0">
                                         Convênio
                                     </option>
+                                    <option value="Nenhum">Nenhum</option>
                                     <option value="Unimed">Unimed</option>
                                     <option value="Hausey">Hausey</option>
                                     <option value="SUS">SUS</option>
@@ -180,7 +262,13 @@ export default {
                                         Sulamérica
                                     </option>
                                 </select>
+                                <span
+                                    v-if="form.errors.health_insurance"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.health_insurance }}</span
+                                >
                             </div>
+
                             <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Sexo</label>
                                 <select
@@ -193,15 +281,19 @@ export default {
                                     <option value="Masculino">Masculino</option>
                                     <option value="Feminino">Feminino</option>
                                 </select>
+                                <span
+                                    v-if="form.errors.biological_sex"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.biological_sex }}</span
+                                >
                             </div>
-                            <Link
-                                href="/create/new/patient"
-                                method="post"
-                                :data="this.form"
+
+                            <button
                                 class="col-span-5 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
+                                type="submit"
                             >
                                 Criar Paciente
-                            </Link>
+                            </button>
                         </div>
                     </form>
                 </div>

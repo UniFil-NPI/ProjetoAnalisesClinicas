@@ -1,11 +1,16 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3'
+
+const page = usePage()
+
+const isAdm = computed(() => page.props.auth.isAdm)
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -32,7 +37,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('user.index')" :active="route().current('user.index')">
+                                <NavLink :href="route('user.index')" :active="route().current('user.index')" v-if="isAdm">
                                     Usuários
                                 </NavLink>
                                 <NavLink :href="route('patient.index')" :active="route().current('patient.index')">
