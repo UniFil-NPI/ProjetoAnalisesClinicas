@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('exams', function (Blueprint $table) {
+            $table->id();
+            // $table->foreignId('patient_id')->constrained()->onDelete('cascade');
             $table->string('patient_name');
             $table->string('doctor_name');
             $table->string('lab');

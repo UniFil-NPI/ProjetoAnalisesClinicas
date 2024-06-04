@@ -49,8 +49,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function tests(): HasMany
-    {
-        return $this->hasMany(Exam::class);
-    }
+    // public function tests(): HasMany
+    // {
+    //     return $this->hasMany(Exam::class);
+    // }
 }
