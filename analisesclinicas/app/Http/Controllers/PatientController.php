@@ -13,22 +13,24 @@ use Inertia\Inertia;
 
 class PatientController extends Controller
 {
-     public function index()
+    public function index()
     {
 
-        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id' ,'patients.*', 'users.*')->get();
+        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->get();
 
         return Inertia::render('Patient/Index', ['patients' => $patients]);
     }
 
-    public function getCep($cep){
+    public function getCep($cep)
+    {
         $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
         $data = $response->json();
 
         return response()->json($data);
     }
 
-    public function create(){
+    public function create()
+    {
         return Inertia::render('Patient/Create');
     }
 
@@ -36,21 +38,21 @@ class PatientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'cpf' => 'required|cpf|formato_cpf',
+            'email' => 'required|email|unique:users,email',
+            'cpf' => 'required|cpf|formato_cpf|unique:users,cpf',
             'post_code' => 'required|formato_cep',
             'street' => 'required',
-            'phone_number' => 'required|celular_com_ddd',
+            'phone_number' => 'required',
             'building_number' => 'required',
             'neighborhood' => 'required',
             'city' => 'required',
-            'state' => 'required',
+            'state' => 'required|uf',
             'birth_date' => 'required',
             'health_insurance' => 'required',
             'biological_sex' => 'required',
         ]);
 
-        
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -77,32 +79,34 @@ class PatientController extends Controller
         return redirect()->route('patient.index');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
 
         $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
-        ->where('patients.id', $id)
-        ->select('patients.id as patient_id' ,'patients.*', 'users.*')->first();
+            ->where('patients.id', $id)
+            ->select('patients.id as patient_id', 'patients.*', 'users.*')->first();
 
         return Inertia::render('Patient/Edit', ['patient' => $patient]);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'cpf' => 'required|cpf|formato_cpf',
             'post_code' => 'required|formato_cep',
             'street' => 'required',
-            'phone_number' => 'required|celular_com_ddd',
+            'phone_number' => 'required',
             'building_number' => 'required',
             'neighborhood' => 'required',
             'city' => 'required',
-            'state' => 'required',
+            'state' => 'required|uf',
             'birth_date' => 'required',
             'health_insurance' => 'required',
             'biological_sex' => 'required',
         ]);
-        
+
         $patient = Patient::findOrFail($id);
 
         $user = User::where('id', $patient->user_id)->firstOrFail();
@@ -112,6 +116,7 @@ class PatientController extends Controller
             'email' => $request->email,
             'cpf' => $request->cpf,
             'password' => Hash::make(substr($request->cpf, 0, 4)),
+            'status' => $request->status,
         ]);
 
         $user_id = User::find($patient->user_id)->id;
@@ -132,5 +137,24 @@ class PatientController extends Controller
         ]);
 
         return redirect()->route('patient.index');
+    }
+
+    public function search(Request $request)
+    {
+        // dd($patients);
+
+        if ($request->search == '') {
+            return Patient::join('users', 'patients.user_id', '=', 'users.id')
+                    ->select('patients.id as patient_id', 'patients.*', 'users.*')
+                    ->orderBy('patient_id', 'desc')
+                    ->get();
+        }
+
+        return Patient::join('users', 'patients.user_id', '=', 'users.id')
+                ->select('patients.id as patient_id', 'patients.*', 'users.*')
+                ->where('users.cpf', $request->search)
+                ->orderBy('patient_id', 'desc')
+                ->get();
+        
     }
 }

@@ -38,7 +38,7 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink :href="route('user.index')" :active="route().current('user.index')" v-if="isAdm">
-                                    Usuários
+                                    Funcionários
                                 </NavLink>
                                 <NavLink :href="route('patient.index')" :active="route().current('patient.index')">
                                     Pacientes

@@ -2,6 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
+
 export default {
     components: {
         Head,
@@ -17,12 +18,18 @@ export default {
                 name: this.user.name,
                 email: this.user.email,
                 cpf: this.user.cpf,
+                role: this.user.roles[0].name,
+                status: this.user.status,
             }),
         };
     },
     methods: {
         save() {
             this.form.post("/user/update/" + this.user.id, this.form);
+        },
+
+        changeStatus() {
+            this.form.status = !this.form.status;
         },
     },
 };
@@ -46,8 +53,8 @@ export default {
                         Editar cadastro do funcionário
                     </h2>
                     <form @submit.prevent="save">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="col-span-1 flex flex-col gap-2">
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Nome Completo</label>
                                 <input
                                     type="text"
@@ -62,7 +69,7 @@ export default {
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="col-span-2 flex flex-col gap-2">
                                 <label for="email">Email</label>
                                 <input
                                     type="email"
@@ -77,13 +84,14 @@ export default {
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="col-span-2 flex flex-col gap-2">
                                 <label for="cpf">CPF</label>
                                 <input
                                     type="text"
                                     v-model="form.cpf"
                                     placeholder="CPF"
                                     class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                    v-mask-cpf
                                 />
                                 <span
                                     v-if="form.errors.cpf"
@@ -91,9 +99,69 @@ export default {
                                     >{{ form.errors.cpf }}</span
                                 >
                             </div>
+                            <div class="col-span-1 flex flex-col gap-2">
+                                <label for="name">Cargo</label>
+                                <select
+                                    v-model="form.role"
+                                    class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                >
+                                    <option selected disabled value="0">
+                                        Selecione
+                                    </option>
+                                    <option value="admin">admin</option>
+                                    <option value="recepcionist">
+                                        recepcionista
+                                    </option>
+                                    <option value="tecnico">técnico</option>
+                                </select>
+                                <span
+                                    v-if="form.errors.role"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.role }}</span
+                                >
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-2">
+                                <Label>Status</Label>
+                                <label
+                                    class="inline-flex items-center cursor-pointer"
+                                >
+                                    <input
+                                        v-if="user.status === true"
+                                        type="checkbox"
+                                        value=""
+                                        class="sr-only peer"
+                                        @click="
+                                            changeStatus()
+                                        "
+                                        checked
+                                    />
+                                    <input
+                                        v-if="user.status === false"
+                                        type="checkbox"
+                                        value=""
+                                        class="sr-only peer"
+                                        @click="
+                                            changeStatus()
+                                        "
+                                    />
+                                    <div
+                                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                    ></div>
+                                    <span
+                                        v-if="user.status === true"
+                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                        >Ativo</span
+                                    >
+                                    <span
+                                        v-if="user.status === false"
+                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                        >Inativo</span
+                                    >
+                                </label>
+                            </div>
                             <button
                                 type="submit"
-                                class="px-4 py-2 rounded-lg bg-primary text-white col-span-2 text-xl uppercase text-center font-semibold"
+                                class="px-4 py-2 rounded-lg bg-primary text-white col-span-4 text-xl uppercase text-center font-semibold"
                             >
                                 Salvar alterações
                             </button>

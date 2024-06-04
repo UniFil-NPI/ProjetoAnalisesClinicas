@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('cpf')->unique();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->boolean('status')->default(true);
             $table->string('password');
             $table->rememberToken();

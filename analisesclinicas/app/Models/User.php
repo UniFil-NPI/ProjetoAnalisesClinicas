@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status',
     ];
 
     /**
@@ -50,6 +51,6 @@ class User extends Authenticatable
 
     public function tests(): HasMany
     {
-        return $this->hasMany(Test::class);
+        return $this->hasMany(Exam::class);
     }
 }

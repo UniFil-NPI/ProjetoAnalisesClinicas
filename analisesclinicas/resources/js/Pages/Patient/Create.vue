@@ -14,7 +14,7 @@ export default {
                 name: "",
                 email: "",
                 cpf: "",
-                password: "",
+                phone_number: "",
                 post_code: "",
                 street: "",
                 building_number: "",
@@ -83,6 +83,7 @@ export default {
                                     v-model="form.cpf"
                                     placeholder="CPF"
                                     class="bg-neutral-200 border-none rounded-lg"
+                                    v-mask-cpf
                                 />
                                 <span
                                     v-if="form.errors.cpf"
@@ -107,11 +108,13 @@ export default {
                             </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
-                                <label for="name">Telefone</label>
+                                <label for="name">Celular</label>
                                 <input
                                     type="text"
                                     v-model="form.phone_number"
+                                    placeholder="Celular"
                                     class="bg-neutral-200 border-none rounded-lg"
+                                    v-mask-phone.br
                                 />
                                 <span
                                     v-if="form.errors.phone_number"
@@ -128,6 +131,7 @@ export default {
                                     v-on:input="getCep"
                                     placeholder="CEP"
                                     class="bg-neutral-200 border-none rounded-lg"
+                                    v-mask="'#####-###'"
                                 />
                                 <span
                                     v-if="form.errors.post_code"

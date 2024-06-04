@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
 
+    Route::post('/user/search', [UserController::class, 'search'])->name('user.search');
+
+
     //Patients Routes
 
     Route::get('/patients', [PatientController::class, 'index'])->name('patient.index');
@@ -53,6 +56,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/patient/edit/{id}', [PatientController::class, 'edit'])->name('patient.edit');
 
     Route::post('/patient/update/{id}', [PatientController::class, 'update'])->name('patient.update');
+
+    Route::post('/patient/search', [PatientController::class, 'search'])->name('patient.search');
+
 });
 
 require __DIR__.'/auth.php';

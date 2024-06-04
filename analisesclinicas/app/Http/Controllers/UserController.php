@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::all();
+        $users = User::with('roles')->orderBy('id', 'desc')->get();
 
         return Inertia::render('User/Index', ['users' => $users]);
     }
@@ -25,10 +26,11 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'cpf' => 'required|cpf',
+            'email' => 'required|email|unique:users,email',
+            'cpf' => 'required|cpf|unique:users,cpf',
             'role' => 'required'
         ]);
 
@@ -46,22 +48,39 @@ class UserController extends Controller
     public function edit($id)
     {
 
-        $user = User::findOrFail($id);
+        $user = User::with('roles')->findOrFail($id);
 
         return Inertia::render('User/Edit', ['user' => $user]);
     }
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'cpf' => 'required|cpf',
+            'role' => 'required'
+        ]);
 
-        User::where('id', $id)->update([
+        $user = User::findOrFail($id);
+        $user->syncRoles($request->role);
+
+        $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'cpf' => $request->cpf,
+            'status' => $request->status,
         ]);
 
 
         return redirect()->route('user.index');
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->search == '') {
+            return User::with('roles')->orderBy('id', 'desc')->get()->filter(fn ($user) => $user->hasRole(['admin', 'recepcionist', 'technician']));
+        }
+        return User::with('roles')->where("cpf", $request->search)->get();
     }
 }

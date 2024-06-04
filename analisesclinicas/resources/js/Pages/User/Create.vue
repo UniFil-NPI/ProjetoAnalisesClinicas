@@ -78,6 +78,7 @@ export default {
                                     v-model="form.cpf"
                                     placeholder="Seu CPF"
                                     class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                    v-mask-cpf
                                 />
                                 <span
                                     v-if="form.errors.cpf"

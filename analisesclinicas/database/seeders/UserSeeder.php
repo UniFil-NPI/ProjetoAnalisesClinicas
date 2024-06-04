@@ -17,13 +17,15 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         Role::create(['name' => 'admin']);
+        Role::create(['name' => 'recepcionist']);
+        Role::create(['name' => 'technician']);
         Role::create(['name' => 'patient']);
 
 
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'cpf' => '123456',
+            'cpf' => '618.837.920-29',
             'password' => Hash::make('admin123')
         ])->assignRole('admin');
 

@@ -28,6 +28,7 @@ export default {
                 birth_date: this.patient.birth_date,
                 health_insurance: this.patient.health_insurance,
                 biological_sex: this.patient.biological_sex,
+                status: this.patient.status,
             }),
         };
     },
@@ -44,6 +45,9 @@ export default {
             this.form.state = response.data.uf;
             this.form.street = response.data.logradouro;
             this.form.neighborhood = response.data.bairro;
+        },
+        changeStatus() {
+            this.form.status = !this.form.status;
         },
     },
 };
@@ -90,6 +94,7 @@ export default {
                                     v-model="form.cpf"
                                     placeholder="CPF"
                                     class="bg-neutral-200 border-none rounded-lg"
+                                    v-mask-cpf
                                 />
                                 <span
                                     v-if="form.errors.cpf"
@@ -103,7 +108,7 @@ export default {
                                 <input
                                     type="email"
                                     v-model="form.email"
-                                    placeholder="Email"
+                                    placeholder="exemplo@email.com"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -114,10 +119,11 @@ export default {
                             </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
-                                <label for="name">Telefone</label>
+                                <label for="name">Celular</label>
                                 <input
                                     type="text"
                                     v-model="form.phone_number"
+                                    placeholder="(xx) xxxxx-xxxx"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -133,7 +139,7 @@ export default {
                                     type="text"
                                     v-model="form.post_code"
                                     v-on:input="getCep"
-                                    placeholder="CEP"
+                                    placeholder="xxxxx-xxx"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -148,7 +154,7 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.street"
-                                    placeholder="Rua"
+                                    placeholder="Av JK"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -178,7 +184,7 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.secondary_address"
-                                    placeholder="Complemento"
+                                    placeholder="ex: apt, bloco"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                             </div>
@@ -233,7 +239,6 @@ export default {
                                 <input
                                     type="date"
                                     v-model="form.birth_date"
-                                    placeholder="Data de nascimento"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -272,7 +277,7 @@ export default {
                                     }}</span
                                 >
                             </div>
-                            
+
                             <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Sexo</label>
                                 <select
@@ -298,21 +303,35 @@ export default {
                                     class="inline-flex items-center cursor-pointer"
                                 >
                                     <input
+                                        v-if="patient.status === true"
                                         type="checkbox"
                                         value=""
                                         class="sr-only peer"
+                                        @click="
+                                            changeStatus()
+                                        "
+                                        checked
+                                    />
+                                    <input
+                                        v-if="patient.status === false"
+                                        type="checkbox"
+                                        value=""
+                                        class="sr-only peer"
+                                        @click="
+                                            changeStatus()
+                                        "
                                     />
                                     <div
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
                                     ></div>
                                     <span
-                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         v-if="patient.status === true"
+                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Ativo</span
                                     >
                                     <span
-                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         v-if="patient.status === false"
+                                        class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Inativo</span
                                     >
                                 </label>

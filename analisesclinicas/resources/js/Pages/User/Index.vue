@@ -3,18 +3,32 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 
 export default {
-    props: {
-        users: Object,
-    },
     components: {
         Head,
         AuthenticatedLayout,
         Link,
     },
+    data() {
+        return {
+            users: {},
+            search: '',
+
+        }
+    },
+    methods: {
+        research() {
+            axios.post('/user/search', {search : this.search}).then(response=>{
+                this.users = response.data;
+            });
+        }
+    },
+    created() {
+        this.research();
+    }
 };
 </script>
 <template>
-    <Head title="Usuários" />
+    <Head title="Funcionários" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -24,11 +38,6 @@ export default {
         </template>
 
         <div class="max-w-7xl mx-auto px-10 mt-10">
-            <label
-                for="search"
-                class="mb-2 text-sm font-medium text-gray-900 sr-only "
-                >Buscar</label
-            >
             <div class="relative">
                 <div
                     class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -53,11 +62,13 @@ export default {
                     type="search"
                     id="search"
                     class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                    placeholder="Buscar"
+                    placeholder="CPF do funcionário"
+                    v-model="search"
+                    v-mask-cpf
                     required
                 />
                 <button
-                    type="submit"
+                    v-on:click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
                 >
                     Buscar
@@ -70,7 +81,7 @@ export default {
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
-                            Gerenciamento de funcionário
+                            Gerenciamento de funcionários
                         </h2>
                         <Link
                             :href="route('user.create')"
@@ -87,6 +98,8 @@ export default {
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>CPF</th>
+                                <th>Cargo</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -100,6 +113,10 @@ export default {
                                 <td class="py-2">{{ user.name }}</td>
                                 <td class="py-2">{{ user.email }}</td>
                                 <td class="py-2">{{ user.cpf }}</td>
+                                <td class="py-2" v-if="user.roles[0].name == 'admin'">{{ 'Adm' }}</td>
+                                <td class="py-2" v-if="user.roles[0].name == 'technician'">{{ 'Técnico' }}</td>
+                                <td class="py-2" v-if="user.roles[0].name == 'recepcionist'">{{ 'Recepcionista' }}</td>
+                                <td class="py-2">{{ user.status ? 'ativo' : 'inativo' }}</td>
                                 <td class="py-2">
                                     <a
                                         :href="route('user.edit', user.id)"
