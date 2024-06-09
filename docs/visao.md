@@ -13,7 +13,7 @@ Este projeto se trata de um sistema de análise clínica, onde será colhido as 
 |        |        |
 | ------ | ------ |
 | O problema de | Ter que realizar cálculos no excel caso seja o exame de paternidade, transcrever as informações à mão para gerar o laudo e não ter um local de acesso ao documento. |
-| afeta | Os biomédicos e clientes que fazem exames. |
+| afeta | Os biomédicos e clientes que realizam exames. |
 | o impacto do qual é | Agilidade de produção e facilidade no acesso ao documento. |
 | uma solução bem-sucedida seria | Desenvolver um site que seja de fácil entendimento e conseguir gerar os documentos rapidamente. |
 

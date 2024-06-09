@@ -1,7 +1,5 @@
 # Documentação do projeto
 
-- [Cronograma](cronograma.md)
-
 - [Visão](visao.md)
 
 - [Pedidos do investidor](pedido_investidor.md)

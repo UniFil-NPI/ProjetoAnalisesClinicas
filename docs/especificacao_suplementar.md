@@ -145,7 +145,7 @@ O sistema deverá conter a logo da UniFil e seguir um padrão de cores descrito 
 
 ### Liguagem de Programação
 
-O sistema será desenvolvido com [Vue.js](https://vuejs.org/) utilizando a UI library [daisyUI](https://daisyui.com/).
+O sistema será desenvolvido com [Vue.js](https://vuejs.org/) e [Tailwind CSS](https://tailwindcss.com/).
 
 ## Documentação do Usuário On-line e Requisitos do Sistema de Ajuda
 
