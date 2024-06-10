@@ -6,38 +6,17 @@
 sequenceDiagram
 
 actor Funcionario
+Funcionario->>+UserController: Route::Post($uri, $action)
 
-activate Funcionario
-Funcionario ->> Register.vue: acessa
-activate Register.vue
-Register.vue ->> /register: POST
-deactivate Register.vue
-activate /register
-/register ->> RegisteredUserController: store($request)
-deactivate /register
-activate RegisteredUserController
-RegisteredUserController ->> UserModel: registra o usuário no banco
-deactivate RegisteredUserController
+UserController->>+DB: store(Request $request)
 
-alt dados válidos
-    activate UserModel
-    UserModel --) RegisteredUserController: OK
-    activate Dashboard.vue
-    deactivate UserModel
-    RegisteredUserController ->> Dashboard.vue: redirect()
-    deactivate Dashboard.vue
-else dados inválidos
-    activate UserModel
-    UserModel --) RegisteredUserController: Usuário ja cadastrado
-    deactivate UserModel
-    activate Register.vue
-    RegisteredUserController ->> Register.vue: redirect()
-    deactivate Register.vue
+DB-->>-UserController: response
 
+alt success response
+    UserController-->>Funcionario: Redireciona para a tela User/Index.vue
+else error response
+    UserController-->>-Funcionario: Mostra erro na tela
 end
-
-deactivate Funcionario
-
 
 ```
 
@@ -46,39 +25,18 @@ deactivate Funcionario
 ```mermaid
 sequenceDiagram
 
-actor Funcionario
+actor Funcionario  
 
-activate Funcionario
-
-Funcionario ->> Search.vue: acessa
-
-activate Search.vue
-Search.vue ->> /search: Post 
-deactivate Search.vue
-activate /search
-/search ->> SearchController: search($request)
-deactivate /search
-activate SearchController
-SearchController ->> UserModel: busca o nome no banco
-deactivate SearchController
-
-alt achou 
-activate UserModel
-UserModel --) SearchController: OK
-deactivate UserModel
-activate Edit.vue
-SearchController ->> Edit.vue: redirect()
-deactivate Edit.vue
-else não achou
-activate UserModel
-UserModel --) SearchController: Usuário não encontrado
-deactivate UserModel
-activate Search.vue
-SearchController ->> Search.vue: redirect()
-deactivate Search.vue
+Funcionario->>+UserController: Route::get($uri, $action)
+alt $request preenchido
+UserController->>+DB: search(Request $request)
+DB-->>-UserController: retorna funcionário buscado
+else $request vazio
+UserController->>+DB: search(Request $request)
+DB-->>-UserController: retorna todos os funcionários
 end
+UserController-->>-Funcionario: Mostra na tela
 
-deactivate Funcionario
 ```
 
 ## Atualizar Cadastro
@@ -88,36 +46,14 @@ sequenceDiagram
 
 actor Funcionario
 
-activate Funcionario
-Funcionario ->> Edit.vue: acessa
-activate Edit.vue
-Edit.vue ->> /edit: POST
-deactivate Edit.vue
-activate /edit
-/edit ->> ProfileController: update($request)
-deactivate /edit
-activate ProfileController
-ProfileController ->> UserModel: Salva a atualização no banco
-deactivate ProfileController
-
-alt dados válidos
-    activate UserModel
-    UserModel --) ProfileController: OK
-    activate Dashboard.vue
-    deactivate UserModel
-    ProfileController ->> Dashboard.vue: redirect()
-    deactivate Dashboard.vue
-else dados inválidos
-    activate UserModel
-    UserModel --) ProfileController: Dados inválidos
-    deactivate UserModel
-    activate Edit.vue
-    ProfileController ->> Edit.vue: redirect()
-    deactivate Edit.vue
-
+Funcionario->>+UserController: Route::post($uri, $action)
+UserController->>+DB: update(Request $request, $id)
+DB-->>-UserController: response
+alt success response
+    UserController-->>Funcionario: Redireciona para a tela User/Index.vue
+else error response
+    UserController-->>-Funcionario: Mostra erro na tela
 end
-
-deactivate Funcionario
 
 ```
 
