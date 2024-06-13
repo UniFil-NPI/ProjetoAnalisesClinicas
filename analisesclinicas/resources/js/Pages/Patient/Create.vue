@@ -234,8 +234,8 @@ export default {
                                 <label for="name">Data de Nascimento</label>
                                 <input
                                     type="date"
+                                    placeholder="dd-mm-yyyy"
                                     v-model="form.birth_date"
-                                    placeholder="Data de nascimento"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -274,7 +274,7 @@ export default {
                             </div>
 
                             <div class="col-span-1 flex flex-col gap-2">
-                                <label for="name">Sexo</label>
+                                <label for="name">Sexo biológico</label>
                                 <select
                                     v-model="form.biological_sex"
                                     class="col-span-1 bg-neutral-200 border-none rounded-lg"

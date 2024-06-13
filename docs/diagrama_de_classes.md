@@ -6,7 +6,7 @@ title: Sistema de Análises Clínicas
 ---
 classDiagram
 
-direction RL
+direction LR
 
 User "1" *-- "0..1" Patient : is
 

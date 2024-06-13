@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PatientController extends Controller
@@ -52,31 +53,37 @@ class PatientController extends Controller
             'biological_sex' => 'required',
         ]);
 
+        try {
+            DB::beginTransaction();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cpf' => $request->cpf,
-            'password' => Hash::make(substr($request->cpf, 0, 4))
-        ])->assignRole('patient');
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'cpf' => $request->cpf,
+                'password' => Hash::make(substr($request->cpf, 0, 4))
+            ])->assignRole('patient');
+    
+            Patient::create([
+                'user_id' => $user->id,
+                'post_code' => $request->post_code,
+                'street' => $request->street,
+                'phone_number' => $request->phone_number,
+                'building_number' => $request->building_number,
+                'secondary_address' => $request->secondary_address,
+                'neighborhood' => $request->neighborhood,
+                'city' => $request->city,
+                'state' => $request->state,
+                'birth_date' => $request->birth_date,
+                'health_insurance' => $request->health_insurance,
+                'biological_sex' => $request->biological_sex,
+            ]);
+            DB::commit();
+            return redirect()->route('patient.index');
+        } catch(Exception $e) {
+            DB::rollBack();
+            return redirect()->route('patient.create');
+        }
 
-        Patient::create([
-            'user_id' => $user->id,
-            'post_code' => $request->post_code,
-            'street' => $request->street,
-            'phone_number' => $request->phone_number,
-            'building_number' => $request->building_number,
-            'secondary_address' => $request->secondary_address,
-            'neighborhood' => $request->neighborhood,
-            'city' => $request->city,
-            'state' => $request->state,
-            'birth_date' => $request->birth_date,
-            'health_insurance' => $request->health_insurance,
-            'biological_sex' => $request->biological_sex,
-        ]);
-
-
-        return redirect()->route('patient.index');
     }
 
     public function edit($id)

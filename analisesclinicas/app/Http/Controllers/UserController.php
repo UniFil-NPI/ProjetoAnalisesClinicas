@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -34,15 +35,27 @@ class UserController extends Controller
             'role' => 'required'
         ]);
 
+        try {
+            DB::beginTransaction();
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cpf' => $request->cpf,
-            'password' => Hash::make(substr($request->cpf, 0, 4))
-        ])->assignRole($request->role);
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'cpf' => $request->cpf,
+                'password' => Hash::make(substr($request->cpf, 0, 4))
+            ])->assignRole($request->role);
 
-        return to_route('user.index');
+            DB::commit();
+
+            return to_route('user.index');
+        } catch(Exception $e) {
+            DB::rollBack();
+            return to_route('user.create');
+        }
+
+        
+
+
     }
 
     public function edit($id)
