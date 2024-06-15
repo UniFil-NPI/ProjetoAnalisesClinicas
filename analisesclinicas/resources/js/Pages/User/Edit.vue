@@ -112,7 +112,7 @@ export default {
                                     <option value="recepcionist">
                                         recepcionista
                                     </option>
-                                    <option value="tecnico">técnico</option>
+                                    <option value="technician">técnico</option>
                                 </select>
                                 <span
                                     v-if="form.errors.role"
