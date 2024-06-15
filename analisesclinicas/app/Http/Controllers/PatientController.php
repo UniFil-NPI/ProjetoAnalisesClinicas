@@ -49,12 +49,13 @@ class PatientController extends Controller
             'city' => 'required',
             'state' => 'required|uf',
             'birth_date' => 'required',
-            'health_insurance' => 'required',
-            'biological_sex' => 'required',
+            'health_insurance' => 'required|not_in:0',
+            'biological_sex' => 'required|not_in:0',
         ]);
 
         try {
             DB::beginTransaction();
+            
 
             $user = User::create([
                 'name' => $request->name,

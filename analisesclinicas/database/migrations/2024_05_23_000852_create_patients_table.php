@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('birth_date');
             $table->string('health_insurance')->nullable();
             $table->string('biological_sex');
+            $table->timestamps();
         });
     }
 

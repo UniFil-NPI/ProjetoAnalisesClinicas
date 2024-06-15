@@ -32,7 +32,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'cpf' => 'required|cpf|unique:users,cpf',
-            'role' => 'required'
+            'role' => 'required|not_in:0'
         ]);
 
         try {

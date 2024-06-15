@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('patient_age');
             $table->string('exam_date');
             $table->date('report_issuance_date');
+            $table->timestamps();
         });
     }
 
