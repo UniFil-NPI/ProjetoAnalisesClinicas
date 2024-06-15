@@ -56,12 +56,13 @@ class PatientController extends Controller
         try {
             DB::beginTransaction();
             
+            $cpfForPassword = $this->formatcpf($request->cpf);
 
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'cpf' => $request->cpf,
-                'password' => Hash::make(substr($request->cpf, 0, 4))
+                'password' => Hash::make(substr($cpfForPassword, 0, 3))
             ])->assignRole('patient');
     
             Patient::create([
@@ -85,6 +86,12 @@ class PatientController extends Controller
             return redirect()->route('patient.create');
         }
 
+    }
+
+    private function formatcpf($cpfRequest) {
+        $formatedCpf = str_replace('.', '', $cpfRequest);
+        $formatedCpf = str_replace('-', '', $formatedCpf);
+        return $formatedCpf;
     }
 
     public function edit($id)

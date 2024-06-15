@@ -35,6 +35,8 @@ class UserController extends Controller
             'role' => 'required|not_in:0'
         ]);
 
+        $cpfForPassword = $this->formatcpf($request->cpf);
+
         try {
             DB::beginTransaction();
 
@@ -42,7 +44,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'cpf' => $request->cpf,
-                'password' => Hash::make(substr($request->cpf, 0, 4))
+                'password' => Hash::make(substr($cpfForPassword, 0, 4))
             ])->assignRole($request->role);
 
             DB::commit();
@@ -56,6 +58,12 @@ class UserController extends Controller
         
 
 
+    }
+
+    private function formatcpf($cpfRequest) {
+        $formatedCpf = str_replace('.', '', $cpfRequest);
+        $formatedCpf = str_replace('-', '', $formatedCpf);
+        return $formatedCpf;
     }
 
     public function edit($id)
