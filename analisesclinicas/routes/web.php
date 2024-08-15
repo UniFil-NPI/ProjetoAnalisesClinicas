@@ -3,6 +3,7 @@
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExamController;
 use App\Models\Patient;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/patient/update/{id}', [PatientController::class, 'update'])->name('patient.update');
 
     Route::post('/patient/search', [PatientController::class, 'search'])->name('patient.search');
+
+    //Exam Routes
+
+    Route::get('/exams', [ExamController::class, 'index'])->name('exam.index');
+
+    Route::get('/new/exam', [ExamController::class, 'create'])->name('exam.create');
+
+    Route::post('/create/new/exam', [ExamController::class, 'store'])->name('exam.store');
+
 
 });
 

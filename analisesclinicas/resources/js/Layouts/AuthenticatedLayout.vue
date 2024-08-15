@@ -6,11 +6,13 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
-import { usePage } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3';
 
-const page = usePage()
+const page = usePage();
 
-const isAdm = computed(() => page.props.auth.isAdm)
+const isAdm = computed(() => page.props.auth.isAdm);
+
+const isRecepcionist = computed(() => page.props.auth.isRecepcionist);
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -40,8 +42,11 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('user.index')" :active="route().current('user.index')" v-if="isAdm">
                                     Funcionários
                                 </NavLink>
-                                <NavLink :href="route('patient.index')" :active="route().current('patient.index')">
+                                <NavLink :href="route('patient.index')" :active="route().current('patient.index')" v-if="isAdm || isRecepcionist">
                                     Pacientes
+                                </NavLink>
+                                <NavLink :href="route('exam.index')" :active="route().current('exam.index')" v-if="isRecepcionist == false">
+                                    Exames
                                 </NavLink>
                             </div>
                         </div>

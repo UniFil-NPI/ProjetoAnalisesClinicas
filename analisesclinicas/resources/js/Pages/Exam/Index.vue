@@ -10,31 +10,20 @@ export default {
     },
     data() {
         return {
-            patients: {},
-            search: '',
-
-        }
+            exams: {},
+        };
     },
     methods: {
-        research() {
-            axios.post(route('patient.search'), {search : this.search}).then(response=>{
-                this.patients = response.data;
-                console.log(this.patients);
-            });
-        },
     },
-    created() {
-        this.research();
-    }
 };
 </script>
 <template>
-    <Head title="Pacientes" />
+    <Head title="Exames" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pacientes
+                Exames
             </h2>
         </template>
 
@@ -82,46 +71,38 @@ export default {
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
-                            Gerenciamento de Pacientes
+                            Gerenciamento de Exames
                         </h2>
                         <Link
-                            :href="route('patient.create')"
+                            :href="route('exam.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
-                            Novo Paciente
+                            Novo exame
                         </Link>
                     </div>
+                    
 
-                    <table class="mt-10" v-show="Object.keys(patients).length != 0">
+                    <table class="mt-10" v-show="Object.keys(exams).length != 0">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Status</th>
-                                <th></th>
+                                <th>Nome do paciente</th>
+                                <th>Data do exame</th>
+                                <th>Descrição do exame</th>
+                                <th>Laudo</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(patient, i) in patients"
-                                :key="i"
                                 class="text-center"
                             >
-                                <td class="py-2">{{ patient.patient_id }}</td>
-                                <td class="py-2">{{ patient.name }}</td>
-                                <td class="py-2">{{ patient.cpf }}</td>
+                                <td class="py-2"></td>
+                                <td class="py-2"></td>
+                                <td class="py-2"></td>
                                 <td class="py-2">
-                                    {{ patient.status ? "ativo" : "inativo" }}
+                                    
                                 </td>
                                 <td class="py-2">
-                                    <Link
-                                        v-if="patient"
-                                        :href="route('patient.edit', patient.patient_id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
-                                    >
-                                        Editar
-                                    </Link>
                                 </td>
                             </tr>
                         </tbody>
