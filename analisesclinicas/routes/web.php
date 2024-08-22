@@ -68,6 +68,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/create/new/exam', [ExamController::class, 'store'])->name('exam.store');
 
+    Route::post('/exam/search', [ExamController::class, 'search'])->name('exam.search');
+
+    Route::get('/exam/edit/{id}', [ExamController::class, 'edit'])->name('exam.edit');
+
+    Route::post('/exam/update/{id}', [ExamController::class, 'update'])->name('exam.update');
+
 
 });
 

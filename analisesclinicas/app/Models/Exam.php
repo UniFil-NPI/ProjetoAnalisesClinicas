@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Exam extends Model
@@ -12,18 +13,15 @@ class Exam extends Model
 
     protected $fillable = [
         'patient_id',
-        'patient_name',
         'doctor_name',
         'lab',
         'health_insurance',
-        'patient_age',
         'exam_date',
-        'report_issuance_date'
-
+        'description'
     ];
 
-    public function patient() : HasOne
+    public function patient() : BelongsTo
     {
-        return $this->hasOne(Patient::class);
+        return $this->belongsTo(Patient::class);
     }
 }

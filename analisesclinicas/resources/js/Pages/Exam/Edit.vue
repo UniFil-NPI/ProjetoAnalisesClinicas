@@ -2,8 +2,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-
-
 export default {
     components: {
         Head,
@@ -11,45 +9,31 @@ export default {
         Link,
     },
     props: {
-        error:{
-            type: String,
-            default: null,
-        }
+        exam: Object,
     },
     data() {
         return {
             form: useForm({
-                cpf: "",
-                doctor_name: "",
-                lab: "",
-                health_insurance: 0,
-                exam_date: "",
-                description: "",
+                doctor_name: this.exam.doctor_name,
+                lab: this.exam.lab,
+                exam_date: this.exam.exam_date,
+                description: this.exam.description,
+                health_insurance: this.exam.health_insurance,
             }),
-            showError:true,
         };
-    },
-    watch:{
-        error(newValue){
-            if(newValue == null){
-                this.showError = false;
-
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        }
     },
     methods: {
         save() {
-            this.form.post('/create/new/exam');
+            this.form.post(
+                "/exam/update/" + this.exam.id,
+                this.form
+            );
         },
     },
 };
 </script>
-
 <template>
-    <Head title="Novo Paciente" />
+    <Head title="Exames" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -61,33 +45,19 @@ export default {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-8 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
                 >
-                    <h2 class="text-2xl font-bold">Novo Exame</h2>
+                    <h2 class="text-2xl font-bold">
+                        Editar exame do paciente
+                    </h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-                            <div class="col-span-2 flex flex-col gap-2">
-                                <label for="cpf">Paciente</label>
-
-                                <input
-                                    type="text"
-                                    v-model="form.cpf"
-                                    class="bg-neutral-200 border-none rounded-lg"
-                                    v-mask-cpf
-                                />
-
-                                <span
-                                    v-if="form.errors.cpf"
-                                    class="text-sm text-red-600"
-                                    >{{ form.errors.cpf }}</span
-                                >
-                            </div>
-
                             <div class="col-span-3 flex flex-col gap-2">
                                 <label for="name">Nome do médico</label>
                                 <input
                                     type="text"
                                     v-model="form.doctor_name"
+                                    placeholder="Nome"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -111,7 +81,7 @@ export default {
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Convênio</label>
                                 <select
                                     v-model="form.health_insurance"
@@ -135,7 +105,9 @@ export default {
                                 <span
                                     v-if="form.errors.health_insurance"
                                     class="text-sm text-red-600"
-                                    >{{ form.errors.health_insurance }}</span
+                                    >{{
+                                        form.errors.name.health_insurance
+                                    }}</span
                                 >
                             </div>
 
@@ -162,10 +134,10 @@ export default {
                             </div>
 
                             <button
-                                class="col-span-5 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
                                 type="submit"
+                                class="px-4 py-2 rounded-lg bg-primary text-white col-span-5 text-xl uppercase text-center font-semibold"
                             >
-                                Criar Exame
+                                Salvar alterações
                             </button>
                         </div>
                     </form>
@@ -173,9 +145,4 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
-
-    <div v-if="error && showError" class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0">
-        {{ error }}
-    </div>
-
 </template>

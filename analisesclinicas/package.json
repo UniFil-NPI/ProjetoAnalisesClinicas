@@ -18,6 +18,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "@devindex/vue-mask": "^2.0.3"
+        "@devindex/vue-mask": "^2.0.3",
+        "primevue": "^4.0.4"
     }
 }
