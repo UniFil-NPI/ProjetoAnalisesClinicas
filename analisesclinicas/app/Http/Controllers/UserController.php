@@ -55,9 +55,6 @@ class UserController extends Controller
             return to_route('user.create');
         }
 
-        
-
-
     }
 
     private function formatcpf($cpfRequest) {

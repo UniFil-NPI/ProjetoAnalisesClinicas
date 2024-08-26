@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-            $table->string('patient_name');
+            $table->foreignId('patient_id')->constrained();
             $table->string('doctor_name');
             $table->string('lab');
             $table->string('health_insurance');
-            $table->date('patient_age');
-            $table->string('exam_date');
-            $table->date('report_issuance_date');
+            $table->dateTime('exam_date');
+            $table->longText('description');
             $table->timestamps();
         });
     }
