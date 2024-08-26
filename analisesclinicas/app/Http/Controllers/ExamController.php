@@ -104,6 +104,6 @@ class ExamController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('patient.index');
+        return redirect()->route('exam.index');
     }
 }
