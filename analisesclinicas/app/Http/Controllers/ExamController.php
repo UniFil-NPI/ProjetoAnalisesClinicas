@@ -21,7 +21,7 @@ class ExamController extends Controller
         return Inertia::render('Exam/Index', ['isAdminOrRecepcionist' => $auth]);
     }
 
-    public function create(Request $request = null)
+    public function create()
     {
         return Inertia::render('Exam/Create');
     }
@@ -53,9 +53,7 @@ class ExamController extends Controller
                 
             } catch(Exception $e) {
                 return Inertia::render('Exam/Create', ["error" => "Paciente não encontrado"]);
-            }
-            
-        return redirect()->route('exam.create')->with('error', 'Paciente não encontrado');
+            }            
     }
 
     public function search(Request $request)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -73,6 +74,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/exam/edit/{id}', [ExamController::class, 'edit'])->name('exam.edit');
 
     Route::post('/exam/update/{id}', [ExamController::class, 'update'])->name('exam.update');
+
+    //Doctor Routes
+
+    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctor.index');
+
+    Route::get('/new/doctor', [DoctorController::class, 'create'])->name('doctor.create');
+
+    Route::post('/create/new/doctor', [DoctorController::class, 'store'])->name('doctor.store');
+
+    Route::post('/doctor/search', [DoctorController::class, 'search'])->name('doctor.search');
+
+    Route::get('/doctor/edit/{id}', [DoctorController::class, 'edit'])->name('doctor.edit');
+
+    Route::post('/doctor/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
+
+
 
 
 });

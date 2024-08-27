@@ -2,7 +2,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-
 export default {
     components: {
         Head,
@@ -11,6 +10,10 @@ export default {
     },
     props: {
         user: Object,
+        error: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -21,7 +24,19 @@ export default {
                 role: this.user.roles[0].name,
                 status: this.user.status,
             }),
+            showError: true,
         };
+    },
+    watch: {
+        error(newValue) {
+            if (newValue == null) {
+                this.showError = false;
+
+                setTimeout(() => {
+                    this.showError = true;
+                }, 2000);
+            }
+        },
     },
     methods: {
         save() {
@@ -130,9 +145,7 @@ export default {
                                         type="checkbox"
                                         value=""
                                         class="sr-only peer"
-                                        @click="
-                                            changeStatus()
-                                        "
+                                        @click="changeStatus()"
                                         checked
                                     />
                                     <input
@@ -140,9 +153,7 @@ export default {
                                         type="checkbox"
                                         value=""
                                         class="sr-only peer"
-                                        @click="
-                                            changeStatus()
-                                        "
+                                        @click="changeStatus()"
                                     />
                                     <div
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
@@ -171,4 +182,11 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+
+    <div
+        v-if="error && showError"
+        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ error }}
+    </div>
 </template>
