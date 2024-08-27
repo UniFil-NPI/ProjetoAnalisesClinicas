@@ -117,7 +117,7 @@ class PatientController extends Controller
             'neighborhood' => 'required',
             'city' => 'required',
             'state' => 'required|uf',
-            'birth_date' => 'required|before_or_equal:',
+            'birth_date' => 'required',
             'health_insurance' => 'required',
             'biological_sex' => 'required',
         ]);
