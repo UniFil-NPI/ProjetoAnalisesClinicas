@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: gerenciar_paciente </br> Versão 1.1
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC001_gerenciar_paciente </br> Versão 1.1
 
 ## Histórico da Revisão
 
@@ -6,6 +6,7 @@
 | ---- | ------ | --------- | ----- |
 | 30/04/2024 | 1.0 | Criação do documento | Guilherme Rafael Faraco Vieira |
 | 10/05/2024 | 1.1 | Documento preenchido | Guilherme Rafael Faraco Vieira |
+| 27/08/2024 | 1.2 | Atualizações | Guilherme Rafael Faraco Vieira |
 
 ## Índice
 
@@ -37,11 +38,11 @@
 
 ## Especificação de Caso de Uso: UC001 - gerenciar_usuario
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: gerenciar_usuario.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC001_gerenciar_usuario.
 
 ## Breve Descrição
 
-O caso de uso gerenciar_usuario engloba as funcionalidades *create*, *read* e *update*. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin* ou a *role receptionist*.
+O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* e *delete*. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin* ou a *role receptionist*.
 
 ## Fluxo Básico de Eventos
 
@@ -65,9 +66,15 @@ O caso de uso gerenciar_usuario engloba as funcionalidades *create*, *read* e *u
 
 - **Atualizar Cadastro do Usuário**
 
-1. Após fazer a busca do paciente desejado haverá a possibilidade de alterar os dados na tabela que está mostrando os dados;
+1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados na tabela que está mostrando o usuário;
 
 2. Depois de feita a alteração, deve ser clicado o botão salvar.
+
+- **Deletar Cadastro do Usuário**
+
+1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados na tabela que está mostrando o usuário;
+
+2. Na página de edição será encontrado um botão para desativar o usuário, esse será o *delete*.
 
 ## Fluxos Alternativos
 
@@ -91,17 +98,17 @@ O caso de uso gerenciar_usuario engloba as funcionalidades *create*, *read* e *u
 
 ## Cenários Chave
 
-- UC001: gerenciar_usuario
+- UC001_gerenciar_usuario
 
-- UC002: gerenciar_pedido_do_exame
+- UC002_gerenciar_pedido_do_exame
 
-- UC003: consultar_exames
+- UC003_gerenciar_medicos
 
-- UC004: gerenciar_laudo
+- UC004_gerenciar_laudo
 
-- UC005: consultar_dados_do_aparelho
+- UC005_consultar_dados_do_aparelho
 
-- UC006: inserir_dados_teste_paternidade
+- UC006_inserir_dados_teste_paternidade
 
 ## Condições Prévias
 

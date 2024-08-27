@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: consultar_exames </br> Versão 1.0
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC003_gerenciar_medico </br> Versão 1.0
 
 ## Histórico da Revisão
 
@@ -52,7 +52,7 @@
 
 ## Especificação de Caso de Uso: UC003 - consultar_exames
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: consultar_exames.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC003_gerenciar_medico.
 
 ## Breve Descrição
 

@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: gerenciar_pedido_do_exame </br> Versão 1.0
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame </br> Versão 1.0
 
 ## Histórico da Revisão
 
@@ -50,13 +50,13 @@
 
 10. [Informações Adicionais](#informações-adicionais)
 
-## Especificação de Caso de Uso: UC002 - gerenciar_pedido_do_exame
+## Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: gerenciar_pedido_do_exame.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC002_gerenciar_pedido_do_exame.
 
 ## Breve Descrição
 
-[A descrição apresenta resumidamente a função e o objetivo do caso de uso. Um único parágrafo será suficiente para esta descrição.]
+O UC002_gerenciar_pedido_do_exame engloba as funcionalidades *create*, *read* e *update*. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin* ou a *role recepcionist* ou a *role patient* ou a *role biomedic*.
 
 ## Fluxo Básico de Eventos
 

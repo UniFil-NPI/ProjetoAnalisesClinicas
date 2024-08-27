@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/vue3";
 
 export default {
     props: {
-        isAdmin:{
+        isAdminOrRecepcionist:{
             type: Boolean,
             default: null,
         }
@@ -44,7 +44,7 @@ export default {
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto px-10 mt-10" v-if="isAdmin">
+        <div class="max-w-7xl mx-auto px-10 mt-10" v-if="isAdminOrRecepcionist">
             <div class="relative">
                 <div
                     class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -90,7 +90,7 @@ export default {
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Exames
                         </h2>
-                        <Link v-if="isAdmin"
+                        <Link v-if="isAdminOrRecepcionist"
                             :href="route('exam.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >

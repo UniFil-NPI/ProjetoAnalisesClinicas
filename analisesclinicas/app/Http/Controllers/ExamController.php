@@ -18,7 +18,7 @@ class ExamController extends Controller
     {
         $auth = Auth::user()->hasRole(['admin', 'recepcionist']);
 
-        return Inertia::render('Exam/Index', ['isAdmin' => $auth]);
+        return Inertia::render('Exam/Index', ['isAdminOrRecepcionist' => $auth]);
     }
 
     public function create(Request $request = null)
