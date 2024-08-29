@@ -18,8 +18,8 @@ export default {
     data() {
         return {
             form: useForm({
-                doctor_name: this.doctor.doctor_name,
-                CRM: this.doctor.CRM,
+                name: this.doctor.name,
+                crm: this.doctor.crm,
             }),
             showError: true,
         };
@@ -66,14 +66,14 @@ export default {
                                 <label for="name">Nome do médico</label>
                                 <input
                                     type="text"
-                                    v-model="form.doctor_name"
+                                    v-model="form.name"
                                     placeholder="Nome"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
-                                    v-if="form.errors.doctor_name"
+                                    v-if="form.errors.name"
                                     class="text-sm text-red-600"
-                                    >{{ form.errors.doctor_name }}</span
+                                    >{{ form.errors.name }}</span
                                 >
                             </div>
 
@@ -81,13 +81,13 @@ export default {
                                 <label for="name">CRM</label>
                                 <input
                                     type="text"
-                                    v-model="form.CRM"
+                                    v-model="form.crm"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
-                                    v-if="form.errors.CRM"
+                                    v-if="form.errors.crm"
                                     class="text-sm text-red-600"
-                                    >{{ form.errors.CRM }}</span
+                                    >{{ form.errors.crm }}</span
                                 >
                             </div>
 

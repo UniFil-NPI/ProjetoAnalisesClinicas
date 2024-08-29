@@ -103,6 +103,7 @@ export default {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
+                                <th>Nome do médico</th>
                                 <th>Data do exame</th>
                                 <th>Descrição do exame</th>
                                 <th>Laudo</th>
@@ -116,7 +117,8 @@ export default {
                                 :key="exam.id"
                             >
                                 <td class="py-2">{{ exam.id }}</td>
-                                <td class="py-2">{{ exam.name }}</td>
+                                <td class="py-2">{{ exam.patient_name }}</td>
+                                <td class="py-2">{{ exam.doctor_name }}</td>
                                 <td class="py-2">{{ new Date(exam.exam_date).toLocaleDateString() }}</td>
                                 <td class="py-2 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
@@ -132,7 +134,7 @@ export default {
                                 </td>
                                 <td class="py-2">
                                     <Link
-                                        v-if="exam"
+                                        v-if="exam && isAdminOrRecepcionist"
                                         :href="route('exam.edit', exam.id)"
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >

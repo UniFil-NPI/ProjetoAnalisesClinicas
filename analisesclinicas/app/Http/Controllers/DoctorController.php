@@ -24,14 +24,14 @@ class DoctorController extends Controller
     {
 
         $request->validate([
-            'doctor_name' => 'required',
-            'CRM' => 'required|unique:doctors,CRM',
+            'name' => 'required',
+            'crm' => 'required|unique:doctors,crm',
         ]);
         
             try {
                 Doctor::create([
-                    'doctor_name' => strtoupper($request->doctor_name),
-                    'CRM' => $request->CRM,
+                    'name' => $request->name,
+                    'crm' => $request->crm,
                 ]);
 
                 return redirect()->route('doctor.index');
@@ -47,10 +47,10 @@ class DoctorController extends Controller
            return Doctor::select('doctors.*')->orderBy('id', 'desc')->get();
         }
 
-        $search = strtoupper($request->search);
+        $search = strtolower($request->search);
 
         $result = Doctor::select('doctors.*')
-                ->where('doctors.doctor_name', $search)->get();
+                ->whereRaw('LOWER(doctors.name) LIKE ?', '%'.$search.'%')->orderBy('id', 'desc')->get();
 
         return $result;
     }
@@ -66,13 +66,13 @@ class DoctorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'doctor_name' => 'required',
-            'CRM' => 'required',
+            'name' => 'required',
+            'crm' => 'required',
         ]);
         try{
             Doctor::find($id)->update([
-                'doctor_name' => $request->doctor_name,
-                'CRM' => $request->CRM,
+                'name' => $request->name,
+                'crm' => $request->crm,
             ]);
             return redirect()->route('doctor.index');
         } catch (Exception $e) {

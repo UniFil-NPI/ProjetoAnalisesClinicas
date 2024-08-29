@@ -108,9 +108,9 @@ export default {
                                 :key="doctor.id"
                             >
                                 <td class="py-2">{{ doctor.id }}</td>
-                                <td class="py-2">{{ doctor.doctor_name }}</td>
+                                <td class="py-2">{{ doctor.name }}</td>
                                 <td class="py-2">
-                                    {{ doctor.CRM }}
+                                    {{ doctor.crm }}
                                 </td>
                                 <td class="py-2">
                                     <Link

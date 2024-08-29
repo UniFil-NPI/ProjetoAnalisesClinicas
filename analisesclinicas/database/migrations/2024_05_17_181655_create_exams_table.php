@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained();
-            $table->string('doctor_name');
+            $table->foreignId('doctor_id')->constrained();
             $table->string('lab');
             $table->string('health_insurance');
             $table->dateTime('exam_date');
