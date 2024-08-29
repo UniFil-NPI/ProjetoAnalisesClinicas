@@ -45,6 +45,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('patient.index')" :active="route().current('patient.index')" v-if="isAdm || isRecepcionist">
                                     Pacientes
                                 </NavLink>
+                                <NavLink :href="route('doctor.index')" :active="route().current('doctor.index')" v-if="isAdm || isRecepcionist">
+                                    Médicos
+                                </NavLink>
                                 <NavLink :href="route('exam.index')" :active="route().current('exam.index')" v-if="isRecepcionist == false">
                                     Exames
                                 </NavLink>

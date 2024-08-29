@@ -10,6 +10,10 @@ export default {
     },
     props: {
         patient: Object,
+        error: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -30,7 +34,19 @@ export default {
                 biological_sex: this.patient.biological_sex,
                 status: this.patient.status,
             }),
+            showError: true,
         };
+    },
+    watch: {
+        error(newValue) {
+            if (newValue == null) {
+                this.showError = false;
+
+                setTimeout(() => {
+                    this.showError = true;
+                }, 2000);
+            }
+        },
     },
     methods: {
         save() {
@@ -77,7 +93,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.name"
-                                    placeholder="Nome"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -92,7 +107,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.cpf"
-                                    placeholder="CPF"
                                     class="bg-neutral-200 border-none rounded-lg"
                                     v-mask-cpf
                                 />
@@ -108,7 +122,6 @@ export default {
                                 <input
                                     type="email"
                                     v-model="form.email"
-                                    placeholder="exemplo@email.com"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -123,7 +136,7 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.phone_number"
-                                    placeholder="(xx) xxxxx-xxxx"
+                                    v-mask-phone.br
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -138,8 +151,9 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.post_code"
+                                    v-mask="'#####-###'"
+                                    maxlength="9"
                                     v-on:input="getCep"
-                                    placeholder="xxxxx-xxx"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -154,7 +168,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.street"
-                                    placeholder="Av JK"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -169,7 +182,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.building_number"
-                                    placeholder="Número"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -184,7 +196,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.secondary_address"
-                                    placeholder="ex: apt, bloco"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                             </div>
@@ -194,7 +205,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.neighborhood"
-                                    placeholder="Bairro"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -209,7 +219,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.city"
-                                    placeholder="Cidade"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -224,7 +233,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.state"
-                                    placeholder="Estado"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -307,9 +315,7 @@ export default {
                                         type="checkbox"
                                         value=""
                                         class="sr-only peer"
-                                        @click="
-                                            changeStatus()
-                                        "
+                                        @click="changeStatus()"
                                         checked
                                     />
                                     <input
@@ -317,9 +323,7 @@ export default {
                                         type="checkbox"
                                         value=""
                                         class="sr-only peer"
-                                        @click="
-                                            changeStatus()
-                                        "
+                                        @click="changeStatus()"
                                     />
                                     <div
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
@@ -349,4 +353,11 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+
+    <div
+        v-if="error && showError"
+        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ error }}
+    </div>
 </template>

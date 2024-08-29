@@ -14,7 +14,6 @@ export default {
     data() {
         return {
             form: useForm({
-                doctor_name: this.exam.doctor_name,
                 lab: this.exam.lab,
                 exam_date: this.exam.exam_date,
                 description: this.exam.description,
@@ -52,20 +51,6 @@ export default {
                     </h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-                            <div class="col-span-3 flex flex-col gap-2">
-                                <label for="name">Nome do médico</label>
-                                <input
-                                    type="text"
-                                    v-model="form.doctor_name"
-                                    placeholder="Nome"
-                                    class="bg-neutral-200 border-none rounded-lg"
-                                />
-                                <span
-                                    v-if="form.errors.doctor_name"
-                                    class="text-sm text-red-600"
-                                    >{{ form.errors.doctor_name }}</span
-                                >
-                            </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Local de coleta</label>
@@ -81,7 +66,7 @@ export default {
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Convênio</label>
                                 <select
                                     v-model="form.health_insurance"

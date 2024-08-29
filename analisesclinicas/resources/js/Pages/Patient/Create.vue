@@ -26,6 +26,8 @@ export default {
                 health_insurance: 0,
                 biological_sex: 0,
             }),
+            currentDate: "",
+
         };
     },
     methods: {
@@ -39,6 +41,30 @@ export default {
             this.form.street = response.data.logradouro;
             this.form.neighborhood = response.data.bairro;
         },
+        getCurrentDate() {
+            let today = new Date();
+
+            let dd = today.getDate();
+
+            let mm = today.getMonth() + 1;
+
+            let yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            this.currentDate = yyyy + "-" + mm + "-" + dd;
+
+
+        }
+    },
+    mounted() {
+        this.getCurrentDate();
     },
 };
 </script>
@@ -66,7 +92,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.name"
-                                    placeholder="Nome"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -81,7 +106,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.cpf"
-                                    placeholder="CPF"
                                     class="bg-neutral-200 border-none rounded-lg"
                                     v-mask-cpf
                                 />
@@ -97,7 +121,6 @@ export default {
                                 <input
                                     type="email"
                                     v-model="form.email"
-                                    placeholder="Email"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -112,7 +135,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.phone_number"
-                                    placeholder="Celular"
                                     class="bg-neutral-200 border-none rounded-lg"
                                     v-mask-phone.br
                                 />
@@ -129,7 +151,7 @@ export default {
                                     type="text"
                                     v-model="form.post_code"
                                     v-on:input="getCep"
-                                    placeholder="CEP"
+                                    maxlength="9"
                                     class="bg-neutral-200 border-none rounded-lg"
                                     v-mask="'#####-###'"
                                 />
@@ -145,7 +167,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.street"
-                                    placeholder="Rua"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -160,7 +181,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.building_number"
-                                    placeholder="Número"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -175,7 +195,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.secondary_address"
-                                    placeholder="Complemento"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -190,7 +209,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.neighborhood"
-                                    placeholder="Bairro"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -205,7 +223,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.city"
-                                    placeholder="Cidade"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -220,7 +237,6 @@ export default {
                                 <input
                                     type="text"
                                     v-model="form.state"
-                                    placeholder="Estado"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span
@@ -234,8 +250,8 @@ export default {
                                 <label for="name">Data de Nascimento</label>
                                 <input
                                     type="date"
-                                    placeholder="dd-mm-yyyy"
                                     v-model="form.birth_date"
+                                    :max="currentDate"
                                     class="bg-neutral-200 border-none rounded-lg"
                                 />
                                 <span

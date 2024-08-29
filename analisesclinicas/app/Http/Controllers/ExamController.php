@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Exam;
 use App\Models\Patient;
 use App\Models\User;
@@ -21,9 +22,15 @@ class ExamController extends Controller
         return Inertia::render('Exam/Index', ['isAdminOrRecepcionist' => $auth]);
     }
 
-    public function create(Request $request = null)
+    public function create()
     {
-        return Inertia::render('Exam/Create');
+        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+                            ->select('patients.id','users.id as user_id', 'users.name as patient_name', 'users.cpf')
+                            ->get();
+
+        $doctors = Doctor::all();
+
+        return Inertia::render('Exam/Create', ['patients' => $patients, 'doctors' => $doctors]);
     }
 
     public function store(Request $request)
@@ -31,31 +38,31 @@ class ExamController extends Controller
 
         $request->validate([
             'cpf' => 'required|cpf|formato_cpf',
-            'doctor_name' => 'required',
+            'crm' => 'required',
             'lab' => 'required',
             'health_insurance' => 'required|not_in:0',
             'exam_date' => 'required',
             'description' => 'required',
         ]);
-        
             try {
                 $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id','users.id as user_id', 'users.name', 'users.cpf')->where('users.cpf', $request->cpf)->firstOrFail();
+                $doctor = Doctor::select('doctors.id','doctors.crm')->where('doctors.crm', $request->crm)->firstOrFail();
 
                 $patient->exams()->create([
+                    'doctor_id' => $doctor->id,
                     'health_insurance' => $request->health_insurance,
                     'exam_date' => $request->exam_date,
                     'lab' => $request->lab,
-                    'doctor_name' => $request->doctor_name,
                     'description' => $request->description,
                 ]);
 
                 return redirect()->route('exam.index');
                 
             } catch(Exception $e) {
-                return Inertia::render('Exam/Create', ["error" => "Paciente não encontrado"]);
-            }
-            
-        return redirect()->route('exam.create')->with('error', 'Paciente não encontrado');
+                $patients = Patient::all();
+                $doctors = Doctor::all();
+                return Inertia::render('Exam/Create', ["error" => "Paciente não encontrado",'patients' => $patients, 'doctors' => $doctors]);
+            }            
     }
 
     public function search(Request $request)
@@ -66,14 +73,16 @@ class ExamController extends Controller
         if(!$auth->hasRole(['admin', 'recepcionist'])){
             return Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
                     ->join('users', 'patients.user_id', '=', 'users.id')
-                    ->select('exams.*', 'users.cpf', 'users.name as name')
-                    ->where('users.cpf', $auth->cpf)->get();
+                    ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+                    ->select('exams.*', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
+                    ->where('users.cpf', $auth->cpf)->orderBy('exams.exam_date', 'desc')->get();
         }
 
         $result = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
                 ->join('users', 'patients.user_id', '=', 'users.id')
-                ->select('exams.*', 'users.cpf', 'users.name as name')
-                ->where('users.cpf', $request->search)->get();
+                ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+                ->select('exams.*', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
+                ->where('users.cpf', $request->search)->orderBy('exams.exam_date', 'desc')->get();
 
         return $result;
     }
@@ -89,7 +98,6 @@ class ExamController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'doctor_name' => 'required',
             'lab' => 'required',
             'health_insurance' => 'required|not_in:0',
             'exam_date' => 'required',
@@ -100,7 +108,6 @@ class ExamController extends Controller
             'health_insurance' => $request->health_insurance,
             'exam_date' => $request->exam_date,
             'lab' => $request->lab,
-            'doctor_name' => $request->doctor_name,
             'description' => $request->description,
         ]);
 

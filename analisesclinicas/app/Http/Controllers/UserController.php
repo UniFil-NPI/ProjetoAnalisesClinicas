@@ -72,26 +72,32 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'cpf' => 'required|cpf',
-            'role' => 'required'
-        ]);
+    {   
+        try{
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'cpf' => 'required|cpf',
+                'role' => 'required'
+            ]);
+    
+            $user = User::findOrFail($id);
+            $user->syncRoles($request->role);
+    
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'cpf' => $request->cpf,
+                'status' => $request->status,
+            ]);
+    
+    
+            return redirect()->route('user.index');
+        } catch (Exception $e) {
+            $user = User::with('roles')->findOrFail($id);
 
-        $user = User::findOrFail($id);
-        $user->syncRoles($request->role);
-
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cpf' => $request->cpf,
-            'status' => $request->status,
-        ]);
-
-
-        return redirect()->route('user.index');
+            return Inertia::render('User/Edit', ['user' => $user, "error" => "CPF já está cadastrado no banco"]);
+        }
     }
 
     public function search(Request $request)

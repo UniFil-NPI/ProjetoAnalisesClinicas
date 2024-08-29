@@ -122,41 +122,48 @@ class PatientController extends Controller
             'biological_sex' => 'required',
         ]);
 
-        $patient = Patient::findOrFail($id);
+        try{
+            $patient = Patient::findOrFail($id);
 
-        $user = User::where('id', $patient->user_id)->firstOrFail();
+            $user = User::where('id', $patient->user_id)->firstOrFail();
 
-        $user->updateOrFail([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cpf' => $request->cpf,
-            'password' => Hash::make(substr($request->cpf, 0, 4)),
-            'status' => $request->status,
-        ]);
+            $user->updateOrFail([
+                'name' => $request->name,
+                'email' => $request->email,
+                'cpf' => $request->cpf,
+                'password' => Hash::make(substr($request->cpf, 0, 4)),
+                'status' => $request->status,
+            ]);
 
-        $user_id = User::find($patient->user_id)->id;
+            $user_id = User::find($patient->user_id)->id;
 
-        Patient::where('id', $id)->update([
-            'user_id' => $user_id,
-            'post_code' => $request->post_code,
-            'street' => $request->street,
-            'phone_number' => $request->phone_number,
-            'building_number' => $request->building_number,
-            'secondary_address' => $request->secondary_address,
-            'neighborhood' => $request->neighborhood,
-            'city' => $request->city,
-            'state' => $request->state,
-            'birth_date' => $request->birth_date,
-            'health_insurance' => $request->health_insurance,
-            'biological_sex' => $request->biological_sex,
-        ]);
+            Patient::where('id', $id)->update([
+                'user_id' => $user_id,
+                'post_code' => $request->post_code,
+                'street' => $request->street,
+                'phone_number' => $request->phone_number,
+                'building_number' => $request->building_number,
+                'secondary_address' => $request->secondary_address,
+                'neighborhood' => $request->neighborhood,
+                'city' => $request->city,
+                'state' => $request->state,
+                'birth_date' => $request->birth_date,
+                'health_insurance' => $request->health_insurance,
+                'biological_sex' => $request->biological_sex,
+            ]);
 
-        return redirect()->route('patient.index');
+            return redirect()->route('patient.index');
+        } catch (Exception $e) {
+            $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
+            ->where('patients.id', $id)
+            ->select('patients.id as patient_id', 'patients.*', 'users.*')->first();
+
+            return Inertia::render('Patient/Edit', ['patient' => $patient, "error" => "CPF já está cadastrado no banco"]);
+        }
     }
 
     public function search(Request $request)
     {
-        // dd($patients);
 
         if ($request->search == '') {
             return Patient::join('users', 'patients.user_id', '=', 'users.id')
