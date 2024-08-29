@@ -11,6 +11,7 @@ direction LR
 User "1" *-- "0..1" Patient : is
 
 class User {
+    #id id
     #string cpf 
     #string name
     #string email
@@ -27,7 +28,8 @@ class User {
 Patient "1" o-- "0..n" Exam : has
 
 class Patient{
-    #int user_id
+    #id id
+    #foreignId user_id
     #string phone_number
     #string post_code
     #string street
@@ -46,18 +48,38 @@ class Patient{
     +edit(id)
     +update(request, id)
     +search(request)
+    -formatCpf(cpfRequest)
 }
 
 class Exam {
-    #int patient_id
-    #string patient_name
-    #string doctor_name
+    #id id
+    #foreignId patient_id
+    #foreignId doctor_id
     #string lab
     #string health_insurance
-    #int patient_age
+    #longText description
     #date exam_date
-    #date report_issuance_date
+    +index()
+    +create()
+    +store(request)
+    +search(request)
+    +edit(id)
+    +update(id, request)
 
+}
+
+Doctor "1" o-- "0..n" Exam : has
+
+class Doctor {
+    #id id
+    #string name
+    #string crm
+    +index()
+    +create()
+    +store(request)
+    +search(request)
+    +edit(id)
+    +update(request, id)
 }
 
 

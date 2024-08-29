@@ -56,7 +56,7 @@ class PatientController extends Controller
         try {
             DB::beginTransaction();
             
-            $cpfForPassword = $this->formatcpf($request->cpf);
+            $cpfForPassword = $this->formatCpf($request->cpf);
 
             $user = User::create([
                 'name' => $request->name,
@@ -88,7 +88,7 @@ class PatientController extends Controller
 
     }
 
-    private function formatcpf($cpfRequest) {
+    private function formatCpf($cpfRequest) {
         $formatedCpf = str_replace('.', '', $cpfRequest);
         $formatedCpf = str_replace('-', '', $formatedCpf);
         return $formatedCpf;
