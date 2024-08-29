@@ -40,12 +40,24 @@ patients {
 }
 exams {
     bigserial id PK
+    int8 doctor_id FK
     int8 patient_id FK
-    varchar[255] doctor_name
-    varchar[255] lab
+    varchar(255) lab
+    varchar(255) health_insurance
     date exam_date
-    date report_issuance_date
+    text description
+    timestamp(0) created_at
+    timestamp(0) updated_at
     
+}
+
+doctors only one .. zero or many exams : has
+doctors {
+    bigserial id PK
+    varchar(255) name
+    varchar(255) crm
+    timestamp(0) created_at
+    timestamp(0) updated_at
 }
 
 users zero or many -- one or many roles : belongs
