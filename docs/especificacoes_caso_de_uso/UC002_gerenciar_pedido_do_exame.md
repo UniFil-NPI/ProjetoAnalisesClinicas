@@ -60,12 +60,29 @@ O UC002_gerenciar_pedido_do_exame engloba as funcionalidades *create*, *read* e 
 
 ## Fluxo Básico de Eventos
 
-[Este caso de uso é iniciado quando o agente faz alguma coisa. Um agente sempre inicia casos de uso. O caso de uso descreve o que o agente faz e o que o sistema faz em resposta. Ele é expresso na forma de um diálogo entre o agente e o sistema.
+- **Cadastrar pedido do exame**
 
-O caso de uso descreve o que acontece dentro do sistema, mas não como ou por que. Se forem trocadas informações, seja específico sobre o que é transmitido de um lado para outro. Por exemplo, não é muito esclarecedor dizer que o agente digita informações do cliente se elas não forem definidas. É melhor dizer que o agente digita o nome e o endereço do cliente. Um Glossário de Termos (ou um Modelo de Domínio mais formal) é essencial para fazer com que a complexidade do caso de uso permaneça gerenciável⎯talvez seja necessário definir coisas como informações do cliente lá para evitar que o caso de uso seja suprimido nos detalhes.
-Alternativas simples podem ser apresentadas no texto do fluxo de eventos. Se forem usadas apenas algumas sentenças para descrever o que acontece quando há uma alternativa, faça isso diretamente dentro do fluxo. Se o fluxo alternativo for mais complexo, utilize uma seção separada para descrevê-lo. Por exemplo, uma subseção Fluxo Alternativo explica como descrever alternativas mais complexas. 
-O fluxo complexo de eventos deve ser melhor estruturado em sub-fluxos. Ao fazer isso, a meta principal deve ser aprimorar a clareza do texto. Os subfluxos podem ser chamados muitas vezes de muitos lugares. Lembre-se de que o caso de uso pode executar subfluxos em seqüências opcionais, em loops ou mesmo vários ao mesmo tempo.
-Uma imagem, às vezes, vale mais que mil palavras, entretanto, não há substituto para a prosa limpa e clara. Se aprimorar a clareza, sinta-se à vontade para colar fluxogramas, diagramas de atividades ou outras figuras no caso de uso. Se um fluxograma for útil para apresentar um processo de decisão complexo, use-o sem dúvida! O mesmo acontece para o comportamento dependente de estado, um diagrama de transição de estado freqüentemente explica o comportamento de um sistema melhor que página e mais páginas de texto. Utilize o meio de apresentação certo para o problema, mas tenha cuidado ao utilizar terminologia, notações ou figuras que o público-alvo pode não entender. Lembre-se de que seu objetivo é explicar, não confundir.]
+1. O admin ou recepcionista clica no botão cadastrar disponível na *navbar*;
+
+2. Será aberto uma página para inserção dos dados: nome, email, cpf, telefone, CEP, rua, número, complemento, bairro, cidade, estado, convênio e sexo biológico;
+
+3. Após a inserção dos dados o usuário irá apertar o botão enviar;
+
+4. Acontecerá um redirecionamento para tela inicial com uma mensagem de sucesso.
+
+- **Buscar Usuário**
+
+1. O admin ou recepcionista clica no botão buscar paciente disponível na *navbar*;
+
+2. Haverá um redirecionamento para uma tela de busca onde mostrará um local para inserir o CPF do paciente;
+
+3. Será mostrado em uma tabela os dados do paciente.
+
+- **Atualizar Cadastro do Usuário**
+
+1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados na tabela que está mostrando o usuário;
+
+2. Depois de feita a alteração, deve ser clicado o botão salvar.
 
 ## Fluxos Alternativos
 

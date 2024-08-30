@@ -46,35 +46,89 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
 ## Fluxo Básico de Eventos
 
-- **Cadastrar Usuário**
+- **Cadastrar usuário**
 
-1. O admin ou recepcionista clica no botão cadastrar disponível na *navbar*;
+  - **Cadastrar novo funcionário**
 
-2. Será aberto uma página para inserção dos dados: nome, email, cpf, telefone, CEP, rua, número, complemento, bairro, cidade, estado, convênio e sexo biológico;
+    1. O admin ou recepcionista seleciona a aba *Funcionários*;
 
-3. Após a inserção dos dados o usuário irá apertar o botão enviar;
+    2. Clica no botão *Novo funcionário*;
 
-4. Acontecerá um redirecionamento para tela inicial com uma mensagem de sucesso.
+    3. Será aberto uma página para inserção dos dados: nome, email, cpf e cargo;
 
-- **Buscar Usuário**
+    4. Após a inserção dos dados o ator irá apertar o botão *CRIAR FUNCIONÁRIO*;
 
-1. O admin ou recepcionista clica no botão buscar paciente disponível na *navbar*;
+    5. Acontecerá um redirecionamento para tela de gerenciamento de funcionários.
 
-2. Haverá um redirecionamento para uma tela de busca onde mostrará um local para inserir o CPF do paciente;
+    - **Cadastrar novo funcionário**
 
-3. Será mostrado em uma tabela os dados do paciente.
+    1. O admin ou recepcionista seleciona a aba *Pacientes*;
 
-- **Atualizar Cadastro do Usuário**
+    2. Clica no botão *Novo paciente*;
 
-1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados na tabela que está mostrando o usuário;
+    3. Será aberto uma página para inserção dos dados: nome, email, cpf, celular, CEP, rua, número, complemento, bairro, cidade, estado, data de nascimento, convênio e sexo biológico;
 
-2. Depois de feita a alteração, deve ser clicado o botão salvar.
+    4. Após a inserção dos dados o ator irá apertar o botão *CRIAR PACIENTE*;
 
-- **Deletar Cadastro do Usuário**
+    5. Acontecerá um redirecionamento para tela de gerenciamento de pacientes.
 
-1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados na tabela que está mostrando o usuário;
+- **Buscar usuário**
 
-2. Na página de edição será encontrado um botão para desativar o usuário, esse será o *delete*.
+  - **Buscar funcionário**
+
+    1. O admin ou recepcionista seleciona a aba *Funcionários*;
+
+    2. Insere o CPF do funcionário que deseja buscar;
+
+    3. Aperta o botão *Buscar*;
+
+    4. Será mostrado em uma tabela os dados do funcionário.
+
+  - **Buscar paciente**
+
+    1. O admin ou recepcionista seleciona a aba *Pacientes*;
+
+    2. Insere o CPF do paciente que deseja buscar;
+
+    3. Aperta o botão *Buscar*;
+
+    4. Será mostrado em uma tabela os dados do paciente.
+
+- **Atualizar cadastro do usuário**
+
+  - **Atualizar cadastro do funcionário**
+
+    1. Após fazer a busca do funcionário desejado, haverá a possibilidade de alterar os dados clicando no botão *Editar* localizado na ultima coluna da tabela;
+
+    2. Depois de feita a alteração, deve ser clicado o botão *SALVAR ALTERAÇÕES*;
+
+    3. Será enviado de volta para a aba *Funcionários*.
+
+  - **Atualizar cadastro do paciente**
+
+    1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados clicando no botão *Editar* localizado na ultima coluna da tabela;
+
+    2. Depois de feita a alteração, deve ser clicado o botão *SALVAR ALTERAÇÕES*;
+
+    3. Será enviado de volta para a aba *Pacientes*.
+
+- **Deletar cadastro do usuário**
+
+  - **Deletar cadastro do funcionário**
+
+    1. Após fazer a busca do funcionário desejado, haverá a possibilidade de alterar os dados apertando no botão localizado na última coluna da tabela;
+
+    2. Na página de edição será encontrado um botão chamado *Status* que ativará ou desativará o funcionário, esse será o *delete*;
+
+    3. Basta apertar em *SALVAR ALTERAÇÕES* e o funcionário será ativado ou inativado.
+
+  - **Deletar cadastro do paciente**
+
+    1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados apertando no botão localizado na última coluna da tabela;
+
+    2. Na página de edição será encontrado um botão chamado *Status* que ativará ou desativará o paciente, esse será o *delete*;
+
+    3. Basta apertar em *SALVAR ALTERAÇÕES* e o paciente será ativado ou inativado.
 
 ## Fluxos Alternativos
 
@@ -126,7 +180,7 @@ Esse caso de uso não possui pontos de extensão.
 
 ### Criptografia
 
-Dentro da parte de cadastro, à principio será gerada uma senha usando os 6 primeiros digitos do CPF do paciente, essa senha deve ser criptografada dentro do banco de dados para manter a segurança da aplicação.
+As senhas dos usuários deverão possuir uma criptografia no banco de dados para que ninguém tenha acesso a senha.
 
 ## Informações Adicionais
 
