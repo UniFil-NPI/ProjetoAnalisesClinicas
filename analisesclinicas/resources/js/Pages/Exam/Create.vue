@@ -218,7 +218,7 @@ export default {
                             </div>
 
                             <div class="col-span-5 flex flex-col gap-2">
-                                <label>Descrição Exame</label>
+                                <label>Descrição do Exame</label>
                                 <textarea
                                     v-model="form.description"
                                     class="bg-neutral-200 border-none rounded-lg"

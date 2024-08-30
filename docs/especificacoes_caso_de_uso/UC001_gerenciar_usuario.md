@@ -22,19 +22,21 @@
 
     3. [Atualizar Cadastro do Usuário](#atualizar-cadastro-do-usuário)
 
-4. [Cenários Chave](#cenários-chave)
+4. [Subfluxos](#subfluxos)
 
-5. [Condições Prévias](#condições-prévias)
+5. [Cenários Chave](#cenários-chave)
 
-6. [Condições Posteriores](#condições-posteriores)
+6. [Condições Prévias](#condições-prévias)
 
-7. [Pontos de Extensão](#pontos-de-extensão)
+7. [Condições Posteriores](#condições-posteriores)
 
-8. [Requisitos Especiais](#requisitos-especiais)
+8. [Pontos de Extensão](#pontos-de-extensão)
+
+9. [Requisitos Especiais](#requisitos-especiais)
 
     1. [Criptografia](#criptografia)
 
-9. [Informações Adicionais](#informações-adicionais)
+10. [Informações Adicionais](#informações-adicionais)
 
 ## Especificação de Caso de Uso: UC001 - gerenciar_usuario
 
@@ -50,67 +52,83 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
   - **Cadastrar novo funcionário**
 
-    1. O admin ou recepcionista seleciona a aba *Funcionários*;
+    1. O *admin* ou *recepcionist* seleciona a aba *Funcionários*;
 
-    2. Clica no botão *Novo funcionário*;
+    2. Clica no botão **Novo funcionário**;
 
     3. Será aberto uma página para inserção dos dados: nome, email, cpf e cargo;
 
-    4. Após a inserção dos dados o ator irá apertar o botão *CRIAR FUNCIONÁRIO*;
+    4. Após a inserção dos dados o ator irá apertar o botão **CRIAR FUNCIONÁRIO**;
 
-    5. Acontecerá um redirecionamento para tela de gerenciamento de funcionários.
+    5. Acontecerá um redirecionamento para a aba **Funcionários**.
 
     - **Cadastrar novo funcionário**
 
-    1. O admin ou recepcionista seleciona a aba *Pacientes*;
+    1. O *admin* ou *recepcionist* seleciona a aba *Pacientes*;
 
-    2. Clica no botão *Novo paciente*;
+    2. Clica no botão **Novo paciente**;
 
     3. Será aberto uma página para inserção dos dados: nome, email, cpf, celular, CEP, rua, número, complemento, bairro, cidade, estado, data de nascimento, convênio e sexo biológico;
 
-    4. Após a inserção dos dados o ator irá apertar o botão *CRIAR PACIENTE*;
+    4. Após a inserção dos dados o ator irá apertar o botão **CRIAR PACIENTE**;
 
-    5. Acontecerá um redirecionamento para tela de gerenciamento de pacientes.
+    5. Acontecerá um redirecionamento para a aba **Pacientes**.
 
 - **Buscar usuário**
 
   - **Buscar funcionário**
 
-    1. O admin ou recepcionista seleciona a aba *Funcionários*;
+    - **Caso não insira nenhum nome no campo de busca**
 
-    2. Insere o CPF do funcionário que deseja buscar;
+      1. O ator seleciona a aba **Funcionários**;
 
-    3. Aperta o botão *Buscar*;
+      2. Mostrará na tabela alguns funcionários cadastrados recentemente.
 
-    4. Será mostrado em uma tabela os dados do funcionário.
+    - **Caso insira um nome no campo de busca**
+
+      1. O *admin* ou *recepcionist* seleciona a aba *Funcionários*;
+
+      2. Insere o CPF do funcionário que deseja buscar;
+
+      3. Aperta o botão **Buscar**;
+
+      4. Será mostrado em uma tabela os dados do funcionário.
 
   - **Buscar paciente**
 
-    1. O admin ou recepcionista seleciona a aba *Pacientes*;
+    - **Caso não insira nenhum nome no campo de busca**
 
-    2. Insere o CPF do paciente que deseja buscar;
+      1. O ator seleciona a aba **Pacientes**;
 
-    3. Aperta o botão *Buscar*;
+      2. Mostrará na tabela alguns pacientes cadastrados recentemente.
 
-    4. Será mostrado em uma tabela os dados do paciente.
+    - **Caso insira um nome no campo de busca**
+
+      1. O *admin* ou *recepcionist* seleciona a aba *Pacientes*;
+
+      2. Insere o CPF do paciente que deseja buscar;
+
+      3. Aperta o botão **Buscar**;
+
+      4. Será mostrado em uma tabela os dados do paciente.
 
 - **Atualizar cadastro do usuário**
 
   - **Atualizar cadastro do funcionário**
 
-    1. Após fazer a busca do funcionário desejado, haverá a possibilidade de alterar os dados clicando no botão *Editar* localizado na ultima coluna da tabela;
+    1. Após fazer a busca do funcionário desejado, haverá a possibilidade de alterar os dados clicando no botão **Editar** localizado na ultima coluna da tabela;
 
-    2. Depois de feita a alteração, deve ser clicado o botão *SALVAR ALTERAÇÕES*;
+    2. Depois de feita a alteração, deve ser clicado o botão **SALVAR ALTERAÇÕES**;
 
-    3. Será enviado de volta para a aba *Funcionários*.
+    3. Será enviado de volta para a aba **Funcionários**.
 
   - **Atualizar cadastro do paciente**
 
-    1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados clicando no botão *Editar* localizado na ultima coluna da tabela;
+    1. Após fazer a busca do paciente desejado, haverá a possibilidade de alterar os dados clicando no botão **Editar** localizado na ultima coluna da tabela;
 
-    2. Depois de feita a alteração, deve ser clicado o botão *SALVAR ALTERAÇÕES*;
+    2. Depois de feita a alteração, deve ser clicado o botão **SALVAR ALTERAÇÕES**;
 
-    3. Será enviado de volta para a aba *Pacientes*.
+    3. Será enviado de volta para a aba **Pacientes**.
 
 - **Deletar cadastro do usuário**
 
@@ -120,7 +138,7 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
     2. Na página de edição será encontrado um botão chamado *Status* que ativará ou desativará o funcionário, esse será o *delete*;
 
-    3. Basta apertar em *SALVAR ALTERAÇÕES* e o funcionário será ativado ou inativado.
+    3. Basta apertar em **SALVAR ALTERAÇÕES** e o funcionário será ativado ou inativado.
 
   - **Deletar cadastro do paciente**
 
@@ -128,7 +146,7 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
     2. Na página de edição será encontrado um botão chamado *Status* que ativará ou desativará o paciente, esse será o *delete*;
 
-    3. Basta apertar em *SALVAR ALTERAÇÕES* e o paciente será ativado ou inativado.
+    3. Basta apertar em **SALVAR ALTERAÇÕES** e o paciente será ativado ou inativado.
 
 ## Fluxos Alternativos
 
@@ -150,6 +168,10 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
 - **Inserção de tipo de caracteres diferentes em campos que não esperam por esse tipo:** Se for inserido algum caractere inválido dentro de algum campo, por exemplo número no nome, será notificado ao clicar em salvar.
 
+## Subfluxos
+
+Este caso de uso não possui subfluxos.
+
 ## Cenários Chave
 
 - UC001_gerenciar_usuario
@@ -170,11 +192,11 @@ Não existe uma condição prévia desse caso de uso.
 
 ## Condições Posteriores
 
-Esse caso de uso não exige nenhume condição posterior.
+Este caso de uso não exige nenhume condição posterior.
 
 ## Pontos de Extensão
 
-Esse caso de uso não possui pontos de extensão.
+Este caso de uso não possui pontos de extensão.
 
 ## Requisitos Especiais
 
