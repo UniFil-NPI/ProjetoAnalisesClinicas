@@ -1,5 +1,8 @@
 # Projeto de Análises Clínicas
 
-Repositório do projeto de estágio.
+Desenvolvedor: [guifaraco](https://github.com/guifaraco)
 
-[Docs](docs/readme.md)
+## Links
+
+[Docs](docs/README.md)
+[Guia de Instalação](analisesclinicas/README.md)

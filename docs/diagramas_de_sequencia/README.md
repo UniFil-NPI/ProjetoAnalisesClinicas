@@ -4,8 +4,8 @@
 
 - [UC002_gerenciar_pedido_do_exame](UC002_gerenciar_pedido_do_exame.md)
 
-- [UC003_consultar_exames](UC003_consultar_exames.md)
+- [UC003_consultar_exames](UC003_gerenciar_medicos.md)
 
 ---
 
-[Voltar](../readme.md)
+[Voltar](../README.md)

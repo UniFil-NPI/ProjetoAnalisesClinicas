@@ -22,11 +22,11 @@
 
 - [Diagrama de implantação](diagrama_de_implantacao.md)
 
-- [Diagramas de Estado](diagramas_de_estado/readme.md)
+- [Diagramas de Estado](diagramas_de_estado/README.md)
 
-- [Diagramas de Sequência](diagramas_de_sequencia/readme.md)
+- [Diagramas de Sequência](diagramas_de_sequencia/README.md)
 
-- [Especificações de caso de uso](especificacoes_caso_de_uso/readme.md)
+- [Especificações de caso de uso](especificacoes_caso_de_uso/README.md)
 
 ---
 
