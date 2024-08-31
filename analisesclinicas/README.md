@@ -6,13 +6,13 @@ Acesse o terminal e clone o repositório onde você desejar em sua máquina:
 
   SSH
 
-  ```git
+  ```sh
   git clone git@github.com:UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira.git
   ```
 
   HTTPS
 
-  ```git
+  ```sh
   git clone https://github.com/UniFil-NPI/  projeto_analises_clinicas-GuilhermeRFVieira.git
   ```
 
@@ -101,20 +101,17 @@ php artisan serve
 ```
 
 Dessa forma o projeto estará rodando localmente em sua máquina em [Localhost](http://localhost:8000/).
-         .--.. .--..
-        / #  \/ # \ \
-       |# # #|# # #| \
-      ,:  ___; ___ |  |
-    ,~   /   \/   \    ~`.
-   .,--.|    |     | ,.. #`.
-   :    |  * | *   |'   `. #:
-  |`.    \___/\___/      ;  :
-  :  ~|     ( )       /~    #
-  `#   \    /~\      /     |'
-   `.   `--'   `----'    #/
-     \#                  .'
-      `-..             #/.
-      /#  ~          ~~  #\
+
+```sh
+
+ _____ _                 _        
+|_   _| |__   __ _ _ __ | | _____ 
+  | | | '_ \ / _` | '_ \| |/ / __|
+  | | | | | | (_| | | | |   <\__ \
+  |_| |_| |_|\__,_|_| |_|_|\_\___/
+
+
+```
 
 ---
 
