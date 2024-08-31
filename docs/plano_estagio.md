@@ -1,4 +1,9 @@
-# CURSO DE BACHARELADO EM ENGENHARIA DE SOFTWARE </br> GUILHERME RAFAEL FARACO VIEIRA </br> PROJETO DE ANÁLISES CLÍNICAS </br> Londrina </br> 2024
+CURSO DE BACHARELADO EM ENGENHARIA DE SOFTWARE\
+GUILHERME RAFAEL FARACO VIEIRA\
+PROJETO DE ANÁLISES CLÍNICAS\
+Londrina\
+2024
+===
 
 ## SUMÁRIO
 
@@ -94,29 +99,30 @@ O sistema é um ator que representa a interação do próprio sistema com os cas
 
 ### CASOS DE USO
 
-#### consultar_exames
 
-O caso de uso consultar_exames por baixo dos panos, fará a segregação entre consultar exames de sangue e de paternidade, onde apenas o adm ou o próprio paciente terão acesso aos laudos de paternidade. Importante ressaltar que os pacientes somente poderão consultar os próprios laudos.
+#### \<\<CRUD\>\> UC001_gerenciar_usuario
 
-#### \<\<CRUD\>\> gerenciar_usuario
+O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o admin tem acesso, A única excessão é a *role* paciente, que poderá ser editada pela recepcionista.
 
-O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o adm tem acesso, A única excessão é a *role* paciente poderá ser editada pela recepcionista.
+#### \<\<CRUD\>\> UC002_gerenciar_pedido_do_exame
 
-#### \<\<CRUD\>\> gerenciar_pedido_do_exame
+O caso de uso UC002_gerenciar_pedido_do_exame, permite o gerenciamento dos pedidos dos exames, onde apenas o admin e o recepcionista tem acesso.
 
-O caso de uso gerenciar_laudos, permite o gerenciamento dos laudos, onde apenas o próprio sitema tem acesso.
+#### \<\<CRUD\>\> UC003_gerenciar_medico
 
-#### gerar_laudo
+O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos cadastrados no sistema, apenas o admin e o recepcionista tem acesso ao caso de uso.
 
-O caso de uso alterar_dados_cadastro é conectado com o usuário, ou seja todos os tipos de usuário poderão realizar essa função, importante ressaltar que não serão todos os dados que podem ser alterados.
+#### UC004_inserir_dados_teste_paternidade
 
-#### inserir_dados_teste_paternidade
+O caso de uso UC004_inserir_dados_teste_paternidade permite a inserção de todas as informações necessárias para os calcúlos do teste de paternidade. 
 
-O caso de uso realizar_exames, por baixo dos panos estará sendo dividido em realizar exame de sangue ou realizar teste de paternidade e depende do caso de uso capturar_dados_dos_exames ocorrer.
+#### UC005_capturar_dados_do_aparelho
 
-#### capturar_dados_do_aparelho
+O caso de uso UC005_capturar_dados_do_aparelho é a captura dos dados do exame de sangue que são colhidos do Analisador Hematológico.
 
-O caso de uso capturar_dados_do_aparelho, poderá ser a captura dos dados do exame de sangue que são colhidos do Analisador Hematológico, ou poderá ser a captura dos dados do teste de paternidade que serão inseridos pelos responsáveis por realizar esse exame.
+#### UC006_gerar_laudo
+
+O caso de uso UC006_gerar_laudo por baixo dos panos estará sendo dividido em gerar laudo do exame de sangue ou do teste de paternidade e depende dos casos de uso UC004_inserir_dados_teste_paternidade e UC005_capturar_dados_do_aparelho ocorrer.
 
 ## TELAS
 
@@ -180,19 +186,21 @@ Figura 6
 
 No *Front-end* do sistema as tecnologias utilizadas serão:
 
-- ***HTML5***, Linguagem de Marcação de HiperTexto, responsável por definir a estrutura do conteúdo da *Web*.
+- ***HTML5***, Linguagem de Marcação de HiperTexto, responsável por definir a estrutura do conteúdo da *Web*;
 
-- ***CSS3***, *Cascading Style Sheets*, responsável por descrever como o conteúdo será exibido na tela.
+- ***CSS3***, *Cascading Style Sheets*, responsável por descrever como o conteúdo será exibido na tela;
 
-- ***JavaScript***, conhecida como linguagem de script para páginas *Web*, é uma linguagem interpretada baseada em protótipos, multiparadigma e dinâmica.
+- ***JavaScript***, conhecida como linguagem de script para páginas *Web*, é uma linguagem interpretada baseada em protótipos, multiparadigma e dinâmica;
 
-- ***[Vue.js](https://vuejs.org/)*** v3, um framework de criação de interfaces de usuário na Web.
+- ***[Vue.js](https://vuejs.org/)*** v3, um framework de criação de interfaces de usuário na Web;
 
-- ***[Node.js](https://nodejs.org/en)*** v20.12.0,
+- ***[Node.js](https://nodejs.org/en)*** v20.12.0;
 
-- ***[npm](https://www.npmjs.com/)*** v10.5.0,
+- ***[npm](https://www.npmjs.com/)*** v10.5.0;
 
-- ***[Tailwind CSS](https://tailwindcss.com/)*** v3.4.3,
+- ***[Tailwind CSS](https://tailwindcss.com/)*** v3.4.3;
+
+- ***[PrimeVue](https://primevue.org/)*** v4.0.4
 
 #### *BACK-END*
 

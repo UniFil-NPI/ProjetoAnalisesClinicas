@@ -14,6 +14,8 @@
 
 - [Plano de Estágio](plano_estagio.md)
 
+- [Relatório final de Estágio](relatorio_final.md)
+
 - [Glossário](glossario.md)
 
 - [DER](DER.md)
