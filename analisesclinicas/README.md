@@ -102,14 +102,12 @@ php artisan serve
 
 Dessa forma o projeto estará rodando localmente em sua máquina em [Localhost](http://localhost:8000/).
 
-```sh
-
+```
  _____ _                 _        
 |_   _| |__   __ _ _ __ | | _____ 
   | | | '_ \ / _` | '_ \| |/ / __|
   | | | | | | (_| | | | |   <\__ \
   |_| |_| |_|\__,_|_| |_|_|\_\___/
-
 
 ```
 
