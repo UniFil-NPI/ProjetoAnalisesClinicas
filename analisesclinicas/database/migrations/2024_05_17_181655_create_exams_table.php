@@ -17,9 +17,10 @@ return new class extends Migration
             $table->foreignId('doctor_id')->constrained();
             $table->string('lab');
             $table->string('health_insurance');
-            $table->dateTime('exam_date');
+            $table->timestamp('exam_date');
             $table->longText('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

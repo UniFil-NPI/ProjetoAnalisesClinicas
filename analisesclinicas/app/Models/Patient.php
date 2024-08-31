@@ -11,6 +11,12 @@ class Patient extends Model
 {
     use HasFactory;
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+
     protected $fillable = [
         'user_id',
         'phone_number',
@@ -25,6 +31,13 @@ class Patient extends Model
         'health_insurance',
         'biological_sex',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'birth_date' => 'datetime:Y-m-d',
+        ];
+    }
 
     public function user(): HasOne
     {

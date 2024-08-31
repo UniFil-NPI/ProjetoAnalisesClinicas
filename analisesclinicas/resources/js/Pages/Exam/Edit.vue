@@ -23,10 +23,7 @@ export default {
     },
     methods: {
         save() {
-            this.form.post(
-                "/exam/update/" + this.exam.id,
-                this.form
-            );
+            this.form.post("/exam/update/" + this.exam.id, this.form);
         },
     },
 };
@@ -46,12 +43,9 @@ export default {
                 <div
                     class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
                 >
-                    <h2 class="text-2xl font-bold">
-                        Editar exame do paciente
-                    </h2>
+                    <h2 class="text-2xl font-bold">Editar exame do paciente</h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-
                             <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Local de coleta</label>
                                 <input
@@ -112,8 +106,14 @@ export default {
 
                             <div class="col-span-5 flex flex-col gap-2">
                                 <label>Descrição do Exame</label>
-                                <textarea v-model="form.description" class="bg-neutral-200 border-none rounded-lg"></textarea>
-                                <span v-if="form.errors.description" class="text-sm text-red-600">
+                                <textarea
+                                    v-model="form.description"
+                                    class="bg-neutral-200 border-none rounded-lg"
+                                ></textarea>
+                                <span
+                                    v-if="form.errors.description"
+                                    class="text-sm text-red-600"
+                                >
                                     {{ form.errors.description }}
                                 </span>
                             </div>

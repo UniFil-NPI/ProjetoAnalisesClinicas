@@ -13,6 +13,7 @@ export default {
         return {
             search: "",
             exams: [],
+            firstSearch: true,
         };
     },
     components: {
@@ -27,10 +28,9 @@ export default {
                 .then((response) => {
                     this.exams = response.data;
                 });
+                this.firstSearch = false;
+            
         },
-    },
-    mounted() {
-        this.research();
     },
 };
 </script>
@@ -97,7 +97,12 @@ export default {
                             Novo exame
                         </Link>
                     </div>
-
+                    <div class="mt-10" v-if="exams.length == 0 && this.firstSearch">
+                        <p class="text-xl font-bold text-red-600">Faça uma busca para aparecer algum exame</p>
+                    </div>
+                    <div class="mt-10" v-if="exams.length == 0 && !this.firstSearch">
+                        <p class="text-xl font-bold text-red-600">Paciente não encontrado</p>
+                    </div>
                     <table class="mt-10" >
                         <thead v-show="exams.length != 0">
                             <tr>

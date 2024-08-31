@@ -11,6 +11,12 @@ class Exam extends Model
 {
     use HasFactory;
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+
     protected $fillable = [
         'patient_id',
         'doctor_id',
@@ -20,12 +26,19 @@ class Exam extends Model
         'description'
     ];
 
-    public function patient() : BelongsTo
+    protected function casts(): array
+    {
+        return [
+            'exam_date' => 'datetime:Y-m-d',
+        ];
+    }
+
+    public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
     }
 
-    public function doctor() : BelongsTo
+    public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class);
     }

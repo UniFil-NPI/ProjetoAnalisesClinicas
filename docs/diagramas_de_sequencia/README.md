@@ -4,7 +4,7 @@
 
 - [UC002_gerenciar_pedido_do_exame](UC002_gerenciar_pedido_do_exame.md)
 
-- [UC003_consultar_exames](UC003_gerenciar_medicos.md)
+- [UC003_gerenciar_medico](UC003_gerenciar_medicos.md)
 
 ---
 
