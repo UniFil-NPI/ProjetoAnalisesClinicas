@@ -664,7 +664,7 @@ O que é um diagrama entidade relacionamento? Disponível em: <https://www.lucid
 
 TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Disponível em: <https://www.devmedia.com.br/orientacoes-basicas-na-elaboracao-de-um-diagrama-de-classes/37224>. Acesso em: 31 ago. 2024.
 
-## APÊNCICE
+## APÊNDICE
 
 ### ARTEFATOS DE REQUISITOS
 
