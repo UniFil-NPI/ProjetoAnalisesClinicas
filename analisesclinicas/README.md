@@ -7,13 +7,13 @@ Acesse o terminal e clone o repositório onde você desejar em sua máquina:
   SSH
 
   ```sh
-  git clone git@github.com:UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira.git
+  git clone git@github.com:UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira.git nome_do_diretorio
   ```
 
   HTTPS
 
   ```sh
-  git clone https://github.com/UniFil-NPI/  projeto_analises_clinicas-GuilhermeRFVieira.git
+  git clone https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira.git nome_do_diretorio
   ```
 
 ## Acesse o diretório do projeto Laravel
@@ -21,7 +21,7 @@ Acesse o terminal e clone o repositório onde você desejar em sua máquina:
 Entre no diretório do projeto:
 
 ```sh
-cd projeto_analises_clinicas-GuilhermeRFVieira
+cd nome_do_diretorio
 cd analisesclinicas
 ```
 
@@ -102,14 +102,17 @@ php artisan serve
 
 Dessa forma o projeto estará rodando localmente em sua máquina em [Localhost](http://localhost:8000/).
 
-```
- _____ _                 _        
-|_   _| |__   __ _ _ __ | | _____ 
-  | | | '_ \ / _` | '_ \| |/ / __|
-  | | | | | | (_| | | | |   <\__ \
-  |_| |_| |_|\__,_|_| |_|_|\_\___/
+## Contas criadas usando o seeder
 
-```
+### Conta admin
+
+**Login:** 618.837.920-29
+**Senha:** 123
+
+### Conta paciente
+
+**Login:** 136.483.140-68
+**Senha:** 123
 
 ---
 
