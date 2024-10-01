@@ -5,6 +5,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\PaternityTestController;
 use App\Models\Patient;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -89,7 +90,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/doctor/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 
+    //Paternity Routes
 
+    Route::get('/paternitytest', [PaternityTestController::class, 'index'])->name('paternity.index');
 
 
 });
