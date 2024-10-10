@@ -51,14 +51,12 @@ export default {
         valuePatientInput(newValue)
         {
             if(newValue){
-                console.log(newValue.value);
                 this.form.cpf = newValue.value;
             }
         },
         valueDoctorInput(newValue)
         {
             if(newValue){
-                console.log(newValue.value);
                 this.form.crm = newValue.value;
             }
         },

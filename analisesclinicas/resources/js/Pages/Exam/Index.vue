@@ -7,6 +7,10 @@ export default {
         isAdminOrRecepcionist:{
             type: Boolean,
             default: null,
+        },
+        isPatient:{
+            type: Boolean,
+            default: null,
         }
     },
     data() {
@@ -31,7 +35,18 @@ export default {
                 this.firstSearch = false;
             
         },
+        initialResearch() {
+            axios
+                .post(route("exam.search"), { search: this.search })
+                .then((response) => {
+                    this.exams = response.data;
+                });
+            
+        },
     },
+    created() {
+        this.initialResearch();
+    }
 };
 </script>
 <template>
@@ -87,7 +102,7 @@ export default {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold">
+                        <h2 class="text-2xl font-bold" v-if="!isPatient">
                             Gerenciamento de Exames
                         </h2>
                         <Link v-if="isAdminOrRecepcionist"
@@ -97,10 +112,13 @@ export default {
                             Novo exame
                         </Link>
                     </div>
-                    <div class="mt-10" v-if="exams.length == 0 && this.firstSearch">
+                    <div class="mt-10" v-if="exams.length == 0 && this.firstSearch && !isPatient">
                         <p class="text-xl font-bold text-red-600">Faça uma busca para aparecer algum exame</p>
                     </div>
-                    <div class="mt-10" v-if="exams.length == 0 && !this.firstSearch">
+                    <div class="mt-10" v-if="exams.length == 0 && isPatient">
+                        <p class="text-xl font-bold text-red-600">Não possui nenhum exame</p>
+                    </div>
+                    <div class="mt-10" v-if="exams.length == 0 && !this.firstSearch && !isPatient">
                         <p class="text-xl font-bold text-red-600">Paciente não encontrado</p>
                     </div>
                     <table class="mt-10" >

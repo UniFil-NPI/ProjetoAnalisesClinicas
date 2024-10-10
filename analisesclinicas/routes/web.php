@@ -92,7 +92,18 @@ Route::middleware('auth')->group(function () {
 
     //Paternity Routes
 
-    Route::get('/paternitytest', [PaternityTestController::class, 'index'])->name('paternity.index');
+    Route::get('/paternitytests', [PaternityTestController::class, 'index'])->name('paternity.index');
+
+    Route::get('/new/paternitytest', [PaternityTestController::class, 'create'])->name('paternity.create');
+
+    Route::post('/create/new/paternitytest', [PaternityTestController::class, 'store'])->name('paternity.store');
+
+    Route::post('/paternitytest/search', [PaternityTestController::class, 'search'])->name('paternity.search');
+
+    Route::get('/paternitytest/edit/{id}', [PaternityTestController::class, 'edit'])->name('paternity.edit');
+
+    Route::post('/paternitytest/update/{id}', [PaternityTestController::class, 'update'])->name('paternity.update');
+
 
 
 });

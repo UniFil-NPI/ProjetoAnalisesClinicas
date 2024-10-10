@@ -18,8 +18,9 @@ class ExamController extends Controller
     public function index()
     {
         $auth = Auth::user()->hasRole(['admin', 'recepcionist']);
+        $isPatient = Auth::user()->hasRole(['patient']);
 
-        return Inertia::render('Exam/Index', ['isAdminOrRecepcionist' => $auth]);
+        return Inertia::render('Exam/Index', ['isAdminOrRecepcionist' => $auth, 'isPatient' => $isPatient]);
     }
 
     public function create()
