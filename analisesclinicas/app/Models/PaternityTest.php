@@ -18,10 +18,12 @@ class PaternityTest extends Model
 
      protected $fillable = [
         'patient_id',
+        'participants',
         'lab',
         'health_insurance',
         'exam_date',
-        'description'
+        'description',
+        'pdf',
     ];
 
     protected function casts(): array

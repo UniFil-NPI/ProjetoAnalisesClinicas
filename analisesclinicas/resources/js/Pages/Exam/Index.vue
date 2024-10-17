@@ -50,12 +50,12 @@ export default {
 };
 </script>
 <template>
-    <Head title="Exames" />
+    <Head title="Pedidos de exames" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Exames
+                Pedidos
             </h2>
         </template>
 
@@ -103,20 +103,20 @@ export default {
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold" v-if="!isPatient">
-                            Gerenciamento de Exames
+                            Gerenciamento de Pedidos
                         </h2>
                         <Link v-if="isAdminOrRecepcionist"
                             :href="route('exam.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
-                            Novo exame
+                            Novo Pedido
                         </Link>
                     </div>
                     <div class="mt-10" v-if="exams.length == 0 && this.firstSearch && !isPatient">
-                        <p class="text-xl font-bold text-red-600">Faça uma busca para aparecer algum exame</p>
+                        <p class="text-xl font-bold text-red-600">Faça uma busca para aparecer algum pedido</p>
                     </div>
                     <div class="mt-10" v-if="exams.length == 0 && isPatient">
-                        <p class="text-xl font-bold text-red-600">Não possui nenhum exame</p>
+                        <p class="text-xl font-bold text-red-600">Não possui nenhum pedido</p>
                     </div>
                     <div class="mt-10" v-if="exams.length == 0 && !this.firstSearch && !isPatient">
                         <p class="text-xl font-bold text-red-600">Paciente não encontrado</p>

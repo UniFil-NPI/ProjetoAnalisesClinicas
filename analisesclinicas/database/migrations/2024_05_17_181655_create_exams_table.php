@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('health_insurance');
             $table->timestamp('exam_date');
             $table->longText('description');
+            $table->string('pdf')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

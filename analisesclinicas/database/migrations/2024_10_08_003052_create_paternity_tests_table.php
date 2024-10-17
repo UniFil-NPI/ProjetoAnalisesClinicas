@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('paternity_tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained();
+            $table->json('participants');
             $table->string('lab');
             $table->string('health_insurance');
             $table->timestamp('exam_date');
             $table->longText('description');
+            $table->string('pdf')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -4,14 +4,14 @@ import { Head, Link } from "@inertiajs/vue3";
 
 export default {
     props: {
-        isAdminOrRecepcionist: {
+        isAdmin: {
             type: Boolean,
             default: null,
         },
         isPatient: {
             type: Boolean,
             default: null,
-        }
+        },
     },
     data() {
         return {
@@ -30,7 +30,7 @@ export default {
             axios
                 .post(route("paternity.search"), { search: this.search })
                 .then((response) => {
-                    this.exams = response.data;
+                    this.paternityTests = response.data;
                 });
             this.firstSearch = false;
         },
@@ -38,7 +38,7 @@ export default {
             axios
                 .post(route("paternity.search"), { search: this.search })
                 .then((response) => {
-                    this.exams = response.data;
+                    this.paternityTests = response.data;
                 });
         },
     },
@@ -48,12 +48,12 @@ export default {
 };
 </script>
 <template>
-    <Head title="Exames de Paternidade" />
+    <Head title="Pedido de exame de paternidade" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Exames de Paternidade
+                Pedidos de Exame de Paternidade
             </h2>
         </template>
 
@@ -83,7 +83,8 @@ export default {
                     id="search"
                     v-model="search"
                     class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Nome do paciente"
+                    placeholder="CPF do paciente"
+                    v-mask-cpf
                     required
                 />
                 <button
@@ -100,29 +101,42 @@ export default {
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
-                            Gerenciamento de Exames de Paternidade
+                            Gerenciamento de Pedidos
                         </h2>
                         <Link
-                            :href="route('doctor.create')"
+                            :href="route('paternity.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
-                            Novo Exame de Paternidade
+                            Novo Pedido
                         </Link>
                     </div>
                     <div
                         class="mt-10"
-                        v-if="paternityTests.length == 0 && this.firstSearch && !isPatient"
+                        v-if="
+                            paternityTests.length == 0 &&
+                            this.firstSearch &&
+                            !isPatient
+                        "
                     >
                         <p class="text-xl font-bold text-red-600">
-                            Faça uma busca para aparecer algum exame
+                            Faça uma busca para aparecer algum pedido
                         </p>
-                    </div>
-                    <div class="mt-10" v-if="paternityTests.length == 0 && isPatient">
-                        <p class="text-xl font-bold text-red-600">Não possui nenhum exame</p>
                     </div>
                     <div
                         class="mt-10"
-                        v-if="paternityTests.length == 0 && !this.firstSearch && !isPatient"
+                        v-if="paternityTests.length == 0 && isPatient"
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não possui nenhum pedido
+                        </p>
+                    </div>
+                    <div
+                        class="mt-10"
+                        v-if="
+                            paternityTests.length == 0 &&
+                            !this.firstSearch &&
+                            !isPatient
+                        "
                     >
                         <p class="text-xl font-bold text-red-600">
                             Paciente não encontrado
@@ -134,8 +148,8 @@ export default {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome Do Paciente</th>
-                                <th>Descrição</th>
                                 <th>Data do exame</th>
+                                <th>Descrição</th>
                                 <th>Laudo</th>
                                 <th></th>
                             </tr>
@@ -147,37 +161,41 @@ export default {
                                 :key="paternityTest.id"
                             >
                                 <td class="py-2">{{ paternityTest.id }}</td>
+
                                 <td class="py-2">
                                     {{ paternityTest.patient_name }}
                                 </td>
+
+                                <td class="py-2">
+                                    {{
+                                        new Date(
+                                            paternityTest.exam_date
+                                        ).toLocaleDateString()
+                                    }}
+                                </td>
+
                                 <td class="py-2 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
                                         {{ paternityTest.description }}
                                     </div>
                                 </td>
+
                                 <td
                                     class="py-2 flex items-center justify-center"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        class="size-6 cursor-pointer"
-                                    >
-                                        <path
-                                            d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                        />
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
+                                    <p v-if="paternityTest.pdf == null">Indisponível</p>
+                                   <a href="#" v-if="paternityTest.pdf != null">baixar</a>
                                 </td>
+
                                 <td class="py-2">
                                     <Link
                                         v-if="paternityTest && isAdmin"
-                                        :href="route('paternityTest.edit', paternityTest.id)"
+                                        :href="
+                                            route(
+                                                'paternity.edit',
+                                                paternityTest.id
+                                            )
+                                        "
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar

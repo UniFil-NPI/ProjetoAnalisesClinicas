@@ -23,7 +23,8 @@ class Exam extends Model
         'lab',
         'health_insurance',
         'exam_date',
-        'description'
+        'description',
+        'pdf',
     ];
 
     protected function casts(): array
