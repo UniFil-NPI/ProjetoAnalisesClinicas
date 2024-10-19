@@ -18,6 +18,7 @@ class PaternityTest extends Model
 
      protected $fillable = [
         'patient_id',
+        'type',
         'participants',
         'lab',
         'health_insurance',

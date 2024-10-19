@@ -15,11 +15,7 @@ class PaternityTestController extends Controller
 {
     public function index()
     {
-        $auth = Auth::user()->hasRole(['admin']);
-
-        $isPatient = Auth::user()->hasRole(['patient']);
-
-        return Inertia::render('PaternityTest/Index', ['isAdmin' => $auth, 'isPatient' => $isPatient]);
+        return Inertia::render('PaternityTest/Index');
     }
 
     public function create()
@@ -44,13 +40,13 @@ class PaternityTestController extends Controller
         try {
             $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id', 'users.id as user_id', 'users.name', 'users.cpf')->where('users.cpf', $request->cpf)->firstOrFail();
 
-            
+
             $formated_participants_list = [];
-            
+
             foreach ($request->participants as $participant) {
                 array_push($formated_participants_list, $participant['cpf']['value']);
             }
-            
+
             $participants_json = json_encode($formated_participants_list);
 
             $patient->paternityTests()->create([
@@ -61,10 +57,10 @@ class PaternityTestController extends Controller
                 'description' => $request->description,
             ]);
 
-            return redirect()->route('paternity.index');
+            return redirect()->route('paternity.index')->with("message", "Pedido cadastrado com sucesso.");
         } catch (Exception $e) {
             $patients = Patient::all();
-            return Inertia::render('PaternityTest/Create', ["error" => "Paciente não encontrado", 'patients' => $patients]);
+            return Inertia::render('PaternityTest/Create', ["error" => "Não foi possível realizar o cadastro do pedido.", 'patients' => $patients]);
         }
     }
 
@@ -78,13 +74,13 @@ class PaternityTestController extends Controller
                 ->join('users', 'patients.user_id', '=', 'users.id')
                 ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
                 ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.exam_date', 'desc')->get();
-            }
-            
-            $result = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
+        }
+
+        $result = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
             ->join('users', 'patients.user_id', '=', 'users.id')
             ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
             ->where('users.cpf', $request->search)->orderBy('paternity_tests.exam_date', 'desc')->get();
-            
+
         return $result;
     }
 
@@ -98,20 +94,26 @@ class PaternityTestController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'lab' => 'required',
-            'health_insurance' => 'required|not_in:0',
-            'exam_date' => 'required',
-            'description' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'lab' => 'required',
+                'health_insurance' => 'required|not_in:0',
+                'exam_date' => 'required',
+                'description' => 'required',
+            ]);
 
-        PaternityTest::find($id)->update([
-            'health_insurance' => $request->health_insurance,
-            'exam_date' => $request->exam_date,
-            'lab' => $request->lab,
-            'description' => $request->description,
-        ]);
+            PaternityTest::find($id)->update([
+                'health_insurance' => $request->health_insurance,
+                'exam_date' => $request->exam_date,
+                'lab' => $request->lab,
+                'description' => $request->description,
+            ]);
 
-        return redirect()->route('paternity.index');
+            return redirect()->route('paternity.index')->with("message", "Dados do pedido atualizados com sucesso.");
+        } catch (Exception $e) {
+            $paternityTest = PaternityTest::find($id);
+
+            return Inertia::render('PaternityTest/Edit', ["error" => "Não foi possível realizar a atualização dos dados.", 'paternityTest' => $paternityTest]);
+        }
     }
 }

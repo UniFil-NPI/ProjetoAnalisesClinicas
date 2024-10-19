@@ -3,11 +3,17 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 
 export default {
-    props: {},
+    props: {
+        flash: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data() {
         return {
             search: "",
             doctors: [],
+            message: this.flash && this.flash.message ? this.flash.message : null,
         };
     },
     components: {
@@ -23,9 +29,15 @@ export default {
                     this.doctors = response.data;
                 });
         },
+        clearMessage() {
+            this.message = null;
+        },
     },
     mounted() {
         this.research();
+        if (this.message) {
+            setTimeout(this.clearMessage, 5000);
+        }
     },
 };
 </script>
@@ -103,7 +115,7 @@ export default {
                         </thead>
                         <tbody>
                             <tr
-                                class="text-center"
+                                class="text-center hover:bg-gray-200 transition-all duration-300"
                                 v-for="doctor in doctors"
                                 :key="doctor.id"
                             >
@@ -128,4 +140,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="message"
+        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ message }}
+    </div>
 </template>

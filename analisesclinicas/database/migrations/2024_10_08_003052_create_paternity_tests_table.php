@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('paternity_tests', function (Blueprint $table) {
             $table->id();
+            $table->string('type')->default('paternity');
             $table->foreignId('patient_id')->constrained();
             $table->json('participants');
             $table->string('lab');

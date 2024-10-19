@@ -4,13 +4,14 @@ import { Head, Link } from "@inertiajs/vue3";
 
 export default {
     props: {
-        isAdmin: {
-            type: Boolean,
-            default: null,
+        flash: {
+            type: Object,
+            default: () => ({}),
         },
-        isPatient: {
-            type: Boolean,
-            default: null,
+    },
+    computed: {
+        user() {
+            return this.$page.props.auth;
         },
     },
     data() {
@@ -18,6 +19,7 @@ export default {
             search: "",
             paternityTests: [],
             firstSearch: true,
+            message: this.flash && this.flash.message ? this.flash.message : null,
         };
     },
     components: {
@@ -41,9 +43,15 @@ export default {
                     this.paternityTests = response.data;
                 });
         },
+        clearMessage() {
+            this.message = null;
+        },
     },
-    created() {
+    mounted() {
         this.initialResearch();
+        if (this.message) {
+            setTimeout(this.clearMessage, 5000);
+        }
     },
 };
 </script>
@@ -53,11 +61,11 @@ export default {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pedidos de Exame de Paternidade
+                Pedidos
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto px-10 mt-10" v-if="!isPatient">
+        <div class="max-w-7xl mx-auto px-10 mt-10" v-if="!user.isPatient">
             <div class="relative">
                 <div
                     class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -106,6 +114,7 @@ export default {
                         <Link
                             :href="route('paternity.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
+                            v-if="user.isAdm"
                         >
                             Novo Pedido
                         </Link>
@@ -115,7 +124,7 @@ export default {
                         v-if="
                             paternityTests.length == 0 &&
                             this.firstSearch &&
-                            !isPatient
+                            !user.isPatient
                         "
                     >
                         <p class="text-xl font-bold text-red-600">
@@ -124,7 +133,7 @@ export default {
                     </div>
                     <div
                         class="mt-10"
-                        v-if="paternityTests.length == 0 && isPatient"
+                        v-if="paternityTests.length == 0 && user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
                             Não possui nenhum pedido
@@ -135,7 +144,7 @@ export default {
                         v-if="
                             paternityTests.length == 0 &&
                             !this.firstSearch &&
-                            !isPatient
+                            !user.isPatient
                         "
                     >
                         <p class="text-xl font-bold text-red-600">
@@ -156,7 +165,7 @@ export default {
                         </thead>
                         <tbody>
                             <tr
-                                class="text-center"
+                                class="text-center hover:bg-gray-200 transition-all duration-300"
                                 v-for="paternityTest in paternityTests"
                                 :key="paternityTest.id"
                             >
@@ -183,13 +192,17 @@ export default {
                                 <td
                                     class="py-2 flex items-center justify-center"
                                 >
-                                    <p v-if="paternityTest.pdf == null">Indisponível</p>
-                                   <a href="#" v-if="paternityTest.pdf != null">baixar</a>
+                                    <p v-if="paternityTest.pdf == null">
+                                        Indisponível
+                                    </p>
+                                    <a href="#" v-if="paternityTest.pdf != null"
+                                        >baixar</a
+                                    >
                                 </td>
 
                                 <td class="py-2">
                                     <Link
-                                        v-if="paternityTest && isAdmin"
+                                        v-if="paternityTest && user.isAdm"
                                         :href="
                                             route(
                                                 'paternity.edit',
@@ -208,4 +221,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="message"
+        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ message }}
+    </div>
 </template>

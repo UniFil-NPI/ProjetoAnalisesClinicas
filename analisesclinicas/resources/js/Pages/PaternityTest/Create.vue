@@ -97,7 +97,7 @@ export default {
                 >
                     <div class="grid grid-cols-5 gap-4">
                         <h2 class="col-span-4 text-2xl font-bold">
-                            Novo Exame
+                            Novo pedido
                         </h2>
                         <button
                             class="col-span-1 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
@@ -235,7 +235,7 @@ export default {
                                 class="col-span-5 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
                                 type="submit"
                             >
-                                Criar Exame
+                                Criar pedido
                             </button>
                         </div>
                     </form>

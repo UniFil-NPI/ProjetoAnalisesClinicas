@@ -45,7 +45,7 @@ class PatientFactory extends Factory
         // Get all user IDs that are currently associated with patients
         $usedUserIds = array_merge(self::$usedUserIds, Patient::pluck('user_id')->toArray());
 
-        $allUserIds = range(1, 4); // Ajuste conforme necessário
+        $allUserIds = range(2, 4); // Ajuste conforme necessário
         $unusedUserIds = array_diff($allUserIds, $usedUserIds);
 
         // Continue trying until an unused user ID is found

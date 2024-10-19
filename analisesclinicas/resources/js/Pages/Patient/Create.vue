@@ -8,6 +8,12 @@ export default {
         AuthenticatedLayout,
         Link,
     },
+    props: {
+        error: {
+            type: String,
+            default: null,
+        },
+    },
     data() {
         return {
             form: useForm({
@@ -27,7 +33,6 @@ export default {
                 biological_sex: 0,
             }),
             currentDate: "",
-
         };
     },
     methods: {
@@ -51,17 +56,15 @@ export default {
             let yyyy = today.getFullYear();
 
             if (dd < 10) {
-                dd = '0' + dd;
+                dd = "0" + dd;
             }
 
             if (mm < 10) {
-                mm = '0' + mm;
+                mm = "0" + mm;
             }
 
             this.currentDate = yyyy + "-" + mm + "-" + dd;
-
-
-        }
+        },
     },
     mounted() {
         this.getCurrentDate();
@@ -86,7 +89,6 @@ export default {
                     <h2 class="text-2xl font-bold">Novo Paciente</h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-
                             <div class="col-span-3 flex flex-col gap-2">
                                 <label for="name">Nome Completo</label>
                                 <input
@@ -320,4 +322,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="error && showError"
+        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ error }}
+    </div>
 </template>

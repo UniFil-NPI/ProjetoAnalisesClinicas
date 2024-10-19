@@ -8,23 +8,38 @@ export default {
         AuthenticatedLayout,
         Link,
     },
+    props: {
+        flash: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data() {
         return {
             users: {},
-            search: '',
+            search: "",
+            message: this.flash && this.flash.message ? this.flash.message : null,
 
-        }
+        };
     },
     methods: {
         research() {
-            axios.post('/user/search', {search : this.search}).then(response=>{
-                this.users = response.data;
-            });
+            axios
+                .post("/user/search", { search: this.search })
+                .then((response) => {
+                    this.users = response.data;
+                });
+        },
+        clearMessage() {
+            this.message = null;
+        },
+    },
+    mounted() {
+        this.research();
+        if (this.message) {
+            setTimeout(this.clearMessage, 5000);
         }
     },
-    created() {
-        this.research();
-    }
 };
 </script>
 <template>
@@ -37,7 +52,7 @@ export default {
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto px-10 mt-10" >
+        <div class="max-w-7xl mx-auto px-10 mt-10">
             <div class="relative">
                 <div
                     class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -61,7 +76,7 @@ export default {
                 <input
                     type="search"
                     id="search"
-                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="CPF do funcionário"
                     v-model="search"
                     v-mask-cpf
@@ -107,16 +122,33 @@ export default {
                             <tr
                                 v-for="(user, i) in users"
                                 :key="i"
-                                class="text-center "
+                                class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
                                 <td class="py-2">{{ user.id }}</td>
                                 <td class="py-2">{{ user.name }}</td>
                                 <td class="py-2">{{ user.email }}</td>
                                 <td class="py-2">{{ user.cpf }}</td>
-                                <td class="py-2" v-if="user.roles[0].name == 'admin'">{{ 'Adm' }}</td>
-                                <td class="py-2" v-if="user.roles[0].name == 'technician'">{{ 'Técnico' }}</td>
-                                <td class="py-2" v-if="user.roles[0].name == 'recepcionist'">{{ 'Recepcionista' }}</td>
-                                <td class="py-2">{{ user.status ? 'ativo' : 'inativo' }}</td>
+                                <td
+                                    class="py-2"
+                                    v-if="user.roles[0].name == 'admin'"
+                                >
+                                    {{ "Adm" }}
+                                </td>
+                                <td
+                                    class="py-2"
+                                    v-if="user.roles[0].name == 'technician'"
+                                >
+                                    {{ "Técnico" }}
+                                </td>
+                                <td
+                                    class="py-2"
+                                    v-if="user.roles[0].name == 'recepcionist'"
+                                >
+                                    {{ "Recepcionista" }}
+                                </td>
+                                <td class="py-2">
+                                    {{ user.status ? "ativo" : "inativo" }}
+                                </td>
                                 <td class="py-2">
                                     <a
                                         :href="route('user.edit', user.id)"
@@ -132,4 +164,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="message"
+        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ message }}
+    </div>
 </template>

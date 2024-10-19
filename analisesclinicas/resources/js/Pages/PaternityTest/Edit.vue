@@ -9,6 +9,10 @@ export default {
         Link,
     },
     props: {
+        error: {
+            type: String,
+            default: null,
+        },
         paternityTest: Object,
     },
     data() {
@@ -34,7 +38,7 @@ export default {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edição do pedido de exame
+                Edição do pedido de exame de paternidade
             </h2>
         </template>
 
@@ -130,4 +134,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="error && showError"
+        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ error }}
+    </div>
 </template>

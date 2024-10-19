@@ -80,10 +80,11 @@ class PatientController extends Controller
                 'biological_sex' => $request->biological_sex,
             ]);
             DB::commit();
-            return redirect()->route('patient.index');
+            return redirect()->route('patient.index')->with("message", "Paciente cadastrado com sucesso.");
         } catch(Exception $e) {
             DB::rollBack();
-            return redirect()->route('patient.create');
+            return Inertia::render('Patient/Create', ["error" => "Não foi possível realizar o cadastro do paciente."]);
+
         }
 
     }
@@ -152,13 +153,13 @@ class PatientController extends Controller
                 'biological_sex' => $request->biological_sex,
             ]);
 
-            return redirect()->route('patient.index');
+            return redirect()->route('patient.index')->with("message", "Dados do paciente atualizados com sucesso.");
         } catch (Exception $e) {
             $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
             ->where('patients.id', $id)
             ->select('patients.id as patient_id', 'patients.*', 'users.*')->first();
 
-            return Inertia::render('Patient/Edit', ['patient' => $patient, "error" => "CPF já está cadastrado no banco"]);
+            return Inertia::render('Patient/Edit', ['patient' => $patient, "error" => "Não foi possível alterar os dados do paciente."]);
         }
     }
 

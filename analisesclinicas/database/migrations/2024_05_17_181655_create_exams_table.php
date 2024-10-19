@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
+            $table->string('type')->default('blood');
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('doctor_id')->constrained();
             $table->string('lab');

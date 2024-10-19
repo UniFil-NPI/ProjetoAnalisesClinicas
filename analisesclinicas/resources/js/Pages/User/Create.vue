@@ -8,6 +8,12 @@ export default {
         AuthenticatedLayout,
         Link,
     },
+    props: {
+        error: {
+            type: String,
+            default: null,
+        },
+    },
     data() {
         return {
             form: useForm({
@@ -119,4 +125,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+        <div
+        v-if="error && showError"
+        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ error }}
+    </div>
 </template>

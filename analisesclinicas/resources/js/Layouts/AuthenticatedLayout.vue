@@ -14,6 +14,9 @@ const isAdm = computed(() => page.props.auth.isAdm);
 
 const isRecepcionist = computed(() => page.props.auth.isRecepcionist);
 
+const isPatient = computed(() => page.props.auth.isPatient);
+
+
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -68,14 +71,13 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink
                                     :href="route('exam.index')"
                                     :active="route().current('exam.index')"
-                                    v-if="isRecepcionist == false"
                                 >
                                     Exames
                                 </NavLink>
                                 <NavLink
                                     :href="route('paternity.index')"
                                     :active="route().current('paterninty.index')"
-                                    v-if="isAdm"
+                                    v-if="isAdm || isPatient"
                                 >
                                     Exames de Paternidade
                                 </NavLink>

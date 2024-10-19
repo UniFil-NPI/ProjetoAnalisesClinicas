@@ -233,7 +233,7 @@ export default {
                                 class="col-span-5 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
                                 type="submit"
                             >
-                                Criar Exame
+                                Criar pedido
                             </button>
                         </div>
                     </form>

@@ -49,10 +49,11 @@ class UserController extends Controller
 
             DB::commit();
 
-            return to_route('user.index');
+            return redirect()->route('user.index')->with("message", "Funcionário cadastrado com sucesso.");
         } catch(Exception $e) {
             DB::rollBack();
-            return to_route('user.create');
+            return Inertia::render('User/Create', ["error" => "Não foi possível realizar o cadastro do funcionário."]);
+
         }
 
     }
@@ -92,11 +93,11 @@ class UserController extends Controller
             ]);
     
     
-            return redirect()->route('user.index');
+            return redirect()->route('user.index')->with("message", "Dados do funcionário atualizados com sucesso.");
         } catch (Exception $e) {
             $user = User::with('roles')->findOrFail($id);
 
-            return Inertia::render('User/Edit', ['user' => $user, "error" => "CPF já está cadastrado no banco"]);
+            return Inertia::render('User/Edit', ['user' => $user, "error" => "Não foi possível realizar a atualização dos dados."]);
         }
     }
 

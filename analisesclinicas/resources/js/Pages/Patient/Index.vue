@@ -8,24 +8,39 @@ export default {
         AuthenticatedLayout,
         Link,
     },
+    props: {
+        flash: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data() {
         return {
             patients: {},
-            search: '',
-
-        }
+            search: "",
+            message:
+                this.flash && this.flash.message ? this.flash.message : null,
+        };
     },
     methods: {
         research() {
-            axios.post(route('patient.search'), {search : this.search}).then(response=>{
-                this.patients = response.data;
-                console.log(this.patients);
-            });
+            axios
+                .post(route("patient.search"), { search: this.search })
+                .then((response) => {
+                    this.patients = response.data;
+                    console.log(this.patients);
+                });
+        },
+        clearMessage() {
+            this.message = null;
         },
     },
-    created() {
+    mounted() {
         this.research();
-    }
+        if (this.message) {
+            setTimeout(this.clearMessage, 5000);
+        }
+    },
 };
 </script>
 <template>
@@ -92,7 +107,10 @@ export default {
                         </Link>
                     </div>
 
-                    <table class="mt-10" v-show="Object.keys(patients).length != 0">
+                    <table
+                        class="mt-10"
+                        v-show="Object.keys(patients).length != 0"
+                    >
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -106,7 +124,7 @@ export default {
                             <tr
                                 v-for="(patient, i) in patients"
                                 :key="i"
-                                class="text-center"
+                                class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
                                 <td class="py-2">{{ patient.patient_id }}</td>
                                 <td class="py-2">{{ patient.name }}</td>
@@ -117,7 +135,12 @@ export default {
                                 <td class="py-2">
                                     <Link
                                         v-if="patient"
-                                        :href="route('patient.edit', patient.patient_id)"
+                                        :href="
+                                            route(
+                                                'patient.edit',
+                                                patient.patient_id
+                                            )
+                                        "
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
@@ -130,4 +153,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="message"
+        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ message }}
+    </div>
 </template>
