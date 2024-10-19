@@ -48,4 +48,9 @@ class Patient extends Model
     {
         return $this->hasMany(Exam::class);
     }
+
+    public function paternityTests(): HasMany
+    {
+        return $this->hasMany(PaternityTest::class);
+    }
 }

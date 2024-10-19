@@ -36,5 +36,19 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123')
         ])->assignRole('patient');
 
+        User::create([
+            'name' => 'pacientetesteAA',
+            'email' => 'pacientetesteAA@gmail.com',
+            'cpf' => '813.070.130-82',
+            'password' => Hash::make('123')
+        ])->assignRole('patient');
+
+        User::create([
+            'name' => 'pacientetesteBB',
+            'email' => 'pacientetesteBB@gmail.com',
+            'cpf' => '952.510.680-26',
+            'password' => Hash::make('123')
+        ])->assignRole('patient');
+
     }
 }

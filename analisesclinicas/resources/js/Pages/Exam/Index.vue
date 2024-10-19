@@ -4,16 +4,22 @@ import { Head, Link } from "@inertiajs/vue3";
 
 export default {
     props: {
-        isAdminOrRecepcionist:{
-            type: Boolean,
-            default: null,
+        flash: {
+            type: Object,
+            default: () => ({}),
         }
+    },
+    computed: {
+        user() {
+            return this.$page.props.auth;
+        },
     },
     data() {
         return {
             search: "",
             exams: [],
             firstSearch: true,
+            message: this.flash && this.flash.message ? this.flash.message : null,
         };
     },
     components: {
@@ -28,23 +34,41 @@ export default {
                 .then((response) => {
                     this.exams = response.data;
                 });
-                this.firstSearch = false;
-            
+            this.firstSearch = false;
         },
+        initialResearch() {
+            axios
+                .post(route("exam.search"), { search: this.search })
+                .then((response) => {
+                    this.exams = response.data;
+                });
+        },
+        clearMessage() {
+            this.message = null;
+        },
+    },
+    mounted() {
+        this.initialResearch();
+        if (this.message) {
+            setTimeout(this.clearMessage, 5000);
+        }
     },
 };
 </script>
 <template>
-    <Head title="Exames" />
+    <Head title="Pedidos de exames" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Exames
+                Pedidos
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto px-10 mt-10" v-if="isAdminOrRecepcionist">
+        <div
+            class="max-w-7xl mx-auto px-10 mt-10"
+            v-if="user.isAdm || user.isRecepcionist"
+        >
             <div class="relative">
                 <div
                     class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -87,23 +111,50 @@ export default {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold">
-                            Gerenciamento de Exames
+                        <h2 class="text-2xl font-bold" v-if="!user.isPatient">
+                            Gerenciamento de Pedidos
                         </h2>
-                        <Link v-if="isAdminOrRecepcionist"
+                        <Link
+                            v-if="user.isAdm || user.isRecepcionist"
                             :href="route('exam.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
-                            Novo exame
+                            Novo Pedido
                         </Link>
                     </div>
-                    <div class="mt-10" v-if="exams.length == 0 && this.firstSearch">
-                        <p class="text-xl font-bold text-red-600">Faça uma busca para aparecer algum exame</p>
+                    <div
+                        class="mt-10"
+                        v-if="
+                            exams.length == 0 &&
+                            this.firstSearch &&
+                            !user.isPatient
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Faça uma busca para aparecer algum pedido
+                        </p>
                     </div>
-                    <div class="mt-10" v-if="exams.length == 0 && !this.firstSearch">
-                        <p class="text-xl font-bold text-red-600">Paciente não encontrado</p>
+                    <div
+                        class="mt-10"
+                        v-if="exams.length == 0 && user.isPatient"
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não possui nenhum pedido
+                        </p>
                     </div>
-                    <table class="mt-10" >
+                    <div
+                        class="mt-10"
+                        v-if="
+                            exams.length == 0 &&
+                            !this.firstSearch &&
+                            !user.isPatient
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Paciente não encontrado
+                        </p>
+                    </div>
+                    <table class="mt-10">
                         <thead v-show="exams.length != 0">
                             <tr>
                                 <th>ID</th>
@@ -117,29 +168,39 @@ export default {
                         </thead>
                         <tbody>
                             <tr
-                                class="text-center"
+                                class="text-center hover:bg-gray-200 transition-all duration-300"
                                 v-for="exam in exams"
                                 :key="exam.id"
                             >
                                 <td class="py-2">{{ exam.id }}</td>
                                 <td class="py-2">{{ exam.patient_name }}</td>
                                 <td class="py-2">{{ exam.doctor_name }}</td>
-                                <td class="py-2">{{ new Date(exam.exam_date).toLocaleDateString() }}</td>
+                                <td class="py-2">
+                                    {{
+                                        new Date(
+                                            exam.exam_date
+                                        ).toLocaleDateString()
+                                    }}
+                                </td>
                                 <td class="py-2 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
-                                    {{ exam.description }}
+                                        {{ exam.description }}
                                     </div>
                                 </td>
-                                <td class="py-2 flex items-center justify-center">
-                                    
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 cursor-pointer">
-                                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                        <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
-                                    </svg>
+                                <td
+                                    class="py-2 flex items-center justify-center"
+                                >
+                                    <p v-if="exam.pdf == null">Indisponível</p>
+                                    <a href="#" v-if="exam.pdf != null"
+                                        >baixar</a
+                                    >
                                 </td>
                                 <td class="py-2">
                                     <Link
-                                        v-if="exam && isAdminOrRecepcionist"
+                                        v-if="
+                                            exam &&
+                                            (user.isAdm || user.isRecepcionist)
+                                        "
                                         :href="route('exam.edit', exam.id)"
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
@@ -153,4 +214,10 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="message"
+        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ message }}
+    </div>
 </template>

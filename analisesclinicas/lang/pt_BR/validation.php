@@ -220,6 +220,8 @@ return [
         'biological_sex' => 'sexo biológico',
         'building_number' => 'número',
         'role' => 'cargo',
+        'lab' => 'laboratório',
+        'exam_date' => 'data do exame'
 
 
     ],

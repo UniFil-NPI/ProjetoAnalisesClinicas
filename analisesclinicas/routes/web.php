@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\PaternityTestController;
 use App\Models\Patient;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -19,11 +22,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
+    
+    //Dashboard
+    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    //Profile
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -89,6 +97,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/doctor/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 
+    //Paternity Routes
+
+    Route::get('/paternitytests', [PaternityTestController::class, 'index'])->name('paternity.index');
+
+    Route::get('/new/paternitytest', [PaternityTestController::class, 'create'])->name('paternity.create');
+
+    Route::post('/create/new/paternitytest', [PaternityTestController::class, 'store'])->name('paternity.store');
+
+    Route::post('/paternitytest/search', [PaternityTestController::class, 'search'])->name('paternity.search');
+
+    Route::get('/paternitytest/edit/{id}', [PaternityTestController::class, 'edit'])->name('paternity.edit');
+
+    Route::post('/paternitytest/update/{id}', [PaternityTestController::class, 'update'])->name('paternity.update');
 
 
 

@@ -34,10 +34,10 @@ class DoctorController extends Controller
                     'crm' => $request->crm,
                 ]);
 
-                return redirect()->route('doctor.index');
+                return redirect()->route('doctor.index')->with("message", "Médico cadastrado com sucesso.");
                 
             } catch(Exception $e) {
-                return Inertia::render('Doctor/Create');
+                return Inertia::render('Doctor/Create', ["error" => "Não foi possível realizar o cadastro do médico."]);
             }            
     }
 
@@ -74,10 +74,10 @@ class DoctorController extends Controller
                 'name' => $request->name,
                 'crm' => $request->crm,
             ]);
-            return redirect()->route('doctor.index');
+            return redirect()->route('doctor.index')->with("message", "Cadastro atualizado com sucesso.");
         } catch (Exception $e) {
             $doctor = Doctor::find($id);
-            return Inertia::render('Doctor/Edit', ['doctor' => $doctor, "error" => "CRM já está cadastrado no banco"]);
+            return Inertia::render('Doctor/Edit', ['doctor' => $doctor, "error" => "Não foi possível realizar as atualizações dos dados do médico."]);
         }
 
     }

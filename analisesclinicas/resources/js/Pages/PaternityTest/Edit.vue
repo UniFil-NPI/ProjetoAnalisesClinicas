@@ -9,36 +9,36 @@ export default {
         Link,
     },
     props: {
-        exam: Object,
         error: {
             type: String,
             default: null,
         },
+        paternityTest: Object,
     },
     data() {
         return {
             form: useForm({
-                lab: this.exam.lab,
-                exam_date: this.exam.exam_date,
-                description: this.exam.description,
-                health_insurance: this.exam.health_insurance,
+                lab: this.paternityTest.lab,
+                exam_date: this.paternityTest.exam_date,
+                description: this.paternityTest.description,
+                health_insurance: this.paternityTest.health_insurance,
             }),
         };
     },
     methods: {
         save() {
-            this.form.post("/exam/update/" + this.exam.id, this.form);
+            this.form.post("/paternitytest/update/" + this.paternityTest.id, this.form);
         },
     },
 };
 </script>
 <template>
-    <Head title="Edição dos pedidos de exames" />
+    <Head title="Edição dos pedidos de teste de paternidade" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pedido de exame
+                Edição do pedido de exame de paternidade
             </h2>
         </template>
 

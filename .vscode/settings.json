@@ -1,0 +1,5 @@
+{
+    "breadcrumbs.enabled": true,
+    "chat.commandCenter.enabled": false,
+    "window.commandCenter": false
+}

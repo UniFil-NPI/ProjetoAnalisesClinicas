@@ -3,32 +3,44 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 
 export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-    },
     props: {
         flash: {
             type: Object,
             default: () => ({}),
         },
     },
+    computed: {
+        user() {
+            return this.$page.props.auth;
+        },
+    },
     data() {
         return {
-            patients: {},
             search: "",
-            message:
-                this.flash && this.flash.message ? this.flash.message : null,
+            paternityTests: [],
+            firstSearch: true,
+            message: this.flash && this.flash.message ? this.flash.message : null,
         };
+    },
+    components: {
+        Head,
+        AuthenticatedLayout,
+        Link,
     },
     methods: {
         research() {
             axios
-                .post(route("patient.search"), { search: this.search })
+                .post(route("paternity.search"), { search: this.search })
                 .then((response) => {
-                    this.patients = response.data;
-                    console.log(this.patients);
+                    this.paternityTests = response.data;
+                });
+            this.firstSearch = false;
+        },
+        initialResearch() {
+            axios
+                .post(route("paternity.search"), { search: this.search })
+                .then((response) => {
+                    this.paternityTests = response.data;
                 });
         },
         clearMessage() {
@@ -36,7 +48,7 @@ export default {
         },
     },
     mounted() {
-        this.research();
+        this.initialResearch();
         if (this.message) {
             setTimeout(this.clearMessage, 5000);
         }
@@ -44,16 +56,16 @@ export default {
 };
 </script>
 <template>
-    <Head title="Pacientes" />
+    <Head title="Pedido de exame de paternidade" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pacientes
+                Pedidos
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto px-10 mt-10">
+        <div class="max-w-7xl mx-auto px-10 mt-10" v-if="!user.isPatient">
             <div class="relative">
                 <div
                     class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -77,9 +89,9 @@ export default {
                 <input
                     type="search"
                     id="search"
+                    v-model="search"
                     class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="CPF do paciente"
-                    v-model="search"
                     v-mask-cpf
                     required
                 />
@@ -97,48 +109,104 @@ export default {
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
-                            Gerenciamento de Pacientes
+                            Gerenciamento de Pedidos
                         </h2>
                         <Link
-                            :href="route('patient.create')"
+                            :href="route('paternity.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
+                            v-if="user.isAdm"
                         >
-                            Novo Paciente
+                            Novo Pedido
                         </Link>
                     </div>
-
-                    <table
+                    <div
                         class="mt-10"
-                        v-show="Object.keys(patients).length != 0"
+                        v-if="
+                            paternityTests.length == 0 &&
+                            this.firstSearch &&
+                            !user.isPatient
+                        "
                     >
-                        <thead>
+                        <p class="text-xl font-bold text-red-600">
+                            Faça uma busca para aparecer algum pedido
+                        </p>
+                    </div>
+                    <div
+                        class="mt-10"
+                        v-if="paternityTests.length == 0 && user.isPatient"
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não possui nenhum pedido
+                        </p>
+                    </div>
+                    <div
+                        class="mt-10"
+                        v-if="
+                            paternityTests.length == 0 &&
+                            !this.firstSearch &&
+                            !user.isPatient
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Paciente não encontrado
+                        </p>
+                    </div>
+
+                    <table class="mt-10">
+                        <thead v-show="paternityTests.length != 0">
                             <tr>
                                 <th>ID</th>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Status</th>
+                                <th>Nome Do Paciente</th>
+                                <th>Data do exame</th>
+                                <th>Descrição</th>
+                                <th>Laudo</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(patient, i) in patients"
-                                :key="i"
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
+                                v-for="paternityTest in paternityTests"
+                                :key="paternityTest.id"
                             >
-                                <td class="py-2">{{ patient.patient_id }}</td>
-                                <td class="py-2">{{ patient.name }}</td>
-                                <td class="py-2">{{ patient.cpf }}</td>
+                                <td class="py-2">{{ paternityTest.id }}</td>
+
                                 <td class="py-2">
-                                    {{ patient.status ? "ativo" : "inativo" }}
+                                    {{ paternityTest.patient_name }}
                                 </td>
+
+                                <td class="py-2">
+                                    {{
+                                        new Date(
+                                            paternityTest.exam_date
+                                        ).toLocaleDateString()
+                                    }}
+                                </td>
+
+                                <td class="py-2 max-w-52">
+                                    <div class="line-clamp-2 break-all mx-auto">
+                                        {{ paternityTest.description }}
+                                    </div>
+                                </td>
+
+                                <td
+                                    class="py-2 flex items-center justify-center"
+                                >
+                                    <p v-if="paternityTest.pdf == null">
+                                        Indisponível
+                                    </p>
+                                    <a href="#" v-if="paternityTest.pdf != null"
+                                        >baixar</a
+                                    >
+                                </td>
+
                                 <td class="py-2">
                                     <Link
-                                        v-if="patient"
+                                        v-if="paternityTest && user.isAdm"
                                         :href="
                                             route(
-                                                'patient.edit',
-                                                patient.patient_id
+                                                'paternity.edit',
+                                                paternityTest.id
                                             )
                                         "
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"

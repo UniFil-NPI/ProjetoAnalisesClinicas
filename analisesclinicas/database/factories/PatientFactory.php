@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PatientFactory extends Factory
 {
+    protected $model = Patient::class;
+
+    protected static $usedUserIds = [];
     /**
      * Define the model's default state.
      *
@@ -17,7 +21,7 @@ class PatientFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 2,
+            'user_id' => $this->getRandomUnusedUserId(),
             'phone_number' => $this->faker->phoneNumber(),
             'post_code' => $this->faker->postcode(),
             'street' => $this->faker->streetAddress(),
@@ -30,5 +34,28 @@ class PatientFactory extends Factory
             'health_insurance' => $this->faker->word(),
             'biological_sex' => $this->faker->word(),
         ];
+    }
+     /**
+     * Get a random user ID that has not been used.
+     *
+     * @return int
+     */
+    protected function getRandomUnusedUserId(): int
+    {
+        // Get all user IDs that are currently associated with patients
+        $usedUserIds = array_merge(self::$usedUserIds, Patient::pluck('user_id')->toArray());
+
+        $allUserIds = range(2, 4); // Ajuste conforme necessário
+        $unusedUserIds = array_diff($allUserIds, $usedUserIds);
+
+        // Continue trying until an unused user ID is found
+        if (empty($unusedUserIds)) {
+            throw new \Exception("Não há mais user IDs disponíveis.");
+        }
+
+        $userId = $this->faker->randomElement($unusedUserIds);
+        self::$usedUserIds[] = $userId; // Track the used user_id
+
+        return $userId;
     }
 }
