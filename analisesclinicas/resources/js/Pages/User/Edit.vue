@@ -1,53 +1,45 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    user: Object,
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        user: Object,
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: this.user.name,
-                email: this.user.email,
-                cpf: this.user.cpf,
-                role: this.user.roles[0].name,
-                status: this.user.status,
-            }),
-            showError: true,
+});
+
+const form = useForm({
+    name: props.user.name,
+    email: props.user.email,
+    cpf: props.user.cpf,
+    role: props.user.roles[0].name,
+    status: props.user.status,
+});
+
+const showError = ref(true);
+
+const save = () => {
+            form.post("/user/update/" + props.user.id, form);
         };
-    },
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-    },
-    methods: {
-        save() {
-            this.form.post("/user/update/" + this.user.id, this.form);
-        },
+const changeStatus = () => {
+            form.status = !form.status;
+        };
 
-        changeStatus() {
-            this.form.status = !this.form.status;
-        },
-    },
-};
+watch(() => props.error, (newValue) => {
+    if (newValue == null) {
+        showError.value = false;
+
+        setTimeout(() => {
+            showError.value = true;
+        }, 2000);
+    }
+});
+
+
 </script>
 <template>
     <Head title="Usuários" />
@@ -136,7 +128,7 @@ export default {
                                 >
                             </div>
                             <div class="col-span-1 flex flex-col gap-2">
-                                <Label>Status</Label>
+                                <label>Status</label>
                                 <label
                                     class="inline-flex items-center cursor-pointer"
                                 >

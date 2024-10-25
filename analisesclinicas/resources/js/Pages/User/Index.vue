@@ -26,7 +26,6 @@ const clearMessage = () => {
 };
 
 onMounted(() => {
-    alert("a")
     research();
     if (message.value) {
         setTimeout(clearMessage, 5000);

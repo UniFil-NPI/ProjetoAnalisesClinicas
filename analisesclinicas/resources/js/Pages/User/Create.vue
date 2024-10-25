@@ -1,34 +1,23 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: "",
-                email: "",
-                cpf: "",
-                role: 0,
-            }),
-        };
-    },
-    methods: {
-        save() {
-            this.form.post("/create/new/user");
-        },
-    },
+});
+
+const form = useForm({
+    name: "",
+    email: "",
+    cpf: "",
+    role: 0,
+});
+
+const save = () => {
+    form.post("/create/new/user");
 };
 </script>
 <template>
@@ -125,7 +114,7 @@ export default {
             </div>
         </div>
     </AuthenticatedLayout>
-        <div
+    <div
         v-if="error && showError"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >

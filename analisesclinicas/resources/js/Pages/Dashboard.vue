@@ -1,28 +1,21 @@
-<script>
+<script setup>
+import { defineProps, computed } from 'vue';
+import { usePage } from '@inertiajs/vue3'; // Supondo que você esteja usando Inertia.js
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    exams: {
+        type: Array,
+        default: null,
     },
-    computed: {
-        user() {
-            return this.$page.props.auth;
-        },
-    },
-    props: {
-        exams: {
-            type: Array,
-            default: null,
-        },
-    },
-    data() {
-        return {};
-    },
-};
+});
+const page = usePage();
+const user = computed(() => {
+            return page.props.auth;
+})
+
+
 </script>
 
 <template>
@@ -39,17 +32,15 @@ export default {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold">
-                            Pedidos Recentes
-                        </h2>
+                        <h2 class="text-2xl font-bold">Pedidos Recentes</h2>
                     </div>
-                    <div class="mt-10" v-if="exams.length == 0">
+                    <div class="mt-10" v-if="props.exams.length == 0">
                         <p class="text-xl font-bold text-red-600">
                             Não possui nenhum pedido
                         </p>
                     </div>
                     <table class="mt-10">
-                        <thead v-show="exams.length != 0">
+                        <thead v-show="props.exams.length != 0">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
@@ -63,7 +54,7 @@ export default {
                         <tbody>
                             <tr
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
-                                v-for="exam in exams"
+                                v-for="exam in props.exams"
                                 :key="exam.id"
                             >
                                 <td class="py-2">{{ exam.id }}</td>
@@ -90,15 +81,13 @@ export default {
                                 <td
                                     class="py-2 flex items-center justify-center"
                                 >
-                                    <p v-if="exam.pdf == null">
-                                        Indisponível
-                                    </p>
+                                    <p v-if="exam.pdf == null">Indisponível</p>
                                     <a href="#" v-if="exam.pdf != null"
                                         >baixar</a
                                     >
                                 </td>
                                 <td class="py-2">
-                                    <Link
+                                    <a
                                         v-if="
                                             exam &&
                                             exam.type == 'blood' &&
@@ -108,8 +97,8 @@ export default {
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
-                                    <Link
+                                    </a>
+                                    <a
                                         v-if="
                                             exam &&
                                             exam.type == 'paternity' &&
@@ -119,7 +108,7 @@ export default {
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
