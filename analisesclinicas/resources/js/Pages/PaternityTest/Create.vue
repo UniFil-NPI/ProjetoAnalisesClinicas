@@ -1,83 +1,72 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
 import AutoComplete from "primevue/autocomplete";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-        AutoComplete,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-        patients: {
-            type: Array,
-        },
+    patients: {
+        type: Array,
     },
-    data() {
-        return {
-            form: useForm({
-                cpf: "",
-                participants: [],
-                lab: "",
-                health_insurance: 0,
-                exam_date: "",
-                description: "",
-            }),
-            showError: true,
-            valuePatientInput: "",
-            items: [],
-        };
-    },
+});
 
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
+const form = useForm({
+    cpf: "",
+    participants: [],
+    lab: "",
+    health_insurance: 0,
+    exam_date: "",
+    description: "",
+});
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-        valuePatientInput(newValue) {
-            if (newValue) {
-                this.form.cpf = newValue.value;
-            }
-        },
-    },
+const showError = ref(true);
+const valuePatientInput = ref("");
+const items = ref([]);
 
-    methods: {
-        save() {
-            this.form.post("/create/new/paternitytest");
-        },
-        searchPatients(event) {
-            this.items = this.patients
-                .filter(
-                    (patient) =>
-                        patient.patient_name
-                            .toLowerCase()
-                            .includes(event.query.toLowerCase()) ||
-                        patient.cpf.includes(event.query.toLowerCase())
-                )
-                .map((patient) => ({
-                    label: `${patient.patient_name} - ${patient.cpf}`,
-                    value: patient.cpf,
-                }));
-        },
-        addParticipant() {
-            this.form.participants.push({ cpf: "", error: null });
-        },
-        updateParticipant(index, value) {
-            this.form.participants[index].cpf = value;
-        },
-    },
+const save = () => {
+    form.post("/create/new/paternitytest");
 };
+
+const searchPatients = (event) => {
+    items.value = props.patients
+        .filter(
+            (patient) =>
+                patient.patient_name
+                    .toLowerCase()
+                    .includes(event.query.toLowerCase()) ||
+                patient.cpf.includes(event.query.toLowerCase())
+        )
+        .map((patient) => ({
+            label: `${patient.patient_name} - ${patient.cpf}`,
+            value: patient.cpf,
+        }));
+};
+const addParticipant = () => {
+    form.participants.push({ cpf: "", error: null });
+};
+const updateParticipant = (update, index) => {
+    form.participants[index].cpf = value;
+};
+
+watch(() => {props.error}, (newValue) => {
+    if (newValue == null) {
+        showError.value = false;
+
+        setTimeout(() => {
+            showError.value = true;
+        }, 2000);
+    }
+});
+
+watch(valuePatientInput, (newValue) => {
+    if (newValue) {
+        form.cpf = newValue.value;
+    }
+});
 </script>
 
 <template>

@@ -1,102 +1,92 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
 import AutoComplete from "primevue/autocomplete";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-        AutoComplete,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-        patients: {
-            type: Array,
-        },
-        doctors: {
-            type: Array,
-        },
+    patients: {
+        type: Array,
     },
-    data() {
-        return {
-            form: useForm({
-                cpf: "",
-                crm: "",
-                lab: "",
-                health_insurance: 0,
-                exam_date: "",
-                description: "",
-            }),
-            showError: true,
-            valuePatientInput: "",
-            valueDoctorInput: "",
-            items: [],
-        };
+    doctors: {
+        type: Array,
     },
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
+});
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-        valuePatientInput(newValue)
-        {
-            if(newValue){
-                this.form.cpf = newValue.value;
-            }
-        },
-        valueDoctorInput(newValue)
-        {
-            if(newValue){
-                this.form.crm = newValue.value;
-            }
-        },
-    },
-    methods: {
-        save() {
-            this.form.post("/create/new/exam");
-        },
-        searchPatients(event) {
-            this.items = this.patients
-                .filter(
-                    (patient) =>
-                        patient.patient_name
-                            .toLowerCase()
-                            .includes(event.query.toLowerCase()) ||
-                        patient.cpf.includes(event.query.toLowerCase())
-                )
-                .map((patient) => ({
-                    label: `${patient.patient_name} - ${patient.cpf}`,
-                    value: patient.cpf
-                }));
-        },
-        searchDoctors(event) {
-            this.items = this.doctors
-                .filter(
-                    (doctor) =>
-                        doctor.name
-                            .toLowerCase()
-                            .includes(event.query.toLowerCase()) ||
-                        doctor.crm.toLowerCase().includes(
-                            event.query.toLowerCase()
-                        )
-                )
-                .map((doctor) => ({
-                    label: `${doctor.name} - ${doctor.crm}`,
-                    value: doctor.crm
-                }));
-        },
-    },
+const form = useForm({
+    cpf: "",
+    crm: "",
+    lab: "",
+    health_insurance: 0,
+    exam_date: "",
+    description: "",
+});
+const showError = ref(true);
+const valuePatientInput = ref("");
+const valueDoctorInput = ref("");
+const items = ref([]);
+
+const searchPatients = (event) => {
+    items.value = props.patients
+        .filter(
+            (patient) =>
+                patient.patient_name
+                    .toLowerCase()
+                    .includes(event.query.toLowerCase()) ||
+                patient.cpf.includes(event.query.toLowerCase())
+        )
+        .map((patient) => ({
+            label: `${patient.patient_name} - ${patient.cpf}`,
+            value: patient.cpf,
+        }));
 };
+
+const searchDoctors = (event) => {
+    items.value = props.doctors
+        .filter(
+            (doctor) =>
+                doctor.name.toLowerCase().includes(event.query.toLowerCase()) ||
+                doctor.crm.toLowerCase().includes(event.query.toLowerCase())
+        )
+        .map((doctor) => ({
+            label: `${doctor.name} - ${doctor.crm}`,
+            value: doctor.crm,
+        }));
+};
+
+const save = () => {
+    form.post("/create/new/exam");
+};
+
+watch(
+    () => {
+        props.error;
+    },
+    (newValue) => {
+        if (newValue == null) {
+            showError.value = false;
+
+            setTimeout(() => {
+                showError.value = true;
+            }, 2000);
+        }
+    }
+);
+watch(valuePatientInput, (newValue) => {
+    if (newValue) {
+        form.cpf = newValue.value;
+    }
+});
+
+watch(valueDoctorInput, (newValue) => {
+    if (newValue) {
+        form.crm = newValue.value;
+    }
+});
 </script>
 
 <template>
@@ -250,24 +240,24 @@ export default {
     </div>
 </template>
 <style>
-    .p-autocomplete-input {
-        width: 100% !important;
-    }
+.p-autocomplete-input {
+    width: 100% !important;
+}
 
-    .p-autocomplete-overlay {
-        margin-top: 6px;
-        background-color: #fff !important;
-        width: 22.8vw;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
+.p-autocomplete-overlay {
+    margin-top: 6px;
+    background-color: #fff !important;
+    width: 22.8vw;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
-    .p-autocomplete-overlay > ul > li:hover{
-        background-color: #d4d4d4 !important;
-        padding-left: 3px;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
+.p-autocomplete-overlay > ul > li:hover {
+    background-color: #d4d4d4 !important;
+    padding-left: 3px;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 </style>
 
 <style scoped>
@@ -275,5 +265,3 @@ export default {
     height: 2.5rem;
 }
 </style>
-
-

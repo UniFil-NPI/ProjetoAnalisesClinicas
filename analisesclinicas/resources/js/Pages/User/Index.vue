@@ -31,8 +31,6 @@ onMounted(() => {
         setTimeout(clearMessage, 5000);
     }
 });
-
-watch(search, research);    
 </script>
 <template>
     <Head title="Funcionários" />

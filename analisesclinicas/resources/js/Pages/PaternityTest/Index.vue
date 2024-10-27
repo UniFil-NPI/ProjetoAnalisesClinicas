@@ -1,59 +1,51 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, usePage } from "@inertiajs/vue3";
+import { computed, onMounted, ref } from 'vue';
 
-export default {
-    props: {
+const props = defineProps({
         flash: {
             type: Object,
-            default: () => ({}),
-        },
-    },
-    computed: {
-        user() {
-            return this.$page.props.auth;
-        },
-    },
-    data() {
-        return {
-            search: "",
-            paternityTests: [],
-            firstSearch: true,
-            message: this.flash && this.flash.message ? this.flash.message : null,
-        };
-    },
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-    },
-    methods: {
-        research() {
-            axios
-                .post(route("paternity.search"), { search: this.search })
-                .then((response) => {
-                    this.paternityTests = response.data;
-                });
-            this.firstSearch = false;
-        },
-        initialResearch() {
-            axios
-                .post(route("paternity.search"), { search: this.search })
-                .then((response) => {
-                    this.paternityTests = response.data;
-                });
-        },
-        clearMessage() {
-            this.message = null;
-        },
-    },
-    mounted() {
-        this.initialResearch();
-        if (this.message) {
-            setTimeout(this.clearMessage, 5000);
+            default: () => ({})
         }
-    },
+});
+
+const page = usePage();
+const user = computed(() => {return page.props.auth});
+
+const search = ref("");
+const paternityTests = ref([]);
+const firstSearch = ref(true);
+const message = ref(props.flash && props.flash.message ? props.flash.message : null);
+
+const research = () => {
+axios
+                .post(route("paternity.search"), { search: search.value })
+                .then((response) => {
+                    paternityTests.value = response.data;
+                });
+            firstSearch.value = false;
 };
+
+const initialResearch = () => {
+            axios
+                .post(route("paternity.search"), { search: search.value })
+                .then((response) => {
+                    paternityTests.value = response.data;
+                });
+};
+
+const clearMessage = () => {
+    message.value = null;
+};
+
+onMounted(() => {
+    initialResearch();
+    if (message.value) {
+        setTimeout(clearMessage, 5000);
+    }
+})
+
 </script>
 <template>
     <Head title="Pedido de exame de paternidade" />
@@ -111,19 +103,19 @@ export default {
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Pedidos
                         </h2>
-                        <Link
+                        <a
                             :href="route('paternity.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                             v-if="user.isAdm"
                         >
                             Novo Pedido
-                        </Link>
+                        </a>
                     </div>
                     <div
                         class="mt-10"
                         v-if="
                             paternityTests.length == 0 &&
-                            this.firstSearch &&
+                            firstSearch &&
                             !user.isPatient
                         "
                     >
@@ -143,7 +135,7 @@ export default {
                         class="mt-10"
                         v-if="
                             paternityTests.length == 0 &&
-                            !this.firstSearch &&
+                            !firstSearch &&
                             !user.isPatient
                         "
                     >
@@ -201,7 +193,7 @@ export default {
                                 </td>
 
                                 <td class="py-2">
-                                    <Link
+                                    <a
                                         v-if="paternityTest && user.isAdm"
                                         :href="
                                             route(
@@ -212,7 +204,7 @@ export default {
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

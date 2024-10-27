@@ -1,46 +1,41 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    doctor: Object,
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        doctor: Object,
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: this.doctor.name,
-                crm: this.doctor.crm,
-            }),
-            showError: true,
-        };
-    },
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
+});
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-    },
-    methods: {
-        save() {
-            this.form.post("/doctor/update/" + this.doctor.id, this.form);
-        },
-    },
+const form = useForm({
+    name: props.doctor.name,
+    crm: props.doctor.crm,
+});
+
+const showError = ref(true);
+
+const save = () => {
+    form.post("/doctor/update/" + props.doctor.id, form);
 };
+
+watch(
+    () => {
+        props.error;
+    },
+    (newValue) => {
+        if (newValue == null) {
+            showError.value = false;
+
+            setTimeout(() => {
+                showError.value = true;
+            }, 2000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Medicos" />

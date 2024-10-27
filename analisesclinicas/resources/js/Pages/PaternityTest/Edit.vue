@@ -1,36 +1,38 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-        paternityTest: Object,
-    },
-    data() {
-        return {
-            form: useForm({
-                lab: this.paternityTest.lab,
-                exam_date: this.paternityTest.exam_date,
-                description: this.paternityTest.description,
-                health_insurance: this.paternityTest.health_insurance,
-            }),
-        };
-    },
-    methods: {
-        save() {
-            this.form.post("/paternitytest/update/" + this.paternityTest.id, this.form);
-        },
-    },
+    paternityTest: Object,
+});
+
+const form = useForm({
+    lab: paternityTest.lab,
+    exam_date: paternityTest.exam_date,
+    description: paternityTest.description,
+    health_insurance: paternityTest.health_insurance,
+});
+
+const showError = ref(true);
+
+const save = () => {
+    form.post("/paternitytest/update/" + paternityTest.id, form);
 };
+
+watch(() => props.error, (newValue) => {
+    if (newValue == null) {
+        showError.value = false;
+
+        setTimeout(() => {
+            showError.value = true;
+        }, 2000);
+    }
+});
 </script>
 <template>
     <Head title="Edição dos pedidos de teste de paternidade" />
@@ -47,7 +49,9 @@ export default {
                 <div
                     class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
                 >
-                    <h2 class="text-2xl font-bold">Editar pedido do paciente</h2>
+                    <h2 class="text-2xl font-bold">
+                        Editar pedido do paciente
+                    </h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
                             <div class="col-span-2 flex flex-col gap-2">

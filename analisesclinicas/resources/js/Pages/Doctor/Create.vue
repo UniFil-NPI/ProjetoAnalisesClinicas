@@ -1,33 +1,24 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: "",
-                crm: "",
-            }),
-            showError: true,
-        };
-    },
-    methods: {
-        save() {
-            this.form.post("/create/new/doctor");
-        },
-    },
+});
+
+const form = useForm({
+    name: "",
+    crm: "",
+});
+
+const showError = ref(true);
+
+const save = () => {
+    form.post("/create/new/doctor");
 };
 </script>
 

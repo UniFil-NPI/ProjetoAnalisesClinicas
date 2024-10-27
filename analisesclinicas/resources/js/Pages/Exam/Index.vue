@@ -1,59 +1,55 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
+import { computed, onMounted, ref } from "vue";
 
-export default {
-    props: {
-        flash: {
-            type: Object,
-            default: () => ({}),
-        }
+const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
-    computed: {
-        user() {
-            return this.$page.props.auth;
-        },
-    },
-    data() {
-        return {
-            search: "",
-            exams: [],
-            firstSearch: true,
-            message: this.flash && this.flash.message ? this.flash.message : null,
-        };
-    },
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-    },
-    methods: {
-        research() {
-            axios
-                .post(route("exam.search"), { search: this.search })
-                .then((response) => {
-                    this.exams = response.data;
-                });
-            this.firstSearch = false;
-        },
-        initialResearch() {
-            axios
-                .post(route("exam.search"), { search: this.search })
-                .then((response) => {
-                    this.exams = response.data;
-                });
-        },
-        clearMessage() {
-            this.message = null;
-        },
-    },
-    mounted() {
-        this.initialResearch();
-        if (this.message) {
-            setTimeout(this.clearMessage, 5000);
-        }
-    },
+});
+
+const page = usePage();
+const user = computed(() => {
+    return page.props.auth;
+});
+
+const search = ref("");
+const exams = ref([]);
+const firstSearch = ref(true);
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+
+const research = () => {
+    axios
+        .post(route("exam.search"), { search: search.value })
+        .then((response) => {
+            exams.value = response.data;
+        });
+    firstSearch.value = false;
 };
+
+const initialResearch = () => {
+    axios
+        .post(route("exam.search"), { search: search.value })
+        .then((response) => {
+            exams.value = response.data;
+        });
+};
+
+const clearMessage = () => {
+    message.value = null;
+};
+
+onMounted(() => {
+    initialResearch();
+    if (message.value) {
+        setTimeout(clearMessage, 5000);
+    }
+});
+
 </script>
 <template>
     <Head title="Pedidos de exames" />
@@ -114,19 +110,19 @@ export default {
                         <h2 class="text-2xl font-bold" v-if="!user.isPatient">
                             Gerenciamento de Pedidos
                         </h2>
-                        <Link
+                        <a
                             v-if="user.isAdm || user.isRecepcionist"
                             :href="route('exam.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
                             Novo Pedido
-                        </Link>
+                        </a>
                     </div>
                     <div
                         class="mt-10"
                         v-if="
                             exams.length == 0 &&
-                            this.firstSearch &&
+                            firstSearch &&
                             !user.isPatient
                         "
                     >
@@ -146,7 +142,7 @@ export default {
                         class="mt-10"
                         v-if="
                             exams.length == 0 &&
-                            !this.firstSearch &&
+                            !firstSearch &&
                             !user.isPatient
                         "
                     >
@@ -196,7 +192,7 @@ export default {
                                     >
                                 </td>
                                 <td class="py-2">
-                                    <Link
+                                    <a
                                         v-if="
                                             exam &&
                                             (user.isAdm || user.isRecepcionist)
@@ -205,7 +201,7 @@ export default {
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

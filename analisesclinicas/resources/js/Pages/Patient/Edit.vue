@@ -1,72 +1,63 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    patient: Object,
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        patient: Object,
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: this.patient.name,
-                email: this.patient.email,
-                cpf: this.patient.cpf,
-                post_code: this.patient.post_code,
-                phone_number: this.patient.phone_number,
-                street: this.patient.street,
-                building_number: this.patient.building_number,
-                secondary_address: this.patient.secondary_address,
-                city: this.patient.city,
-                state: this.patient.state,
-                neighborhood: this.patient.neighborhood,
-                birth_date: this.patient.birth_date,
-                health_insurance: this.patient.health_insurance,
-                biological_sex: this.patient.biological_sex,
-                status: this.patient.status,
-            }),
-            showError: true,
-        };
-    },
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
+});
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-    },
-    methods: {
-        save() {
-            this.form.post(
-                "/patient/update/" + this.patient.patient_id,
-                this.form
-            );
-        },
-        async getCep() {
-            let response = await axios.get(route("cep", this.form.post_code));
-            this.form.city = response.data.localidade;
-            this.form.state = response.data.uf;
-            this.form.street = response.data.logradouro;
-            this.form.neighborhood = response.data.bairro;
-        },
-        changeStatus() {
-            this.form.status = !this.form.status;
-        },
-    },
+const form = useForm({
+    name: props.patient.name,
+    email: props.patient.email,
+    cpf: props.patient.cpf,
+    post_code: props.patient.post_code,
+    phone_number: props.patient.phone_number,
+    street: props.patient.street,
+    building_number: props.patient.building_number,
+    secondary_address: props.patient.secondary_address,
+    city: props.patient.city,
+    state: props.patient.state,
+    neighborhood: props.patient.neighborhood,
+    birth_date: props.patient.birth_date,
+    health_insurance: props.patient.health_insurance,
+    biological_sex: props.patient.biological_sex,
+    status: props.patient.status,
+});
+
+const showError = ref(true);
+
+const save = () => {
+    form.post("/patient/update/" + props.patient.patient_id, form);
 };
+
+const getCep = async () => {
+    let response = await axios.get(route("cep", form.post_code));
+    form.city = response.data.localidade;
+    form.state = response.data.uf;
+    form.street = response.data.logradouro;
+    form.neighborhood = response.data.bairro;
+};
+const changeStatus = () => {
+    form.status = !form.status;
+};
+
+watch(
+    () => props.error,
+    (newValue) => {
+        if (newValue == null) {
+            showError = false;
+
+            setTimeout(() => {
+                showError = true;
+            }, 2000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Pacientes" />

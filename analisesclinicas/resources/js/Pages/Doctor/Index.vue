@@ -1,45 +1,39 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+import { onMounted, ref } from "vue";
 
-export default {
-    props: {
-        flash: {
-            type: Object,
-            default: () => ({}),
-        },
+const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
-    data() {
-        return {
-            search: "",
-            doctors: [],
-            message: this.flash && this.flash.message ? this.flash.message : null,
-        };
-    },
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-    },
-    methods: {
-        research() {
-            axios
-                .post(route("doctor.search"), { search: this.search })
-                .then((response) => {
-                    this.doctors = response.data;
-                });
-        },
-        clearMessage() {
-            this.message = null;
-        },
-    },
-    mounted() {
-        this.research();
-        if (this.message) {
-            setTimeout(this.clearMessage, 5000);
-        }
-    },
+});
+
+const search = ref("");
+const doctors = ref([]);
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+
+const research = () => {
+    axios
+        .post(route("doctor.search"), { search: search.value })
+        .then((response) => {
+            doctors.value = response.data;
+        });
 };
+
+const clearMessage = () => {
+    message.value = null;
+};
+
+onMounted(() => {
+    research();
+    if (message.value) {
+        setTimeout(clearMessage, 5000);
+    }
+});
 </script>
 <template>
     <Head title="Medicos" />
@@ -96,12 +90,12 @@ export default {
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Médicos
                         </h2>
-                        <Link
+                        <a
                             :href="route('doctor.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
                             Novo médico
-                        </Link>
+                        </a>
                     </div>
 
                     <table class="mt-10">
@@ -125,13 +119,13 @@ export default {
                                     {{ doctor.crm }}
                                 </td>
                                 <td class="py-2">
-                                    <Link
+                                    <a
                                         v-if="doctor"
                                         :href="route('doctor.edit', doctor.id)"
                                         class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

@@ -1,35 +1,24 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    exam: Object,
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        exam: Object,
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                lab: this.exam.lab,
-                exam_date: this.exam.exam_date,
-                description: this.exam.description,
-                health_insurance: this.exam.health_insurance,
-            }),
-        };
-    },
-    methods: {
-        save() {
-            this.form.post("/exam/update/" + this.exam.id, this.form);
-        },
-    },
+});
+
+const form = useForm({
+    lab: props.exam.lab,
+    exam_date: props.exam.exam_date,
+    description: props.exam.description,
+    health_insurance: props.exam.health_insurance,
+});
+
+const save = () => {
+    form.post("/exam/update/" + props.exam.id, form);
 };
 </script>
 <template>
@@ -47,7 +36,9 @@ export default {
                 <div
                     class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
                 >
-                    <h2 class="text-2xl font-bold">Editar pedido do paciente</h2>
+                    <h2 class="text-2xl font-bold">
+                        Editar pedido do paciente
+                    </h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
                             <div class="col-span-2 flex flex-col gap-2">
