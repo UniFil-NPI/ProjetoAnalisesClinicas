@@ -2,7 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import AutoComplete from "primevue/autocomplete";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const props = defineProps({
     error: {
@@ -23,12 +23,14 @@ const form = useForm({
     description: "",
 });
 
-const showError = ref(true);
 const valuePatientInput = ref("");
 const items = ref([]);
 
+const errorMessage = ref(null);
+
 const save = () => {
     form.post("/create/new/paternitytest");
+    errorMessage.value = props.error;
 };
 
 const searchPatients = (event) => {
@@ -52,21 +54,25 @@ const updateParticipant = (update, index) => {
     form.participants[index].cpf = value;
 };
 
-watch(() => {props.error}, (newValue) => {
-    if (newValue == null) {
-        showError.value = false;
+const clearError = () => {
+    errorMessage.value = null;
+}
 
-        setTimeout(() => {
-            showError.value = true;
-        }, 2000);
-    }
-});
+
 
 watch(valuePatientInput, (newValue) => {
     if (newValue) {
         form.cpf = newValue.value;
     }
 });
+
+watch(() => errorMessage.value, (newError) => {
+    errorMessage.value = newError;
+    if (newError) {
+        setTimeout(clearError, 5000);
+    }
+});
+
 </script>
 
 <template>
@@ -234,10 +240,10 @@ watch(valuePatientInput, (newValue) => {
     </AuthenticatedLayout>
 
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>
 

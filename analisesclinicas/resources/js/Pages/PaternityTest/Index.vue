@@ -44,7 +44,7 @@ onMounted(() => {
     if (message.value) {
         setTimeout(clearMessage, 5000);
     }
-})
+});
 
 </script>
 <template>

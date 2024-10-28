@@ -6,7 +6,9 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\PaternityTestController;
+use App\Models\ExamType;
 use App\Models\Patient;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +22,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
 
 
 
@@ -111,6 +113,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/paternitytest/update/{id}', [PaternityTestController::class, 'update'])->name('paternity.update');
 
+    //Exam Types Routes
+
+    Route::get('/typesofexam', [ExamTypeController::class, 'index'])->name('type.index');
+
+    Route::get('/new/typesofexam', [ExamTypeController::class, 'create'])->name('type.create');
+
+    Route::post('/create/new/typesofexam', [ExamTypeController::class, 'store'])->name('type.store');
+
+    Route::post('/typesofexam/search', [ExamTypeController::class, 'search'])->name('type.search');
+
+    Route::get('/typesofexam/edit/{id}', [ExamTypeController::class, 'edit'])->name('type.edit');
+
+    Route::post('/typesofexam/update/{id}', [ExamTypeController::class, 'update'])->name('type.update');
 
 
 });

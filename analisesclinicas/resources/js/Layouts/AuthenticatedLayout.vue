@@ -16,7 +16,6 @@ const isRecepcionist = computed(() => page.props.auth.isRecepcionist);
 
 const isPatient = computed(() => page.props.auth.isPatient);
 
-
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -30,7 +29,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('welcome')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
@@ -48,11 +47,19 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink
-                                    :href="route('user.index')"
-                                    :active="route().current('user.index')"
-                                    v-if="isAdm"
+                                    :href="route('exam.index')"
+                                    :active="route().current('exam.index')"
                                 >
-                                    Funcionários
+                                    Exames
+                                </NavLink>
+                                <NavLink
+                                    :href="route('paternity.index')"
+                                    :active="
+                                        route().current('paterninty.index')
+                                    "
+                                    v-if="isAdm || isPatient"
+                                >
+                                    Exames de Paternidade
                                 </NavLink>
                                 <NavLink
                                     :href="route('patient.index')"
@@ -69,17 +76,18 @@ const showingNavigationDropdown = ref(false);
                                     Médicos
                                 </NavLink>
                                 <NavLink
-                                    :href="route('exam.index')"
-                                    :active="route().current('exam.index')"
+                                    :href="route('user.index')"
+                                    :active="route().current('user.index')"
+                                    v-if="isAdm"
                                 >
-                                    Exames
+                                    Funcionários
                                 </NavLink>
                                 <NavLink
-                                    :href="route('paternity.index')"
-                                    :active="route().current('paterninty.index')"
-                                    v-if="isAdm || isPatient"
+                                    :href="route('type.index')"
+                                    :active="route().current('type.index')"
+                                    v-if="isAdm"
                                 >
-                                    Exames de Paternidade
+                                    Tipos de Exames
                                 </NavLink>
                             </div>
                         </div>

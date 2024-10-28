@@ -221,8 +221,8 @@ return [
         'building_number' => 'número',
         'role' => 'cargo',
         'lab' => 'laboratório',
-        'exam_date' => 'data do exame'
-
+        'exam_date' => 'data do exame',
+        'state' => 'estado',
 
     ],
 

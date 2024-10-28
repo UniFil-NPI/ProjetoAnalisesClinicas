@@ -72,7 +72,7 @@ watch(
 
             setTimeout(() => {
                 showError.value = true;
-            }, 2000);
+            }, 5000);
         }
     }
 );

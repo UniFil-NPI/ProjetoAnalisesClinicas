@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Facade;
 use Inertia\Inertia;
 use LaravelLegends\PtBrValidator\Rules\Cpf;
 
+use function PHPUnit\Framework\throwException;
+
 class PaternityTestController extends Controller
 {
     public function index()
@@ -46,7 +48,9 @@ class PaternityTestController extends Controller
             foreach ($request->participants as $participant) {
                 array_push($formated_participants_list, $participant['cpf']['value']);
             }
-
+            if (count($formated_participants_list) == 0) {
+                throw new Exception('Não foi adicionado nenhum participante');
+            }
             $participants_json = json_encode($formated_participants_list);
 
             $patient->paternityTests()->create([
@@ -59,8 +63,15 @@ class PaternityTestController extends Controller
 
             return redirect()->route('paternity.index')->with("message", "Pedido cadastrado com sucesso.");
         } catch (Exception $e) {
-            $patients = Patient::all();
-            return Inertia::render('PaternityTest/Create', ["error" => "Não foi possível realizar o cadastro do pedido.", 'patients' => $patients]);
+
+            $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
+            ->get();
+
+            return Inertia::render('PaternityTest/Create', [
+                'error' => $e->getMessage() == "Não foi adicionado nenhum participante"? $e->getMessage() : 'Não foi possível salvar o novo pedido: ',
+                'patients' => $patients,
+            ]);
         }
     }
 

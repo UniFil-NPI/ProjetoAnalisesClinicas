@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('type')->default('blood');
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('doctor_id')->constrained();
+            $table->foreignId('exam_type_id')->constrained();
             $table->string('lab');
             $table->string('health_insurance');
             $table->timestamp('exam_date');
             $table->longText('description');
             $table->string('pdf')->nullable();
+            $table->string('state')->default('analyzing');
             $table->timestamps();
             $table->softDeletes();
         });
