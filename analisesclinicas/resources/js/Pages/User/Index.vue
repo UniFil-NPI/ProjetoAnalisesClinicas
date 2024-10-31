@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted, watch, defineProps } from 'vue';
+import { ref, onMounted, watch, defineProps } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import axios from 'axios';
+import axios from "axios";
 
 const props = defineProps({
     flash: {
@@ -13,12 +13,15 @@ const props = defineProps({
 
 const users = ref([]);
 const search = ref("");
-const message = ref(props.flash.message || null);
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+const status = ref("");
 
 const research = () => {
-    axios.post("/user/search", { search: search.value })
-    .then((response) => {
-        users.value = response.data;
+    axios.post("/user/search", { search: search.value }).then((response) => {
+        users.value = response.data.result;
+        status.value = response.data.status;
     });
 };
 const clearMessage = () => {
@@ -96,7 +99,20 @@ onMounted(() => {
                         </a>
                     </div>
 
-                    <table class="mt-10">
+                    <div
+                        class="mt-10"
+                        v-if="
+                            users.length == 0 &&
+                            status == 'employee not found'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum funcionário cadastrado que
+                            corresponde com sua busca.
+                        </p>
+                    </div>
+
+                    <table class="mt-10" v-if="users.length != 0">
                         <thead>
                             <tr>
                                 <th>ID</th>

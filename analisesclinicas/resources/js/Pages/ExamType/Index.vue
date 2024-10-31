@@ -8,10 +8,6 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
-    error: {
-        type: String,
-        default: null,
-    },
 });
 
 const search = ref("");
@@ -19,12 +15,14 @@ const examTypes = ref([]);
 const message = ref(
     props.flash && props.flash.message ? props.flash.message : null
 );
+const status = ref("");
 
 const research = () => {
     axios
         .post(route("type.search"), { search: search.value })
         .then((response) => {
-            examTypes.value = response.data;
+            examTypes.value = response.data.result;
+            status.value = response.data.status;
         });
 };
 
@@ -32,17 +30,10 @@ const clearMessage = () => {
     message.value = null;
 };
 
-const clearError = () => {
-    props.error = null;
-};
-
 onMounted(() => {
     research();
     if (message.value) {
         setTimeout(clearMessage, 5000);
-    }
-    if (props.error) {
-        setTimeout(clearError, 5000);
     }
 });
 </script>
@@ -83,8 +74,7 @@ onMounted(() => {
                     id="search"
                     v-model="search"
                     class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="CPF do paciente"
-                    v-mask-cpf
+                    placeholder="Nome do tipo de exame"
                     required
                 />
                 <button
@@ -110,6 +100,29 @@ onMounted(() => {
                             Novo Tipo
                         </a>
                     </div>
+
+                    <div
+                        class="mt-10"
+                        v-if="
+                            examTypes.length == 0 && status == 'there is no types of exam registered'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum tipo de exame cadastrado no momento.
+                        </p>
+                    </div>
+
+                    <div
+                        class="mt-10"
+                        v-if="
+                            examTypes.length == 0 && status == 'exam types not found'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum tipo de exame cadastrado que corresponde com sua busca.
+                        </p>
+                    </div>
+
                     <table class="mt-10">
                         <thead v-show="examTypes.length != 0">
                             <tr>
@@ -146,11 +159,5 @@ onMounted(() => {
         class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
     >
         {{ message }}
-    </div>
-    <div
-        v-if="error"
-        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
-    >
-        {{ error }}
     </div>
 </template>

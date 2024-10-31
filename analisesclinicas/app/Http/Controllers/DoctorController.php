@@ -27,32 +27,53 @@ class DoctorController extends Controller
             'name' => 'required',
             'crm' => 'required|unique:doctors,crm',
         ]);
-        
-            try {
-                Doctor::create([
-                    'name' => $request->name,
-                    'crm' => $request->crm,
-                ]);
 
-                return redirect()->route('doctor.index')->with("message", "Médico cadastrado com sucesso.");
-                
-            } catch(Exception $e) {
-                return Inertia::render('Doctor/Create', ["error" => "Não foi possível realizar o cadastro do médico."]);
-            }            
+        try {
+            Doctor::create([
+                'name' => $request->name,
+                'crm' => $request->crm,
+            ]);
+
+            return redirect()->route('doctor.index')->with("message", "Médico cadastrado com sucesso.");
+        } catch (Exception $e) {
+            return Inertia::render('Doctor/Create', ["error" => "Não foi possível realizar o cadastro do médico."]);
+        }
     }
 
     public function search(Request $request)
     {
-        if($request->search == '') {
-           return Doctor::select('doctors.*')->orderBy('id', 'desc')->get();
+        $result = [];
+        $allDoctors = Doctor::all();
+
+        if (count($allDoctors) == 0) {
+            return [
+                "result" => $result,
+                "status" => "There is no doctors registered",
+            ];
         }
 
-        $search = strtolower($request->search);
+        if ($request->search == '') {
+            $result = Doctor::select('doctors.*')->orderBy('id', 'desc')->get();
+        } else {
+            $search = strtolower($request->search);
 
-        $result = Doctor::select('doctors.*')
-                ->whereRaw('LOWER(doctors.name) LIKE ?', '%'.$search.'%')->orderBy('id', 'desc')->get();
+            $doctors = Doctor::select('doctors.*')
+                ->whereRaw('LOWER(doctors.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->get();
 
-        return $result;
+            if (count($doctors) == 0) {
+                return [
+                    "result" => $result,
+                    "status" => "doctor not found"
+                ];
+            }
+
+            $result = $doctors;
+        }
+
+        return [
+            "result" => $result,
+            "status" => "ok",
+        ];
     }
 
     public function edit($id)
@@ -69,7 +90,7 @@ class DoctorController extends Controller
             'name' => 'required',
             'crm' => 'required',
         ]);
-        try{
+        try {
             Doctor::find($id)->update([
                 'name' => $request->name,
                 'crm' => $request->crm,
@@ -79,6 +100,5 @@ class DoctorController extends Controller
             $doctor = Doctor::find($id);
             return Inertia::render('Doctor/Edit', ['doctor' => $doctor, "error" => "Não foi possível realizar as atualizações dos dados do médico."]);
         }
-
     }
 }

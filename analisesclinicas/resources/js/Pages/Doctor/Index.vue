@@ -8,10 +8,6 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
-    error: {
-        type: String,
-        default: null,
-    },
 });
 
 const search = ref("");
@@ -19,12 +15,14 @@ const doctors = ref([]);
 const message = ref(
     props.flash && props.flash.message ? props.flash.message : null
 );
+const status = ref("");
 
 const research = () => {
     axios
         .post(route("doctor.search"), { search: search.value })
         .then((response) => {
-            doctors.value = response.data;
+            doctors.value = response.data.result;
+            status.value = response.data.status;
         });
 };
 
@@ -101,6 +99,26 @@ onMounted(() => {
                             Novo médico
                         </a>
                     </div>
+                    <div
+                        class="mt-10"
+                        v-if="
+                            doctors.length == 0 && status == 'There is no doctors registered'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não tem nenhum médico cadastrado no momento.
+                        </p>
+                    </div>
+                    <div
+                        class="mt-10"
+                        v-if="
+                            doctors.length == 0 && status == 'doctor not found'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum médico cadastrado que corresponde com sua busca.
+                        </p>
+                    </div>
 
                     <table class="mt-10">
                         <thead v-show="doctors.length != 0">
@@ -143,11 +161,5 @@ onMounted(() => {
         class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
     >
         {{ message }}
-    </div>
-    <div
-        v-if="errorMessage"
-        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
-    >
-        {{ errorMessage }}
     </div>
 </template>

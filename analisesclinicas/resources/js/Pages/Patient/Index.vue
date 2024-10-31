@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
     flash: {
@@ -10,17 +10,19 @@ const props = defineProps({
     },
 });
 
-const patients = ref({});
+const patients = ref([]);
 const search = ref("");
 const message = ref(
     props.flash && props.flash.message ? props.flash.message : null
 );
+const status = ref("");
 
 const research = () => {
     axios
         .post(route("patient.search"), { search: search.value })
         .then((response) => {
-            patients.value = response.data;
+            patients.value = response.data.result;
+            status.value = response.data.status;
         });
 };
 
@@ -99,9 +101,35 @@ onMounted(() => {
                         </a>
                     </div>
 
+                    <div
+                        class="mt-10"
+                        v-if="
+                            patients.length == 0 &&
+                            status == 'there is no patients registered'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum paciente cadastrado no
+                            momento.
+                        </p>
+                    </div>
+
+                    <div
+                        class="mt-10"
+                        v-if="
+                            patients.length == 0 &&
+                            status == 'patient not found'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum paciente cadastrado que
+                            corresponde com sua busca.
+                        </p>
+                    </div>
+
                     <table
                         class="mt-10"
-                        v-show="Object.keys(patients).length != 0"
+                        v-if="patients.length != 0"
                     >
                         <thead>
                             <tr>

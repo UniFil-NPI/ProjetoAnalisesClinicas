@@ -83,7 +83,7 @@ class ExamController extends Controller
 
         $auth = Auth::user();
 
-        $result = null;
+        $result = [];
 
         $query = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
             ->join('users', 'patients.user_id', '=', 'users.id')

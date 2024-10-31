@@ -172,8 +172,11 @@ onMounted(() => {
                                         {{ exam.description }}
                                     </div>
                                 </td>
-                                <td class="py-2" v-if="exam.pdf == null">
+                                <td class="py-2" v-if="exam.pdf == null && user.isPatient">
                                     Indisponível
+                                </td>
+                                <td class="py-2" v-if="exam.pdf == null && !user.isPatient">
+                                    
                                 </td>
                                 <td
                                     class="py-2 flex items-center justify-center"

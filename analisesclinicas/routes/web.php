@@ -8,12 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\PaternityTestController;
-use App\Models\ExamType;
-use App\Models\Patient;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -103,7 +100,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/paternitytests', [PaternityTestController::class, 'index'])->name('paternity.index');
 
-    Route::get('/new/paternitytest', [PaternityTestController::class, 'create'])->name('paternity.create');
+    Route::get('/new/paternitytest/select', [PaternityTestController::class, 'select'])->name('paternity.select');
+
+    Route::get('/new/paternitytest/duo', [PaternityTestController::class, 'create_duo'])->name('paternity.create.duo');
+
+    Route::get('/new/paternitytest/trio', [PaternityTestController::class, 'create_trio'])->name('paternity.create.trio');
 
     Route::post('/create/new/paternitytest', [PaternityTestController::class, 'store'])->name('paternity.store');
 

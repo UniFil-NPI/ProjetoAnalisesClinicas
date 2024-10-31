@@ -47,16 +47,36 @@ class ExamTypeController extends Controller
     
     public function search(Request $request)
     {
-        if ($request->search == "") {
-            return ExamType::select('exam_types.*')
-            ->orderBy('exam_types.created_at', 'desc')->get();
-        } 
-        try {
-            return ExamType::select('exam_types.*')
-            ->where('exam_types.name', $request->search)->orderBy('exam_types.created_at', 'desc')->get();
-        } catch(Exception $e) {
-            return Inertia::render('ExamType/Index', ["error" => "Nome não encontrado no sistema."]);
+        $result = [];
+
+        if (count(ExamType::all()) == 0) {
+            return [
+                "result" => $result,
+                "status" => "there is no types of exam registered",
+            ];
         }
+
+        if ($request->search == "") {
+            $result = ExamType::select('exam_types.*')
+            ->orderBy('exam_types.created_at', 'desc')->get();
+        } else {
+            $search = strtolower($request->search);
+
+            $result = ExamType::select('exam_types.*')
+            ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->get();
+
+            if (count($result) == 0) {
+                return [
+                    "result" => $result,
+                    "status" => "exam types not found",
+                ]; 
+            }
+        }
+
+        return [
+            "result" => $result,
+            "status" => "ok",
+        ];
         
     }
 

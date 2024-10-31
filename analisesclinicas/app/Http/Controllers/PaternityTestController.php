@@ -20,13 +20,31 @@ class PaternityTestController extends Controller
         return Inertia::render('PaternityTest/Index');
     }
 
-    public function create()
+    public function select()
     {
         $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
             ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
             ->get();
 
-        return Inertia::render('PaternityTest/Create', ['patients' => $patients]);
+        return Inertia::render('PaternityTest/Select');
+    }
+
+    public function create_duo()
+    {
+        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
+            ->get();
+
+        return Inertia::render('PaternityTest/CreateDuo', ['patients' => $patients]);
+    }
+
+    public function create_trio()
+    {
+        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
+            ->get();
+
+        return Inertia::render('PaternityTest/CreateTrio', ['patients' => $patients]);
     }
 
     public function store(Request $request)

@@ -100,7 +100,7 @@ onMounted(() => {
                             Gerenciamento de Pedidos
                         </h2>
                         <a
-                            :href="route('paternity.create')"
+                            :href="route('paternity.select')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                             v-if="user.isAdm"
                         >
