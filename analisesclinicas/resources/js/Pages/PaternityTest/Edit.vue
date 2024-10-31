@@ -18,19 +18,25 @@ const form = useForm({
     health_insurance: paternityTest.health_insurance,
 });
 
-const showError = ref(true);
+const errorMessage = ref(null);
 
 const save = () => {
     form.post("/paternitytest/update/" + paternityTest.id, form);
+    errorMessage.value = props.error;
 };
 
-watch(() => props.error, (newValue) => {
-    if (newValue == null) {
-        showError.value = false;
+const clearError = () => {
+    errorMessage.value = null;
+}
 
-        setTimeout(() => {
-            showError.value = true;
-        }, 2000);
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
+
+watch(() => errorMessage.value, (newError) => {
+    errorMessage.value = newError;
+    if (newError) {
+        setTimeout(clearError, 5000);
     }
 });
 </script>

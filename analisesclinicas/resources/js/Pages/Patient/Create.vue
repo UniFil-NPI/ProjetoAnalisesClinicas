@@ -27,9 +27,11 @@ const form = useForm({
     biological_sex: 0,
 });
 const currentDate = ref("");
+const errorMessage = ref(null);
 
 const save = () => {
     form.post("/create/new/patient");
+    errorMessage.value = props.error;
 };
 
 const getCep = async () => {
@@ -60,9 +62,27 @@ const getCurrentDate = () => {
     currentDate.value = yyyy + "-" + mm + "-" + dd;
 };
 
+const clearError = () => {
+    errorMessage.value = null;
+};
+
 onMounted(() => {
     getCurrentDate();
 });
+
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Novo Paciente" />
@@ -316,9 +336,9 @@ onMounted(() => {
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>

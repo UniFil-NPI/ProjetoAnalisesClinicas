@@ -29,10 +29,12 @@ const form = useForm({
     status: props.patient.status,
 });
 
-const showError = ref(true);
+const errorMessage = ref(null);
+
 
 const save = () => {
     form.post("/patient/update/" + props.patient.patient_id, form);
+    errorMessage.value = props.error;
 };
 
 const getCep = async () => {
@@ -46,15 +48,20 @@ const changeStatus = () => {
     form.status = !form.status;
 };
 
-watch(
-    () => props.error,
-    (newValue) => {
-        if (newValue == null) {
-            showError = false;
+const clearError = () => {
+    errorMessage.value = null;
+};
 
-            setTimeout(() => {
-                showError = true;
-            }, 2000);
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
         }
     }
 );
@@ -346,9 +353,9 @@ watch(
     </AuthenticatedLayout>
 
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>

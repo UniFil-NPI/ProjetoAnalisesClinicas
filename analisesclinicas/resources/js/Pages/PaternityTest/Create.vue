@@ -58,12 +58,14 @@ const clearError = () => {
     errorMessage.value = null;
 }
 
-
-
 watch(valuePatientInput, (newValue) => {
     if (newValue) {
         form.cpf = newValue.value;
     }
+});
+
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
 });
 
 watch(() => errorMessage.value, (newError) => {

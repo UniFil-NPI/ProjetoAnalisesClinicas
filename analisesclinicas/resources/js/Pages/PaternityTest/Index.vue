@@ -1,38 +1,36 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps({
-        flash: {
-            type: Object,
-            default: () => ({})
-        }
+    flash: {
+        type: Object,
+        default: () => ({}),
+    },
 });
 
 const page = usePage();
-const user = computed(() => {return page.props.auth});
+const user = computed(() => {
+    return page.props.auth;
+});
 
 const search = ref("");
 const paternityTests = ref([]);
 const firstSearch = ref(true);
-const message = ref(props.flash && props.flash.message ? props.flash.message : null);
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+const status = ref("");
 
 const research = () => {
-axios
-                .post(route("paternity.search"), { search: search.value })
-                .then((response) => {
-                    paternityTests.value = response.data;
-                });
-            firstSearch.value = false;
-};
-
-const initialResearch = () => {
-            axios
-                .post(route("paternity.search"), { search: search.value })
-                .then((response) => {
-                    paternityTests.value = response.data;
-                });
+    axios
+        .post(route("paternity.search"), { search: search.value })
+        .then((response) => {
+            paternityTests.value = response.data.result;
+            status.value = response.data.status;
+        });
+    firstSearch.value = false;
 };
 
 const clearMessage = () => {
@@ -40,12 +38,10 @@ const clearMessage = () => {
 };
 
 onMounted(() => {
-    initialResearch();
     if (message.value) {
         setTimeout(clearMessage, 5000);
     }
 });
-
 </script>
 <template>
     <Head title="Pedido de exame de paternidade" />
@@ -125,7 +121,7 @@ onMounted(() => {
                     </div>
                     <div
                         class="mt-10"
-                        v-if="paternityTests.length == 0 && user.isPatient"
+                        v-if="status == 'exams is empty' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
                             Não possui nenhum pedido
@@ -134,8 +130,7 @@ onMounted(() => {
                     <div
                         class="mt-10"
                         v-if="
-                            paternityTests.length == 0 &&
-                            !firstSearch &&
+                            status == 'patient not found' &&
                             !user.isPatient
                         "
                     >

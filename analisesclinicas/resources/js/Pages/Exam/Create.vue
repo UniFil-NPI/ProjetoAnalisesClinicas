@@ -15,19 +15,24 @@ const props = defineProps({
     doctors: {
         type: Array,
     },
+    examTypes: {
+        type: Array,
+    },
 });
 
 const form = useForm({
     cpf: "",
     crm: "",
+    exam_type_name: "",   
     lab: "",
     health_insurance: 0,
     exam_date: "",
     description: "",
 });
-const showError = ref(true);
+const errorMessage = ref(null);
 const valuePatientInput = ref("");
 const valueDoctorInput = ref("");
+const valueTypeInput = ref("");
 const items = ref([]);
 
 const searchPatients = (event) => {
@@ -58,24 +63,33 @@ const searchDoctors = (event) => {
         }));
 };
 
-const save = () => {
-    form.post("/create/new/exam");
+const searchExamTypes = (event) => {
+    items.value = props.examTypes
+        .filter(
+            (type) =>
+                type.name.toLowerCase().includes(event.query.toLowerCase())
+        )
+        .map((type) => ({
+            label: `${type.name}`,
+            value: type.name,
+        }));
 };
 
-watch(
-    () => {
-        props.error;
-    },
-    (newValue) => {
-        if (newValue == null) {
-            showError.value = false;
+const save = () => {
+    form.post("/create/new/exam");
+    errorMessage.value = props.error;
+};
 
-            setTimeout(() => {
-                showError.value = true;
-            }, 5000);
-        }
+const clearError = () => {
+    errorMessage.value = null;
+};
+
+watch(valueTypeInput, (newValue) => {
+    if (newValue) {
+        form.exam_type_name = newValue.value;
     }
-);
+});
+
 watch(valuePatientInput, (newValue) => {
     if (newValue) {
         form.cpf = newValue.value;
@@ -87,6 +101,23 @@ watch(valueDoctorInput, (newValue) => {
         form.crm = newValue.value;
     }
 });
+
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 
 <template>
@@ -107,7 +138,7 @@ watch(valueDoctorInput, (newValue) => {
                     <h2 class="text-2xl font-bold">Novo Exame</h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="col-span-3 flex flex-col gap-2">
                                 <label for="cpf">Nome ou CPF do paciente</label>
 
                                 <div
@@ -129,7 +160,7 @@ watch(valueDoctorInput, (newValue) => {
                                 >
                             </div>
 
-                            <div class="col-span-3 flex flex-col gap-2">
+                            <div class="col-span-2 flex flex-col gap-2">
                                 <label for="name">Nome ou CRM do médico</label>
                                 <div
                                     class="focus-within:border-blue-600 focus-within:border h-full rounded-lg w-full relative"
@@ -150,6 +181,26 @@ watch(valueDoctorInput, (newValue) => {
                             </div>
 
                             <div class="col-span-2 flex flex-col gap-2">
+                                <label for="name">Tipo de exame</label>
+                                <div
+                                    class="focus-within:border-blue-600 focus-within:border h-full rounded-lg w-full relative"
+                                >
+                                    <AutoComplete
+                                        v-model="valueTypeInput"
+                                        :suggestions="items"
+                                        optionLabel="label"
+                                        @complete="searchExamTypes"
+                                        class="bg-neutral-200 rounded-lg w-full h-full px-3 autocomplete-custom"
+                                    />
+                                </div>
+                                <span
+                                    v-if="form.errors.exam_type_name"
+                                    class="text-sm text-red-600"
+                                    >{{ form.errors.exam_type_name }}</span
+                                >
+                            </div>
+
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Local de coleta</label>
                                 <input
                                     type="text"
@@ -163,7 +214,7 @@ watch(valueDoctorInput, (newValue) => {
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="col-span-1 flex flex-col gap-2">
                                 <label for="name">Convênio</label>
                                 <select
                                     v-model="form.health_insurance"
@@ -233,10 +284,10 @@ watch(valueDoctorInput, (newValue) => {
     </AuthenticatedLayout>
 
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>
 <style>

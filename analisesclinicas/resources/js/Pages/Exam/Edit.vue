@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     exam: Object,
@@ -17,9 +18,30 @@ const form = useForm({
     health_insurance: props.exam.health_insurance,
 });
 
+const errorMessage = ref(null);
+
 const save = () => {
     form.post("/exam/update/" + props.exam.id, form);
+    errorMessage.value = props.error;
 };
+
+const clearError = () => {
+    errorMessage.value = null;
+}
+
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Edição dos pedidos de exames" />
@@ -126,9 +148,9 @@ const save = () => {
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>

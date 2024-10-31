@@ -25,11 +25,11 @@ const form = useForm({
     ],
 });
 
-const errorMessage = ref(null);
+const errorMessage = ref(props.error);
 
 const save = () => {
-    form.post("/create/new/typesofexam");
     errorMessage.value = props.error;
+    form.post("/create/new/typesofexam");
 };
 
 const addComponent = () => {
@@ -53,6 +53,10 @@ const removeComponent = (index) => {
 const clearError = () => {
     errorMessage.value = null;
 };
+
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
 
 watch(
     () => errorMessage.value,

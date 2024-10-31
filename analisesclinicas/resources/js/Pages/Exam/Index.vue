@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, usePage } from "@inertiajs/vue3";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
     flash: {
@@ -14,29 +14,22 @@ const page = usePage();
 const user = computed(() => {
     return page.props.auth;
 });
-
 const search = ref("");
 const exams = ref([]);
 const firstSearch = ref(true);
 const message = ref(
     props.flash && props.flash.message ? props.flash.message : null
 );
+const status = ref("");
 
 const research = () => {
     axios
         .post(route("exam.search"), { search: search.value })
         .then((response) => {
-            exams.value = response.data;
+            exams.value = response.data.result;
+            status.value = response.data.status;
         });
     firstSearch.value = false;
-};
-
-const initialResearch = () => {
-    axios
-        .post(route("exam.search"), { search: search.value })
-        .then((response) => {
-            exams.value = response.data;
-        });
 };
 
 const clearMessage = () => {
@@ -44,12 +37,11 @@ const clearMessage = () => {
 };
 
 onMounted(() => {
-    initialResearch();
+    research();
     if (message.value) {
         setTimeout(clearMessage, 5000);
     }
 });
-
 </script>
 <template>
     <Head title="Pedidos de exames" />
@@ -121,9 +113,7 @@ onMounted(() => {
                     <div
                         class="mt-10"
                         v-if="
-                            exams.length == 0 &&
-                            firstSearch &&
-                            !user.isPatient
+                            exams.length == 0 && firstSearch && !user.isPatient
                         "
                     >
                         <p class="text-xl font-bold text-red-600">
@@ -132,7 +122,7 @@ onMounted(() => {
                     </div>
                     <div
                         class="mt-10"
-                        v-if="exams.length == 0 && user.isPatient"
+                        v-if="status == 'exams is empty' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
                             Não possui nenhum pedido
@@ -140,11 +130,7 @@ onMounted(() => {
                     </div>
                     <div
                         class="mt-10"
-                        v-if="
-                            exams.length == 0 &&
-                            !firstSearch &&
-                            !user.isPatient
-                        "
+                        v-if="status == 'patient not found' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
                             Paciente não encontrado
@@ -156,9 +142,11 @@ onMounted(() => {
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
                                 <th>Nome do médico</th>
+                                <th>Tipo do exame</th>
                                 <th>Data do exame</th>
                                 <th>Descrição do exame</th>
                                 <th>Laudo</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -171,6 +159,7 @@ onMounted(() => {
                                 <td class="py-2">{{ exam.id }}</td>
                                 <td class="py-2">{{ exam.patient_name }}</td>
                                 <td class="py-2">{{ exam.doctor_name }}</td>
+                                <td class="py-2">{{ exam.exam_type_name }}</td>
                                 <td class="py-2">
                                     {{
                                         new Date(
@@ -183,14 +172,18 @@ onMounted(() => {
                                         {{ exam.description }}
                                     </div>
                                 </td>
+                                <td class="py-2" v-if="exam.pdf == null">
+                                    Indisponível
+                                </td>
                                 <td
                                     class="py-2 flex items-center justify-center"
+                                    v-else
                                 >
-                                    <p v-if="exam.pdf == null">Indisponível</p>
                                     <a href="#" v-if="exam.pdf != null"
                                         >baixar</a
                                     >
                                 </td>
+                                <td class="py-2">{{ exam.state }}</td>
                                 <td class="py-2">
                                     <a
                                         v-if="

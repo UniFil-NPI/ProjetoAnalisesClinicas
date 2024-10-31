@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamp('exam_date');
             $table->longText('description');
             $table->string('pdf')->nullable();
-            $table->string('state')->default('analyzing');
+            $table->string('state')->default('analisando');
             $table->timestamps();
             $table->softDeletes();
         });

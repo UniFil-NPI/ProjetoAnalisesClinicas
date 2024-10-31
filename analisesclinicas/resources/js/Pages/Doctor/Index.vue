@@ -8,6 +8,10 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    error: {
+        type: String,
+        default: null,
+    },
 });
 
 const search = ref("");
@@ -139,5 +143,11 @@ onMounted(() => {
         class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
     >
         {{ message }}
+    </div>
+    <div
+        v-if="errorMessage"
+        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ errorMessage }}
     </div>
 </template>

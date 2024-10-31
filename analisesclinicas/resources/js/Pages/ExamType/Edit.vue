@@ -46,6 +46,10 @@ const removeComponent = (index) => {
     form.components_info.splice(index, 1);
 };
 
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
+
 watch(
     () => errorMessage.value,
     (newError) => {

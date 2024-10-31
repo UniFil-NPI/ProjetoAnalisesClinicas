@@ -16,23 +16,28 @@ const form = useForm({
     crm: props.doctor.crm,
 });
 
-const showError = ref(true);
+const errorMessage = ref(null);
+
+const clearError = () => {
+    errorMessage.value = null;
+};
 
 const save = () => {
     form.post("/doctor/update/" + props.doctor.id, form);
+    errorMessage.value = props.error;
+
 };
 
-watch(
-    () => {
-        props.error;
-    },
-    (newValue) => {
-        if (newValue == null) {
-            showError.value = false;
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
 
-            setTimeout(() => {
-                showError.value = true;
-            }, 2000);
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
         }
     }
 );
@@ -100,9 +105,9 @@ watch(
     </AuthenticatedLayout>
 
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>

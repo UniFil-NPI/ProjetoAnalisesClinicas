@@ -65,11 +65,11 @@ class PaternityTestController extends Controller
         } catch (Exception $e) {
 
             $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
-            ->get();
+                ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
+                ->get();
 
             return Inertia::render('PaternityTest/Create', [
-                'error' => $e->getMessage() == "Não foi adicionado nenhum participante"? $e->getMessage() : 'Não foi possível salvar o novo pedido: ',
+                'error' => $e->getMessage() == "Não foi adicionado nenhum participante" ? $e->getMessage() : 'Não foi possível salvar o novo pedido: ',
                 'patients' => $patients,
             ]);
         }
@@ -87,12 +87,32 @@ class PaternityTestController extends Controller
                 ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.exam_date', 'desc')->get();
         }
 
+        $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
+            ->select('users.cpf')->where('users.cpf', $request->search)->get();
+
         $result = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
             ->join('users', 'patients.user_id', '=', 'users.id')
             ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
             ->where('users.cpf', $request->search)->orderBy('paternity_tests.exam_date', 'desc')->get();
 
-        return $result;
+        if (count($patient) == 0) {
+            return [
+                "result" => $result,
+                "status" => "patient not found"
+            ];
+        }
+
+        if (count($result) == 0) {
+            return [
+                "result" => $result,
+                "status" => "exams is empty",
+            ];
+        }
+
+        return [
+            "result" => $result,
+            "status" => "ok",
+        ];
     }
 
     public function edit($id)

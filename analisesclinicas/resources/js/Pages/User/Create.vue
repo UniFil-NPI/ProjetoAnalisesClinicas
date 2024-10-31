@@ -15,10 +15,30 @@ const form = useForm({
     cpf: "",
     role: 0,
 });
+const errorMessage = ref(null);
 
 const save = () => {
     form.post("/create/new/user");
+    errorMessage.value = props.error;
 };
+
+const clearError = () => {
+    errorMessage.value = null;
+};
+
+watch(() => props.error, (newError) => {
+    errorMessage.value = newError;
+});
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Usuários" />
@@ -115,9 +135,9 @@ const save = () => {
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>
