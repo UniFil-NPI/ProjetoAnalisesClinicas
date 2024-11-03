@@ -29,11 +29,11 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('welcome')">
+                                <a :href="route('dashboard')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
-                                </Link>
+                                </a>
                             </div>
 
                             <!-- Navigation Links -->
@@ -55,7 +55,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink
                                     :href="route('paternity.index')"
                                     :active="
-                                        route().current('paterninty.index')
+                                        route().current('paternity.index')
                                     "
                                     v-if="isAdm || isPatient"
                                 >

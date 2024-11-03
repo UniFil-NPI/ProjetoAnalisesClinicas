@@ -36,6 +36,11 @@ class Exam extends Model
         ];
     }
 
+    public function patientExamResult(): BelongsTo
+    {
+        return $this->belongsTo(PatientExamResult::class);
+    }
+
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);

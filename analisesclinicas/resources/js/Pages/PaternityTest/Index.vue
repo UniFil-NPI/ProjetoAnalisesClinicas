@@ -17,7 +17,6 @@ const user = computed(() => {
 
 const search = ref("");
 const paternityTests = ref([]);
-const firstSearch = ref(true);
 const message = ref(
     props.flash && props.flash.message ? props.flash.message : null
 );
@@ -30,7 +29,6 @@ const research = () => {
             paternityTests.value = response.data.result;
             status.value = response.data.status;
         });
-    firstSearch.value = false;
 };
 
 const clearMessage = () => {
@@ -38,6 +36,7 @@ const clearMessage = () => {
 };
 
 onMounted(() => {
+    research();
     if (message.value) {
         setTimeout(clearMessage, 5000);
     }
@@ -109,36 +108,20 @@ onMounted(() => {
                     </div>
                     <div
                         class="mt-10"
-                        v-if="
-                            paternityTests.length == 0 &&
-                            firstSearch &&
-                            !user.isPatient
-                        "
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Faça uma busca para aparecer algum pedido
-                        </p>
-                    </div>
-                    <div
-                        class="mt-10"
                         v-if="status == 'exams is empty' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
-                            Não possui nenhum pedido
+                            Não existe nenhum pedido
                         </p>
                     </div>
                     <div
                         class="mt-10"
-                        v-if="
-                            status == 'patient not found' &&
-                            !user.isPatient
-                        "
+                        v-if="status == 'patient not found' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
                             Paciente não encontrado
                         </p>
                     </div>
-
                     <table class="mt-10">
                         <thead v-show="paternityTests.length != 0">
                             <tr>
@@ -147,6 +130,7 @@ onMounted(() => {
                                 <th>Data do exame</th>
                                 <th>Descrição</th>
                                 <th>Laudo</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -177,15 +161,27 @@ onMounted(() => {
                                 </td>
 
                                 <td
-                                    class="py-2 flex items-center justify-center"
+                                    class="py-2"
+                                    v-if="paternityTest.pdf == null && user.isPatient"
                                 >
-                                    <p v-if="paternityTest.pdf == null">
-                                        Indisponível
-                                    </p>
+                                    Indisponível
+                                </td>
+                                <td
+                                    class="py-2"
+                                    v-if="paternityTest.pdf == null && !user.isPatient"
+                                >
+                                    <a href="#">Gerar laudo</a>
+                                </td>
+                                <td
+                                    class="py-2 flex items-center justify-center"
+                                    v-else
+                                >
                                     <a href="#" v-if="paternityTest.pdf != null"
-                                        >baixar</a
+                                        >Baixar</a
                                     >
                                 </td>
+
+                                <td class="py-2">{{ paternityTest.state }}</td>
 
                                 <td class="py-2">
                                     <a

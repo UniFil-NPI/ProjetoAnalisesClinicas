@@ -16,7 +16,7 @@ const props = defineProps({
 
 const form = useForm({
     cpf: "",
-    participants: [],
+    participants: [{ cpf: "" }, { cpf: "" }],
     lab: "",
     health_insurance: 0,
     exam_date: "",
@@ -29,7 +29,7 @@ const items = ref([]);
 const errorMessage = ref(null);
 
 const save = () => {
-    form.post("/create/new/paternitytest");
+    form.post("/paternitytest/store");
     errorMessage.value = props.error;
 };
 
@@ -47,16 +47,14 @@ const searchPatients = (event) => {
             value: patient.cpf,
         }));
 };
-const addParticipant = () => {
-    form.participants.push({ cpf: "", error: null });
-};
+
 const updateParticipant = (update, index) => {
     form.participants[index].cpf = value;
 };
 
 const clearError = () => {
     errorMessage.value = null;
-}
+};
 
 watch(valuePatientInput, (newValue) => {
     if (newValue) {
@@ -64,17 +62,22 @@ watch(valuePatientInput, (newValue) => {
     }
 });
 
-watch(() => props.error, (newError) => {
-    errorMessage.value = newError;
-});
-
-watch(() => errorMessage.value, (newError) => {
-    errorMessage.value = newError;
-    if (newError) {
-        setTimeout(clearError, 5000);
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
     }
-});
+);
 
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 
 <template>
@@ -82,9 +85,16 @@ watch(() => errorMessage.value, (newError) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Exame de Paternidade
-            </h2>
+            <button
+                @click="$inertia.visit(route('paternity.select'))"
+                class="bg-primary text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">
@@ -96,12 +106,6 @@ watch(() => errorMessage.value, (newError) => {
                         <h2 class="col-span-4 text-2xl font-bold">
                             Novo pedido
                         </h2>
-                        <button
-                            class="col-span-1 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
-                            @click="addParticipant"
-                        >
-                            Adicionar Participante
-                        </button>
                     </div>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
@@ -136,7 +140,7 @@ watch(() => errorMessage.value, (newError) => {
                                 class="col-span-5 flex flex-col gap-2"
                             >
                                 <label :for="`cpf-${index}`"
-                                    >Nome ou CPF do novo participante</label
+                                    >Nome ou CPF do outro participante</label
                                 >
 
                                 <div

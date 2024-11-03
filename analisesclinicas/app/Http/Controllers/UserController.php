@@ -36,7 +36,6 @@ class UserController extends Controller
         ]);
 
         $cpfForPassword = $this->formatcpf($request->cpf);
-
         try {
             DB::beginTransaction();
 

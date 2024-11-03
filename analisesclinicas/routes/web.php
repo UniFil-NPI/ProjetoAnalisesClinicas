@@ -24,11 +24,11 @@ Route::get('/', function () {
 
 
 Route::middleware('auth')->group(function () {
-    
+
     //Dashboard
-    
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     //Profile
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,99 +36,111 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //CEP
-    
+
     Route::get('/getcep/{cep}', [PatientController::class, 'getCep'])->name('cep');
 
     //Users Routes
 
-    Route::get('/users', [UserController::class, 'index'])->name('user.index');
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
 
-    Route::get('/new/user', [UserController::class, 'create'])->name('user.create');
+        Route::get('/new', [UserController::class, 'create'])->name('create');
 
-    Route::post('/create/new/user', [UserController::class, 'store'])->name('user.store');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
 
-    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
 
-    Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
 
-    Route::post('/user/search', [UserController::class, 'search'])->name('user.search');
-
+        Route::post('/search', [UserController::class, 'search'])->name('search');
+    });
 
     //Patients Routes
 
-    Route::get('/patients', [PatientController::class, 'index'])->name('patient.index');
+    Route::prefix('patient')->name('patient.')->group(function () {
+        Route::get('/', [PatientController::class, 'index'])->name('index');
 
-    Route::get('/new/patient', [PatientController::class, 'create'])->name('patient.create');
+        Route::get('/new', [PatientController::class, 'create'])->name('create');
 
-    Route::post('/create/new/patient', [PatientController::class, 'store'])->name('patient.store');
+        Route::post('/store', [PatientController::class, 'store'])->name('store');
 
-    Route::get('/patient/edit/{id}', [PatientController::class, 'edit'])->name('patient.edit');
+        Route::get('/edit/{id}', [PatientController::class, 'edit'])->name('edit');
 
-    Route::post('/patient/update/{id}', [PatientController::class, 'update'])->name('patient.update');
+        Route::post('/update/{id}', [PatientController::class, 'update'])->name('update');
 
-    Route::post('/patient/search', [PatientController::class, 'search'])->name('patient.search');
+        Route::post('/search', [PatientController::class, 'search'])->name('search');
+    });
 
     //Exam Routes
+    Route::prefix('exam')->name('exam.')->group(function () {
+        Route::get('/', [ExamController::class, 'index'])->name('index');
 
-    Route::get('/exams', [ExamController::class, 'index'])->name('exam.index');
+        Route::get('/new', [ExamController::class, 'create'])->name('create');
 
-    Route::get('/new/exam', [ExamController::class, 'create'])->name('exam.create');
+        Route::post('/store', [ExamController::class, 'store'])->name('store');
 
-    Route::post('/create/new/exam', [ExamController::class, 'store'])->name('exam.store');
+        Route::post('/search', [ExamController::class, 'search'])->name('search');
 
-    Route::post('/exam/search', [ExamController::class, 'search'])->name('exam.search');
+        Route::get('/edit/{id}', [ExamController::class, 'edit'])->name('edit');
 
-    Route::get('/exam/edit/{id}', [ExamController::class, 'edit'])->name('exam.edit');
+        Route::post('/update/{id}', [ExamController::class, 'update'])->name('update');
 
-    Route::post('/exam/update/{id}', [ExamController::class, 'update'])->name('exam.update');
+        Route::get('/import/{id}', [ExamController::class, 'importResult'])->name('import');
+
+        Route::post('/{id}/store-pdf', [ExamController::class, 'storePdfPath'])->name('store-pdf');
+    });
+
 
     //Doctor Routes
+    Route::prefix('doctor')->name('doctor.')->group(function () {
+        Route::get('/', [DoctorController::class, 'index'])->name('index');
 
-    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctor.index');
+        Route::get('/new', [DoctorController::class, 'create'])->name('create');
 
-    Route::get('/new/doctor', [DoctorController::class, 'create'])->name('doctor.create');
+        Route::post('/store', [DoctorController::class, 'store'])->name('store');
 
-    Route::post('/create/new/doctor', [DoctorController::class, 'store'])->name('doctor.store');
+        Route::post('/search', [DoctorController::class, 'search'])->name('search');
 
-    Route::post('/doctor/search', [DoctorController::class, 'search'])->name('doctor.search');
+        Route::get('/edit/{id}', [DoctorController::class, 'edit'])->name('edit');
 
-    Route::get('/doctor/edit/{id}', [DoctorController::class, 'edit'])->name('doctor.edit');
+        Route::post('/update/{id}', [DoctorController::class, 'update'])->name('update');
+    });
 
-    Route::post('/doctor/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 
     //Paternity Routes
+    Route::prefix('paternitytest')->name('paternity.')->group(function () {
 
-    Route::get('/paternitytests', [PaternityTestController::class, 'index'])->name('paternity.index');
+        Route::get('/', [PaternityTestController::class, 'index'])->name('index');
 
-    Route::get('/new/paternitytest/select', [PaternityTestController::class, 'select'])->name('paternity.select');
+        Route::get('/select', [PaternityTestController::class, 'select'])->name('select');
 
-    Route::get('/new/paternitytest/duo', [PaternityTestController::class, 'create_duo'])->name('paternity.create.duo');
+        Route::get('/new/duo', [PaternityTestController::class, 'create_duo'])->name('create.duo');
 
-    Route::get('/new/paternitytest/trio', [PaternityTestController::class, 'create_trio'])->name('paternity.create.trio');
+        Route::get('/new/trio', [PaternityTestController::class, 'create_trio'])->name('create.trio');
 
-    Route::post('/create/new/paternitytest', [PaternityTestController::class, 'store'])->name('paternity.store');
+        Route::post('/store', [PaternityTestController::class, 'store'])->name('store');
 
-    Route::post('/paternitytest/search', [PaternityTestController::class, 'search'])->name('paternity.search');
+        Route::post('/search', [PaternityTestController::class, 'search'])->name('search');
 
-    Route::get('/paternitytest/edit/{id}', [PaternityTestController::class, 'edit'])->name('paternity.edit');
+        Route::get('/edit/{id}', [PaternityTestController::class, 'edit'])->name('edit');
 
-    Route::post('/paternitytest/update/{id}', [PaternityTestController::class, 'update'])->name('paternity.update');
+        Route::post('/update/{id}', [PaternityTestController::class, 'update'])->name('update');
+    });
 
     //Exam Types Routes
-
-    Route::get('/typesofexam', [ExamTypeController::class, 'index'])->name('type.index');
-
-    Route::get('/new/typesofexam', [ExamTypeController::class, 'create'])->name('type.create');
-
-    Route::post('/create/new/typesofexam', [ExamTypeController::class, 'store'])->name('type.store');
-
-    Route::post('/typesofexam/search', [ExamTypeController::class, 'search'])->name('type.search');
-
-    Route::get('/typesofexam/edit/{id}', [ExamTypeController::class, 'edit'])->name('type.edit');
-
-    Route::post('/typesofexam/update/{id}', [ExamTypeController::class, 'update'])->name('type.update');
-
-
+    Route::prefix('typeofexam')->name('type.')->group(function () {
+            Route::get('/', [ExamTypeController::class, 'index'])->name('index');
+        
+            Route::get('/new', [ExamTypeController::class, 'create'])->name('create');
+        
+            Route::post('/store', [ExamTypeController::class, 'store'])->name('store');
+        
+            Route::post('/search', [ExamTypeController::class, 'search'])->name('search');
+        
+            Route::get('/edit/{id}', [ExamTypeController::class, 'edit'])->name('edit');
+        
+            Route::post('/update/{id}', [ExamTypeController::class, 'update'])->name('update');
+    });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

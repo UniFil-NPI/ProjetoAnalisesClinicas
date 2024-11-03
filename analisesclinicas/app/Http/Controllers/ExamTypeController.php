@@ -58,7 +58,7 @@ class ExamTypeController extends Controller
 
         if ($request->search == "") {
             $result = ExamType::select('exam_types.*')
-            ->orderBy('exam_types.created_at', 'desc')->get();
+            ->orderBy('exam_types.updated_at', 'desc')->get();
         } else {
             $search = strtolower($request->search);
 

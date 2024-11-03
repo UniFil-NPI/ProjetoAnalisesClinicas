@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     error: {
@@ -12,16 +12,16 @@ const props = defineProps({
 });
 
 const form = useForm({
-    lab: paternityTest.lab,
-    exam_date: paternityTest.exam_date,
-    description: paternityTest.description,
-    health_insurance: paternityTest.health_insurance,
+    lab: props.paternityTest.lab,
+    exam_date: props.paternityTest.exam_date,
+    description: props.paternityTest.description,
+    health_insurance: props.paternityTest.health_insurance,
 });
 
 const errorMessage = ref(null);
 
 const save = () => {
-    form.post("/paternitytest/update/" + paternityTest.id, form);
+    form.post("/paternitytest/update/" + props.paternityTest.id, form);
     errorMessage.value = props.error;
 };
 
@@ -45,9 +45,16 @@ watch(() => errorMessage.value, (newError) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edição do pedido de exame de paternidade
-            </h2>
+            <button
+                @click="$inertia.visit(route('paternity.index'))"
+                class="bg-primary text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">

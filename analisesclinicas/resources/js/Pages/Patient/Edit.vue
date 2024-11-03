@@ -31,7 +31,6 @@ const form = useForm({
 
 const errorMessage = ref(null);
 
-
 const save = () => {
     form.post("/patient/update/" + props.patient.patient_id, form);
     errorMessage.value = props.error;
@@ -52,9 +51,12 @@ const clearError = () => {
     errorMessage.value = null;
 };
 
-watch(() => props.error, (newError) => {
-    errorMessage.value = newError;
-});
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
 
 watch(
     () => errorMessage.value,
@@ -71,9 +73,16 @@ watch(
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pacientes
-            </h2>
+            <button
+                @click="$inertia.visit(route('patient.index'))"
+                class="bg-primary text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">

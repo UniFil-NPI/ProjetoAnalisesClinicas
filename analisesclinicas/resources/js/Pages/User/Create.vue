@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     error: {
@@ -18,7 +19,7 @@ const form = useForm({
 const errorMessage = ref(null);
 
 const save = () => {
-    form.post("/create/new/user");
+    form.post("/user/store");
     errorMessage.value = props.error;
 };
 
@@ -26,9 +27,12 @@ const clearError = () => {
     errorMessage.value = null;
 };
 
-watch(() => props.error, (newError) => {
-    errorMessage.value = newError;
-});
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
 
 watch(
     () => errorMessage.value,
@@ -45,9 +49,16 @@ watch(
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Funcionários
-            </h2>
+            <button
+                @click="$inertia.visit(route('user.index'))"
+                class="bg-primary text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">

@@ -16,7 +16,6 @@ const user = computed(() => {
 });
 const search = ref("");
 const exams = ref([]);
-const firstSearch = ref(true);
 const message = ref(
     props.flash && props.flash.message ? props.flash.message : null
 );
@@ -29,7 +28,6 @@ const research = () => {
             exams.value = response.data.result;
             status.value = response.data.status;
         });
-    firstSearch.value = false;
 };
 
 const clearMessage = () => {
@@ -112,20 +110,10 @@ onMounted(() => {
                     </div>
                     <div
                         class="mt-10"
-                        v-if="
-                            exams.length == 0 && firstSearch && !user.isPatient
-                        "
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Faça uma busca para aparecer algum pedido
-                        </p>
-                    </div>
-                    <div
-                        class="mt-10"
                         v-if="status == 'exams is empty' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
-                            Não possui nenhum pedido
+                            Não existe nenhum pedido
                         </p>
                     </div>
                     <div
@@ -176,14 +164,14 @@ onMounted(() => {
                                     Indisponível
                                 </td>
                                 <td class="py-2" v-if="exam.pdf == null && !user.isPatient">
-                                    
+                                    <a :href="route('exam.import', exam.id)">Gerar laudo</a>
                                 </td>
                                 <td
                                     class="py-2 flex items-center justify-center"
                                     v-else
                                 >
                                     <a href="#" v-if="exam.pdf != null"
-                                        >baixar</a
+                                        >Baixar</a
                                     >
                                 </td>
                                 <td class="py-2">{{ exam.state }}</td>

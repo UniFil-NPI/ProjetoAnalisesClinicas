@@ -22,10 +22,6 @@ class PaternityTestController extends Controller
 
     public function select()
     {
-        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
-            ->get();
-
         return Inertia::render('PaternityTest/Select');
     }
 
@@ -97,27 +93,31 @@ class PaternityTestController extends Controller
     {
 
         $auth = Auth::user();
+        $result = [];
+        $query = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name');
 
         if ($auth->hasRole(['patient'])) {
-            return PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
-                ->join('users', 'patients.user_id', '=', 'users.id')
-                ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
-                ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.exam_date', 'desc')->get();
-        }
+            $result = $query
+                ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.updated_at', 'desc')->get();
+        } else {
+            if ($request->search == "") {
+                $result = $query->orderBy('paternity_tests.updated_at', 'desc')->get();
+            } else {
+                $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
+                    ->select('users.cpf')->where('users.cpf', $request->search)->get();
 
-        $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('users.cpf')->where('users.cpf', $request->search)->get();
+                $result = $query
+                    ->where('users.cpf', $request->search)->orderBy('paternity_tests.updated_at', 'desc')->get();
 
-        $result = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
-            ->join('users', 'patients.user_id', '=', 'users.id')
-            ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
-            ->where('users.cpf', $request->search)->orderBy('paternity_tests.exam_date', 'desc')->get();
-
-        if (count($patient) == 0) {
-            return [
-                "result" => $result,
-                "status" => "patient not found"
-            ];
+                if (count($patient) == 0) {
+                    return [
+                        "result" => $result,
+                        "status" => "patient not found"
+                    ];
+                }
+            }
         }
 
         if (count($result) == 0) {
