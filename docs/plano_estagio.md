@@ -85,17 +85,14 @@ O biomédico é uma *role* de usuário, que está conectado aos casos de uso que
 
 O paciente é uma *role* de usuário, que está conectado aos casos de uso que um paciente tem.
 
-#### adm
+#### admin
 
-O adm é uma *role* de usuário, que está conectado aos casos de uso que um adm tem.
+O adm é uma *role* de usuário, que está conectado aos casos de uso que um admin tem.
 
 #### recepcionista
 
 O recepcionista é uma *role* de usuário, que está conectado aos casos de uso que um recepcionista tem.
 
-#### sistema
-
-O sistema é um ator que representa a interação do próprio sistema com os casos de uso.
 
 ### CASOS DE USO
 
@@ -112,17 +109,21 @@ O caso de uso UC002_gerenciar_pedido_do_exame, permite o gerenciamento dos pedid
 
 O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos cadastrados no sistema, apenas o admin e o recepcionista tem acesso ao caso de uso.
 
-#### UC004_inserir_dados_teste_paternidade
+#### \<\<CRUD\>\> UC004_gerenciar_tipos_de_exame
 
-O caso de uso UC004_inserir_dados_teste_paternidade permite a inserção de todas as informações necessárias para os calcúlos do teste de paternidade. 
+O caso de uso UC004_gerenciar_tipos_de_exame permite o gerenciamento dos tipos de exame cadastrados no sistema, apenas o admin e o biomédico tem acesso ao caso de uso.
 
-#### UC005_capturar_dados_do_aparelho
+#### UC005_inserir_dados_teste_paternidade
 
-O caso de uso UC005_capturar_dados_do_aparelho é a captura dos dados do exame de sangue que são colhidos do Analisador Hematológico.
+O caso de uso UC005_inserir_dados_teste_paternidade permite a inserção de todas as informações necessárias para os calcúlos do teste de paternidade. 
 
-#### UC006_gerar_laudo
+#### UC006_importar_csv
 
-O caso de uso UC006_gerar_laudo por baixo dos panos estará sendo dividido em gerar laudo do exame de sangue ou do teste de paternidade e depende dos casos de uso UC004_inserir_dados_teste_paternidade e UC005_capturar_dados_do_aparelho ocorrer.
+O caso de uso UC006_importar_csv é a captura dos dados do exame de sangue que são colhidos do Analisador Hematológico.
+
+#### UC007_gerar_laudo
+
+O caso de uso UC007_gerar_laudo por baixo dos panos estará sendo dividido em gerar laudo do exame de sangue ou do teste de paternidade e depende dos casos de uso UC005_inserir_dados_teste_paternidade e UC006_importar_csv ocorrer.
 
 ## TELAS
 
