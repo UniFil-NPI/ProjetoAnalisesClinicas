@@ -167,16 +167,16 @@ onMounted(() => {
                                     Indisponível
                                 </td>
                                 <td
-                                    class="py-2"
+                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="paternityTest.pdf == null && !user.isPatient"
                                 >
                                     <a href="#">Gerar laudo</a>
                                 </td>
                                 <td
-                                    class="py-2 flex items-center justify-center"
-                                    v-else
+                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="paternityTest.pdf != null"
                                 >
-                                    <a href="#" v-if="paternityTest.pdf != null"
+                                    <a href="#"
                                         >Baixar</a
                                     >
                                 </td>

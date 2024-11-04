@@ -163,14 +163,14 @@ onMounted(() => {
                                 <td class="py-2" v-if="exam.pdf == null && user.isPatient">
                                     Indisponível
                                 </td>
-                                <td class="py-2" v-if="exam.pdf == null && !user.isPatient">
+                                <td class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300" v-if="exam.pdf == null && !user.isPatient">
                                     <a :href="route('exam.import', exam.id)">Gerar laudo</a>
                                 </td>
                                 <td
-                                    class="py-2 flex items-center justify-center"
-                                    v-else
+                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="exam.pdf != null"
                                 >
-                                    <a href="#" v-if="exam.pdf != null"
+                                    <a href="#" 
                                         >Baixar</a
                                     >
                                 </td>

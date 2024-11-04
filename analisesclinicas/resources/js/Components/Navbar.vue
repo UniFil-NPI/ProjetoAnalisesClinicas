@@ -15,7 +15,7 @@ defineProps({
         <nav class="w-full bg-neutral-50 shadow-md shadow-primary py-3">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="shrink-0 flex items-center">
-                    <a :href="route('dashboard')">
+                    <a :href="route('welcome')">
                         <ApplicationLogo
                             class="block h-9 w-auto fill-current text-gray-800"
                         />

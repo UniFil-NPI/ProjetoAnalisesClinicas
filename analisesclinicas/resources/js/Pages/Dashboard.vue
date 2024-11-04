@@ -1,6 +1,6 @@
 <script setup>
-import { defineProps, computed } from 'vue';
-import { usePage } from '@inertiajs/vue3'; // Supondo que você esteja usando Inertia.js
+import { defineProps, computed } from "vue";
+import { usePage } from "@inertiajs/vue3"; // Supondo que você esteja usando Inertia.js
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 
@@ -12,10 +12,8 @@ const props = defineProps({
 });
 const page = usePage();
 const user = computed(() => {
-            return page.props.auth;
-})
-
-
+    return page.props.auth;
+});
 </script>
 
 <template>
@@ -79,11 +77,37 @@ const user = computed(() => {
                                     </div>
                                 </td>
                                 <td
-                                    class="py-2 flex items-center justify-center"
+                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="
+                                        exam.pdf == null &&
+                                        !user.isPatient &&
+                                        exam.type == 'blood'
+                                    "
                                 >
-                                    <p v-if="exam.pdf == null">Indisponível</p>
-                                    <a href="#" v-if="exam.pdf != null"
-                                        >baixar</a
+                                    <a href="#">Gerar laudo</a>
+                                </td>
+                                <td
+                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="
+                                        exam.pdf == null &&
+                                        !user.isPatient &&
+                                        exam.type == 'paternity'
+                                    "
+                                >
+                                    <a href="#">Gerar laudo</a>
+                                </td>
+                                <td
+                                    class="py-2"
+                                    v-if="exam.pdf == null && user.isPatient"
+                                >
+                                    Indisponível
+                                </td>
+                                <td
+                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="exam.pdf != null"
+                                >
+                                    <a href="#"
+                                        >Baixar</a
                                     >
                                 </td>
                                 <td class="py-2">
