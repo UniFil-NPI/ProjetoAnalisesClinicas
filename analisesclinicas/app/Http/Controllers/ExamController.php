@@ -162,19 +162,19 @@ class ExamController extends Controller
         }
     }
 
-    public function importResult($id)
+    public function import_result($id)
     {
         $exam = Exam::find($id);
 
         return Inertia::render('Exam/Import', ['exam' => $exam]);
     }
 
-    public function storePdfPath(Request $request, $id)
+    public function store_pdf_path(Request $request, $id)
     {
         $exam = Exam::find($id);
 
         try {
-            $pdfPath = $this->generateReport($request->file, $exam);
+            $pdfPath = $this->generate_report($request->file, $exam);
 
             $exam->update(['pdf' => $pdfPath]);
 
@@ -184,7 +184,7 @@ class ExamController extends Controller
         }
     }
 
-    private function generateReport($file, $exam)
+    private function generate_report($file, $exam)
     {
         Excel::import(new PatientExamResultImport, $file);
 

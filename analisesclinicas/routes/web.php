@@ -85,9 +85,9 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/update/{id}', [ExamController::class, 'update'])->name('update');
 
-        Route::get('/import/{id}', [ExamController::class, 'importResult'])->name('import');
+        Route::get('/import/{id}', [ExamController::class, 'import_result'])->name('import');
 
-        Route::post('/{id}/store-pdf', [ExamController::class, 'storePdfPath'])->name('store-pdf');
+        Route::post('/{id}/store-pdf', [ExamController::class, 'store_pdf_path'])->name('store-pdf');
     });
 
 
@@ -125,6 +125,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [PaternityTestController::class, 'edit'])->name('edit');
 
         Route::post('/update/{id}', [PaternityTestController::class, 'update'])->name('update');
+
+        Route::get('/report/duo/new/{id}', [PaternityTestController::class, 'create_duo_report'])->name('create.duo.report');
+
+        Route::get('/report/trio/new/{id}', [PaternityTestController::class, 'create_trio_report'])->name('create.trio.report');
+
+        Route::post('/report/store/{id}', [PaternityTestController::class, 'store_report'])->name('store.report');
+
     });
 
     //Exam Types Routes

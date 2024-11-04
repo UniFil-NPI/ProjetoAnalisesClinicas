@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AlleleFreq;
 use App\Models\PaternityTest;
 use App\Models\Patient;
 use Exception;
@@ -164,5 +165,25 @@ class PaternityTestController extends Controller
 
             return Inertia::render('PaternityTest/Edit', ["error" => "Não foi possível realizar a atualização dos dados.", 'paternityTest' => $paternityTest]);
         }
+    }
+
+    public function create_duo_report($id)
+    {
+        $paternityTest = PaternityTest::find($id);
+
+        return Inertia::render('PaternityTest/CreateReportDuo', ['paternityTest' => $paternityTest]);
+    }
+
+
+    public function create_trio_report($id)
+    {
+        $paternityTest = PaternityTest::find($id);
+
+        return Inertia::render('PaternityTest/CreateReportTrio', ['paternityTest' => $paternityTest]);
+    }
+
+    public function store_report(Request $request, $id)
+    {
+        return;
     }
 }

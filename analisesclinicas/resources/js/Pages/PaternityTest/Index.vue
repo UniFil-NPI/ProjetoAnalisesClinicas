@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
     flash: {
@@ -40,6 +40,12 @@ onMounted(() => {
     if (message.value) {
         setTimeout(clearMessage, 5000);
     }
+});
+
+watch(paternityTests, (newValue) => {
+    newValue.forEach(element => {
+        element.participants = JSON.parse(element.participants);
+    });
 });
 </script>
 <template>
@@ -168,9 +174,15 @@ onMounted(() => {
                                 </td>
                                 <td
                                     class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="paternityTest.pdf == null && !user.isPatient"
+                                    v-if="paternityTest.pdf == null && !user.isPatient && paternityTest.participants.length == 1"
                                 >
-                                    <a href="#">Gerar laudo</a>
+                                    <a :href="route('paternity.create.duo.report', paternityTest.id)">Gerar laudo</a>
+                                </td>
+                                <td
+                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="paternityTest.pdf == null && !user.isPatient && paternityTest.participants.length == 2"
+                                >
+                                    <a :href="route('paternity.create.trio.report', paternityTest.id)">Gerar laudo</a>
                                 </td>
                                 <td
                                     class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
