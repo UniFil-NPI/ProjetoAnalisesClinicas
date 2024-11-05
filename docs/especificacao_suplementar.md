@@ -16,9 +16,7 @@
 
     3. [Definições, Acrônimos e Abreviações](#definições-acrônimos-e-abreviações)
 
-    4. [Referências](#referências)
-
-    5. [Visão Geral](#visão-geral)
+    4. [Visão Geral](#visão-geral)
 
 2. [Funcionalidade](#funcionalidade)
 
@@ -50,21 +48,8 @@
 
 8. [Documentação do Usuário On-line e Requisitos do Sistema de Ajuda](#documentação-do-usuário-on-line-e-requisitos-do-sistema-de-ajuda)
 
-9. [Componentes Comprados](#componentes-comprados)
+9. [Observações Legais, sobre Direitos Autorais e Outras Observações](#observações-legais-sobre-direitos-autorais-e-outras-observações)
 
-10. [Interfaces](#interfaces)
-
-    1. [Interfaces de Hardware](#interfaces-de-hardware)
-
-    2. [Interfaces de Software](#interfaces-de-software)
-
-    3. [Interfaces de Comunicações](#interfaces-de-comunicações)
-
-11. [Requisitos de Licença](#requisitos-de-licença)
-
-12. [Observações Legais, sobre Direitos Autorais e Outras Observações](#observações-legais-sobre-direitos-autorais-e-outras-observações)
-
-13. [Padrões Aplicáveis](#padrões-aplicáveis)
 
 ## Introdução
 
@@ -88,12 +73,6 @@ Esse documento engloba os requisitos de todo o sistema que será feito.
 ### Definições, Acrônimos e Abreviações
 
 Consultar o [glossário](glossario.md).
-
-### Referências
-
-OLIVEIRA, M. Conheça os detalhes dos Estilos de Indentação. Disponível em: <https://terminalroot.com.br/2022/02/conheca-os-detalhes-dos-estilos-de-indentacao.html>. Acesso em: 23 mar. 2024.
-
-Convenções de nomenclatura: Camel, Pascal, Kebab e Snake case. Disponível em: <https://www.alura.com.br/artigos/convencoes-nomenclatura-camel-pascal-kebab-snake-case>. Acesso em: 23 mar. 2024.
 
 ### Visão Geral
 
@@ -133,8 +112,6 @@ O sistema deve ter a capacidade de armazenar uma grande quantidade de informaç�
 
 ### Padrão de Codificação
 
-Será utilizado um padrão para definir nomes de variaveis e funções/métodos será usado o camelCase, classes será usado o PascalCase, constantes utilizarão o padrão Screaming snake case, a indentação do código deverá seguir o [estilo K&R](https://terminalroot.com.br/2022/02/conheca-os-detalhes-dos-estilos-de-indentacao.html).
-
 As técnologias utilizadas no Front-end serão: HTML, CSS, JavaScript e [Vue.js](https://vuejs.org/). No Back-end será usado: [Laravel](https://laravel.com/).
 
 ## Restrições de Design
@@ -151,35 +128,9 @@ O sistema será desenvolvido com [Vue.js](https://vuejs.org/) e [Tailwind CSS](h
 
 O sistema conterá uma documentação on-line.
 
-## Componentes Comprados
-
-Não se aplica.
-
-## Interfaces
-
-### Interfaces de Hardware
-
-Em análise.
-
-### Interfaces de Software
-
-Em análise.
-
-### Interfaces de Comunicações
-
-Em análise.
-
-## Requisitos de Licença
-
-Não se aplica.
-
 ## Observações Legais, sobre Direitos Autorais e Outras Observações
 
 O sistema terá as observações legais de acordo com os padrões da instituição UniFil.
-
-## Padrões Aplicáveis
-
-Não se aplica.
 
 ---
 

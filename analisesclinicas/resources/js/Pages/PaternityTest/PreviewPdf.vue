@@ -2,9 +2,7 @@
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
-const props = defineProps({
-    
-});
+const props = defineProps({});
 
 const form = useForm({
     conclusion: "",
@@ -71,184 +69,32 @@ const generatePdf = async () => {
 
         <div class="section">
             <h2>Resultados</h2>
-            <table>
+            <table class="exam-table">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th colspan="2">Mãe</th>
-                        <th colspan="2">Filho</th>
-                        <th colspan="2">Investigado</th>
-                        <th colspan="1">Indice de Paternidade</th>
+                        <th>Locus</th>
+                        <th>Mãe</th>
+                        <th>Filho</th>
+                        <th>Investigado</th>
+                        <th>Índice de Paternidade</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr v-for="(row, index) in examData" :key="index">
+                        <td>{{ row.locus }}</td>
+                        <td>{{ row.mother }}</td>
+                        <td>{{ row.child }}</td>
+                        <td>{{ row.investigated }}</td>
+                        <td>{{ row.paternityIndex }}</td>
+                    </tr>
+                    <!-- Linha de IP Acumulado e PP% -->
                     <tr>
-                        <td>D3S1358</td>
-                        <td>17</td>
-                        <td>15</td>
-                        <td>15</td>
-                        <td>2.459685751</td>
+                        <td colspan="4" class="label-cell">IP Acumulado</td>
+                        <td>{{ accumulatedIP }}</td>
                     </tr>
                     <tr>
-                        <td>D15S656</td>
-                        <td>6</td>
-                        <td>16</td>
-                        <td>16</td>
-                        <td>16.42031625</td>
-                    </tr>
-                    <tr>
-                        <td>D2S441</td>
-                        <td>12</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>0.919117647</td>
-                    </tr>
-                    <tr>
-                        <td>D10S1248</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>11.38356164</td>
-                    </tr>
-                    <tr>
-                        <td>D13S317</td>
-                        <td>8</td>
-                        <td>14</td>
-                        <td>13</td>
-                        <td>6.12755255</td>
-                    </tr>
-                    <tr>
-                        <td>PentaE</td>
-                        <td>12</td>
-                        <td>9</td>
-                        <td>9</td>
-                        <td>8.09198892</td>
-                    </tr>
-                    <tr>
-                        <td>D16S539</td>
-                        <td>9</td>
-                        <td>11</td>
-                        <td>11</td>
-                        <td>11.33144963</td>
-                    </tr>
-                    <tr>
-                        <td>D18S51</td>
-                        <td>11</td>
-                        <td>16</td>
-                        <td>14</td>
-                        <td>4.606960238</td>
-                    </tr>
-                    <tr>
-                        <td>D2S1338</td>
-                        <td>22</td>
-                        <td>22</td>
-                        <td>22</td>
-                        <td>5.740512634</td>
-                    </tr>
-                    <tr>
-                        <td>CSF1PO</td>
-                        <td>10</td>
-                        <td>12</td>
-                        <td>12</td>
-                        <td>3.057277788</td>
-                    </tr>
-                    <tr>
-                        <td>PentaD</td>
-                        <td>9</td>
-                        <td>10</td>
-                        <td>11</td>
-                        <td>14.99296879</td>
-                    </tr>
-                    <tr>
-                        <td>TH01</td>
-                        <td>7</td>
-                        <td>9</td>
-                        <td>9</td>
-                        <td>10.57969377</td>
-                    </tr>
-                    <tr>
-                        <td>vWA</td>
-                        <td>15</td>
-                        <td>16</td>
-                        <td>17</td>
-                        <td>5.430053571</td>
-                    </tr>
-                    <tr>
-                        <td>D21S11</td>
-                        <td>31</td>
-                        <td>31</td>
-                        <td>30</td>
-                        <td>8.164508209</td>
-                    </tr>
-                    <tr>
-                        <td>D7S820</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>11</td>
-                        <td>4.14834481</td>
-                    </tr>
-                    <tr>
-                        <td>D5S818</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>12</td>
-                        <td>4.149826632</td>
-                    </tr>
-                    <tr>
-                        <td>TPOX</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>11</td>
-                        <td>4.215311005</td>
-                    </tr>
-                    <tr>
-                        <td>D8S1179</td>
-                        <td>13</td>
-                        <td>13</td>
-                        <td>14</td>
-                        <td>3.99034714</td>
-                    </tr>
-                    <tr>
-                        <td>D12S391</td>
-                        <td>20</td>
-                        <td>24</td>
-                        <td>24</td>
-                        <td>4.976077896</td>
-                    </tr>
-                    <tr>
-                        <td>D19S433</td>
-                        <td>12</td>
-                        <td>14</td>
-                        <td>14</td>
-                        <td>6.630239145</td>
-                    </tr>
-                    <tr>
-                        <td>FGA</td>
-                        <td>23</td>
-                        <td>21</td>
-                        <td>22</td>
-                        <td>3.312750113</td>
-                    </tr>
-                    <tr>
-                        <td>D22S1045</td>
-                        <td>15</td>
-                        <td>16</td>
-                        <td>16</td>
-                        <td>1.322051824</td>
-                    </tr>
-                    <tr>
-                        <td>DYS391</td>
-                        <td></td>
-                        <td>11</td>
-                        <td>11</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Amelogenina</td>
-                        <td>X</td>
-                        <td>X</td>
-                        <td>X</td>
-                        <td></td>
+                        <td colspan="4" class="label-cell">PP %</td>
+                        <td>{{ ppPercent }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -296,17 +142,36 @@ const generatePdf = async () => {
     font-weight: bold;
 }
 
-table {
+.exam-table {
     width: 100%;
     border-collapse: collapse;
+    font-family: Arial, sans-serif;
 }
-th,
-td {
-    border: 1px solid black;
+
+.exam-table th,
+.exam-table td {
+    border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
-th {
+
+.exam-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.exam-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.exam-table tr:hover {
+    background-color: #e9e9e9;
+}
+
+.label-cell {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 16px;
     background-color: #f2f2f2;
 }
 
