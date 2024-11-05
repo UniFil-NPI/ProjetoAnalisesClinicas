@@ -125,7 +125,7 @@ onMounted(() => {
                         </p>
                     </div>
                     <table class="mt-10">
-                        <thead v-show="exams.length != 0">
+                        <thead class="border-b-2" v-show="exams.length != 0">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
@@ -144,45 +144,45 @@ onMounted(() => {
                                 v-for="exam in exams"
                                 :key="exam.id"
                             >
-                                <td class="py-2">{{ exam.id }}</td>
-                                <td class="py-2">{{ exam.patient_name }}</td>
-                                <td class="py-2">{{ exam.doctor_name }}</td>
-                                <td class="py-2">{{ exam.exam_type_name }}</td>
-                                <td class="py-2">
+                                <td class="py-4">{{ exam.id }}</td>
+                                <td class="py-4">{{ exam.patient_name }}</td>
+                                <td class="py-4">{{ exam.doctor_name }}</td>
+                                <td class="py-4">{{ exam.exam_type_name }}</td>
+                                <td class="py-4">
                                     {{
                                         new Date(
                                             exam.exam_date
                                         ).toLocaleDateString()
                                     }}
                                 </td>
-                                <td class="py-2 max-w-52">
+                                <td class="py-4 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
                                         {{ exam.description }}
                                     </div>
                                 </td>
-                                <td class="py-2" v-if="exam.pdf == null && user.isPatient">
+                                <td class="py-4" v-if="exam.pdf == null && user.isPatient">
                                     Indisponível
                                 </td>
-                                <td class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300" v-if="exam.pdf == null && !user.isPatient">
+                                <td class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300" v-if="exam.pdf == null && !user.isPatient">
                                     <a :href="route('exam.import', exam.id)">Gerar laudo</a>
                                 </td>
                                 <td
-                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="exam.pdf != null"
                                 >
                                     <a href="#" 
                                         >Baixar</a
                                     >
                                 </td>
-                                <td class="py-2">{{ exam.state }}</td>
-                                <td class="py-2">
+                                <td class="py-4">{{ exam.state }}</td>
+                                <td class="py-4 flex justify-end">
                                     <a
                                         v-if="
                                             exam &&
                                             (user.isAdm || user.isRecepcionist)
                                         "
                                         :href="route('exam.edit', exam.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>

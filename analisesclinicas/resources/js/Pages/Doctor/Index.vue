@@ -121,7 +121,7 @@ onMounted(() => {
                     </div>
 
                     <table class="mt-10">
-                        <thead v-show="doctors.length != 0">
+                        <thead class="border-b-2" v-show="doctors.length != 0">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do Médico</th>
@@ -135,16 +135,16 @@ onMounted(() => {
                                 v-for="doctor in doctors"
                                 :key="doctor.id"
                             >
-                                <td class="py-2">{{ doctor.id }}</td>
-                                <td class="py-2">{{ doctor.name }}</td>
-                                <td class="py-2">
+                                <td class="py-4">{{ doctor.id }}</td>
+                                <td class="py-4">{{ doctor.name }}</td>
+                                <td class="py-4">
                                     {{ doctor.crm }}
                                 </td>
-                                <td class="py-2">
+                                <td class="py-4 flex justify-end">
                                     <a
                                         v-if="doctor"
                                         :href="route('doctor.edit', doctor.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>

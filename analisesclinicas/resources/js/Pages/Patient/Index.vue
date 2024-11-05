@@ -131,7 +131,7 @@ onMounted(() => {
                         class="mt-10"
                         v-if="patients.length != 0"
                     >
-                        <thead>
+                        <thead class="border-b-2">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
@@ -146,13 +146,13 @@ onMounted(() => {
                                 :key="i"
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
-                                <td class="py-2">{{ patient.patient_id }}</td>
-                                <td class="py-2">{{ patient.name }}</td>
-                                <td class="py-2">{{ patient.cpf }}</td>
-                                <td class="py-2">
+                                <td class="py-4">{{ patient.patient_id }}</td>
+                                <td class="py-4">{{ patient.name }}</td>
+                                <td class="py-4">{{ patient.cpf }}</td>
+                                <td class="py-4">
                                     {{ patient.status ? "ativo" : "inativo" }}
                                 </td>
-                                <td class="py-2">
+                                <td class="py-4 flex justify-end">
                                     <a
                                         v-if="patient"
                                         :href="
@@ -161,7 +161,7 @@ onMounted(() => {
                                                 patient.patient_id
                                             )
                                         "
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>

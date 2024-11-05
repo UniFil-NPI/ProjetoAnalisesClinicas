@@ -129,7 +129,7 @@ watch(paternityTests, (newValue) => {
                         </p>
                     </div>
                     <table class="mt-10">
-                        <thead v-show="paternityTests.length != 0">
+                        <thead class="border-b-2" v-show="paternityTests.length != 0">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome Do Paciente</th>
@@ -146,13 +146,13 @@ watch(paternityTests, (newValue) => {
                                 v-for="paternityTest in paternityTests"
                                 :key="paternityTest.id"
                             >
-                                <td class="py-2">{{ paternityTest.id }}</td>
+                                <td class="py-4">{{ paternityTest.id }}</td>
 
-                                <td class="py-2">
+                                <td class="py-4">
                                     {{ paternityTest.patient_name }}
                                 </td>
 
-                                <td class="py-2">
+                                <td class="py-4">
                                     {{
                                         new Date(
                                             paternityTest.exam_date
@@ -160,32 +160,32 @@ watch(paternityTests, (newValue) => {
                                     }}
                                 </td>
 
-                                <td class="py-2 max-w-52">
+                                <td class="py-4 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
                                         {{ paternityTest.description }}
                                     </div>
                                 </td>
 
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="paternityTest.pdf == null && user.isPatient"
                                 >
                                     Indisponível
                                 </td>
                                 <td
-                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="paternityTest.pdf == null && !user.isPatient && paternityTest.participants.length == 1"
                                 >
                                     <a :href="route('paternity.create.duo.report', paternityTest.id)">Gerar laudo</a>
                                 </td>
                                 <td
-                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="paternityTest.pdf == null && !user.isPatient && paternityTest.participants.length == 2"
                                 >
                                     <a :href="route('paternity.create.trio.report', paternityTest.id)">Gerar laudo</a>
                                 </td>
                                 <td
-                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="paternityTest.pdf != null"
                                 >
                                     <a href="#"
@@ -193,9 +193,9 @@ watch(paternityTests, (newValue) => {
                                     >
                                 </td>
 
-                                <td class="py-2">{{ paternityTest.state }}</td>
+                                <td class="py-4">{{ paternityTest.state }}</td>
 
-                                <td class="py-2">
+                                <td class="py-4 flex justify-end">
                                     <a
                                         v-if="paternityTest && user.isAdm"
                                         :href="
@@ -204,7 +204,7 @@ watch(paternityTests, (newValue) => {
                                                 paternityTest.id
                                             )
                                         "
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>

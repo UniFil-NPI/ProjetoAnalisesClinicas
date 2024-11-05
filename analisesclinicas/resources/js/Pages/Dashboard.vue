@@ -38,11 +38,10 @@ const user = computed(() => {
                         </p>
                     </div>
                     <table class="mt-10">
-                        <thead v-show="props.exams.length != 0">
+                        <thead class="border-b-2" v-show="props.exams.length != 0">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
-                                <th>Nome do médico</th>
                                 <th>Data do exame</th>
                                 <th>Descrição do exame</th>
                                 <th>Laudo</th>
@@ -55,29 +54,22 @@ const user = computed(() => {
                                 v-for="exam in props.exams"
                                 :key="exam.id"
                             >
-                                <td class="py-2">{{ exam.id }}</td>
-                                <td class="py-2">{{ exam.patient_name }}</td>
-                                <td class="py-2">
-                                    {{
-                                        exam.doctor_name
-                                            ? exam.doctor_name
-                                            : "Não possui"
-                                    }}
-                                </td>
-                                <td class="py-2">
+                                <td class="py-4">{{ exam.id }}</td>
+                                <td class="py-4">{{ exam.patient_name }}</td>
+                                <td class="py-4">
                                     {{
                                         new Date(
                                             exam.exam_date
                                         ).toLocaleDateString()
                                     }}
                                 </td>
-                                <td class="py-2 max-w-52">
+                                <td class="py-4 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
                                         {{ exam.description }}
                                     </div>
                                 </td>
                                 <td
-                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="
                                         exam.pdf == null &&
                                         !user.isPatient &&
@@ -87,7 +79,7 @@ const user = computed(() => {
                                     <a href="#">Gerar laudo</a>
                                 </td>
                                 <td
-                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="
                                         exam.pdf == null &&
                                         !user.isPatient &&
@@ -97,20 +89,20 @@ const user = computed(() => {
                                     <a href="#">Gerar laudo</a>
                                 </td>
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="exam.pdf == null && user.isPatient"
                                 >
                                     Indisponível
                                 </td>
                                 <td
-                                    class="py-2 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="exam.pdf != null"
                                 >
                                     <a href="#"
                                         >Baixar</a
                                     >
                                 </td>
-                                <td class="py-2">
+                                <td class="py-4 flex justify-end">
                                     <a
                                         v-if="
                                             exam &&
@@ -118,7 +110,7 @@ const user = computed(() => {
                                             !user.isPatient
                                         "
                                         :href="route('exam.edit', exam.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>
@@ -129,7 +121,7 @@ const user = computed(() => {
                                             !user.isPatient
                                         "
                                         :href="route('paternity.edit', exam.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>

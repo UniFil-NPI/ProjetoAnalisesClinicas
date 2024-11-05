@@ -113,7 +113,7 @@ onMounted(() => {
                     </div>
 
                     <table class="mt-10" v-if="users.length != 0">
-                        <thead>
+                        <thead class="border-b-2">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
@@ -130,35 +130,35 @@ onMounted(() => {
                                 :key="user.id"
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
-                                <td class="py-2">{{ user.id }}</td>
-                                <td class="py-2">{{ user.name }}</td>
-                                <td class="py-2">{{ user.email }}</td>
-                                <td class="py-2">{{ user.cpf }}</td>
+                                <td class="py-4">{{ user.id }}</td>
+                                <td class="py-4">{{ user.name }}</td>
+                                <td class="py-4">{{ user.email }}</td>
+                                <td class="py-4">{{ user.cpf }}</td>
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="user.roles[0].name == 'admin'"
                                 >
                                     {{ "Adm" }}
                                 </td>
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="user.roles[0].name == 'technician'"
                                 >
                                     {{ "Técnico" }}
                                 </td>
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="user.roles[0].name == 'recepcionist'"
                                 >
                                     {{ "Recepcionista" }}
                                 </td>
-                                <td class="py-2">
+                                <td class="py-4">
                                     {{ user.status ? "ativo" : "inativo" }}
                                 </td>
-                                <td class="py-2">
+                                <td class="py-4 flex justify-end">
                                     <a
                                         :href="route('user.edit', user.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>

@@ -124,7 +124,7 @@ onMounted(() => {
                     </div>
 
                     <table class="mt-10">
-                        <thead v-show="examTypes.length != 0">
+                        <thead class="border-b-2" v-show="examTypes.length != 0">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
@@ -137,12 +137,12 @@ onMounted(() => {
                                 v-for="type in examTypes"
                                 :key="type.id"
                             >
-                                <td class="py-2">{{ type.id }}</td>
-                                <td class="py-2">{{ type.name }}</td>
-                                <td class="py-2 flex justify-end">
+                                <td class="py-4">{{ type.id }}</td>
+                                <td class="py-4">{{ type.name }}</td>
+                                <td class="py-4 flex justify-end">
                                     <a
                                         :href="route('type.edit', type.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>
