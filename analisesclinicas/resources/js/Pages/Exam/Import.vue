@@ -67,7 +67,7 @@ watch(
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
+                <div class="bg-white flex flex-col shadow-md sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold" v-if="!user.isPatient">
                             Importar resultado

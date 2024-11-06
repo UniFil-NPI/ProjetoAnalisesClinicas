@@ -43,7 +43,7 @@ onMounted(() => {
 });
 
 watch(paternityTests, (newValue) => {
-    newValue.forEach(element => {
+    newValue.forEach((element) => {
         element.participants = JSON.parse(element.participants);
     });
 });
@@ -99,7 +99,7 @@ watch(paternityTests, (newValue) => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
+                <div class="bg-white flex flex-col shadow-md sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Pedidos
@@ -129,7 +129,10 @@ watch(paternityTests, (newValue) => {
                         </p>
                     </div>
                     <table class="mt-10">
-                        <thead class="border-b-2" v-show="paternityTests.length != 0">
+                        <thead
+                            class="border-b-2"
+                            v-show="paternityTests.length != 0"
+                        >
                             <tr>
                                 <th>ID</th>
                                 <th>Nome Do Paciente</th>
@@ -167,28 +170,35 @@ watch(paternityTests, (newValue) => {
                                 </td>
 
                                 <td
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="
+                                        !user.isPatient
+                                    "
+                                >
+                                    <a :href="route('paternity.report.manage', paternityTest.id)">Editar</a>
+                                </td>
+
+                                <td
                                     class="py-4"
-                                    v-if="paternityTest.pdf == null && user.isPatient"
+                                    v-if="
+                                        paternityTest.pdf == null &&
+                                        user.isPatient
+                                    "
                                 >
                                     Indisponível
                                 </td>
+
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="paternityTest.pdf == null && !user.isPatient && paternityTest.participants.length == 1"
+                                    v-if="paternityTest.pdf != null && user.isPatient"
                                 >
-                                    <a :href="route('paternity.create.duo.report', paternityTest.id)">Gerar laudo</a>
-                                </td>
-                                <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="paternityTest.pdf == null && !user.isPatient && paternityTest.participants.length == 2"
-                                >
-                                    <a :href="route('paternity.create.trio.report', paternityTest.id)">Gerar laudo</a>
-                                </td>
-                                <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="paternityTest.pdf != null"
-                                >
-                                    <a href="#"
+                                    <a
+                                        :href="
+                                            route(
+                                                'paternity.report.download',
+                                                paternityTest.id
+                                            )
+                                        "
                                         >Baixar</a
                                     >
                                 </td>

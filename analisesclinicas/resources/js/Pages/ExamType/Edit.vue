@@ -83,7 +83,7 @@ watch(
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-5 shadow-md sm:rounded-lg p-5"
                 >
                     <div class="grid grid-cols-5 gap-4">
                         <h2 class="col-span-4 text-2xl font-bold">

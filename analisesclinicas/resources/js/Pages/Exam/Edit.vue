@@ -66,7 +66,7 @@ watch(
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-5 shadow-md sm:rounded-lg p-5"
                 >
                     <h2 class="text-2xl font-bold">
                         Editar pedido do paciente

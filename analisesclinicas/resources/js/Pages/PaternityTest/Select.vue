@@ -1,5 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/vue3";
+
 </script>
 
 <template>
@@ -22,7 +24,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-8 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-8 shadow-md sm:rounded-lg p-5"
                 >
                     <div class="grid grid-cols-5 gap-4">
                         <h2 class="col-span-4 text-2xl font-bold">
@@ -32,12 +34,12 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
                     <div class="grid grid-cols-4 gap-4">
                         <a  :href="route('paternity.create.duo')"
-                            class="col-span-2 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
+                            class="col-span-2 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
                         >
                             Duo
                         </a>
                         <a  :href="route('paternity.create.trio')"
-                            class="col-span-2 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
+                            class="col-span-2 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
                         >
                             Trio
                         </a>

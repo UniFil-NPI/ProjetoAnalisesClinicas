@@ -27,7 +27,9 @@ const save = () => {
 };
 
 const changeStatus = () => {
-    form.status = !form.status;
+    if (props.user.id != 1){
+        form.status = !form.status;
+    }
 };
 
 const clearError = () => {
@@ -71,7 +73,7 @@ watch(
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-5 shadow-md sm:rounded-lg p-5"
                 >
                     <h2 class="text-2xl font-bold">
                         Editar cadastro do funcionário
@@ -151,6 +153,7 @@ watch(
                                 >
                                     <input
                                         v-if="user.status === true"
+                                        :disabled="user.id == 1"
                                         type="checkbox"
                                         value=""
                                         class="sr-only peer"
@@ -168,12 +171,12 @@ watch(
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
                                     ></div>
                                     <span
-                                        v-if="user.status === true"
+                                        v-if="form.status === true"
                                         class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Ativo</span
                                     >
                                     <span
-                                        v-if="user.status === false"
+                                        v-if="form.status === false"
                                         class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Inativo</span
                                     >

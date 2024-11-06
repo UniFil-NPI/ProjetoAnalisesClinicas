@@ -1,21 +1,67 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
-const props = defineProps({});
+const props = defineProps({
+    ipa: {
+        type: Number,
+    },
+    pp: {
+        type: Number,
+    },
+    exclusion: {
+        type: Number,
+    },
+    ip: {
+        type: Object,
+    },
+    loci: {
+        type: Object,
+    },
+    paternityTest: {
+        type: Object,
+    },
+    error: {
+        type: String,
+        default: null,
+    },
+});
 
 const form = useForm({
+    ipa: props.ipa,
+    pp: props.pp,
+    ip: props.ip,
+    loci: props.loci,
+    exclusion: props.exclusion,
     conclusion: "",
 });
 
-const generatePdf = async () => {
-    try {
-        await this.$inertia.post("/gerar-pdf", { conclusion: form.conclusion });
-        alert("PDF gerado com sucesso!");
-    } catch (error) {
-        console.error("Erro ao gerar PDF:", error);
-    }
+const generatePdf = () => {
+    form.post(`/paternitytest/report/store/${props.paternityTest.id}`);
 };
+
+const errorMessage = ref(null);
+
+const clearError = () => {
+    errorMessage.value = null;
+};
+
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 
 <template>
@@ -45,6 +91,7 @@ const generatePdf = async () => {
                 termociclador (Veriti, LifeTechnologies), programado de acordo
                 com o protocolo fornecido pelo fabricante do sistema.
             </p>
+            <br />
             <p>
                 b) DA DETECÇÃO DOS PRODUTOS AMPLIFICADOS: Alíquotas das amostras
                 amplificadas foram submetidas à corrida eletroforética capilar
@@ -52,6 +99,7 @@ const generatePdf = async () => {
                 analisador genético automático de 8 capilares 3500
                 (LifeTechnologies).
             </p>
+            <br />
             <p>
                 c) DA ANÁLISE ESTATÍSTICA: Um indivíduo que é o pai biológico
                 deve compartilhar pelo menos um alelo com a(o) filha(o) em cada
@@ -73,28 +121,50 @@ const generatePdf = async () => {
                 <thead>
                     <tr>
                         <th>Locus</th>
-                        <th>Mãe</th>
-                        <th>Filho</th>
-                        <th>Investigado</th>
+                        <th colspan="2">Mãe</th>
+                        <th colspan="2">Filho</th>
+                        <th colspan="2">Investigado</th>
                         <th>Índice de Paternidade</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(row, index) in examData" :key="index">
-                        <td>{{ row.locus }}</td>
-                        <td>{{ row.mother }}</td>
-                        <td>{{ row.child }}</td>
-                        <td>{{ row.investigated }}</td>
-                        <td>{{ row.paternityIndex }}</td>
+                    <tr v-for="(row, locus) in loci" :key="locus">
+                        <td>
+                            {{ locus }}
+                        </td>
+                        <td>
+                            {{ row.mae_alelo1 }}
+                        </td>
+                        <td>
+                            {{ row.mae_alelo2 }}
+                        </td>
+                        <td>
+                            {{ row.crianca_alelo1 }}
+                        </td>
+                        <td>
+                            {{ row.crianca_alelo2 }}
+                        </td>
+                        <td>
+                            {{ row.pai_alelo1 }}
+                        </td>
+                        <td>
+                            {{ row.pai_alelo2 }}
+                        </td>
+                        <td>
+                            {{ ip[locus] }}
+                        </td>
                     </tr>
-                    <!-- Linha de IP Acumulado e PP% -->
                     <tr>
-                        <td colspan="4" class="label-cell">IP Acumulado</td>
-                        <td>{{ accumulatedIP }}</td>
+                        <td colspan="7" class="label-cell">IP Acumulado</td>
+                        <td>{{ ipa }}</td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="label-cell">PP %</td>
-                        <td>{{ ppPercent }}</td>
+                        <td colspan="7" class="label-cell">PP %</td>
+                        <td>{{ pp }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="7" class="label-cell">Exclusões</td>
+                        <td>{{ exclusion }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -104,7 +174,7 @@ const generatePdf = async () => {
             <label for="conclusion"><strong>Conclusão</strong></label>
             <textarea
                 id="conclusion"
-                v-model="conclusion"
+                v-model="form.conclusion"
                 placeholder="Digite a conclusão aqui..."
             ></textarea>
         </div>
@@ -113,14 +183,25 @@ const generatePdf = async () => {
             <button @click="generatePdf">Gerar PDF</button>
         </div>
     </div>
+    <div
+        v-if="errorMessage"
+        class="fixed bottom-0 left-0 w-full bg-red-500 text-white text-lg py-4 px-6 text-center"
+    >
+        {{ errorMessage }}
+    </div>
 </template>
 
 <style scoped>
 .container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
 .header {
@@ -131,33 +212,38 @@ const generatePdf = async () => {
 .header h1 {
     font-size: 24px;
     font-weight: bold;
-}
-
-.section {
-    margin-bottom: 20px;
+    color: #333;
 }
 
 .section h2 {
     font-size: 18px;
     font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
 }
 
 .exam-table {
     width: 100%;
     border-collapse: collapse;
-    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
+    background-color: #fafafa;
 }
 
 .exam-table th,
 .exam-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: center;
+    color: #555;
 }
 
 .exam-table th {
-    background-color: #f2f2f2;
+    background-color: #f5f5f5;
     font-weight: bold;
+    color: #333;
 }
 
 .exam-table tr:nth-child(even) {
@@ -165,22 +251,48 @@ const generatePdf = async () => {
 }
 
 .exam-table tr:hover {
-    background-color: #e9e9e9;
+    background-color: #f1f1f1;
 }
 
 .label-cell {
     font-weight: bold;
     text-align: right;
     padding-right: 16px;
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 20px;
+    }
+
+    .section h2 {
+        font-size: 16px;
+    }
+
+    .exam-table,
+    .exam-table th,
+    .exam-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .exam-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }
 
 textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
+    font-size: 14px;
+    color: #333;
 }
 
 .button-container {
@@ -190,14 +302,16 @@ textarea {
 
 button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #f29400;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: rgb(253 186 116);
 }
 </style>

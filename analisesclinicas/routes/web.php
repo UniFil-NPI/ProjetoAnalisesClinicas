@@ -8,6 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\PaternityTestController;
+use App\Http\Middleware\EnsureUserHasRole;
+use App\Http\Middleware\EnsureUserIsActive;
+use App\Models\PaternityTest;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,7 +26,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
     //Dashboard
 
@@ -53,7 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
 
         Route::post('/search', [UserController::class, 'search'])->name('search');
-    });
+    })->middleware(EnsureUserHasRole::class.':admin');
 
     //Patients Routes
 
@@ -69,25 +72,25 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{id}', [PatientController::class, 'update'])->name('update');
 
         Route::post('/search', [PatientController::class, 'search'])->name('search');
-    });
+    })->middleware(EnsureUserHasRole::class.':admin,recepcionist');
 
     //Exam Routes
     Route::prefix('exam')->name('exam.')->group(function () {
         Route::get('/', [ExamController::class, 'index'])->name('index');
 
-        Route::get('/new', [ExamController::class, 'create'])->name('create');
+        Route::get('/new', [ExamController::class, 'create'])->name('create')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
-        Route::post('/store', [ExamController::class, 'store'])->name('store');
+        Route::post('/store', [ExamController::class, 'store'])->name('store')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
-        Route::post('/search', [ExamController::class, 'search'])->name('search');
+        Route::post('/search', [ExamController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
-        Route::get('/edit/{id}', [ExamController::class, 'edit'])->name('edit');
+        Route::get('/edit/{id}', [ExamController::class, 'edit'])->name('edit')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
-        Route::post('/update/{id}', [ExamController::class, 'update'])->name('update');
+        Route::post('/update/{id}', [ExamController::class, 'update'])->name('update')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
-        Route::get('/import/{id}', [ExamController::class, 'import_result'])->name('import');
+        Route::get('/import/{id}', [ExamController::class, 'import_result'])->name('import')->middleware(EnsureUserHasRole::class.':admin,biomedic');
 
-        Route::post('/{id}/store-pdf', [ExamController::class, 'store_pdf_path'])->name('store-pdf');
+        Route::post('/{id}/store-pdf', [ExamController::class, 'store_pdf_path'])->name('store-pdf')->middleware(EnsureUserHasRole::class.':admin,biomedic');
     });
 
 
@@ -104,33 +107,47 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [DoctorController::class, 'edit'])->name('edit');
 
         Route::post('/update/{id}', [DoctorController::class, 'update'])->name('update');
-    });
+    })->middleware(EnsureUserHasRole::class.':admin,recepcionist');;
 
 
     //Paternity Routes
     Route::prefix('paternitytest')->name('paternity.')->group(function () {
 
-        Route::get('/', [PaternityTestController::class, 'index'])->name('index');
+        Route::get('/', [PaternityTestController::class, 'index'])->name('index')->middleware(EnsureUserHasRole::class.':admin,patient');
 
-        Route::get('/select', [PaternityTestController::class, 'select'])->name('select');
+        Route::get('/select', [PaternityTestController::class, 'select'])->name('select')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::get('/new/duo', [PaternityTestController::class, 'create_duo'])->name('create.duo');
+        Route::get('/new/duo', [PaternityTestController::class, 'create_duo'])->name('create.duo')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::get('/new/trio', [PaternityTestController::class, 'create_trio'])->name('create.trio');
+        Route::get('/new/trio', [PaternityTestController::class, 'create_trio'])->name('create.trio')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::post('/store', [PaternityTestController::class, 'store'])->name('store');
+        Route::post('/store/{type}', [PaternityTestController::class, 'store'])->name('store')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::post('/search', [PaternityTestController::class, 'search'])->name('search');
+        Route::post('/search', [PaternityTestController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin');
+        
+        Route::get('/edit/{id}', [PaternityTestController::class, 'edit'])->name('edit')->middleware(EnsureUserHasRole::class.':admin');
+        
+        Route::post('/update/{id}', [PaternityTestController::class, 'update'])->name('update')->middleware(EnsureUserHasRole::class.':admin');
+        
+        Route::post('/duo/calc', [PaternityTestController::class, 'calc_ipc_duo'])->name('calc.duo')->middleware(EnsureUserHasRole::class.':admin');
+        
+        Route::get('/trio/calc/{id}', [PaternityTestController::class, 'calc_ipc_trio'])->name('calc.trio')->middleware(EnsureUserHasRole::class.':admin');
+        
+        Route::prefix('/report')->name('report.')->group(function() {
+            
+            Route::get('/manage/{id}', [PaternityTestController::class, 'report_manage'])->name('manage')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::get('/edit/{id}', [PaternityTestController::class, 'edit'])->name('edit');
+            Route::get('/duo/new/{id}', [PaternityTestController::class, 'create_duo_report'])->name('create.duo')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::post('/update/{id}', [PaternityTestController::class, 'update'])->name('update');
+            Route::get('/trio/new/{id}', [PaternityTestController::class, 'create_trio_report'])->name('create.trio')->middleware(EnsureUserHasRole::class.':admin');
+            
+            Route::post('/store/{id}', [PaternityTestController::class, 'store_report'])->name('store')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::get('/report/duo/new/{id}', [PaternityTestController::class, 'create_duo_report'])->name('create.duo.report');
+            Route::get('/download/{id}', [PaternityTestController::class, 'download_report'])->name('download')->middleware(EnsureUserHasRole::class.':admin,patient');
 
-        Route::get('/report/trio/new/{id}', [PaternityTestController::class, 'create_trio_report'])->name('create.trio.report');
-
-        Route::post('/report/store/{id}', [PaternityTestController::class, 'store_report'])->name('store.report');
+            Route::get('/remove/{id}', [PaternityTestController::class, 'remove_report'])->name('remove')->middleware(EnsureUserHasRole::class.':admin');
+        });
+        
 
     });
 
@@ -147,7 +164,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [ExamTypeController::class, 'edit'])->name('edit');
         
             Route::post('/update/{id}', [ExamTypeController::class, 'update'])->name('update');
-    });
+    })->middleware(EnsureUserHasRole::class.':admin,biomedic');;
 });
 
 require __DIR__ . '/auth.php';
