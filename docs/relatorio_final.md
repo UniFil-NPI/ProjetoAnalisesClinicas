@@ -700,7 +700,7 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 #### Diagramas de Sequência:
 
-- ##### [UC001_GERENCIAR_USUARI](diagramas_de_sequencia/UC001_gerenciar_usuario.md)
+- ##### [UC001_GERENCIAR_USUARIO](diagramas_de_sequencia/UC001_gerenciar_usuario.md)
 
 - ##### [UC002_GERENCIAR_PEDIDO_DO_EXAME](diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame.md)
 

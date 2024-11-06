@@ -1,59 +1,45 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
+import { computed, onMounted, ref, watch } from "vue";
 
-export default {
-    props: {
-        flash: {
-            type: Object,
-            default: () => ({}),
-        }
+const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
-    computed: {
-        user() {
-            return this.$page.props.auth;
-        },
-    },
-    data() {
-        return {
-            search: "",
-            exams: [],
-            firstSearch: true,
-            message: this.flash && this.flash.message ? this.flash.message : null,
-        };
-    },
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-    },
-    methods: {
-        research() {
-            axios
-                .post(route("exam.search"), { search: this.search })
-                .then((response) => {
-                    this.exams = response.data;
-                });
-            this.firstSearch = false;
-        },
-        initialResearch() {
-            axios
-                .post(route("exam.search"), { search: this.search })
-                .then((response) => {
-                    this.exams = response.data;
-                });
-        },
-        clearMessage() {
-            this.message = null;
-        },
-    },
-    mounted() {
-        this.initialResearch();
-        if (this.message) {
-            setTimeout(this.clearMessage, 5000);
-        }
-    },
+});
+
+const page = usePage();
+const user = computed(() => {
+    return page.props.auth;
+});
+const search = ref("");
+const exams = ref([]);
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+const status = ref("");
+
+const research = () => {
+    axios
+        .post(route("exam.search"), { search: search.value })
+        .then((response) => {
+            exams.value = response.data.result;
+            status.value = response.data.status;
+        });
 };
+
+const clearMessage = () => {
+    message.value = null;
+};
+
+onMounted(() => {
+    research();
+    if (message.value) {
+        setTimeout(clearMessage, 5000);
+    }
+});
 </script>
 <template>
     <Head title="Pedidos de exames" />
@@ -114,55 +100,41 @@ export default {
                         <h2 class="text-2xl font-bold" v-if="!user.isPatient">
                             Gerenciamento de Pedidos
                         </h2>
-                        <Link
+                        <a
                             v-if="user.isAdm || user.isRecepcionist"
                             :href="route('exam.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
                             Novo Pedido
-                        </Link>
+                        </a>
                     </div>
                     <div
                         class="mt-10"
-                        v-if="
-                            exams.length == 0 &&
-                            this.firstSearch &&
-                            !user.isPatient
-                        "
+                        v-if="status == 'exams is empty' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
-                            Faça uma busca para aparecer algum pedido
+                            Não existe nenhum pedido
                         </p>
                     </div>
                     <div
                         class="mt-10"
-                        v-if="exams.length == 0 && user.isPatient"
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Não possui nenhum pedido
-                        </p>
-                    </div>
-                    <div
-                        class="mt-10"
-                        v-if="
-                            exams.length == 0 &&
-                            !this.firstSearch &&
-                            !user.isPatient
-                        "
+                        v-if="status == 'patient not found' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
                             Paciente não encontrado
                         </p>
                     </div>
                     <table class="mt-10">
-                        <thead v-show="exams.length != 0">
+                        <thead class="border-b-2" v-show="exams.length != 0">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
                                 <th>Nome do médico</th>
+                                <th>Tipo do exame</th>
                                 <th>Data do exame</th>
                                 <th>Descrição do exame</th>
                                 <th>Laudo</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -172,40 +144,48 @@ export default {
                                 v-for="exam in exams"
                                 :key="exam.id"
                             >
-                                <td class="py-2">{{ exam.id }}</td>
-                                <td class="py-2">{{ exam.patient_name }}</td>
-                                <td class="py-2">{{ exam.doctor_name }}</td>
-                                <td class="py-2">
+                                <td class="py-4">{{ exam.id }}</td>
+                                <td class="py-4">{{ exam.patient_name }}</td>
+                                <td class="py-4">{{ exam.doctor_name }}</td>
+                                <td class="py-4">{{ exam.exam_type_name }}</td>
+                                <td class="py-4">
                                     {{
                                         new Date(
                                             exam.exam_date
                                         ).toLocaleDateString()
                                     }}
                                 </td>
-                                <td class="py-2 max-w-52">
+                                <td class="py-4 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
                                         {{ exam.description }}
                                     </div>
                                 </td>
+                                <td class="py-4" v-if="exam.pdf == null && user.isPatient">
+                                    Indisponível
+                                </td>
+                                <td class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300" v-if="exam.pdf == null && !user.isPatient">
+                                    <a :href="route('exam.import', exam.id)">Gerar laudo</a>
+                                </td>
                                 <td
-                                    class="py-2 flex items-center justify-center"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="exam.pdf != null"
                                 >
-                                    <p v-if="exam.pdf == null">Indisponível</p>
-                                    <a href="#" v-if="exam.pdf != null"
-                                        >baixar</a
+                                    <a href="#" 
+                                        >Baixar</a
                                     >
                                 </td>
-                                <td class="py-2">
-                                    <Link
+                                <td class="py-4">{{ exam.state }}</td>
+                                <td class="py-4 flex justify-end">
+                                    <a
                                         v-if="
                                             exam &&
                                             (user.isAdm || user.isRecepcionist)
                                         "
                                         :href="route('exam.edit', exam.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

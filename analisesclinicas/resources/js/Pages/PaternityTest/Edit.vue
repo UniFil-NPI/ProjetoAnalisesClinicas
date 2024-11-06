@@ -1,53 +1,73 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-        paternityTest: Object,
-    },
-    data() {
-        return {
-            form: useForm({
-                lab: this.paternityTest.lab,
-                exam_date: this.paternityTest.exam_date,
-                description: this.paternityTest.description,
-                health_insurance: this.paternityTest.health_insurance,
-            }),
-        };
-    },
-    methods: {
-        save() {
-            this.form.post("/paternitytest/update/" + this.paternityTest.id, this.form);
-        },
-    },
+    paternityTest: Object,
+});
+
+const form = useForm({
+    lab: props.paternityTest.lab,
+    exam_date: props.paternityTest.exam_date,
+    description: props.paternityTest.description,
+    health_insurance: props.paternityTest.health_insurance,
+});
+
+const errorMessage = ref(null);
+
+const save = () => {
+    form.post("/paternitytest/update/" + props.paternityTest.id, form);
+    errorMessage.value = props.error;
 };
+
+const clearError = () => {
+    errorMessage.value = null;
+}
+
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
+
+watch(() => errorMessage.value, (newError) => {
+    errorMessage.value = newError;
+    if (newError) {
+        setTimeout(clearError, 5000);
+    }
+});
 </script>
 <template>
     <Head title="Edição dos pedidos de teste de paternidade" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edição do pedido de exame de paternidade
-            </h2>
+            <button
+                @click="$inertia.visit(route('paternity.index'))"
+                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-5 shadow-md sm:rounded-lg p-5"
                 >
-                    <h2 class="text-2xl font-bold">Editar pedido do paciente</h2>
+                    <h2 class="text-2xl font-bold">
+                        Editar pedido do paciente
+                    </h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
                             <div class="col-span-2 flex flex-col gap-2">

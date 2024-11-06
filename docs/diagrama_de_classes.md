@@ -8,8 +8,6 @@ classDiagram
 
 direction LR
 
-User "1" *-- "0..1" Patient : is
-
 class User {
     #id id
     #string cpf 
@@ -23,9 +21,8 @@ class User {
     +edit(id)
     +update(request, id)
     +search(request)
+    -formatcpf($cpfRequest)
 }
-
-Patient "1" o-- "0..n" Exam : has
 
 class Patient{
     #id id
@@ -38,7 +35,7 @@ class Patient{
     #string neighborhood
     #string city
     #string state
-    #date birth_date
+    #timestamp birth_date
     #string health_insurance
     #string biological_sex
     +index()
@@ -55,20 +52,23 @@ class Exam {
     #id id
     #foreignId patient_id
     #foreignId doctor_id
+    #foreignId exam_type_id
+    #string type
     #string lab
     #string health_insurance
+    #timestamp exam_date
     #longText description
-    #date exam_date
+    #string state
+    #string pdf
     +index()
     +create()
     +store(request)
     +search(request)
     +edit(id)
     +update(id, request)
+    +import_result($id)
 
 }
-
-Doctor "1" o-- "0..n" Exam : has
 
 class Doctor {
     #id id
@@ -81,6 +81,72 @@ class Doctor {
     +edit(id)
     +update(request, id)
 }
+
+class ExamType {
+    #id id
+    #string name
+    #json components_info
+    +index()
+    +create()
+    +store(request)
+    +search(request)
+    +edit(id)
+    +update(request, id)
+    -check_components_input(request, type)
+    -is_error_in_the_list(error)
+}
+
+class PaternityTest {
+    #id id
+    #foreignId patient_id
+    #string type
+    #json participants
+    #string lab
+    #string health_insurance
+    #timestamp exam_date
+    #longText description
+    #string pdf
+    +index()
+    +select()
+    +create_duo()
+    +create_trio()
+    +store(request)
+    +search(request)
+    +edit(id)
+    +update(request, id)
+    +create_duo_report(id)
+    +create_trio_report(id)
+    +store_report(request, id)
+}
+
+class PatientExamResult {
+    #foreignId patient_id
+    #foreignId requisition_id
+    #string exam_type_name
+    #double exam_value
+    #timestamp start_date
+    #string patient_name
+    #string patient_gender
+    #string operator_name
+    #timestamp end_date
+}
+
+User "1" *-- "0..1" Patient : is
+
+Patient "1" *-- "0..n" Exam : has
+
+Patient "1" *-- "0..n" PaternityTest : has
+
+Patient "1" *-- "0..n" PatientExamResult: has
+
+ExamType "1" *-- "0..n" Exam : has
+
+Doctor "1" *-- "0..n" Exam : has
+
+Exam "1" *-- "0..1" PatientExamResult
+
+
+ 
 
 
 ```

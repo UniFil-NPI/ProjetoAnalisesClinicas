@@ -2,17 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Test;
+use App\Http\Controllers\AlleleFreqImportController;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TestSeeder extends Seeder
+class AlleleFreqSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        // Test::factory()->count(15)->create();
+        $AlleleFreqImportController = new AlleleFreqImportController();
+        $AlleleFreqImportController();
     }
 }

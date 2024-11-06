@@ -1,46 +1,39 @@
-<script>
+<script setup>
+import { ref, onMounted, watch, defineProps } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+import axios from "axios";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
-    props: {
-        flash: {
-            type: Object,
-            default: () => ({}),
-        },
-    },
-    data() {
-        return {
-            users: {},
-            search: "",
-            message: this.flash && this.flash.message ? this.flash.message : null,
+});
 
-        };
-    },
-    methods: {
-        research() {
-            axios
-                .post("/user/search", { search: this.search })
-                .then((response) => {
-                    this.users = response.data;
-                });
-        },
-        clearMessage() {
-            this.message = null;
-        },
-    },
-    mounted() {
-        this.research();
-        if (this.message) {
-            setTimeout(this.clearMessage, 5000);
-        }
-    },
+const users = ref([]);
+const search = ref("");
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+const status = ref("");
+
+const research = () => {
+    axios.post("/user/search", { search: search.value }).then((response) => {
+        users.value = response.data.result;
+        status.value = response.data.status;
+    });
 };
+const clearMessage = () => {
+    message.value = null;
+};
+
+onMounted(() => {
+    research();
+    if (message.value) {
+        setTimeout(clearMessage, 5000);
+    }
+});
 </script>
 <template>
     <Head title="Funcionários" />
@@ -83,7 +76,7 @@ export default {
                     required
                 />
                 <button
-                    v-on:click="research"
+                    @click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
                 >
                     Buscar
@@ -98,16 +91,29 @@ export default {
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de funcionários
                         </h2>
-                        <Link
+                        <a
                             :href="route('user.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
                             Novo funcionário
-                        </Link>
+                        </a>
                     </div>
 
-                    <table class="mt-10">
-                        <thead>
+                    <div
+                        class="mt-10"
+                        v-if="
+                            users.length == 0 &&
+                            status == 'employee not found'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum funcionário cadastrado que
+                            corresponde com sua busca.
+                        </p>
+                    </div>
+
+                    <table class="mt-10" v-if="users.length != 0">
+                        <thead class="border-b-2">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
@@ -120,39 +126,39 @@ export default {
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(user, i) in users"
-                                :key="i"
+                                v-for="user in users"
+                                :key="user.id"
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
-                                <td class="py-2">{{ user.id }}</td>
-                                <td class="py-2">{{ user.name }}</td>
-                                <td class="py-2">{{ user.email }}</td>
-                                <td class="py-2">{{ user.cpf }}</td>
+                                <td class="py-4">{{ user.id }}</td>
+                                <td class="py-4">{{ user.name }}</td>
+                                <td class="py-4">{{ user.email }}</td>
+                                <td class="py-4">{{ user.cpf }}</td>
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="user.roles[0].name == 'admin'"
                                 >
                                     {{ "Adm" }}
                                 </td>
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="user.roles[0].name == 'technician'"
                                 >
                                     {{ "Técnico" }}
                                 </td>
                                 <td
-                                    class="py-2"
+                                    class="py-4"
                                     v-if="user.roles[0].name == 'recepcionist'"
                                 >
                                     {{ "Recepcionista" }}
                                 </td>
-                                <td class="py-2">
+                                <td class="py-4">
                                     {{ user.status ? "ativo" : "inativo" }}
                                 </td>
-                                <td class="py-2">
+                                <td class="py-4 flex justify-end">
                                     <a
                                         :href="route('user.edit', user.id)"
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
                                     </a>

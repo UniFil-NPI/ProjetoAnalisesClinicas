@@ -55,7 +55,7 @@ class PatientController extends Controller
 
         try {
             DB::beginTransaction();
-            
+
             $cpfForPassword = $this->formatCpf($request->cpf);
 
             $user = User::create([
@@ -64,7 +64,7 @@ class PatientController extends Controller
                 'cpf' => $request->cpf,
                 'password' => Hash::make(substr($cpfForPassword, 0, 3))
             ])->assignRole('patient');
-    
+
             Patient::create([
                 'user_id' => $user->id,
                 'post_code' => $request->post_code,
@@ -81,15 +81,14 @@ class PatientController extends Controller
             ]);
             DB::commit();
             return redirect()->route('patient.index')->with("message", "Paciente cadastrado com sucesso.");
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return Inertia::render('Patient/Create', ["error" => "Não foi possível realizar o cadastro do paciente."]);
-
         }
-
     }
 
-    private function formatCpf($cpfRequest) {
+    private function formatCpf($cpfRequest)
+    {
         $formatedCpf = str_replace('.', '', $cpfRequest);
         $formatedCpf = str_replace('-', '', $formatedCpf);
         return $formatedCpf;
@@ -123,7 +122,7 @@ class PatientController extends Controller
             'biological_sex' => 'required',
         ]);
 
-        try{
+        try {
             $patient = Patient::findOrFail($id);
 
             $user = User::where('id', $patient->user_id)->firstOrFail();
@@ -156,8 +155,8 @@ class PatientController extends Controller
             return redirect()->route('patient.index')->with("message", "Dados do paciente atualizados com sucesso.");
         } catch (Exception $e) {
             $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->where('patients.id', $id)
-            ->select('patients.id as patient_id', 'patients.*', 'users.*')->first();
+                ->where('patients.id', $id)
+                ->select('patients.id as patient_id', 'patients.*', 'users.*')->first();
 
             return Inertia::render('Patient/Edit', ['patient' => $patient, "error" => "Não foi possível alterar os dados do paciente."]);
         }
@@ -165,19 +164,37 @@ class PatientController extends Controller
 
     public function search(Request $request)
     {
+        $result = [];
 
-        if ($request->search == '') {
-            return Patient::join('users', 'patients.user_id', '=', 'users.id')
-                    ->select('patients.id as patient_id', 'patients.*', 'users.*')
-                    ->orderBy('patient_id', 'desc')
-                    ->get();
+        $query = Patient::join('users', 'patients.user_id', '=', 'users.id')
+            ->select('patients.id as patient_id', 'patients.*', 'users.*');
+
+        if (count(Patient::all()) == 0) {
+            return [
+                "result" => $result,
+                "status" => "there is no patients registered",
+            ];
         }
-
-        return Patient::join('users', 'patients.user_id', '=', 'users.id')
-                ->select('patients.id as patient_id', 'patients.*', 'users.*')
+        if ($request->search == '') {
+            $result = $query
+                ->orderBy('patient_id', 'desc')
+                ->get();
+        } else {
+            $result = $query
                 ->where('users.cpf', $request->search)
                 ->orderBy('patient_id', 'desc')
                 ->get();
-        
+
+            if (count($result) == 0) {
+                return [
+                    "result" => $result,
+                    "status" => "patient not found",
+                ];
+            }
+        }
+        return [
+            "result" => $result,
+            "status" => "ok",
+        ];
     }
 }

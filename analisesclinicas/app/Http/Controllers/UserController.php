@@ -36,7 +36,6 @@ class UserController extends Controller
         ]);
 
         $cpfForPassword = $this->formatcpf($request->cpf);
-
         try {
             DB::beginTransaction();
 
@@ -50,15 +49,14 @@ class UserController extends Controller
             DB::commit();
 
             return redirect()->route('user.index')->with("message", "Funcionário cadastrado com sucesso.");
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return Inertia::render('User/Create', ["error" => "Não foi possível realizar o cadastro do funcionário."]);
-
         }
-
     }
 
-    private function formatcpf($cpfRequest) {
+    private function formatcpf($cpfRequest)
+    {
         $formatedCpf = str_replace('.', '', $cpfRequest);
         $formatedCpf = str_replace('-', '', $formatedCpf);
         return $formatedCpf;
@@ -73,26 +71,26 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-    {   
-        try{
+    {
+        try {
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|email',
                 'cpf' => 'required|cpf',
                 'role' => 'required'
             ]);
-    
+
             $user = User::findOrFail($id);
             $user->syncRoles($request->role);
-    
+
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'cpf' => $request->cpf,
                 'status' => $request->status,
             ]);
-    
-    
+
+
             return redirect()->route('user.index')->with("message", "Dados do funcionário atualizados com sucesso.");
         } catch (Exception $e) {
             $user = User::with('roles')->findOrFail($id);
@@ -103,9 +101,23 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
+        $result = [];
+
         if ($request->search == '') {
-            return User::with('roles')->orderBy('id', 'desc')->get()->filter(fn ($user) => $user->hasRole(['admin', 'recepcionist', 'technician']));
+            $result = User::with('roles')->orderBy('id', 'desc')->get()->filter(fn($user) => $user->hasRole(['admin', 'recepcionist', 'technician']));
+        } else {
+            $result = User::with('roles')->where("cpf", $request->search)->get()->filter(fn($user) => $user->hasRole(['admin', 'recepcionist', 'technician']));
+
+            if (count($result) == 0) {
+                return [
+                    "result" => $result,
+                    "status" => "employee not found",
+                ];
+            }
         }
-        return User::with('roles')->where("cpf", $request->search)->get();
+        return [
+            "result" => $result,
+            "status" => "ok",
+        ];
     }
 }

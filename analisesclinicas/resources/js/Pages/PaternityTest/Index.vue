@@ -1,59 +1,52 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, usePage } from "@inertiajs/vue3";
+import { computed, onMounted, ref, watch } from "vue";
 
-export default {
-    props: {
-        flash: {
-            type: Object,
-            default: () => ({}),
-        },
+const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
-    computed: {
-        user() {
-            return this.$page.props.auth;
-        },
-    },
-    data() {
-        return {
-            search: "",
-            paternityTests: [],
-            firstSearch: true,
-            message: this.flash && this.flash.message ? this.flash.message : null,
-        };
-    },
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-    },
-    methods: {
-        research() {
-            axios
-                .post(route("paternity.search"), { search: this.search })
-                .then((response) => {
-                    this.paternityTests = response.data;
-                });
-            this.firstSearch = false;
-        },
-        initialResearch() {
-            axios
-                .post(route("paternity.search"), { search: this.search })
-                .then((response) => {
-                    this.paternityTests = response.data;
-                });
-        },
-        clearMessage() {
-            this.message = null;
-        },
-    },
-    mounted() {
-        this.initialResearch();
-        if (this.message) {
-            setTimeout(this.clearMessage, 5000);
-        }
-    },
+});
+
+const page = usePage();
+const user = computed(() => {
+    return page.props.auth;
+});
+
+const search = ref("");
+const paternityTests = ref([]);
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+const status = ref("");
+
+const research = () => {
+    axios
+        .post(route("paternity.search"), { search: search.value })
+        .then((response) => {
+            paternityTests.value = response.data.result;
+            status.value = response.data.status;
+        });
 };
+
+const clearMessage = () => {
+    message.value = null;
+};
+
+onMounted(() => {
+    research();
+    if (message.value) {
+        setTimeout(clearMessage, 5000);
+    }
+});
+
+watch(paternityTests, (newValue) => {
+    newValue.forEach((element) => {
+        element.participants = JSON.parse(element.participants);
+    });
+});
 </script>
 <template>
     <Head title="Pedido de exame de paternidade" />
@@ -106,60 +99,47 @@ export default {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
+                <div class="bg-white flex flex-col shadow-md sm:rounded-lg p-5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Pedidos
                         </h2>
-                        <Link
-                            :href="route('paternity.create')"
+                        <a
+                            :href="route('paternity.select')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                             v-if="user.isAdm"
                         >
                             Novo Pedido
-                        </Link>
+                        </a>
                     </div>
                     <div
                         class="mt-10"
-                        v-if="
-                            paternityTests.length == 0 &&
-                            this.firstSearch &&
-                            !user.isPatient
-                        "
+                        v-if="status == 'exams is empty' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
-                            Faça uma busca para aparecer algum pedido
+                            Não existe nenhum pedido
                         </p>
                     </div>
                     <div
                         class="mt-10"
-                        v-if="paternityTests.length == 0 && user.isPatient"
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Não possui nenhum pedido
-                        </p>
-                    </div>
-                    <div
-                        class="mt-10"
-                        v-if="
-                            paternityTests.length == 0 &&
-                            !this.firstSearch &&
-                            !user.isPatient
-                        "
+                        v-if="status == 'patient not found' && !user.isPatient"
                     >
                         <p class="text-xl font-bold text-red-600">
                             Paciente não encontrado
                         </p>
                     </div>
-
                     <table class="mt-10">
-                        <thead v-show="paternityTests.length != 0">
+                        <thead
+                            class="border-b-2"
+                            v-show="paternityTests.length != 0"
+                        >
                             <tr>
                                 <th>ID</th>
                                 <th>Nome Do Paciente</th>
                                 <th>Data do exame</th>
                                 <th>Descrição</th>
                                 <th>Laudo</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -169,13 +149,13 @@ export default {
                                 v-for="paternityTest in paternityTests"
                                 :key="paternityTest.id"
                             >
-                                <td class="py-2">{{ paternityTest.id }}</td>
+                                <td class="py-4">{{ paternityTest.id }}</td>
 
-                                <td class="py-2">
+                                <td class="py-4">
                                     {{ paternityTest.patient_name }}
                                 </td>
 
-                                <td class="py-2">
+                                <td class="py-4">
                                     {{
                                         new Date(
                                             paternityTest.exam_date
@@ -183,25 +163,50 @@ export default {
                                     }}
                                 </td>
 
-                                <td class="py-2 max-w-52">
+                                <td class="py-4 max-w-52">
                                     <div class="line-clamp-2 break-all mx-auto">
                                         {{ paternityTest.description }}
                                     </div>
                                 </td>
 
                                 <td
-                                    class="py-2 flex items-center justify-center"
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="
+                                        !user.isPatient
+                                    "
                                 >
-                                    <p v-if="paternityTest.pdf == null">
-                                        Indisponível
-                                    </p>
-                                    <a href="#" v-if="paternityTest.pdf != null"
-                                        >baixar</a
+                                    <a :href="route('paternity.report.manage', paternityTest.id)">Editar</a>
+                                </td>
+
+                                <td
+                                    class="py-4"
+                                    v-if="
+                                        paternityTest.pdf == null &&
+                                        user.isPatient
+                                    "
+                                >
+                                    Indisponível
+                                </td>
+
+                                <td
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="paternityTest.pdf != null && user.isPatient"
+                                >
+                                    <a
+                                        :href="
+                                            route(
+                                                'paternity.report.download',
+                                                paternityTest.id
+                                            )
+                                        "
+                                        >Baixar</a
                                     >
                                 </td>
 
-                                <td class="py-2">
-                                    <Link
+                                <td class="py-4">{{ paternityTest.state }}</td>
+
+                                <td class="py-4 flex justify-end">
+                                    <a
                                         v-if="paternityTest && user.isAdm"
                                         :href="
                                             route(
@@ -209,10 +214,10 @@ export default {
                                                 paternityTest.id
                                             )
                                         "
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

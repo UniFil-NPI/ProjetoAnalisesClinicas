@@ -1,87 +1,94 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    patient: Object,
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        patient: Object,
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: this.patient.name,
-                email: this.patient.email,
-                cpf: this.patient.cpf,
-                post_code: this.patient.post_code,
-                phone_number: this.patient.phone_number,
-                street: this.patient.street,
-                building_number: this.patient.building_number,
-                secondary_address: this.patient.secondary_address,
-                city: this.patient.city,
-                state: this.patient.state,
-                neighborhood: this.patient.neighborhood,
-                birth_date: this.patient.birth_date,
-                health_insurance: this.patient.health_insurance,
-                biological_sex: this.patient.biological_sex,
-                status: this.patient.status,
-            }),
-            showError: true,
-        };
-    },
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
+});
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-    },
-    methods: {
-        save() {
-            this.form.post(
-                "/patient/update/" + this.patient.patient_id,
-                this.form
-            );
-        },
-        async getCep() {
-            let response = await axios.get(route("cep", this.form.post_code));
-            this.form.city = response.data.localidade;
-            this.form.state = response.data.uf;
-            this.form.street = response.data.logradouro;
-            this.form.neighborhood = response.data.bairro;
-        },
-        changeStatus() {
-            this.form.status = !this.form.status;
-        },
-    },
+const form = useForm({
+    name: props.patient.name,
+    email: props.patient.email,
+    cpf: props.patient.cpf,
+    post_code: props.patient.post_code,
+    phone_number: props.patient.phone_number,
+    street: props.patient.street,
+    building_number: props.patient.building_number,
+    secondary_address: props.patient.secondary_address,
+    city: props.patient.city,
+    state: props.patient.state,
+    neighborhood: props.patient.neighborhood,
+    birth_date: props.patient.birth_date,
+    health_insurance: props.patient.health_insurance,
+    biological_sex: props.patient.biological_sex,
+    status: props.patient.status,
+});
+
+const errorMessage = ref(null);
+
+const save = () => {
+    form.post("/patient/update/" + props.patient.patient_id, form);
+    errorMessage.value = props.error;
 };
+
+const getCep = async () => {
+    let response = await axios.get(route("cep", form.post_code));
+    form.city = response.data.localidade;
+    form.state = response.data.uf;
+    form.street = response.data.logradouro;
+    form.neighborhood = response.data.bairro;
+};
+const changeStatus = () => {
+    form.status = !form.status;
+};
+
+const clearError = () => {
+    errorMessage.value = null;
+};
+
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Pacientes" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pacientes
-            </h2>
+            <button
+                @click="$inertia.visit(route('patient.index'))"
+                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-5 shadow-md sm:rounded-lg p-5"
                 >
                     <h2 class="text-2xl font-bold">
                         Editar cadastro do paciente
@@ -355,9 +362,9 @@ export default {
     </AuthenticatedLayout>
 
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>

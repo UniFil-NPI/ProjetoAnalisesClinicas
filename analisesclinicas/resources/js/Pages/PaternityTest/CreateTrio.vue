@@ -1,83 +1,83 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
 import AutoComplete from "primevue/autocomplete";
+import { onMounted, ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
-        AutoComplete,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-        patients: {
-            type: Array,
-        },
+    patients: {
+        type: Array,
     },
-    data() {
-        return {
-            form: useForm({
-                cpf: "",
-                participants: [],
-                lab: "",
-                health_insurance: 0,
-                exam_date: "",
-                description: "",
-            }),
-            showError: true,
-            valuePatientInput: "",
-            items: [],
-        };
-    },
+});
 
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
+const form = useForm({
+    cpf: "",
+    participants: [{ cpf: "" }, { cpf: "" }],
+    lab: "",
+    health_insurance: 0,
+    exam_date: "",
+    description: "",
+});
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-        valuePatientInput(newValue) {
-            if (newValue) {
-                this.form.cpf = newValue.value;
-            }
-        },
-    },
+const valuePatientInput = ref("");
+const items = ref([]);
 
-    methods: {
-        save() {
-            this.form.post("/create/new/paternitytest");
-        },
-        searchPatients(event) {
-            this.items = this.patients
-                .filter(
-                    (patient) =>
-                        patient.patient_name
-                            .toLowerCase()
-                            .includes(event.query.toLowerCase()) ||
-                        patient.cpf.includes(event.query.toLowerCase())
-                )
-                .map((patient) => ({
-                    label: `${patient.patient_name} - ${patient.cpf}`,
-                    value: patient.cpf,
-                }));
-        },
-        addParticipant() {
-            this.form.participants.push({ cpf: "", error: null });
-        },
-        updateParticipant(index, value) {
-            this.form.participants[index].cpf = value;
-        },
-    },
+const errorMessage = ref(null);
+
+const save = () => {
+    form.post("/paternitytest/store/trio");
+    errorMessage.value = props.error;
 };
+
+const searchPatients = (event) => {
+    items.value = props.patients
+        .filter(
+            (patient) =>
+                patient.patient_name
+                    .toLowerCase()
+                    .includes(event.query.toLowerCase()) ||
+                patient.cpf.includes(event.query.toLowerCase())
+        )
+        .map((patient) => ({
+            label: `${patient.patient_name} - ${patient.cpf}`,
+            value: patient.cpf,
+        }));
+};
+
+const updateParticipant = (update, index) => {
+    form.participants[index].cpf = value;
+};
+
+const clearError = () => {
+    errorMessage.value = null;
+};
+
+watch(valuePatientInput, (newValue) => {
+    if (newValue) {
+        form.cpf = newValue.value;
+    }
+});
+
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 
 <template>
@@ -85,26 +85,27 @@ export default {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Exame de Paternidade
-            </h2>
+            <button
+                @click="$inertia.visit(route('paternity.select'))"
+                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-8 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-8 shadow-md sm:rounded-lg p-5"
                 >
                     <div class="grid grid-cols-5 gap-4">
                         <h2 class="col-span-4 text-2xl font-bold">
                             Novo pedido
                         </h2>
-                        <button
-                            class="col-span-1 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
-                            @click="addParticipant"
-                        >
-                            Adicionar Participante
-                        </button>
                     </div>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
@@ -139,7 +140,7 @@ export default {
                                 class="col-span-5 flex flex-col gap-2"
                             >
                                 <label :for="`cpf-${index}`"
-                                    >Nome ou CPF do novo participante</label
+                                    >Nome ou CPF do outro participante</label
                                 >
 
                                 <div
@@ -245,10 +246,10 @@ export default {
     </AuthenticatedLayout>
 
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>
 

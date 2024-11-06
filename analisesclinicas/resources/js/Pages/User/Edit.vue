@@ -1,68 +1,79 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    user: Object,
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        user: Object,
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: this.user.name,
-                email: this.user.email,
-                cpf: this.user.cpf,
-                role: this.user.roles[0].name,
-                status: this.user.status,
-            }),
-            showError: true,
-        };
-    },
-    watch: {
-        error(newValue) {
-            if (newValue == null) {
-                this.showError = false;
+});
 
-                setTimeout(() => {
-                    this.showError = true;
-                }, 2000);
-            }
-        },
-    },
-    methods: {
-        save() {
-            this.form.post("/user/update/" + this.user.id, this.form);
-        },
+const form = useForm({
+    name: props.user.name,
+    email: props.user.email,
+    cpf: props.user.cpf,
+    role: props.user.roles[0].name,
+    status: props.user.status,
+});
 
-        changeStatus() {
-            this.form.status = !this.form.status;
-        },
-    },
+const errorMessage = ref(null);
+
+const save = () => {
+    form.post("/user/update/" + props.user.id, form);
+    errorMessage.value = props.error;
 };
+
+const changeStatus = () => {
+    if (props.user.id != 1){
+        form.status = !form.status;
+    }
+};
+
+const clearError = () => {
+    errorMessage.value = null;
+};
+
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Usuários" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Funcionários
-            </h2>
+            <button
+                @click="$inertia.visit(route('user.index'))"
+                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+                <img
+                    src="../../assets/voltar.png"
+                    alt="Voltar"
+                    class="w-5 h-5"
+                />
+            </button>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-5 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-5 shadow-md sm:rounded-lg p-5"
                 >
                     <h2 class="text-2xl font-bold">
                         Editar cadastro do funcionário
@@ -136,12 +147,13 @@ export default {
                                 >
                             </div>
                             <div class="col-span-1 flex flex-col gap-2">
-                                <Label>Status</Label>
+                                <label>Status</label>
                                 <label
                                     class="inline-flex items-center cursor-pointer"
                                 >
                                     <input
                                         v-if="user.status === true"
+                                        :disabled="user.id == 1"
                                         type="checkbox"
                                         value=""
                                         class="sr-only peer"
@@ -159,12 +171,12 @@ export default {
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
                                     ></div>
                                     <span
-                                        v-if="user.status === true"
+                                        v-if="form.status === true"
                                         class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Ativo</span
                                     >
                                     <span
-                                        v-if="user.status === false"
+                                        v-if="form.status === false"
                                         class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Inativo</span
                                     >
@@ -184,9 +196,9 @@ export default {
     </AuthenticatedLayout>
 
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>

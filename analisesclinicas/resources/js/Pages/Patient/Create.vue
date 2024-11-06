@@ -1,90 +1,113 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { onMounted, ref, watch } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    error: {
+        type: String,
+        default: null,
     },
-    props: {
-        error: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: "",
-                email: "",
-                cpf: "",
-                phone_number: "",
-                post_code: "",
-                street: "",
-                building_number: "",
-                secondary_address: "",
-                city: "",
-                state: "",
-                neighborhood: "",
-                birth_date: "",
-                health_insurance: 0,
-                biological_sex: 0,
-            }),
-            currentDate: "",
-        };
-    },
-    methods: {
-        save() {
-            this.form.post("/create/new/patient");
-        },
-        async getCep() {
-            let response = await axios.get(route("cep", this.form.post_code));
-            this.form.city = response.data.localidade;
-            this.form.state = response.data.uf;
-            this.form.street = response.data.logradouro;
-            this.form.neighborhood = response.data.bairro;
-        },
-        getCurrentDate() {
-            let today = new Date();
+});
 
-            let dd = today.getDate();
+const form = useForm({
+    name: "",
+    email: "",
+    cpf: "",
+    phone_number: "",
+    post_code: "",
+    street: "",
+    building_number: "",
+    secondary_address: "",
+    city: "",
+    state: "",
+    neighborhood: "",
+    birth_date: "",
+    health_insurance: 0,
+    biological_sex: 0,
+});
+const currentDate = ref("");
+const errorMessage = ref(null);
 
-            let mm = today.getMonth() + 1;
-
-            let yyyy = today.getFullYear();
-
-            if (dd < 10) {
-                dd = "0" + dd;
-            }
-
-            if (mm < 10) {
-                mm = "0" + mm;
-            }
-
-            this.currentDate = yyyy + "-" + mm + "-" + dd;
-        },
-    },
-    mounted() {
-        this.getCurrentDate();
-    },
+const save = () => {
+    form.post("/patient/store");
+    errorMessage.value = props.error;
 };
+
+const getCep = async () => {
+    let response = await axios.get(route("cep", form.post_code));
+    form.city = response.data.localidade;
+    form.state = response.data.uf;
+    form.street = response.data.logradouro;
+    form.neighborhood = response.data.bairro;
+};
+
+const getCurrentDate = () => {
+    let today = new Date();
+
+    let dd = today.getDate();
+
+    let mm = today.getMonth() + 1;
+
+    let yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = "0" + dd;
+    }
+
+    if (mm < 10) {
+        mm = "0" + mm;
+    }
+
+    currentDate.value = yyyy + "-" + mm + "-" + dd;
+};
+
+const clearError = () => {
+    errorMessage.value = null;
+};
+
+onMounted(() => {
+    getCurrentDate();
+});
+
+watch(
+    () => props.error,
+    (newError) => {
+        errorMessage.value = newError;
+    }
+);
+
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
+    }
+);
 </script>
 <template>
     <Head title="Novo Paciente" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pacientes
-            </h2>
+<template #header>
+                <button
+                    @click="$inertia.visit(route('patient.index'))"
+                    class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+                >
+                     <img
+                        src="../../assets/voltar.png"
+                        alt="Voltar"
+                        class="w-5 h-5"
+                    />
+                </button>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-8 shadow-sm shadow-primary sm:rounded-lg p-5"
+                    class="bg-white flex flex-col gap-8 shadow-md sm:rounded-lg p-5"
                 >
                     <h2 class="text-2xl font-bold">Novo Paciente</h2>
                     <form @submit.prevent="save">
@@ -323,9 +346,9 @@ export default {
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="error && showError"
+        v-if="errorMessage"
         class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
     >
-        {{ error }}
+        {{ errorMessage }}
     </div>
 </template>

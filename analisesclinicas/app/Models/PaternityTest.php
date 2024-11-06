@@ -25,6 +25,7 @@ class PaternityTest extends Model
         'exam_date',
         'description',
         'pdf',
+        'state',
     ];
 
     protected function casts(): array

@@ -1,47 +1,41 @@
-<script>
+<script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+import { onMounted, ref } from "vue";
 
-export default {
-    components: {
-        Head,
-        AuthenticatedLayout,
-        Link,
+const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
-    props: {
-        flash: {
-            type: Object,
-            default: () => ({}),
-        },
-    },
-    data() {
-        return {
-            patients: {},
-            search: "",
-            message:
-                this.flash && this.flash.message ? this.flash.message : null,
-        };
-    },
-    methods: {
-        research() {
-            axios
-                .post(route("patient.search"), { search: this.search })
-                .then((response) => {
-                    this.patients = response.data;
-                    console.log(this.patients);
-                });
-        },
-        clearMessage() {
-            this.message = null;
-        },
-    },
-    mounted() {
-        this.research();
-        if (this.message) {
-            setTimeout(this.clearMessage, 5000);
-        }
-    },
+});
+
+const patients = ref([]);
+const search = ref("");
+const message = ref(
+    props.flash && props.flash.message ? props.flash.message : null
+);
+const status = ref("");
+
+const research = () => {
+    axios
+        .post(route("patient.search"), { search: search.value })
+        .then((response) => {
+            patients.value = response.data.result;
+            status.value = response.data.status;
+        });
 };
+
+const clearMessage = () => {
+    message.value = null;
+};
+
+onMounted(() => {
+    research();
+    if (message.value) {
+        setTimeout(clearMessage, 5000);
+    }
+});
 </script>
 <template>
     <Head title="Pacientes" />
@@ -99,19 +93,45 @@ export default {
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Pacientes
                         </h2>
-                        <Link
+                        <a
                             :href="route('patient.create')"
                             class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
                         >
                             Novo Paciente
-                        </Link>
+                        </a>
+                    </div>
+
+                    <div
+                        class="mt-10"
+                        v-if="
+                            patients.length == 0 &&
+                            status == 'there is no patients registered'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum paciente cadastrado no
+                            momento.
+                        </p>
+                    </div>
+
+                    <div
+                        class="mt-10"
+                        v-if="
+                            patients.length == 0 &&
+                            status == 'patient not found'
+                        "
+                    >
+                        <p class="text-xl font-bold text-red-600">
+                            Não existe nenhum paciente cadastrado que
+                            corresponde com sua busca.
+                        </p>
                     </div>
 
                     <table
                         class="mt-10"
-                        v-show="Object.keys(patients).length != 0"
+                        v-if="patients.length != 0"
                     >
-                        <thead>
+                        <thead class="border-b-2">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
@@ -126,14 +146,14 @@ export default {
                                 :key="i"
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
-                                <td class="py-2">{{ patient.patient_id }}</td>
-                                <td class="py-2">{{ patient.name }}</td>
-                                <td class="py-2">{{ patient.cpf }}</td>
-                                <td class="py-2">
+                                <td class="py-4">{{ patient.patient_id }}</td>
+                                <td class="py-4">{{ patient.name }}</td>
+                                <td class="py-4">{{ patient.cpf }}</td>
+                                <td class="py-4">
                                     {{ patient.status ? "ativo" : "inativo" }}
                                 </td>
-                                <td class="py-2">
-                                    <Link
+                                <td class="py-4 flex justify-end">
+                                    <a
                                         v-if="patient"
                                         :href="
                                             route(
@@ -141,10 +161,10 @@ export default {
                                                 patient.patient_id
                                             )
                                         "
-                                        class="px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
                                     >
                                         Editar
-                                    </Link>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

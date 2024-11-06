@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Patient;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +16,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PatientSeeder::class,
             DoctorSeeder::class,
+            ExamTypeSeeder::class,
+            AlleleFreqSeeder::class
         ]);
     }
 }
