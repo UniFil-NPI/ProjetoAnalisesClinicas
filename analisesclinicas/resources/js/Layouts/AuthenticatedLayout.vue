@@ -11,9 +11,7 @@ import { usePage } from "@inertiajs/vue3";
 const page = usePage();
 
 const isAdm = computed(() => page.props.auth.isAdm);
-
 const isRecepcionist = computed(() => page.props.auth.isRecepcionist);
-
 const isPatient = computed(() => page.props.auth.isPatient);
 
 const showingNavigationDropdown = ref(false);
@@ -36,27 +34,17 @@ const showingNavigationDropdown = ref(false);
                                 </a>
                             </div>
 
-                            <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
-                            >
-                                <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
-                                >
+                            <!-- Desktop Navigation Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink
-                                    :href="route('exam.index')"
-                                    :active="route().current('exam.index')"
-                                >
+                                <NavLink :href="route('exam.index')" :active="route().current('exam.index')">
                                     Exames
                                 </NavLink>
                                 <NavLink
                                     :href="route('paternity.index')"
-                                    :active="
-                                        route().current('paternity.index')
-                                    "
+                                    :active="route().current('paternity.index')"
                                     v-if="isAdm || isPatient"
                                 >
                                     Exames de Paternidade
@@ -75,18 +63,10 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Médicos
                                 </NavLink>
-                                <NavLink
-                                    :href="route('user.index')"
-                                    :active="route().current('user.index')"
-                                    v-if="isAdm"
-                                >
+                                <NavLink :href="route('user.index')" :active="route().current('user.index')" v-if="isAdm">
                                     Funcionários
                                 </NavLink>
-                                <NavLink
-                                    :href="route('type.index')"
-                                    :active="route().current('type.index')"
-                                    v-if="isAdm"
-                                >
+                                <NavLink :href="route('type.index')" :active="route().current('type.index')" v-if="isAdm">
                                     Tipos de Exames
                                 </NavLink>
                             </div>
@@ -102,7 +82,7 @@ const showingNavigationDropdown = ref(false);
                                                 type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {{ $page.props.auth.user.name }}
+                                                {{ page.props.auth.user.name }}
 
                                                 <svg
                                                     class="ms-2 -me-0.5 h-4 w-4"
@@ -121,16 +101,10 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink
-                                            :href="route('profile.edit')"
-                                        >
+                                        <DropdownLink :href="route('profile.edit')">
                                             Perfil
                                         </DropdownLink>
-                                        <DropdownLink
-                                            :href="route('logout')"
-                                            method="post"
-                                            as="button"
-                                        >
+                                        <DropdownLink :href="route('logout')" method="post" as="button">
                                             Sair
                                         </DropdownLink>
                                     </template>
@@ -138,13 +112,10 @@ const showingNavigationDropdown = ref(false);
                             </div>
                         </div>
 
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
+                        <!-- Hamburger for Mobile -->
+                        <div class="-me-2 flex items-center md:hidden"> <!-- Alterado de sm:hidden para md:hidden -->
                             <button
-                                @click="
-                                    showingNavigationDropdown =
-                                        !showingNavigationDropdown
-                                "
+                                @click="showingNavigationDropdown = !showingNavigationDropdown"
                                 class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
                             >
                                 <svg
@@ -156,8 +127,7 @@ const showingNavigationDropdown = ref(false);
                                     <path
                                         :class="{
                                             hidden: showingNavigationDropdown,
-                                            'inline-flex':
-                                                !showingNavigationDropdown,
+                                            'inline-flex': !showingNavigationDropdown,
                                         }"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -167,8 +137,7 @@ const showingNavigationDropdown = ref(false);
                                     <path
                                         :class="{
                                             hidden: !showingNavigationDropdown,
-                                            'inline-flex':
-                                                showingNavigationDropdown,
+                                            'inline-flex': showingNavigationDropdown,
                                         }"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -182,19 +151,40 @@ const showingNavigationDropdown = ref(false);
                 </div>
 
                 <!-- Responsive Navigation Menu -->
-                <div
-                    :class="{
-                        block: showingNavigationDropdown,
-                        hidden: !showingNavigationDropdown,
-                    }"
-                    class="sm:hidden"
-                >
+                <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="md:hidden"> <!-- Alterado de sm:hidden para md:hidden -->
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
-                        >
+                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('exam.index')" :active="route().current('exam.index')">
+                            Exames
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="isAdm || isPatient"
+                            :href="route('paternity.index')"
+                            :active="route().current('paternity.index')"
+                        >
+                            Exames de Paternidade
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="isAdm || isRecepcionist"
+                            :href="route('patient.index')"
+                            :active="route().current('patient.index')"
+                        >
+                            Pacientes
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="isAdm || isRecepcionist"
+                            :href="route('doctor.index')"
+                            :active="route().current('doctor.index')"
+                        >
+                            Médicos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="isAdm" :href="route('user.index')" :active="route().current('user.index')">
+                            Funcionários
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="isAdm" :href="route('type.index')" :active="route().current('type.index')">
+                            Tipos de Exames
                         </ResponsiveNavLink>
                     </div>
 
@@ -202,23 +192,19 @@ const showingNavigationDropdown = ref(false);
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
                             <div class="font-medium text-base text-gray-800">
-                                {{ $page.props.auth.user.name }}
+                                {{ page.props.auth.user.name }}
                             </div>
                             <div class="font-medium text-sm text-gray-500">
-                                {{ $page.props.auth.user.email }}
+                                {{ page.props.auth.user.email }}
                             </div>
                         </div>
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Perfil
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Log Out
+                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
+                                Sair
                             </ResponsiveNavLink>
                         </div>
                     </div>
