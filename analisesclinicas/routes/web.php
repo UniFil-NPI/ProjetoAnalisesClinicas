@@ -129,7 +129,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
         
         Route::post('/update/{id}', [PaternityTestController::class, 'update'])->name('update')->middleware(EnsureUserHasRole::class.':admin');
         
-        Route::post('/duo/calc', [PaternityTestController::class, 'calc_ipc_duo'])->name('calc.duo')->middleware(EnsureUserHasRole::class.':admin');
+        Route::get('/duo/calc/{id}', [PaternityTestController::class, 'calc_ipc_duo'])->name('calc.duo')->middleware(EnsureUserHasRole::class.':admin');
         
         Route::get('/trio/calc/{id}', [PaternityTestController::class, 'calc_ipc_trio'])->name('calc.trio')->middleware(EnsureUserHasRole::class.':admin');
         
@@ -141,7 +141,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
             Route::get('/trio/new/{id}', [PaternityTestController::class, 'create_trio_report'])->name('create.trio')->middleware(EnsureUserHasRole::class.':admin');
             
-            Route::post('/store/{id}', [PaternityTestController::class, 'store_report'])->name('store')->middleware(EnsureUserHasRole::class.':admin');
+            Route::post('/store/{id}/{type}', [PaternityTestController::class, 'store_report'])->name('store')->middleware(EnsureUserHasRole::class.':admin');
 
             Route::get('/download/{id}', [PaternityTestController::class, 'download_report'])->name('download')->middleware(EnsureUserHasRole::class.':admin,patient');
 

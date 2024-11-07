@@ -71,22 +71,10 @@ const user = computed(() => {
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="
-                                        exam.pdf == null &&
-                                        !user.isPatient &&
-                                        exam.type == 'blood'
+                                        !user.isPatient && exam.type == 'paternity'
                                     "
                                 >
-                                    <a href="#">Gerar laudo</a>
-                                </td>
-                                <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="
-                                        exam.pdf == null &&
-                                        !user.isPatient &&
-                                        exam.type == 'paternity'
-                                    "
-                                >
-                                    <a href="#">Gerar laudo</a>
+                                    <a :href="route('paternity.report.manage', exam.id)">Gerenciar laudo</a>
                                 </td>
                                 <td
                                     class="py-4"
@@ -96,7 +84,7 @@ const user = computed(() => {
                                 </td>
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="exam.pdf != null"
+                                    v-if="exam.pdf != null && user.isPatient"
                                 >
                                     <a href="#"
                                         >Baixar</a

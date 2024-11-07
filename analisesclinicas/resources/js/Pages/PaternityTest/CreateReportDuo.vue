@@ -2,7 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import AutoComplete from "primevue/autocomplete";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 
 const props = defineProps({
     error: {
@@ -14,92 +14,107 @@ const props = defineProps({
     },
 });
 
-const form = useForm({
-    D8S1179_crianca_alelo1: "",
-    D8S1179_crianca_alelo2: "",
-    D8S1179_pai_alelo1: "",
-    D8S1179_pai_alelo2: "",
-
-    D21S11_crianca_alelo1: "",
-    D21S11_crianca_alelo2: "",
-    D21S11_pai_alelo1: "",
-    D21S11_pai_alelo2: "",
-
-    D7S820_crianca_alelo1: "",
-    D7S820_crianca_alelo2: "",
-    D7S820_pai_alelo1: "",
-    D7S820_pai_alelo2: "",
-
-    CSF1PO_crianca_alelo1: "",
-    CSF1PO_crianca_alelo2: "",
-    CSF1PO_pai_alelo1: "",
-    CSF1PO_pai_alelo2: "",
-
-    D3S1358_crianca_alelo1: "",
-    D3S1358_crianca_alelo2: "",
-    D3S1358_pai_alelo1: "",
-    D3S1358_pai_alelo2: "",
-
-    THO1_crianca_alelo1: "",
-    THO1_crianca_alelo2: "",
-    THO1_pai_alelo1: "",
-    THO1_pai_alelo2: "",
-
-    D13S317_crianca_alelo1: "",
-    D13S317_crianca_alelo2: "",
-    D13S317_pai_alelo1: "",
-    D13S317_pai_alelo2: "",
-
-    D16S539_crianca_alelo1: "",
-    D16S539_crianca_alelo2: "",
-    D16S539_pai_alelo1: "",
-    D16S539_pai_alelo2: "",
-
-    D2S1338_crianca_alelo1: "",
-    D2S1338_crianca_alelo2: "",
-    D2S1338_pai_alelo1: "",
-    D2S1338_pai_alelo2: "",
-
-    D19S433_crianca_alelo1: "",
-    D19S433_crianca_alelo2: "",
-    D19S433_pai_alelo1: "",
-    D19S433_pai_alelo2: "",
-
-    VWA_crianca_alelo1: "",
-    VWA_crianca_alelo2: "",
-    VWA_pai_alelo1: "",
-    VWA_pai_alelo2: "",
-
-    TPOX_crianca_alelo1: "",
-    TPOX_crianca_alelo2: "",
-    TPOX_pai_alelo1: "",
-    TPOX_pai_alelo2: "",
-
-    D18S51_crianca_alelo1: "",
-    D18S51_crianca_alelo2: "",
-    D18S51_pai_alelo1: "",
-    D18S51_pai_alelo2: "",
-
-    D5S818_crianca_alelo1: "",
-    D5S818_crianca_alelo2: "",
-    D5S818_pai_alelo1: "",
-    D5S818_pai_alelo2: "",
-
-    FGA_crianca_alelo1: "",
-    FGA_crianca_alelo2: "",
-    FGA_pai_alelo1: "",
-    FGA_pai_alelo2: "",
+const inputData = reactive({
+    D8S1179: {
+        crianca_alelo1: "14",
+        crianca_alelo2: "14",
+        pai_alelo1: "11",
+        pai_alelo2: "14",
+    },
+    D21S11: {
+        crianca_alelo1: "31.2",
+        crianca_alelo2: "32",
+        pai_alelo1: "29",
+        pai_alelo2: "32",
+    },
+    D7S820: {
+        crianca_alelo1: "9",
+        crianca_alelo2: "11",
+        pai_alelo1: "8",
+        pai_alelo2: "9",
+    },
+    CSF1PO: {
+        crianca_alelo1: "8",
+        crianca_alelo2: "11",
+        pai_alelo1: "8",
+        pai_alelo2: "11",
+    },
+    D3S1358: {
+        crianca_alelo1: "15",
+        crianca_alelo2: "17",
+        pai_alelo1: "15",
+        pai_alelo2: "17",
+    },
+    THO1: {
+        crianca_alelo1: "7",
+        crianca_alelo2: "7",
+        pai_alelo1: "6",
+        pai_alelo2: "7",
+    },
+    D13S317: {
+        crianca_alelo1: "9",
+        crianca_alelo2: "13",
+        pai_alelo1: "9",
+        pai_alelo2: "12",
+    },
+    D16S539: {
+        crianca_alelo1: "10",
+        crianca_alelo2: "11",
+        pai_alelo1: "10",
+        pai_alelo2: "10",
+    },
+    D2S1338: {
+        crianca_alelo1: "22",
+        crianca_alelo2: "22",
+        pai_alelo1: "18",
+        pai_alelo2: "22",
+    },
+    D19S433: {
+        crianca_alelo1: "13",
+        crianca_alelo2: "13",
+        pai_alelo1: "13",
+        pai_alelo2: "16",
+    },
+    VWA: {
+        crianca_alelo1: "14",
+        crianca_alelo2: "17",
+        pai_alelo1: "14",
+        pai_alelo2: "18",
+    },
+    TPOX: {
+        crianca_alelo1: "8",
+        crianca_alelo2: "8",
+        pai_alelo1: "6",
+        pai_alelo2: "8",
+    },
+    D18S51: {
+        crianca_alelo1: "13",
+        crianca_alelo2: "14",
+        pai_alelo1: "13",
+        pai_alelo2: "17",
+    },
+    D5S818: {
+        crianca_alelo1: "11",
+        crianca_alelo2: "12",
+        pai_alelo1: "9",
+        pai_alelo2: "11",
+    },
+    FGA: {
+        crianca_alelo1: "23",
+        crianca_alelo2: "24",
+        pai_alelo1: "23",
+        pai_alelo2: "24",
+    },
 });
 
-const markers = [
-    "D8S1179", "D21S11", "D7S820", "CSF1PO", "D3S1358", "THO1", "D13S317",
-    "D16S539", "D2S1338", "D19S433", "VWA", "TPOX", "D18S51", "D5S818", "FGA"
-];
+const form = useForm({
+    loci: inputData,
+});
 
 const errorMessage = ref(null);
 
 const save = () => {
-    form.post("/paternitytest/store");
+    form.get(`/paternitytest/duo/calc/${props.paternityTest.id}`);
     errorMessage.value = props.error;
 };
 
@@ -200,26 +215,22 @@ watch(
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="marker in markers"
-                                    :key="marker"
+                                    v-for="(items, locus) in form.loci"
+                                    :key="locus"
                                 >
                                     <td
                                         class="px-4 py-2 border border-gray-300"
                                     >
-                                        {{ marker }}
+                                        {{ locus }}
                                     </td>
-
 
                                     <td
                                         class="px-4 py-2 border border-gray-300"
                                     >
                                         <input
                                             type="text"
-                                            v-model="
-                                                form[
-                                                    marker + '_crianca_alelo1'
-                                                ]
-                                            "
+                                            v-model="items.crianca_alelo1"
+                                            required
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -228,11 +239,8 @@ watch(
                                     >
                                         <input
                                             type="text"
-                                            v-model="
-                                                form[
-                                                    marker + '_crianca_alelo2'
-                                                ]
-                                            "
+                                            required
+                                            v-model="items.crianca_alelo2"
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -242,9 +250,8 @@ watch(
                                     >
                                         <input
                                             type="text"
-                                            v-model="
-                                                form[marker + '_pai_alelo1']
-                                            "
+                                            required
+                                            v-model="items.pai_alelo1"
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -253,9 +260,8 @@ watch(
                                     >
                                         <input
                                             type="text"
-                                            v-model="
-                                                form[marker + '_pai_alelo2']
-                                            "
+                                            required
+                                            v-model="items.pai_alelo2"
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>

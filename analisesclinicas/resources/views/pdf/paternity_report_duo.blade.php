@@ -157,7 +157,6 @@
                 <thead>
                     <tr>
                         <th>Locus</th>
-                        <th colspan="2">Mãe</th>
                         <th colspan="2">Filho</th>
                         <th colspan="2">Investigado</th>
                         <th>Índice de Paternidade</th>
@@ -167,21 +166,19 @@
                     @foreach($loci as $locus => $row)
                         <tr>
                             <td>{{ $locus }}</td>
-                            <td>{{ $row['mae_alelo1'] }}</td>
-                            <td>{{ $row['mae_alelo2'] }}</td>
                             <td>{{ $row['crianca_alelo1'] }}</td>
                             <td>{{ $row['crianca_alelo2'] }}</td>
                             <td>{{ $row['pai_alelo1'] }}</td>
                             <td>{{ $row['pai_alelo2'] }}</td>
-                            <td>{{ $ip[$locus] ?? '-' }}</td>
+                            <td>{{ $ips[$locus] ?? '-' }}</td>
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="7" class="label-cell">IP Acumulado</td>
-                        <td>{{ $ipa }}</td>
+                        <td colspan="5" class="label-cell">IP Acumulado</td>
+                        <td>{{ $ipc }}</td>
                     </tr>
                     <tr>
-                        <td colspan="7" class="label-cell">PP %</td>
+                        <td colspan="5" class="label-cell">PP %</td>
                         <td>{{ $pp }}</td>
                     </tr>
                 </tbody>

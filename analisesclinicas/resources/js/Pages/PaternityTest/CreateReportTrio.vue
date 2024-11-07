@@ -276,6 +276,7 @@ watch(
                                         <input
                                             type="text"
                                             v-model="items.mae_alelo1"
+                                            required
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -285,6 +286,7 @@ watch(
                                         <input
                                             type="text"
                                             v-model="items.mae_alelo2"
+                                            required
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -295,6 +297,7 @@ watch(
                                         <input
                                             type="text"
                                             v-model="items.crianca_alelo1"
+                                            required
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -304,6 +307,7 @@ watch(
                                         <input
                                             type="text"
                                             v-model="items.crianca_alelo2"
+                                            required
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -314,6 +318,7 @@ watch(
                                         <input
                                             type="text"
                                             v-model="items.pai_alelo1"
+                                            required
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>
@@ -323,6 +328,7 @@ watch(
                                         <input
                                             type="text"
                                             v-model="items.pai_alelo2"
+                                            required
                                             class="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         />
                                     </td>

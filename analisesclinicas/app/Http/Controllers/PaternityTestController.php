@@ -188,7 +188,9 @@ class PaternityTestController extends Controller
     public function create_duo_report($id)
     {
         $paternityTest = PaternityTest::find($id);
-
+        if ($paternityTest->pdf != null) {
+            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro']);
+        }
         return Inertia::render('PaternityTest/CreateReportDuo', ['paternityTest' => $paternityTest]);
     }
 
@@ -196,110 +198,177 @@ class PaternityTestController extends Controller
     public function create_trio_report($id)
     {
         $paternityTest = PaternityTest::find($id);
-
+        if ($paternityTest->pdf != null) {
+            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro']);
+        }
         return Inertia::render('PaternityTest/CreateReportTrio', ['paternityTest' => $paternityTest]);
     }
 
 
 
     public function calc_ipc_trio(Request $request, $id)
+    {   
+        try {
+            $exclusion = 0;
+            $alleles_freq = AlleleFreq::all();
+            $ips = [];
+            foreach ($request->loci as $locus => $value) {
+                $allele1_mother = (float) str_replace(',', '.', $value["mae_alelo1"]);
+                $allele2_mother = (float) str_replace(',', '.', $value["mae_alelo2"]);
+                $allele1_child = (float) str_replace(',', '.', $value["crianca_alelo1"]);
+                $allele2_child = (float) str_replace(',', '.', $value["crianca_alelo2"]);
+                $allele1_father = (float) str_replace(',', '.', $value["pai_alelo1"]);
+                $allele2_father = (float) str_replace(',', '.', $value["pai_alelo2"]);
+
+                $mother_and_child_different_alleles = $allele1_mother == $allele1_child && $allele2_mother == $allele2_child;
+
+                if ($allele1_father != $allele2_father) {
+                    $paternal_allele = 0;
+                    if ($allele1_father == $allele1_child || $allele1_father == $allele2_child) {
+                        $paternal_allele =  $allele1_father;
+                    }
+                    if ($allele2_father == $allele1_child || $allele2_father == $allele2_child) {
+                        $paternal_allele =  $allele1_father;
+                    }
+                    if ($paternal_allele == 0) {
+                        $ips[$locus] = 1;
+                        $exclusion++;
+                    }
+
+                    if (!$mother_and_child_different_alleles && $paternal_allele != 0) {
+                        foreach ($alleles_freq as $allele) {
+                            if ($allele['Alelo'] == $paternal_allele) {
+                                $ips[$locus] = 0.5 / $allele[$locus];
+                            }
+                        }
+                    } else {
+                        $allele1_freq = 0;
+                        $allele2_freq = 0;
+                        foreach ($alleles_freq as $allele) {
+                            if ($allele1_child == $allele['Alelo']) {
+                                $allele1_freq = $allele[$locus];
+                            }
+                            if ($allele2_child == $allele['Alelo']) {
+                                $allele2_freq = $allele[$locus];
+                            }
+                        }
+                        $ips[$locus] = 0.5 / ($allele1_freq + $allele2_freq);
+                    }
+                } else {
+                    $paternal_allele = 0;
+                    if ($allele1_father == $allele1_child || $allele1_father == $allele2_child) {
+                        $paternal_allele =  $allele1_father;
+                    }
+                    if ($allele2_father == $allele1_child || $allele2_father == $allele2_child) {
+                        $paternal_allele =  $allele1_father;
+                    }
+                    if ($paternal_allele == 0) {
+                        $ips[$locus] = 1;
+                        $exclusion++;
+                    }
+                    if (!$mother_and_child_different_alleles && $paternal_allele != 0) {
+                        foreach ($alleles_freq as $allele) {
+                            if ($allele['Alelo'] == $paternal_allele) {
+                                $ips[$locus] = 1 / $allele[$locus];
+                            }
+                        }
+                    } else {
+                        $allele1_freq = 0;
+                        $allele2_freq = 0;
+                        foreach ($alleles_freq as $allele) {
+                            if ($allele1_child == $allele['Alelo']) {
+                                $allele1_freq = $allele[$locus];
+                            }
+                            if ($allele2_child == $allele['Alelo']) {
+                                $allele2_freq = $allele[$locus];
+                            }
+                        }
+                        $ips[$locus] = 1 / ($allele1_freq + $allele2_freq);
+                    }
+                }
+            }
+            $ipa = array_product($ips);
+            $pp = $ipa / ($ipa + 1) * 100;
+
+            $paternityTest = PaternityTest::find($id);
+            return Inertia::render('PaternityTest/PreviewPdfTrio', ['ipa' => $ipa, 'pp' => $pp, 'exclusion' => $exclusion, 'ips' => $ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest]);
+        } catch (Exception $e) {
+            $paternityTest = PaternityTest::find($id);
+            return Inertia::render('PaternityTest/CreateReportTrio', ['paternityTest' => $paternityTest, 'error' => 'Erro ao realizar o calculo']);
+        }
+    }
+
+    public function calc_ipc_duo(Request $request, $id)
     {
         $exclusion = 0;
-        $allelesFreq = AlleleFreq::all();
-        $ip = [];
+        $alleles_freq = AlleleFreq::all();
+        $ips = [];
         foreach ($request->loci as $locus => $value) {
-            $allele1_mother = (float) str_replace(',', '.', $value["mae_alelo1"]);
-            $allele2_mother = (float) str_replace(',', '.', $value["mae_alelo2"]);
             $allele1_child = (float) str_replace(',', '.', $value["crianca_alelo1"]);
             $allele2_child = (float) str_replace(',', '.', $value["crianca_alelo2"]);
             $allele1_father = (float) str_replace(',', '.', $value["pai_alelo1"]);
             $allele2_father = (float) str_replace(',', '.', $value["pai_alelo2"]);
-            $mother_and_child_different_alleles = $allele1_mother == $allele1_child && $allele2_mother == $allele2_child;
+
+            $child_has_father_allele = $allele1_father == $allele1_child || $allele1_father == $allele2_child || $allele2_father == $allele1_child || $allele2_father == $allele2_child;
 
             if ($allele1_father != $allele2_father) {
-                $paternal_allele = 0;
-                if ($allele1_father == $allele1_child || $allele1_father == $allele2_child) {
-                    $paternal_allele =  $allele1_father;
-                }
-                if ($allele2_father == $allele1_child || $allele2_father == $allele2_child) {
-                    $paternal_allele =  $allele1_father;
-                }
-                if ($paternal_allele == 0) {
-                    $ip[$locus] = 1;
-                    $exclusion++;
-                }
-
-                if (!$mother_and_child_different_alleles && $paternal_allele != 0) {
-                    foreach ($allelesFreq as $allele) {
-                        if ($allele['Alelo'] == $paternal_allele) {
-                            $ip[$locus] = 0.5 / $allele[$locus];
-                        }
-                    }
-                } else {
+                if ($child_has_father_allele) {
                     $allele1_freq = 0;
                     $allele2_freq = 0;
-                    foreach ($allelesFreq as $allele) {
-                        if ($allele1_child == $allele['Alelo']) {
+                    foreach ($alleles_freq as $allele) {
+                        if ($allele1_father == $allele['Alelo']) {
                             $allele1_freq = $allele[$locus];
                         }
-                        if ($allele2_child == $allele['Alelo']) {
+                        if ($allele2_father == $allele['Alelo']) {
                             $allele2_freq = $allele[$locus];
                         }
                     }
-                    $ip[$locus] = 0.5 / ($allele1_freq + $allele2_freq);
+                    $ips[$locus] = 0.5 / ($allele1_freq + $allele2_freq);
+                } else {
+                    $ips[$locus] = 1;
+                    $exclusion++;
                 }
             } else {
-                $paternal_allele = 0;
-                if ($allele1_father == $allele1_child || $allele1_father == $allele2_child) {
-                    $paternal_allele =  $allele1_father;
-                }
-                if ($allele2_father == $allele1_child || $allele2_father == $allele2_child) {
-                    $paternal_allele =  $allele1_father;
-                }
-                if ($paternal_allele == 0) {
-                    $ip[$locus] = 1;
-                    $exclusion++;
-                }
-                if (!$mother_and_child_different_alleles && $paternal_allele != 0) {
-                    foreach ($allelesFreq as $allele) {
-                        if ($allele['Alelo'] == $paternal_allele) {
-                            $ip[$locus] = 1 / $allele[$locus];
-                        }
-                    }
-                } else {
+                if ($child_has_father_allele) {
                     $allele1_freq = 0;
-                    $allele2_freq = 0;
-                    foreach ($allelesFreq as $allele) {
-                        if ($allele1_child == $allele['Alelo']) {
+                    foreach ($alleles_freq as $allele) {
+                        if ($allele1_father == $allele['Alelo']) {
                             $allele1_freq = $allele[$locus];
                         }
-                        if ($allele2_child == $allele['Alelo']) {
-                            $allele2_freq = $allele[$locus];
-                        }
                     }
-                    $ip[$locus] = 1 / ($allele1_freq + $allele2_freq);
+                    $ips[$locus] = 1 / $allele1_freq;
+                } else {
+                    $ips[$locus] = 1;
+                    $exclusion++;
                 }
             }
         }
-        $ipa = array_product($ip);
-        $pp = $ipa / ($ipa + 1) * 100;
+        $sum = 0;
+        foreach ($ips as $ip) {
+            $sum += log($ip, 10);
+        }
+        $ipc = pow(10, $sum);
+        $pp = $ipc / ($ipc + 1) * 100;
 
         $paternityTest = PaternityTest::find($id);
-        return Inertia::render('PaternityTest/PreviewPdf', ['ipa' => $ipa, 'pp' => $pp, 'exclusion' => $exclusion, 'ip' => $ip, 'loci' => $request->loci, 'paternityTest' => $paternityTest]);
+        return Inertia::render('PaternityTest/PreviewPdfDuo', ['ipc' => $ipc, 'pp' => $pp, 'exclusion' => $exclusion, 'ips' => $ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest]);
     }
 
-    public function calc_ipc_duo(Request $request) {}
-
-    public function store_report(Request $request, $id)
+    public function store_report(Request $request, $id, $type)
     {
         $paternityTest = PaternityTest::join('patients', 'patients.id', '=', 'paternity_tests.patient_id')
             ->join('users', 'users.id', '=', 'patients.user_id')
             ->where('paternity_tests.id', $id)
             ->select('users.name as patient_name')
             ->first();
-
         try {
-            $pdf = Pdf::loadview('pdf.paternity_report', ['ipa' => $request->ipa, 'pp' => $request->pp, 'ip' => $request->ip, 'loci' => $request->loci, 'conclusion' => $request->conclusion]);
+
+            if ($type == 'trio') {
+                $pdf = Pdf::loadview('pdf.paternity_report_trio', ['ipa' => $request->ipa, 'pp' => $request->pp, 'ips' => $request->ips, 'loci' => $request->loci, 'conclusion' => $request->conclusion]);
+            }
+            if ($type == 'duo') {
+                $pdf = Pdf::loadview('pdf.paternity_report_duo', ['ipc' => $request->ipc, 'pp' => $request->pp, 'ips' => $request->ips, 'loci' => $request->loci, 'conclusion' => $request->conclusion]);
+            }
 
             $current_date = Carbon::now()->format('d-m-Y');
             $file_name = $id . "-" . $paternityTest->patient_name . '-laudo-' . $current_date . '.pdf';
@@ -314,20 +383,24 @@ class PaternityTestController extends Controller
                     'state' => 'Finalizado'
                 ]);
 
-            return redirect()->route('paternity.report.manage')->with("message", "Sucesso ao gerar o Pdf.");
+            return redirect()->route('paternity.report.manage', $id)->with("message", "Sucesso ao gerar o Pdf.");
         } catch (Exception $e) {
-            dd($e->getMessage());
             $paternityTest = PaternityTest::find($id);
-            return Inertia::render('PaternityTest/PreviewPdf', ['ipa' => $request->ipa, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ip' => $request->ip, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
+            if ($type == 'trio') {
+                return Inertia::render('PaternityTest/PreviewPdfTrio', ['ipa' => $request->ipa, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ips' => $request->ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
+            }
+            if ($type == 'duo') {
+                return Inertia::render('PaternityTest/PreviewPdfTrio', ['ipc' => $request->ipc, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ips' => $request->ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
+            }
         }
     }
 
     public function download_report($id)
-    {
-        $paternityTest = PaternityTest::find($id)->first();
+    {   
+        $paternityTest = PaternityTest::find($id);
         try {
             return Storage::download($paternityTest->pdf);
-        } catch (Error $error) {
+        } catch (Error | Exception $e) {
             return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Não foi possível fazer o download, não existe nenhum laudo nesse pedido']);
         }
     }
@@ -342,7 +415,7 @@ class PaternityTestController extends Controller
                     'pdf' => null,
                     'state' => 'analisando'
                 ]);
-            return redirect()->route('paternity.report.manage')->with("message", "Sucesso ao remover o Pdf.");
+            return redirect()->route('paternity.report.manage', $id)->with("message", "Sucesso ao remover o Pdf.");
         } catch (Error $error) {
             return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Não foi possível remover o laudo, não existe nenhum laudo nesse pedido.']);
         }

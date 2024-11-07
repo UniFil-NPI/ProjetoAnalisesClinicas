@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, usePage } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
@@ -175,7 +175,7 @@ watch(paternityTests, (newValue) => {
                                         !user.isPatient
                                     "
                                 >
-                                    <a :href="route('paternity.report.manage', paternityTest.id)">Editar</a>
+                                    <a :href="route('paternity.report.manage', paternityTest.id)">Gerenciar Laudo</a>
                                 </td>
 
                                 <td
