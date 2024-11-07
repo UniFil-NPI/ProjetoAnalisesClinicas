@@ -9,6 +9,8 @@ use App\Models\ExamType;
 use App\Models\Patient;
 use App\Models\PatientExamResult;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Error;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -162,69 +164,108 @@ class ExamController extends Controller
         }
     }
 
+    public function manage_report($id)
+    {
+        $exam = Exam::find($id);
+
+        return Inertia::render("Exam/ReportManage", ['exam' => $exam]);
+    }
+
     public function import_result($id)
     {
         $exam = Exam::find($id);
 
+        if ($exam->pdf != null) {
+            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro.']);
+        }
+
         return Inertia::render('Exam/Import', ['exam' => $exam]);
     }
 
-    public function store_pdf_path(Request $request, $id)
+    public function store_import(Request $request, $id)
     {
         $exam = Exam::find($id);
-
         try {
-            $pdfPath = $this->generate_report($request->file, $exam);
+            $components = Exam::join('exam_types', "exams.exam_type_id", '=', 'exam_types.id')
+            ->select('exam_types.components_info')
+            ->where('exams.exam_type_id', $exam->exam_type_id)
+            ->first();
+            
+            $components = json_decode($components->components_info, true);
+            Excel::import(new PatientExamResultImport, $request->file);
+            $info = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
+                ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
+                ->join('doctors', 'doctors.id', '=', 'exams.doctor_id')
+                ->join('patients', 'patients.id', '=', 'exams.patient_id')
+                ->join('users', 'users.id', '=', 'patients.user_id')
+                ->select(
+                    'patient_exam_results.requisition_id as requisition_id',
+                    'users.name as patient_name',
+                    'patients.birth_date as birth_date',
+                    'exams.health_insurance as health_insurance',
+                    'exams.lab as lab',
+                    'doctors.name as doctor_name',
+                    'exams.exam_date as exam_date',
+                    'patients.biological_sex as sex',
+                    'exam_types.name as exam_name',
+                    'patient_exam_results.exam_value as value',
+                )
+                ->where('patient_exam_results.requisition_id', $exam->id)
+                ->first();
+                PatientExamResult::truncate();
 
-            $exam->update(['pdf' => $pdfPath]);
-
-            return redirect()->route('exam.index')->with("message", "Laudo gerado com sucesso.");
+            return Inertia::render('Exam/PreviewPdf', ['exam' => $exam, 'info' => $info, 'components' => $components]);
         } catch (Exception $e) {
-            return Inertia::render('Exam/Import', ["error" => "Não foi possível gerar o laudo.", 'exam' => $exam]);
+            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Erro ao gerar o laudo']);
         }
     }
 
-    private function generate_report($file, $exam)
+    public function store_report(Request $request, $id)
     {
-        Excel::import(new PatientExamResultImport, $file);
+        $exam = Exam::find($id);
+        try {
+            $pdf = Pdf::loadview('pdf.exam_report', ['info' => $request->info, 'components' => $request->components, 'conclusion' => $request->conclusion]);
 
-        $components = Exam::join('exam_types', "exams.exam_type_id", '=', 'exam_types.id')
-            ->select('exam_types.components_info')
-            ->where('exam_type_id', $exam->exam_type_id)
-            ->first();
+            $current_date = Carbon::now()->format('d-m-Y');
 
-        $components = json_decode($components->components_info, true);
+            $file_name = $id . '-' . $request->info['patient_name'] . '-laudo-' . $current_date . '.pdf';
+            $file_path = 'laudos/sangue/' . $file_name;
 
-        $info = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
-            ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
-            ->join('doctors', 'doctors.id', '=', 'exams.doctor_id')
-            ->join('patients', 'patients.id', '=', 'exams.patient_id')
-            ->join('users', 'users.id', '=', 'patients.user_id')
-            ->select(
-                'patient_exam_results.requisition_id as requisition_id',
-                'users.name as patient_name',
-                'patients.birth_date as birth_date',
-                'exams.health_insurance as health_insurance',
-                'exams.lab as lab',
-                'doctors.name as doctor_name',
-                'exams.exam_date as exam_date',
-                'patients.biological_sex as sex',
-                'exam_types.name as exam_name',
-                'patient_exam_results.exam_value as value',
-            )
-            ->where('patient_exam_results.requisition_id', $exam->id)
-            ->first();
+            Storage::put($file_path, $pdf->output());
+            $exam->update([
+                'pdf' => $file_path,
+                'state' => 'Finalizado',
+            ]);
 
-        $pdf = Pdf::loadview('pdf.exam_report', ['info' => $info, 'components' => $components]);
-        $current_date = \Carbon\Carbon::now()->format('d-m-Y');
-        $file_name = $info->patient_name . '-laudo-' . $current_date . '.pdf';
+            return redirect()->route('exam.report.manage', $id)->with("message", "Laudo gerado com sucesso.");
+        } catch (Exception $e) {
+            return Inertia::render('Exam/Import', ["error" => "Não foi possível gerar o laudo.", 'exam' => $exam, 'info' => $request->info, 'components' => $request->components]);
+        }
+    }
 
-        $file_path = 'laudos/' . $file_name;
+    public function download_report($id)
+    {
+        $exam = Exam::find($id);
+        try {
+            return Storage::download($exam->pdf);
+        } catch (Error | Exception $e) {
+            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Não foi possível fazer o download, não existe nenhum laudo nesse pedido']);
+        }
+    }
 
-        Storage::put($file_path, $pdf->output());
-
-        PatientExamResult::truncate();
-
-        return $file_path;
+    public function remove_report($id)
+    {
+        $exam = Exam::find($id);
+        try {
+            Storage::delete($exam->pdf);
+            Exam::find($id)
+                ->updateOrFail([
+                    'pdf' => null,
+                    'state' => 'analisando'
+                ]);
+            return redirect()->route('exam.report.manage', $id)->with("message", "Sucesso ao remover o Pdf.");
+        } catch (Exception | Error $e) {
+            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Não foi possível remover o laudo, não existe nenhum laudo nesse pedido.']);
+        }
     }
 }

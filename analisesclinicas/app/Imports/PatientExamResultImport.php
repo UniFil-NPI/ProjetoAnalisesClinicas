@@ -7,11 +7,18 @@ use Maatwebsite\Excel\Concerns\ToModel;
 
 class PatientExamResultImport implements ToModel
 {
+    public function getCsvSettings(): array
+    {
+        return [
+            'delimiter' => ","
+        ];
+    }
+
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new PatientExamResult([

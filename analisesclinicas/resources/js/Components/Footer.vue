@@ -6,10 +6,6 @@ export default {
         return {
             menuItems: [
                 {
-                    name: "Home",
-                    link: "#home",
-                },
-                {
                     name: "Política de privacidade",
                     link: "#clinica",
                 },
@@ -30,14 +26,14 @@ export default {
 </script>
 
 <template>
-    <footer class="bg-white">
+    <footer class="bg-white max">
         <div class="container px-4 mx-auto">
             <div class="pt-24 pb-11 mx-auto max-w-6xl">
                 <a class="flex md:mx-auto mb-5 max-w-max" href="#">
                     <img
                     draggable="false"
                         src="../assets/UniFil_Logo Isolado Horizontal-01.png"
-                        class="h-20"
+                        class="h-16"
                         alt="Clinica Logo"
                     />
                     

@@ -199,7 +199,7 @@ class PaternityTestController extends Controller
     {
         $paternityTest = PaternityTest::find($id);
         if ($paternityTest->pdf != null) {
-            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro']);
+            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro.']);
         }
         return Inertia::render('PaternityTest/CreateReportTrio', ['paternityTest' => $paternityTest]);
     }
@@ -390,7 +390,7 @@ class PaternityTestController extends Controller
                 return Inertia::render('PaternityTest/PreviewPdfTrio', ['ipa' => $request->ipa, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ips' => $request->ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
             }
             if ($type == 'duo') {
-                return Inertia::render('PaternityTest/PreviewPdfTrio', ['ipc' => $request->ipc, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ips' => $request->ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
+                return Inertia::render('PaternityTest/PreviewPdfDuo', ['ipc' => $request->ipc, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ips' => $request->ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
             }
         }
     }
@@ -416,7 +416,7 @@ class PaternityTestController extends Controller
                     'state' => 'analisando'
                 ]);
             return redirect()->route('paternity.report.manage', $id)->with("message", "Sucesso ao remover o Pdf.");
-        } catch (Error $error) {
+        } catch (Exception | Error $e) {
             return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Não foi possível remover o laudo, não existe nenhum laudo nesse pedido.']);
         }
     }

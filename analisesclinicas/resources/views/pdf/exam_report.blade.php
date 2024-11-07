@@ -64,31 +64,31 @@
 
     <header>
         <h1>Laudo de Exame de Sangue</h1>
-        <p>Número da Requisição: {{ $info->requisition_id }}</p>
+        <p>Número da Requisição: {{ $info['requisition_id'] }}</p>
     </header>
 
     <section>
         <h2>Informações do Paciente</h2>
         <div class="grid">
-            <p><span class="font-bold">Nome do Paciente:</span> {{ $info->patient_name }}</p>
-            <p><span class="font-bold">Idade:</span> {{ \Carbon\Carbon::parse($info->birth_date)->age }} anos</p>
-            <p><span class="font-bold">Convênio:</span> {{ $info->health_insurance }}</p>
-            <p><span class="font-bold">Local da Coleta:</span> {{ $info->lab }}</p>
+            <p><span class="font-bold">Nome do Paciente:</span> {{ $info['patient_name'] }}</p>
+            <p><span class="font-bold">Idade:</span> {{ \Carbon\Carbon::parse($info['birth_date'])->age }} anos</p>
+            <p><span class="font-bold">Convênio:</span> {{ $info['health_insurance'] }}</p>
+            <p><span class="font-bold">Local da Coleta:</span> {{ $info['lab'] }}</p>
         </div>
     </section>
 
     <section>
         <h2>Informações do Exame</h2>
         <div class="grid">
-            <p><span class="font-bold">Médico Solicitante:</span> {{ $info->doctor_name }}</p>
-            <p><span class="font-bold">Data do Exame:</span> {{ $info->exam_date }}</p>
+            <p><span class="font-bold">Médico Solicitante:</span> {{ $info['doctor_name'] }}</p>
+            <p><span class="font-bold">Data do Exame:</span> {{ $info['exam_date'] }}</p>
             <p><span class="font-bold">Data de Emissão do Laudo:</span> {{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
         </div>
     </section>
 
     <section>
         <h2>Resultados dos Exames</h2>
-        @if ($info->sex == 'Masculino')
+        @if ($info['sex'] == 'Masculino')
         @foreach($components as $component)
             <div>
                 <h3>{{ $component['name'] }}</h3>
@@ -101,7 +101,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ $info->value }} {{ $component['metric'] }}</td>
+                            <td>{{ $info['value'] }} {{ $component['metric'] }}</td>
                             <td>Mínimo: {{ $component['min_male'] }} - Máximo: {{ $component['max_male'] }}</td>
                         </tr>
                     </tbody>
@@ -110,7 +110,7 @@
             </div>
         @endforeach            
         @endif
-        @if ($info->sex == 'Feminino')
+        @if ($info['sex'] == 'Feminino')
         @foreach($components as $component)
             <div>
                 <h3>{{ $component['name'] }}</h3>
@@ -123,7 +123,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ $info->value }} {{ $component['metric'] }}</td>
+                            <td>{{ $info['value'] }} {{ $component['metric'] }}</td>
                             <td>Mínimo: {{ $component['min_female'] }} - Máximo: {{ $component['max_female'] }}</td>
                         </tr>
                     </tbody>
@@ -132,9 +132,9 @@
         @endforeach
         @endif
     </section>
-    @if($conclusion)
-        <h2>Conclusão</h2>
-        <p>{{ $conclusion }}</p>
-    @endif
+
+    <h2>Conclusão</h2>
+    <p>{{ $conclusion }}</p>
+    
 </body>
 </html>

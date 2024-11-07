@@ -30,22 +30,22 @@ class UserSeeder extends Seeder
         ])->assignRole('admin');
 
         User::create([
-            'name' => 'pacienteteste',
-            'email' => 'pacienteteste@gmail.com',
+            'name' => 'Paulo Tavarez',
+            'email' => 'paulo.tavarez@gmail.com',
             'cpf' => '136.483.140-68',
             'password' => Hash::make('123')
         ])->assignRole('patient');
 
         User::create([
-            'name' => 'pacientetesteAA',
-            'email' => 'pacientetesteAA@gmail.com',
+            'name' => 'Joana Neves',
+            'email' => 'joana.neves@gmail.com',
             'cpf' => '813.070.130-82',
             'password' => Hash::make('123')
         ])->assignRole('patient');
 
         User::create([
-            'name' => 'pacientetesteBB',
-            'email' => 'pacientetesteBB@gmail.com',
+            'name' => 'Jack Jones',
+            'email' => 'jack.jones@gmail.com',
             'cpf' => '952.510.680-26',
             'password' => Hash::make('123')
         ])->assignRole('patient');

@@ -20,10 +20,9 @@ const page = usePage();
 const user = computed(() => {
     return page.props.auth;
 });
-const errorMessage = ref(null);
-
+const errorMessage = ref(props.error || null);
 const submitFile = () => {
-    form.post(`/exam/${props.exam.id}/store-pdf`);
+    form.post(`/exam/report/store/import/${props.exam.id}`);
     errorMessage.value = props.error;
 };
 
@@ -31,20 +30,12 @@ const clearError = () => {
     errorMessage.value = null;
 };
 
+if (errorMessage.value) setTimeout(clearError, 5000);
+
 watch(
     () => props.error,
     (newError) => {
         errorMessage.value = newError;
-    }
-);
-
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
     }
 );
 </script>
@@ -54,7 +45,7 @@ watch(
     <AuthenticatedLayout>
         <template #header>
             <button
-                @click="$inertia.visit(route('exam.index'))"
+                @click="$inertia.visit(route('exam.report.manage', props.exam.id))"
                 class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
             >
                 <img

@@ -4,43 +4,32 @@ import { Head, router } from "@inertiajs/vue3";
 import { computed, onMounted, onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({}),
+    },
     error: {
         type: String,
         default: null,
     },
-    paternityTest: {
+    exam: {
         type: Object,
     },
 });
 
-const errorMessage = ref(null);
+const errorMessage = ref(props.error || null);
+const message = ref(props.flash?.message || null);
 
-onMounted(() => {
-    router.on("finish", () => {
-        errorMessage.value = props.error;
-        if (errorMessage.value) {
-            setTimeout(clearError, 5000);
-        }
-    });
-});
-
-const clickDownload = () => {
-    router.get(route("paternity.report.download", props.paternityTest.id), {
-        preserveState: "error",
-    });
+const clearMessage = () => {
+    message.value = null;
 };
-
-const clickRemove = () => {
-    router.get(route("paternity.report.remove", props.paternityTest.id), {
-        preserveState: "error",
-    });
-};
-
-const participants = ref(JSON.parse(props.paternityTest.participants));
 
 const clearError = () => {
     errorMessage.value = null;
 };
+
+if (message.value) setTimeout(clearMessage, 5000);
+if (errorMessage.value) setTimeout(clearError, 5000);
 
 watch(
     () => props.error,
@@ -59,7 +48,7 @@ watch(
     <AuthenticatedLayout>
         <template #header>
             <button
-                @click="$inertia.visit(route('paternity.index'))"
+                @click="$inertia.visit(route('exam.index'))"
                 class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
             >
                 <img
@@ -83,13 +72,7 @@ watch(
 
                     <div class="grid grid-cols-3 gap-4">
                         <a
-                            :href="
-                                route(
-                                    'paternity.report.create.trio',
-                                    props.paternityTest.id
-                                )
-                            "
-                            v-if="participants.length == 2"
+                            :href="route('exam.import', exam.id)"
                             class="col-span-1 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
                         >
                             Gerar Laudo
@@ -97,27 +80,25 @@ watch(
                         <a
                             :href="
                                 route(
-                                    'paternity.report.create.duo',
-                                    props.paternityTest.id
+                                    'exam.report.download',
+                                    exam.id
                                 )
                             "
-                            v-if="participants.length == 1"
-                            class="col-span-1 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
-                        >
-                            Gerar Laudo
-                        </a>
-                        <button
-                            @click.prevent="clickDownload"
                             class="col-span-1 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
                         >
                             Baixar
-                        </button>
-                        <button
-                            @click.prevent="clickRemove"
+                        </a>
+                        <a
+                            :href="
+                                route(
+                                    'exam.report.remove',
+                                    exam.id
+                                )
+                            "
                             class="col-span-1 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
                         >
                             Remover laudo
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -128,5 +109,11 @@ watch(
         class="fixed bottom-0 left-0 w-full bg-red-500 text-white text-lg py-4 px-6 text-center"
     >
         {{ errorMessage }}
+    </div>
+    <div
+        v-if="message"
+        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ message }}
     </div>
 </template>

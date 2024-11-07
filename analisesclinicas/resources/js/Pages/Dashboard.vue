@@ -38,7 +38,10 @@ const user = computed(() => {
                         </p>
                     </div>
                     <table class="mt-10">
-                        <thead class="border-b-2" v-show="props.exams.length != 0">
+                        <thead
+                            class="border-b-2"
+                            v-show="props.exams.length != 0"
+                        >
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
@@ -71,10 +74,36 @@ const user = computed(() => {
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="
-                                        !user.isPatient && exam.type == 'paternity'
+                                        !user.isPatient &&
+                                        exam.type == 'paternity'
                                     "
                                 >
-                                    <a :href="route('paternity.report.manage', exam.id)">Gerenciar laudo</a>
+                                    <a
+                                        :href="
+                                            route(
+                                                'paternity.report.manage',
+                                                exam.id
+                                            )
+                                        "
+                                        >Gerenciar laudo</a
+                                    >
+                                </td>
+                                <td
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="
+                                        !user.isPatient &&
+                                        exam.type == 'blood'
+                                    "
+                                >
+                                    <a
+                                        :href="
+                                            route(
+                                                'exam.report.manage',
+                                                exam.id
+                                            )
+                                        "
+                                        >Gerenciar laudo</a
+                                    >
                                 </td>
                                 <td
                                     class="py-4"
@@ -84,11 +113,14 @@ const user = computed(() => {
                                 </td>
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="exam.pdf != null && user.isPatient"
+                                    v-if="exam.pdf != null && user.isPatient && exam.type == 'blood'">
+                                    <a :href="route('exam.report.download', exam.id)">Baixar</a>
+                                </td>
+                                <td
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="exam.pdf != null && user.isPatient && exam.type == 'blood'"
                                 >
-                                    <a href="#"
-                                        >Baixar</a
-                                    >
+                                    <a :href="route('paternity.report.download', exam.id)">Baixar</a>
                                 </td>
                                 <td class="py-4 flex justify-end">
                                     <a
