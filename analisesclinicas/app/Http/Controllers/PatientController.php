@@ -16,8 +16,8 @@ class PatientController extends Controller
 {
     public function index()
     {
-
-        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->get();
+        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->orderBy('patient_id', 'desc')
+            ->paginate(5);
 
         return Inertia::render('Patient/Index', ['patients' => $patients]);
     }
@@ -164,37 +164,17 @@ class PatientController extends Controller
 
     public function search(Request $request)
     {
-        $result = [];
-
-        $query = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('patients.id as patient_id', 'patients.*', 'users.*');
-
-        if (count(Patient::all()) == 0) {
-            return [
-                "result" => $result,
-                "status" => "there is no patients registered",
-            ];
-        }
-        if ($request->search == '') {
-            $result = $query
-                ->orderBy('patient_id', 'desc')
-                ->paginate(2);
+        if ($request->search == "") {
+            $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->orderBy('patient_id', 'desc')
+                ->paginate(5);
         } else {
-            $result = $query
+            $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+                ->select('patients.id as patient_id', 'patients.*', 'users.*')
                 ->where('users.cpf', $request->search)
                 ->orderBy('patient_id', 'desc')
-                ->paginate(2);
-
-            if (count($result) == 0) {
-                return [
-                    "result" => $result,
-                    "status" => "patient not found",
-                ];
-            }
+                ->paginate(1);
         }
-        return [
-            "result" => $result,
-            "status" => "ok",
-        ];
+
+        return Inertia::render('Patient/Index', ['patients' => $patients]);
     }
 }

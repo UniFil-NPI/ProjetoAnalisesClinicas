@@ -71,7 +71,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/update/{id}', [PatientController::class, 'update'])->name('update');
 
-        Route::get('/search', [PatientController::class, 'search'])->name('search');
+        Route::post('/search', [PatientController::class, 'search'])->name('search');
     })->middleware(EnsureUserHasRole::class.':admin,recepcionist');
 
     //Exam Routes

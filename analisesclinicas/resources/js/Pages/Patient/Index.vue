@@ -9,19 +9,14 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    patients: Object,
 });
 
-const patients = ref({});
 const search = ref("");
 const status = ref("");
 
 const research = () => {
-    axios
-        .get(route("patient.search"), { search: search.value })
-        .then((response) => {
-            patients.value = response.data.result;
-            status.value = response.data.status;
-        });
+    router.post(route("patient.search"), { search: search.value });
 };
 
 const message = ref(props.flash?.message || null);
@@ -31,10 +26,6 @@ const clearMessage = () => {
 };
 
 if (message.value) setTimeout(clearMessage, 5000);
-
-onMounted(() => {
-    research();
-});
 </script>
 <template>
     <Head title="Pacientes" />
@@ -100,32 +91,13 @@ onMounted(() => {
                         </a>
                     </div>
 
-                    <div
-                        class="mt-10"
-                        v-if="
-                            patients.length == 0 &&
-                            status == 'there is no patients registered'
-                        "
-                    >
+                    <div class="mt-10" v-if="patients.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum paciente cadastrado no momento.
+                            Paciente(s) não encontrado.
                         </p>
                     </div>
 
-                    <div
-                        class="mt-10"
-                        v-if="
-                            patients.length == 0 &&
-                            status == 'patient not found'
-                        "
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum paciente cadastrado que
-                            corresponde com sua busca.
-                        </p>
-                    </div>
-
-                    <table class="mt-10" v-if="patients.length != 0">
+                    <table class="mt-10" v-if="patients.data.length != 0">
                         <thead class="border-b-2">
                             <tr>
                                 <th>ID</th>
