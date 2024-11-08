@@ -371,6 +371,7 @@ class PaternityTestController extends Controller
             }
 
             $current_date = Carbon::now()->format('d-m-Y');
+            
             $file_name = $id . "-" . $paternityTest->patient_name . '-laudo-' . $current_date . '.pdf';
             $file_path = 'laudos/paternidade/' . $file_name;
 

@@ -8,6 +8,21 @@ classDiagram
 
 direction LR
 
+
+User "1" *-- "0..1" Patient
+
+Patient "1" *-- "0..n" PaternityTest
+
+Patient "1" *-- "0..n" Exam
+
+Patient "1" *-- "0..n" PatientExamResult
+
+ExamType "1" *-- "0..n" Exam
+
+Doctor "1" *-- "0..n" Exam
+
+Exam "1" *-- "0..1" PatientExamResult
+
 class User {
     #id id
     #string cpf 
@@ -66,7 +81,12 @@ class Exam {
     +search(request)
     +edit(id)
     +update(id, request)
-    +import_result($id)
+    +manage_report(id)
+    +import_result(id)
+    +store_import(request, id)
+    +store_report(request, id)
+    +download_report(id)
+    +remove_report(id)
 
 }
 
@@ -106,17 +126,23 @@ class PaternityTest {
     #timestamp exam_date
     #longText description
     #string pdf
+    #string state
     +index()
     +select()
     +create_duo()
     +create_trio()
-    +store(request)
+    +store(request, type)
     +search(request)
     +edit(id)
     +update(request, id)
+    +report_manage(id)
     +create_duo_report(id)
     +create_trio_report(id)
-    +store_report(request, id)
+    +calc_ipc_trio(request, id)
+    +calc_ipc_duo(request, id)
+    +store_report(request, id, type)
+    +download_report(id)
+    +remove_report(id)
 }
 
 class PatientExamResult {
@@ -129,24 +155,8 @@ class PatientExamResult {
     #string patient_gender
     #string operator_name
     #timestamp end_date
+    +__invoke()
 }
-
-User "1" *-- "0..1" Patient : is
-
-Patient "1" *-- "0..n" Exam : has
-
-Patient "1" *-- "0..n" PaternityTest : has
-
-Patient "1" *-- "0..n" PatientExamResult: has
-
-ExamType "1" *-- "0..n" Exam : has
-
-Doctor "1" *-- "0..n" Exam : has
-
-Exam "1" *-- "0..1" PatientExamResult
-
-
- 
 
 
 ```

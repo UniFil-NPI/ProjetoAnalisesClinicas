@@ -7,6 +7,10 @@ title: Sistema de Análises Clínicas
 erDiagram
 
 users only one -- zero or one patients : is
+patients only one .. zero or many exams : has
+doctors only one .. zero or many exams : has
+users zero or many -- one or many roles : belongs
+
 users {
     bigSerial id PK
     varchar(255) cpf UK
@@ -20,8 +24,6 @@ users {
     timestamp(0) deleted_at
 }
 
-
-patients only one .. zero or many exams : has
 patients {
     bigSerial id PK
     int8 user_id FK
@@ -36,32 +38,20 @@ patients {
     varchar(255) birth_date
     varchar(255) health_insurance
     varchar(255) biological_sex
-
-}
-exams {
-    bigserial id PK
-    int8 doctor_id FK
-    int8 patient_id FK
-    varchar(255) lab
-    varchar(255) health_insurance
-    date exam_date
-    text description
     timestamp(0) created_at
     timestamp(0) updated_at
-    
+    timestamp(0) deleted_at
+
 }
 
-doctors only one .. zero or many exams : has
 doctors {
     bigserial id PK
     varchar(255) name
     varchar(255) crm
     timestamp(0) created_at
     timestamp(0) updated_at
+    timestamp(0) deleted_at
 }
-
-users zero or many -- one or many roles : belongs
-
 
 roles {
     bigserial id PK
@@ -70,6 +60,85 @@ roles {
     timestamp(0) created_at
     timestamp(0) updated_at
 
+}
+
+exams {
+    bigserial id PK
+    varchar(255) type
+    int8 doctor_id FK
+    int8 patient_id FK
+    int8 exam_type_id FK
+    varchar(255) lab
+    varchar(255) health_insurance
+    timestamp(0) exam_date
+    text description
+    varchar(255) pdf
+    varchar(255) state
+    timestamp(0) created_at
+    timestamp(0) updated_at
+    timestamp(0) deleted_at
+}
+
+exam_types {
+    bigserial id PK
+    varchar(255) name
+    json components_info
+    timestamp(0) created_at
+    timestamp(0) updated_at
+}
+
+paternity_tests {
+    bigserial id PK
+    varchar(255) type
+    int8 patient_id FK
+    json participants
+    varchar(255) lab
+    varchar(255) health_insurance
+    timestamp(0) exam_date
+    text description
+    varchar(255) pdf
+    varchar(255) state
+    timestamp(0) created_at
+    timestamp(0) updated_at
+    timestamp(0) deleted_at
+}
+
+patient_exam_results {
+    bigserial id PK
+    int8 patient_id FK
+    int8 requisition_id FK
+    varchar(255) exam_type_name
+    float8 exam_value
+    timestamp(0) start_date
+    varchar(255) patient_name
+    varchar(255) patient_gender
+    varchar(255) operator_name
+    timestamp(0) end_date
+    timestamp(0) created_at
+    timestamp(0) updated_at
+    timestamp(0) deleted_at
+}
+
+allele_freqs {
+    bigserial id PK
+    varchar(255) Alelo
+    float8 D3S1358
+    float8 VWA
+    float8 FGA
+    float8 D8S1179
+    float8 D21S11
+    float8 D18S51
+    float8 D5S818
+    float8 D13S317
+    float8 D7S820
+    float8 D16S539
+    float8 THO1
+    float8 TPOX
+    float8 CSF1PO
+    float8 D2S1338
+    float8 D19S433
+    timestamp(0) created_at
+    timestamp(0) updated_at
 }
 
 ```
