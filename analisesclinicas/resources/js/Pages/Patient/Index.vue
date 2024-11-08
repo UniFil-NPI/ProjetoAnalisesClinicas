@@ -2,7 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { Head, router } from "@inertiajs/vue3";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const props = defineProps({
     flash: {
@@ -12,7 +12,7 @@ const props = defineProps({
     patients: Object,
 });
 
-const search = ref("");
+const search = ref(null);
 const status = ref("");
 
 const research = () => {
@@ -21,11 +21,13 @@ const research = () => {
 
 const message = ref(props.flash?.message || null);
 
+
 const clearMessage = () => {
     message.value = null;
 };
 
 if (message.value) setTimeout(clearMessage, 5000);
+
 </script>
 <template>
     <Head title="Pacientes" />
@@ -67,6 +69,12 @@ if (message.value) setTimeout(clearMessage, 5000);
                     v-mask-cpf
                     required
                 />
+                <a
+                    :href="route('patient.index')"
+                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                >
+                    ✕
+                </a>
                 <button
                     v-on:click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
