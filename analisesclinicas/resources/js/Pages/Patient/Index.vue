@@ -1,6 +1,8 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import Pagination from "@/Components/Pagination.vue";
+import { Head} from "@inertiajs/vue3";
+import { Inertia } from "@inertiajs/inertia";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({
@@ -10,31 +12,35 @@ const props = defineProps({
     },
 });
 
-const patients = ref([]);
+const patients = ref({});
 const search = ref("");
-const message = ref(
-    props.flash && props.flash.message ? props.flash.message : null
-);
 const status = ref("");
 
 const research = () => {
-    axios
-        .post(route("patient.search"), { search: search.value })
-        .then((response) => {
-            patients.value = response.data.result;
-            status.value = response.data.status;
-        });
+    Inertia.get(
+        route("patient.search"),
+        { search: search.value },
+        {
+            replace: true,
+            preserveState: true,
+            onSuccess: (page) => {
+                patients.value = page.props.patients;
+                status.value = page.props.status;
+            },
+        }
+    );
 };
+
+const message = ref(props.flash?.message || null);
 
 const clearMessage = () => {
     message.value = null;
 };
 
+if (message.value) setTimeout(clearMessage, 5000);
+
 onMounted(() => {
     research();
-    if (message.value) {
-        setTimeout(clearMessage, 5000);
-    }
 });
 </script>
 <template>
@@ -109,8 +115,7 @@ onMounted(() => {
                         "
                     >
                         <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum paciente cadastrado no
-                            momento.
+                            Não existe nenhum paciente cadastrado no momento.
                         </p>
                     </div>
 
@@ -127,10 +132,7 @@ onMounted(() => {
                         </p>
                     </div>
 
-                    <table
-                        class="mt-10"
-                        v-if="patients.length != 0"
-                    >
+                    <table class="mt-10" v-if="patients.length != 0">
                         <thead class="border-b-2">
                             <tr>
                                 <th>ID</th>
@@ -142,8 +144,8 @@ onMounted(() => {
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(patient, i) in patients"
-                                :key="i"
+                                v-for="patient in patients.data"
+                                :key="patient.id"
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
                                 <td class="py-4">{{ patient.patient_id }}</td>
@@ -169,6 +171,7 @@ onMounted(() => {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="patients.links" />
                 </div>
             </div>
         </div>

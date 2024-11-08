@@ -178,12 +178,12 @@ class PatientController extends Controller
         if ($request->search == '') {
             $result = $query
                 ->orderBy('patient_id', 'desc')
-                ->get();
+                ->paginate(2);
         } else {
             $result = $query
                 ->where('users.cpf', $request->search)
                 ->orderBy('patient_id', 'desc')
-                ->get();
+                ->paginate(2);
 
             if (count($result) == 0) {
                 return [
