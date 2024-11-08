@@ -6,16 +6,16 @@ title: Sistema de Análises Clínicas
 ---
 classDiagram
 
-direction LR
+direction RL
 
 
 User "1" *-- "0..1" Patient
 
 Patient "1" *-- "0..n" PaternityTest
 
-Patient "1" *-- "0..n" Exam
+Patient "0..n" --* "1" PatientExamResult
 
-Patient "1" *-- "0..n" PatientExamResult
+Patient "1" *-- "0..n" Exam
 
 ExamType "1" *-- "0..n" Exam
 
