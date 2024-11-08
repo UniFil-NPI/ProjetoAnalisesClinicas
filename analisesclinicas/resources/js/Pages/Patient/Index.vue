@@ -1,8 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
-import { Head} from "@inertiajs/vue3";
-import { Inertia } from "@inertiajs/inertia";
+import { Head, router } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({
@@ -17,18 +16,12 @@ const search = ref("");
 const status = ref("");
 
 const research = () => {
-    Inertia.get(
-        route("patient.search"),
-        { search: search.value },
-        {
-            replace: true,
-            preserveState: true,
-            onSuccess: (page) => {
-                patients.value = page.props.patients;
-                status.value = page.props.status;
-            },
-        }
-    );
+    axios
+        .get(route("patient.search"), { search: search.value })
+        .then((response) => {
+            patients.value = response.data.result;
+            status.value = response.data.status;
+        });
 };
 
 const message = ref(props.flash?.message || null);
