@@ -66,7 +66,7 @@ Figura 8
 
 ![Gerenciamento de laudos](./img/telas/exames_de_sangue/report_manage.png)
 
-### Imortar CSV
+### Importar CSV
 
 A Figura 9 é onde ocorre a importação do arquivo CSV.
 

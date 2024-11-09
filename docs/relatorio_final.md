@@ -302,6 +302,32 @@ O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos no sis
 
 ##### Telas
 
+###### Médicos
+
+**Index**
+
+A Figura 17 é responsável por exibir os médicos cadastrados.
+
+Figura 17
+
+![Exibir](./img/telas/medicos/index.png)
+
+**Edit**
+
+A Figura 18 é responsável por editar os dados dos médicos cadastrados.
+
+Figura 18
+
+![Editar](./img/telas/medicos/edit.png)
+
+**Create**
+
+A Figura 19 é responsável por criar novos cadastros de médico.
+
+Figura 19
+
+![Cadastrar](./img/telas/medicos/create.png)
+
 ##### Diagrama de sequência
 
 [UC003_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC003_gerenciar_medico.md)
@@ -311,6 +337,32 @@ O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos no sis
 O caso de uso UC004_gerenciar_tipo_de_exame permite o gerenciamento dos tipos de exame no sistema, as *roles* admin, biomédico e recepcionista tem acesso ao caso de uso.
 
 ##### Telas
+
+###### Tipos de exame
+
+**Index**
+
+A Figura 20 é responsável por exibir os tipos de exame cadastrados.
+
+Figura 20
+
+![Exibir](./img/telas/tipos_de_exame/index.png)
+
+**Edit**
+
+A Figura 21 é responsável por editar os dados dos tipos de exame cadastrados.
+
+Figura 21
+
+![Editar](./img/telas/tipos_de_exame/edit.png)
+
+**Create**
+
+A Figura 22 é responsável por criar novos cadastros de tipos de exame.
+
+Figura 22
+
+![Cadastro](./img/telas/tipos_de_exame/create.png)
 
 ##### Diagrama de sequência
 
@@ -325,9 +377,69 @@ Os pacientes podem fazer o download dos laudos registrados nos pedidos deles.
 
 ##### Telas
 
+###### Exames de paternidade
+
+**Gerenciar laudos**
+
+A Figura 23 é responsável por gerenciar os laudos do exame de paternidade.
+
+Figura 23
+
+![Gerenciamento de laudos](./img/telas/exames_de_paternidade/report_manage.png)
+
+**Inserir dados do exame**
+
+As Figuras 24, 25, 26 e 27 são responsáveis pela inserção dos dados para geração do laudo de paternidade.
+
+Figura 24
+
+![Criar laudo duo 1](./img/telas/exames_de_paternidade/create_report_duo1.png)
+
+Figura 25
+
+![Criar laudo duo 2](./img/telas/exames_de_paternidade/create_report_duo2.png)
+
+Figura 26
+
+![Criar laudo trio 1](./img/telas/exames_de_paternidade/create_report_trio1.png)
+
+Figura 27
+
+![Criar laudo trio 2](./img/telas/exames_de_paternidade/create_report_trio2.png)
+
+###### Exames de sangue
+
+**Gerenciar laudos**
+
+A Figura 28 é responsável pelo gerenciamento do laudo.
+
+Figura 28
+
+![Gerenciamento de laudos](./img/telas/exames_de_sangue/report_manage.png)
+
+**Importar CSV**
+
+A Figura 29 é onde ocorre a importação do arquivo CSV.
+
+Figura 29
+
+![Importar CSV](./img/telas/exames_de_sangue/importar_csv.png)
+
+**Preview PDF**
+
+As Figuras 30 e 31 mostram o preview do PDF.
+
+Figura 30
+
+![Preview1](./img/telas/exames_de_sangue/preview1.png)
+
+Figura 31
+
+![Preview2](./img/telas/exames_de_sangue/preview2.png)
+
 ##### Diagrama de sequência
 
-[UC005_GERENCIAR_LAUDO]()
+[UC005_GERENCIAR_LAUDO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC005_gerenciar_laudo.md)
 
 ## CONCLUSÕES E TRABALHOS FUTUROS
 
@@ -367,7 +479,7 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 - ##### [UC004_GERENCIAR_TIPO_DE_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC004_gerenciar_tipo_de_exame.md)
 
-- ##### [UC005_GERENCIAR_LAUDO]()
+- ##### [UC005_GERENCIAR_LAUDO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC005_gerenciar_laudo.md)
 
 #### [Glossário](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/glossario.md)
 
@@ -397,7 +509,7 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 - ##### [UC004_GERENCIAR_TIPO_DE_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC004_gerenciar_tipo_de_exame.md)
 
-- ##### [UC005_GERENCIAR_LAUDO]()
+- ##### [UC005_GERENCIAR_LAUDO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC005_gerenciar_laudo.md)
 
 #### [Workflow AS-IS](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/workflow_asis.md)
 

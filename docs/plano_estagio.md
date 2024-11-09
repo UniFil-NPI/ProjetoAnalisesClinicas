@@ -123,9 +123,9 @@ As telas estão presentes e detalhadas em [telas](./telas.md)
 
 ## *WORKFLOW (AS IS)* NA NOTAÇÃO BPMN
 
-A figura 6 refere-se ao *workflow (AS-IS)* na notação BPMN e tem como objetivo definir como é solucionado atualmente o problema que o sistema tem como objetivo resolver.
+A figura 2 refere-se ao *workflow (AS-IS)* na notação BPMN e tem como objetivo definir como é solucionado atualmente o problema que o sistema tem como objetivo resolver.
 
-Figura 6
+Figura 2
 
 ![WorkflowASIS](./img/diagramas/WorkflowASIS.png)
 
@@ -181,9 +181,9 @@ Para a prototipação do projeto foi utilizado uma ferramenta *Web* chamada ***[
 
 ## CRONOGRAMA
 
-A Figura 7 refere-se ao cronograma do projeto, que é uma ferramenta para organização, onde é colocado prazo para realizar cada tarefa do projeto.
+A Figura 3 refere-se ao cronograma do projeto, que é uma ferramenta para organização, onde é colocado prazo para realizar cada tarefa do projeto.
 
-Figura 7
+Figura 3
 
 ![Cronograma](./img/Cronograma-de-projeto-Cronograma-de-projeto.png)
 
