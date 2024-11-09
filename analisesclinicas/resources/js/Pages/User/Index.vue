@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted, watch, defineProps } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import Pagination from "@/Components/Pagination.vue";
+import { Head, router } from "@inertiajs/vue3";
 import axios from "axios";
 
 const props = defineProps({
@@ -9,31 +10,22 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    users: Object,
 });
 
-const users = ref([]);
 const search = ref("");
-const message = ref(
-    props.flash && props.flash.message ? props.flash.message : null
-);
-const status = ref("");
 
 const research = () => {
-    axios.post("/user/search", { search: search.value }).then((response) => {
-        users.value = response.data.result;
-        status.value = response.data.status;
-    });
+    router.post(route("user.search"), { search: search.value });
 };
+
+const message = ref(props.flash?.message || null);
+
 const clearMessage = () => {
     message.value = null;
 };
 
-onMounted(() => {
-    research();
-    if (message.value) {
-        setTimeout(clearMessage, 5000);
-    }
-});
+if (message.value) setTimeout(clearMessage, 5000);
 </script>
 <template>
     <Head title="Funcionários" />
@@ -75,6 +67,12 @@ onMounted(() => {
                     v-mask-cpf
                     required
                 />
+                <a
+                    :href="route('user.index')"
+                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                >
+                    ✕
+                </a>
                 <button
                     @click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
@@ -99,20 +97,13 @@ onMounted(() => {
                         </a>
                     </div>
 
-                    <div
-                        class="mt-10"
-                        v-if="
-                            users.length == 0 &&
-                            status == 'employee not found'
-                        "
-                    >
+                    <div class="mt-10" v-if="users.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum funcionário cadastrado que
-                            corresponde com sua busca.
+                            Funcionário(s) não encontrado(s).
                         </p>
                     </div>
 
-                    <table class="mt-10" v-if="users.length != 0">
+                    <table class="mt-10" v-if="users.data.length != 0">
                         <thead class="border-b-2">
                             <tr>
                                 <th>ID</th>
@@ -126,7 +117,7 @@ onMounted(() => {
                         </thead>
                         <tbody>
                             <tr
-                                v-for="user in users"
+                                v-for="user in users.data"
                                 :key="user.id"
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
                             >
@@ -138,13 +129,13 @@ onMounted(() => {
                                     class="py-4"
                                     v-if="user.roles[0].name == 'admin'"
                                 >
-                                    {{ "Adm" }}
+                                    {{ "Administrador" }}
                                 </td>
                                 <td
                                     class="py-4"
-                                    v-if="user.roles[0].name == 'technician'"
+                                    v-if="user.roles[0].name == 'biomedic'"
                                 >
-                                    {{ "Técnico" }}
+                                    {{ "Biomédico" }}
                                 </td>
                                 <td
                                     class="py-4"
@@ -166,6 +157,7 @@ onMounted(() => {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="users.links" />
                 </div>
             </div>
         </div>

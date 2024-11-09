@@ -131,8 +131,8 @@ watch(
                                     v-model="form.role"
                                     class="col-span-1 bg-neutral-200 border-none rounded-lg"
                                 >
-                                    <option selected disabled value="0">
-                                        Selecione
+                                    <option selected disabled :value=form.role >
+                                        {{form.role}}
                                     </option>
                                     <option value="admin">admin</option>
                                     <option value="recepcionist">

@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import Pagination from "@/Components/Pagination.vue";
+import { Head, router } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({
@@ -8,34 +9,22 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    doctors: Object,
 });
 
 const search = ref("");
-const doctors = ref([]);
-const message = ref(
-    props.flash && props.flash.message ? props.flash.message : null
-);
-const status = ref("");
 
 const research = () => {
-    axios
-        .post(route("doctor.search"), { search: search.value })
-        .then((response) => {
-            doctors.value = response.data.result;
-            status.value = response.data.status;
-        });
+    router.post(route("doctor.search"), { search: search.value });
 };
+
+const message = ref(props.flash?.message || null);
 
 const clearMessage = () => {
     message.value = null;
 };
 
-onMounted(() => {
-    research();
-    if (message.value) {
-        setTimeout(clearMessage, 5000);
-    }
-});
+if (message.value) setTimeout(clearMessage, 5000);
 </script>
 <template>
     <Head title="Medicos" />
@@ -76,6 +65,12 @@ onMounted(() => {
                     placeholder="Nome do médico"
                     required
                 />
+                <a
+                    :href="route('doctor.index')"
+                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                >
+                    ✕
+                </a>
                 <button
                     v-on:click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
@@ -99,29 +94,17 @@ onMounted(() => {
                             Novo médico
                         </a>
                     </div>
-                    <div
-                        class="mt-10"
-                        v-if="
-                            doctors.length == 0 && status == 'There is no doctors registered'
-                        "
-                    >
+                    <div class="mt-10" v-if="doctors.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
-                            Não tem nenhum médico cadastrado no momento.
-                        </p>
-                    </div>
-                    <div
-                        class="mt-10"
-                        v-if="
-                            doctors.length == 0 && status == 'doctor not found'
-                        "
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum médico cadastrado que corresponde com sua busca.
+                            Médico(s) não encontrado(s).
                         </p>
                     </div>
 
                     <table class="mt-10">
-                        <thead class="border-b-2" v-show="doctors.length != 0">
+                        <thead
+                            class="border-b-2"
+                            v-show="doctors.data.length != 0"
+                        >
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do Médico</th>
@@ -132,7 +115,7 @@ onMounted(() => {
                         <tbody>
                             <tr
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
-                                v-for="doctor in doctors"
+                                v-for="doctor in doctors.data"
                                 :key="doctor.id"
                             >
                                 <td class="py-4">{{ doctor.id }}</td>
@@ -152,6 +135,7 @@ onMounted(() => {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="doctors.links" />
                 </div>
             </div>
         </div>

@@ -12,7 +12,8 @@ class DoctorController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Doctor/Index');
+        $doctors = Doctor::select('doctors.*')->orderBy('id', 'desc')->paginate(5);
+        return Inertia::render('Doctor/Index', ['doctors' => $doctors]);
     }
 
     public function create()
@@ -42,38 +43,16 @@ class DoctorController extends Controller
 
     public function search(Request $request)
     {
-        $result = [];
-        $allDoctors = Doctor::all();
-
-        if (count($allDoctors) == 0) {
-            return [
-                "result" => $result,
-                "status" => "There is no doctors registered",
-            ];
-        }
-
         if ($request->search == '') {
-            $result = Doctor::select('doctors.*')->orderBy('id', 'desc')->get();
+            $doctors = Doctor::select('doctors.*')->orderBy('id', 'desc')->paginate(5);
         } else {
             $search = strtolower($request->search);
 
             $doctors = Doctor::select('doctors.*')
-                ->whereRaw('LOWER(doctors.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->get();
-
-            if (count($doctors) == 0) {
-                return [
-                    "result" => $result,
-                    "status" => "doctor not found"
-                ];
-            }
-
-            $result = $doctors;
+                ->whereRaw('LOWER(doctors.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->paginate(5);
         }
 
-        return [
-            "result" => $result,
-            "status" => "ok",
-        ];
+        return Inertia::render('Doctor/Index', ['doctors' => $doctors]);
     }
 
     public function edit($id)

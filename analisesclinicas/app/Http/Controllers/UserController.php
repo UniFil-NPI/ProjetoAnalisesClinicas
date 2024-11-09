@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index()
     {
 
-        $users = User::with('roles')->orderBy('id', 'desc')->get();
+        $users = User::withoutRole('patient')->with('roles')->orderBy('id', 'desc')->paginate(5);
 
         return Inertia::render('User/Index', ['users' => $users]);
     }
@@ -101,23 +102,11 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        $result = [];
-
         if ($request->search == '') {
-            $result = User::with('roles')->orderBy('id', 'desc')->get()->filter(fn($user) => $user->hasRole(['admin', 'recepcionist', 'technician']));
+            $users = User::withoutRole('patient')->with('roles')->orderBy('id', 'desc')->paginate(5);
         } else {
-            $result = User::with('roles')->where("cpf", $request->search)->get()->filter(fn($user) => $user->hasRole(['admin', 'recepcionist', 'technician']));
-
-            if (count($result) == 0) {
-                return [
-                    "result" => $result,
-                    "status" => "employee not found",
-                ];
-            }
+            $users = User::withoutRole('patient')->with('roles')->where('cpf', $request->search)->orderBy('id', 'desc')->paginate(1);
         }
-        return [
-            "result" => $result,
-            "status" => "ok",
-        ];
+        return Inertia::render('User/Index', ['users' => $users]);
     }
 }

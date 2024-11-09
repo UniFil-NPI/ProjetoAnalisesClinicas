@@ -167,14 +167,13 @@ class PatientController extends Controller
         if ($request->search == '') {
             $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->orderBy('patient_id', 'desc')
                 ->paginate(5);
-
-            return Inertia::render('Patient/Index', ['patients' => $patients]);
+        } else {
+            $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+                ->select('patients.id as patient_id', 'patients.*', 'users.*')
+                ->where('users.cpf', $request->search)
+                ->orderBy('patient_id', 'desc')
+                ->paginate(1);
         }
-        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('patients.id as patient_id', 'patients.*', 'users.*')
-            ->where('users.cpf', $request->search)
-            ->orderBy('patient_id', 'desc')
-            ->paginate(1);
 
         return Inertia::render('Patient/Index', ['patients' => $patients]);
     }

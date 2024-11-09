@@ -101,7 +101,7 @@ if (message.value) setTimeout(clearMessage, 5000);
 
                     <div class="mt-10" v-if="patients.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
-                            Paciente(s) não encontrado.
+                            Paciente(s) não encontrado(s).
                         </p>
                     </div>
 

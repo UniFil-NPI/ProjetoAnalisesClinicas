@@ -30,6 +30,41 @@ class UserSeeder extends Seeder
         ])->assignRole('admin');
 
         User::create([
+            'name' => 'Clara Torres',
+            'email' => 'clara.torres@gmail.com',
+            'cpf' => '169.811.130-40',
+            'password' => Hash::make('123')
+        ])->assignRole('recepcionist');
+
+        User::create([
+            'name' => 'Roberto Silva',
+            'email' => 'roberto.silva@gmail.com',
+            'cpf' => '616.153.300-62',
+            'password' => Hash::make('123')
+        ])->assignRole('recepcionist');
+
+        User::create([
+            'name' => 'Juliana Francisca',
+            'email' => 'juliana.francisca@gmail.com',
+            'cpf' => '593.923.540-96',
+            'password' => Hash::make('123')
+        ])->assignRole('biomedic');
+
+        User::create([
+            'name' => 'Pedro Oliveira',
+            'email' => 'pedro.oliveira@gmail.com',
+            'cpf' => '255.825.840-05',
+            'password' => Hash::make('123')
+        ])->assignRole('biomedic');
+
+        User::create([
+            'name' => 'Larissa Rodrigues',
+            'email' => 'larissa.rodrigues@gmail.com',
+            'cpf' => '714.863.970-00',
+            'password' => Hash::make('123')
+        ])->assignRole('biomedic');
+
+        User::create([
             'name' => 'Paulo Tavarez',
             'email' => 'paulo.tavarez@gmail.com',
             'cpf' => '136.483.140-68',

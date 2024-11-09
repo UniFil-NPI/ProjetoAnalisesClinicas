@@ -125,7 +125,7 @@ watch(
                                     <option value="recepcionist">
                                         recepcionista
                                     </option>
-                                    <option value="technician">técnico</option>
+                                    <option value="biomedic">biomédico</option>
                                 </select>
                                 <span
                                     v-if="form.errors.role"
