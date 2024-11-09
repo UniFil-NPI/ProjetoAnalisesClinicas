@@ -10,6 +10,8 @@
 
 - [Workflow (AS-IS)](workflow_asis.md)
 
+- [Workflow (TO-BE)](workflow_to_be.md)
+
 - [Especificação suplementar](especificacao_suplementar.md)
 
 - [Plano de Estágio](plano_estagio.md)

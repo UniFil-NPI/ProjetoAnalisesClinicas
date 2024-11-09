@@ -6,6 +6,15 @@
 
 - [UC003_gerenciar_medico](UC003_gerenciar_medico.md)
 
+- [UC004_gerenciar_tipo_de_exame](UC004_gerenciar_tipo_de_exame.md)
+
+- [UC005_inserir_dados_do_teste_de_paternidade](UC005_inserir_dados_do_teste_de_paternidade.md)
+
+- [UC006_importar_CSV](UC006_importar_CSV.md)
+
+- [UC007_gerar_laudo](UC007_gerar_laudo.md)
+
+
 ---
 
 [Voltar](../README.md)

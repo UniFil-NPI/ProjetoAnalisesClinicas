@@ -668,47 +668,55 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 ### ARTEFATOS DE REQUISITOS
 
-#### [Documento de Visão](visao.md)
+#### [Documento de Visão](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/visao.md)
 
-#### [Especificação Complementar](especificacao_suplementar.md)
+#### [Especificação Suplementar](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacao_suplementar.md)
 
 #### Especificações de Caso de Uso:
 
-- ##### [UC001_GERENCIAR_USUARIO](especificacoes_caso_de_uso/UC001_gerenciar_usuario.md)
+- ##### [UC001_GERENCIAR_USUARIO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC001_gerenciar_usuario.md)
 
-- ##### [UC002_GERENCIAR_PEDIDO_DO_EXAME](especificacoes_caso_de_uso/UC002_gerenciar_pedido_do_exame.md)
+- ##### [UC002_GERENCIAR_PEDIDO_DO_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC002_gerenciar_pedido_do_exame.md)
 
-- ##### [UC003_GERENCIAR_MEDICO](especificacoes_caso_de_uso/UC003_gerenciar_medico.md)
+- ##### [UC003_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC003_gerenciar_medico.md)
 
-#### [Glossário](glossario.md)
+- ##### [UC004_GERENCIAR_TIPO_DE_EXAME]()
 
-#### [Pedido do Investidor](pedido_investidor.md)
+- ##### [UC005_INSERIR_DADOS_DO_TESTE_DE_PATERNIDADE]()
+
+- ##### [UC006_IMPORTAR_CSV]()
+
+- ##### [UC007_GERAR_LAUDO]()
+
+#### [Glossário](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/glossario.md)
+
+#### [Pedidos do Investidor](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/pedido_investidor.md)
 
 ### DIAGRAMAS
 
-#### [Diagrama de Caso de Uso](caso_de_uso.md)
+#### [Diagrama de Caso de Uso](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/caso_de_uso.md)
 
-#### [Diagrama de Classes](diagrama_de_classes.md)
+#### [Diagrama de Classes](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagrama_de_classes.md)
 
-#### [Diagrama de Entidade e Relacionamento](DER.md)
+#### [Diagrama de Entidade e Relacionamento](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/DER.md)
 
 #### Diagramas de Estado:
 
-- ##### [UC002_gerenciar_pedido_do_exame](diagramas_de_estado/UC002_gerenciar_pedido_do_exame.md)
+- ##### [UC002_gerenciar_pedido_do_exame](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_estado/UC002_gerenciar_pedido_do_exame.md)
 
-#### [Diagrama de Implantação](diagrama_de_implantacao.md)
+#### [Diagrama de Implantação](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagrama_de_implantacao.md)
 
 #### Diagramas de Sequência:
 
-- ##### [UC001_GERENCIAR_USUARIO](diagramas_de_sequencia/UC001_gerenciar_usuario.md)
+- ##### [UC001_GERENCIAR_USUARIO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC001_gerenciar_usuario.md)
 
-- ##### [UC002_GERENCIAR_PEDIDO_DO_EXAME](diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame.md)
+- ##### [UC002_GERENCIAR_PEDIDO_DO_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame.md)
 
-- ##### [UC003_GERENCIAR_MEDICO](diagramas_de_sequencia/UC003_gerenciar_medico.md)
+- ##### [UC003_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC003_gerenciar_medico.md)
 
-#### [Workflow AS-IS](workflow_asis.md)
+#### [Workflow AS-IS](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/workflow_asis.md)
 
-
+#### [Workflow TO-BE](workflow_asis.md)
 
 ---
 

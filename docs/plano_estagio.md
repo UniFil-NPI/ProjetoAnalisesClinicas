@@ -127,49 +127,7 @@ O caso de uso UC007_gerar_laudo por baixo dos panos estará sendo dividido em ge
 
 ## TELAS
 
-A Figura 2 refere-se a tela inicial do *site* quando o usuário não está conectado a sua conta, essa tela conterá informações sobre o laboratório e os exames.
-
-A tela inicial terá 4 variações, sendo elas:
-
-- Sem *login*;
-
-- Conectado como paciente ou biomédico;
-
-- Conectado como recepcionista;
-
-- Conectado como adm.
-
-As diferenças entre cada uma dessas variações será no header da página, onde os botões serão alterados conforme o tipo de usuário.
-
-O header da página sem *login* apresentará apenas o botão de *login*, se o tipo de usuário for paciente ou biomédico constará as opções de consultar exame e de perfil que abrirá o menu *dropdown* sendo possível gerenciar perfil e sair, se o tipo de usuário for recepcionista as opções disponíveis serão cadastrar usuário e a opção de perfil e se o usuário for um adm apresentará as opções de cadastrar usuário, consultar exames, realizar exame de paternidade e perfil.
-
-Figura 2
-
-![tela_inicial_sem_login](img/telas/sem_login.png)
-
-A Figura 3 refere-se a tela de cadastro, os únicos tipos de usuário com acesso a elas são os recepcionistas e adm.
-
-Figura 3
-
-![tela_cadastro](img/telas/cadastro.png)
-
-A Figura 4 refere-se a tela de *login*, onde o usuário irá entrar em sua conta.
-
-Figura 4
-
-![tela_login](img/telas/login.png)
-
-A Figura 5 refere-se a tela de consultar exames, o objetivo dessa página é listar todos os exames que o paciente realizou, um meio para pesquisar para facilitar encontrar o exame desejado.
-
-Essa tela possui algumas variações dependendo de qual o tipo de usuário que estiver acessando.
-
-Se for um paciente, os campos que aparecerão como informações do exame serão: valor de referência, data de realização, médico requerente e o tipo de exame. O paciente poderá pesquisar filtrando por qualquer um dos campos que existem.
-
-Se for um biomédico(a) ou um adm, os campos que aparecerão como informações do laudo serão: valor de referência, data de realização, médico requerente, nome do examinado e o tipo de exame(o biomédico não tem acesso aos exames de paternidade). O paciente poderá pesquisar filtrando por qualquer um dos campos que existem.
-
-Figura 5
-
-![consultar_exames](img/telas/consultar_exames.png)
+As telas estão presentes e detalhadas em [telas](./telas.md)
 
 ## *WORKFLOW (AS IS)* NA NOTAÇÃO BPMN
 
