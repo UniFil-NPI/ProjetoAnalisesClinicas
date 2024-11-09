@@ -12,21 +12,21 @@ Este projeto se trata de um sistema de análise clínica, onde será colhido as 
 
 |        |        |
 | ------ | ------ |
-| O problema de | Ter que realizar cálculos no excel caso seja o exame de paternidade, transcrever as informações à mão para gerar o laudo e não ter um local de acesso ao documento. |
-| afeta | Os biomédicos e clientes que realizam exames. |
-| o impacto do qual é | Agilidade de produção e facilidade no acesso ao documento. |
-| uma solução bem-sucedida seria | Desenvolver um site que seja de fácil entendimento e conseguir gerar os documentos rapidamente. |
+| O problema | Ter que realizar cálculos no excel caso seja o exame de paternidade, transcrever as informações à mão para gerar o laudo e não ter um local de acesso ao documento |
+| Afeta | Os biomédicos e clientes que realizam exames |
+| O impacto do qual é | Agilidade de produção e facilidade no acesso ao documento |
+| Uma solução bem-sucedida seria | Desenvolver um site que seja de fácil entendimento e conseguir gerar os documentos rapidamente |
 
 ### Instrução sobre a Posição do Produto
 
 |        |        |
 | ------ | ------ |
-| Para | Biomédicos e pacientes. |
-| Que | O processo é demorado e manual. |
-| O Sistema de Análises clínicas | Gera um laudo e um login e senha de acesso para o paciente . |
-| Que | Facilita o trabalho do biomédico de copiar dado por dado e enviar para o paciente. |
-| A menos que | Não seja possível coletar os dados do aparelho de exame. |
-| Nosso produto | Oferece um método de conseguir entregar mais exames e de forma mais agradável. |
+| Para | Biomédicos e pacientes |
+| Que | O processo é demorado e manual |
+| O Sistema de Análises clínicas | Gera um laudo e um login e senha de acesso para o paciente |
+| Que | Facilita o trabalho do biomédico de copiar dado por dado e enviar para o paciente |
+| A menos que | Não seja possível coletar os dados do aparelho de exame |
+| Nosso produto | Oferece um método de conseguir entregar mais exames e de forma mais agradável |
 
 ## Descrições do Envolvido
 
@@ -34,7 +34,7 @@ Este projeto se trata de um sistema de análise clínica, onde será colhido as 
 
 | Nome | Descrição | Responsabilidades |
 | ------ | ------ | ------ |
-| Departamento de biomedicina da UniFil. | Laboratórios de biomedicina, onde alunos e professores trabalham e estudam. | Apresentar como funciona os aparelhos e fazer o uso do software desenvolvido. |
+| Departamento de biomedicina da UniFil | Laboratórios de biomedicina, onde alunos, professores e funcionários frequentam | Utilizar o software para gerenciar a cliníca, ter um local para armazenar os dados dos usuários e seus pedidos e exames |
 
 ### Ambiente do Usuário
 
@@ -44,7 +44,7 @@ Feito por um biomédico, atualmente leva cerca de uma hora, no caso dos exames n
 
 ### Perspectiva do Produto
 
-O sistema irá automatizar os cálculos se necessário, gerará os laudos baseados nos resultados colhidos e mostrará de forma organizada em um site, onde apenas o usuário que fez o exame e os biomédicos autorizados terão acesso.  
+O sistema irá automatizar os cálculos se necessário, gerará os laudos baseados nos resultados colhidos e mostrará de forma organizada em um site, onde apenas o usuário que fez o exame e os funcionários autorizados terão acesso.  
 
 ### Premissas e Dependências
 
@@ -59,11 +59,11 @@ O sistema dependerá do acesso à informação concedida pelo software do aparel
 
 ### Alternativas e Competição
 
-Existem sistemas para laboratórios disponíveis, a própria stakeholder citou um de fora do país, porém a usabilidade não é legal.
+Existem sistemas gratuitos para laboratórios disponíveis, a própria stakeholder citou um de fora do país, porém a usabilidade não é legal.
 
 ## Outros Requisitos do Produto
 
-Agendamento de exames.
+Não se aplica.
 
 ---
 

@@ -57,7 +57,7 @@ O sistema irá agilizar, facilitar e aumentar a produção de exames feitos, bas
 
 ### Definições, Acrônimos e Abreviações
 
-Consultar glossário.
+Consultar [glossário](./glossario.md).
 
 ### Referências
 

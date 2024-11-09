@@ -1,10 +1,12 @@
-# Glossário </br> Projeto de Análises Clínicas </br> Versão 1.0
+#  NPI </br> Projeto de Análises Clínicas </br> Glossário </br> Versão 1.0
 
 ## Histórico da Revisão
 
 | Data | Versão | Descrição | Autor |
 | ---- | ------ | --------- | ----- |
 | 13/03/2024 | 1.0 | Criação do glossário | Guilherme Rafael Faraco Vieira|
+| 09/11/2024 | 2.0 | Atualização conforme a criação de mais documentos | Guilherme Rafael Faraco Vieira|
+
 
 ## Índice
 
@@ -30,17 +32,15 @@
 
         4. [Análises clínicas](#análises-clínicas)
 
-        5. [Coágulo](#coágulo)
+        5. [DNA](#dna)
 
-        6. [DNA](#dna)
+        6. [Hemograma](#hemograma)
 
-        7. [Hemograma](#hemograma)
+        7. [Heterozigoto](#heterozigoto)
 
-        8. [Heterozigoto](#heterozigoto)
+        8. [Homozigoto](#homozigoto)
 
-        9. [Homozigoto](#homozigoto)
-
-        10. [Laudo](#laudo)
+        9.  [Laudo](#laudo)
 
     2. [Computação](#computação)
 
@@ -69,6 +69,10 @@ O glossário explica os termos de todos os documentos, sendo eles:
 - [Especificação Suplementar](especificacao_suplementar.md);
 
 - [Plano de Estágio](plano_estagio.md);
+
+- [Especificações de caso de uso](./especificacoes_caso_de_uso/README.md);
+
+- [Relatório final de estágio](./relatorio_final.md).
 
 ### Referências
 
@@ -115,10 +119,6 @@ O analisador hematológico, ou analisador de hematologia, destina-se a realizar 
 #### Análises Clínicas
 
 As análises clínicas são um conjunto de exames com a finalidade de verificar o estado de saúde de um paciente ou investigar doenças, como os chamados exames de rotina, check-ups, dentre outros.
-
-#### Coágulo
-
-Um coágulo sanguíneo é um grumo de material que o corpo fabrica para tampar um sangramento dos vasos sanguíneos.
 
 #### DNA
 

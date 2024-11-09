@@ -5,6 +5,8 @@
 | Data | Versão | Descrição | Autor |
 | ---- | ------ | --------- | ----- |
 | 21/03/2024 | 1.0 | Criação do documento | Guilherme Rafael Faraco Vieira |
+| 09/11/2024 | 2.0 | Atualização conforme novas informações obtidas | Guilherme Rafael Faraco Vieira |
+
 
 ## Índice
 

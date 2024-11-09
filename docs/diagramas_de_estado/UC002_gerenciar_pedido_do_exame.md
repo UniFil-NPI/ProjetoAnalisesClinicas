@@ -2,9 +2,8 @@
 ```mermaid
 stateDiagram-v2
     direction LR
-    [*] --> em_analise: Pedido realizado
-    em_analise: Em análise
-    em_analise --> Analisado: Laudo gerado
+    [*] --> Analisando: Pedido realizado
+    Analisando --> Analisado: Laudo gerado
     Analisado --> [*]
 ```
 ---

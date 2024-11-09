@@ -55,13 +55,13 @@ O objetivo deste projeto é prover uma aplicação *Web* que funcionará como um
 
 - No exame de sangue o sistema será responsável por gerar um laudo selecionando os dados colhidos do Analisador Hematológico com base no tipo de exame pedido pelo médico do paciente. Os laudos possuirão um padrão a ser seguido.
 
-- No teste de paternidade, será primeiramente selecionado o tipo de teste, podendo ser em trio(mãe, requerente - filho(a), suposto pai investigado), duo(requerente - filho(a), suposto pai investigado) e de reconstituição(podendo ser várias pessoas da família, ex: avós ou outra família), após a seleção do tipo de teste de paternidade, serão feito os cadastros de cada participante e então colhidos as amostras biológicas e então o responsável pelo teste de paternidade irá inserir os dados necessários para realização do teste, esse exame é realizado por meio de algumas fórmulas matemáticas que serão executadas pelo próprio sistema.
+- No teste de paternidade, será primeiramente selecionado o tipo de teste, podendo ser em trio(mãe, requerente - filho(a), suposto pai investigado) ou duo(requerente - filho(a), após a seleção do tipo de teste de paternidade, serão colhidos as amostras biológicas e então o responsável pelo teste de paternidade irá inserir os dados necessários para realização do teste, esse exame é realizado por meio de algumas fórmulas matemáticas que serão executadas pelo próprio sistema.
 
-- Um local onde os usuários tenham acesso aos laudos, contendo um filtro para que fique mais simples de buscar o exame desejado e opções de *download* e compartilhamento do laudo selecionado.
+- Um local onde os usuários tenham acesso aos laudos, contendo um filtro para que fique mais simples de buscar o exame desejado e opção de *download* do laudo selecionado.
 
 ### JUSTIFICATIVA
 
-O sistema proposto ao laboratório da UniFil é uma aplicação *Web* onde conterá informações relevantes para que os pacientes entendam sobre os exames e como funciona a clínica no geral. Dentro dessa aplicação serão gerados de forma automatizada os laudos dos exames de sangue e dos testes de paternidade, também possibilitará os usuários manterem um controle dos usuários e laudos de forma fácil.
+O sistema proposto ao laboratório da UniFil é uma aplicação *Web* onde conterá informações relevantes para que os pacientes entendam sobre os exames e como funciona a clínica no geral. Dentro dessa aplicação serão gerados de forma automatizada os laudos dos exames de sangue e dos testes de paternidade, também possibilitará os funcionários manterem um controle dos usuários e laudos de forma fácil.
 
 O laboratório de análises clínicas está em fase inicial, os exames ainda não estão sendo feitos em quaisquer pacientes, apenas em alguns selecionados para fim de estudos, sendo assim o laboratório necessita do Sistema de Análises Clínicas ofertado, para que não seja necessário realizar todos os processos, desde o cadastro, de forma manual.
 
@@ -99,7 +99,7 @@ O recepcionista é uma *role* de usuário, que está conectado aos casos de uso 
 
 #### \<\<CRUD\>\> UC001_gerenciar_usuario
 
-O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o admin tem acesso, A única excessão é a *role* paciente, que poderá ser editada pela recepcionista.
+O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o admin tem acesso. A única excessão é a *role* paciente, que poderá ser editada pela recepcionista.
 
 #### \<\<CRUD\>\> UC002_gerenciar_pedido_do_exame
 
@@ -115,7 +115,7 @@ O caso de uso UC004_gerenciar_tipos_de_exame permite o gerenciamento dos tipos d
 
 #### UC005_inserir_dados_teste_paternidade
 
-O caso de uso UC005_inserir_dados_teste_paternidade permite a inserção de todas as informações necessárias para os calcúlos do teste de paternidade. 
+O caso de uso UC005_inserir_dados_teste_paternidade permite a inserção de todas as informações necessárias para os calcúlos do teste de paternidade e somente o admin tem a permissão para realizar a inserção. 
 
 #### UC006_importar_csv
 

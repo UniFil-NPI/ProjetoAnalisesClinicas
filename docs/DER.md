@@ -7,9 +7,14 @@ title: Sistema de Análises Clínicas
 erDiagram
 
 users only one -- zero or one patients : is
-patients only one .. zero or many exams : has
-doctors only one .. zero or many exams : has
 users zero or many -- one or many roles : belongs
+patients only one -- zero or many exams : has
+patients only one -- zero or many paternity_tests : has
+patients only one -- zero or many patient_exam_results: has
+doctors only one -- zero or many exams : has
+exam_types only one -- zero or many exams: has
+exams only one -- only one patient_exam_results: has
+
 
 users {
     bigSerial id PK
