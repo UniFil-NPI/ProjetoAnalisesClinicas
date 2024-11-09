@@ -29,7 +29,11 @@ Londrina\
      2. [UC002_GERENCIAR_PEDIDO_DO_EXAME](#uc002_gerenciar_pedido_do_exame)
      
      3. [UC003_GERENCIAR_MEDICO](#uc003_gerenciar_medico)
-   
+
+     4. [UC004_GERENCIAR_TIPO_DE_EXAME](#uc004_gerenciar_tipo_de_exame)
+
+     5. [UC005_GERENCIAR_LAUDO](#uc005_gerenciar_laudo)
+
 5. [CONCLUSÕES E TRABALHOS FUTUROS](#conclusões-e-trabalhos-futuros)
 
 6. [REFERÊNCIAS](#referências)
@@ -138,511 +142,192 @@ Figura 1
 
 O diagrama de classes é uma ferramenta essencial na modelagem orientada a objetos, proporcionando uma visão detalhada e estruturada do sistema que é crucial para o desenvolvimento de software eficiente e bem-organizado.
 
-A Figura 2 refere-se ao diagrama de classe do sistema de Análises Clínicas.
+[Diagrama de Classes](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagrama_de_classes.md)
 
-Figura 2
-
-```mermaid
----
-title: Sistema de Análises Clínicas
----
-classDiagram
-
-direction LR
-
-User "1" *-- "0..1" Patient : is
-
-class User {
-    #id id
-    #string cpf 
-    #string name
-    #string email
-    #string password
-    #boolean status
-    +index()
-    +create()
-    +store(request)
-    +edit(id)
-    +update(request, id)
-    +search(request)
-}
-
-Patient "1" o-- "0..n" Exam : has
-
-class Patient{
-    #id id
-    #foreignId user_id
-    #string phone_number
-    #string post_code
-    #string street
-    #string building_number
-    #string secondary_address
-    #string neighborhood
-    #string city
-    #string state
-    #date birth_date
-    #string health_insurance
-    #string biological_sex
-    +index()
-    +getCep(cep)
-    +create()
-    +store(request)
-    +edit(id)
-    +update(request, id)
-    +search(request)
-    -formatCpf(cpfRequest)
-}
-
-class Exam {
-    #id id
-    #foreignId patient_id
-    #foreignId doctor_id
-    #string lab
-    #string health_insurance
-    #longText description
-    #date exam_date
-    +index()
-    +create()
-    +store(request)
-    +search(request)
-    +edit(id)
-    +update(id, request)
-
-}
-
-Doctor "1" o-- "0..n" Exam : has
-
-class Doctor {
-    #id id
-    #string name
-    #string crm
-    +index()
-    +create()
-    +store(request)
-    +search(request)
-    +edit(id)
-    +update(request, id)
-}
-
-
-```
 
 ### DIAGRAMA DE ENTIDADE E RELACIONAMENTO
 
 O diagrama ER é uma ferramenta crucial na modelagem de dados, permitindo que você visualize e organize as informações de forma estruturada e lógica, o que é essencial para o design e implementação eficaz de sistemas de banco de dados.
 
-A Figura 3 refere-se ao diagrama de entidade e relacionamento do sistema de Análises Clínicas.
-
-Figura 3
-
-```mermaid
----
-title: Sistema de Análises Clínicas
----
-erDiagram
-
-users only one -- zero or one patients : is
-users {
-    bigSerial id PK
-    varchar(255) cpf UK
-    varchar(255) name
-    varchar(255) email
-    boolean status
-    varchar(255) password
-    varchar(100) remember_token
-    timestamp(0) created_at
-    timestamp(0) updated_at
-    timestamp(0) deleted_at
-}
-
-
-patients only one .. zero or many exams : has
-patients {
-    bigSerial id PK
-    int8 user_id FK
-    varchar(255) phone_number
-    varchar(255) post_code
-    varchar(255) street
-    varchar(255) building_number
-    varchar(255) secondary_address
-    varchar(255) neighborhood
-    varchar(255) city
-    varchar(255) state
-    varchar(255) birth_date
-    varchar(255) health_insurance
-    varchar(255) biological_sex
-
-}
-exams {
-    bigserial id PK
-    int8 doctor_id FK
-    int8 patient_id FK
-    varchar(255) lab
-    varchar(255) health_insurance
-    date exam_date
-    text description
-    timestamp(0) created_at
-    timestamp(0) updated_at
-    
-}
-
-doctors only one .. zero or many exams : has
-doctors {
-    bigserial id PK
-    varchar(255) name
-    varchar(255) crm
-    timestamp(0) created_at
-    timestamp(0) updated_at
-}
-
-users zero or many -- one or many roles : belongs
-
-
-roles {
-    bigserial id PK
-    varchar[255] name
-    varchar[255] guard_name
-    timestamp(0) created_at
-    timestamp(0) updated_at
-
-}
-
-```
+[Diagrama de Entidade e Relacionamento](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/DER.md)
 
 ### CASOS DE USO
 
 #### UC001_GERENCIAR_USUARIO
 
-O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o admin tem acesso, A única excessão é a *role* paciente, que poderá ser editada pela recepcionista.
+O caso de uso UC001_gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o admin tem acesso, A única excessão é a *role* paciente, que poderá ser editada pela recepcionista.
 
 ##### Telas
 
-A Figura 4 refere-se à tela de busca de funcionários.
+###### Funcionários
+
+**Index**
+
+A Figura 2 é responsável por exibir os funcionários cadastrados.
+
+Figura 2
+
+![Exibir](./img/telas/funcionarios/index.png)
+
+**Edit**
+
+A Figura 3 é responsável por editar os dados dos funcionários cadastrados.
+
+Figura 3
+
+![Editar](./img/telas/funcionarios/edit.png)
+
+**Create**
+
+A Figura 4 é responsável por criar novos cadastros de funcionário.
 
 Figura 4
 
-![Busca de funcionários](img/telas/UC001_img1.png)
+![Cadastrar](./img/telas/funcionarios/create.png)
 
-A Figura 5 refere-se à tela de edição dos dados do funcionário.
+###### Pacientes
+
+**Index**
+
+A Figura 5 é responsável por exibir os pacientes cadastrados.
 
 Figura 5
 
-![Busca de funcionários](img/telas/UC001_img2.png)
+![Exibir](./img/telas/pacientes/index.png)
 
-A Figura 6 refere-se à tela de criação de um novo cadastro de funcionário.
+**Edit**
+
+A Figura 6 é responsável por editar os dados dos pacientes cadastrados.
 
 Figura 6
 
-![Busca de funcionários](img/telas/UC001_img3.png)
+![Editar](./img/telas/pacientes/edit.png)
 
-A Figura 7 refere-se à tela de busca de pacientes.
+**Create**
+
+A Figura 7 é responsável por criar novos cadastros de paciente.
 
 Figura 7
 
-![Busca de funcionários](img/telas/UC001_img4.png)
-
-A Figura 8 refere-se à tela de criação de um novo cadastro de paciente.
-
-Figura 8
-
-![Busca de funcionários](img/telas/UC001_img5.png)
-
-A Figura 9 refere-se à tela de edição dos dados do paciente.
-
-Figura 9
-
-![Busca de funcionários](img/telas/UC001_img6.png)
+![Cadastrar](./img/telas/pacientes/create.png)
 
 ##### Diagrama de sequência
 
-###### Cadastro de Usuário
-
-A Figura 10 refere-se ao diagrama de sequência da parte de criação de um novo cadastro de usuário.
-
-Figura 10
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario
-Funcionario->>+UserController: Route::Post($uri, $action)
-
-UserController->>+DB: store(Request $request)
-
-DB-->>-UserController: response
-
-alt success response
-    UserController-->>Funcionario: Redireciona para a tela User/Index.vue
-else error response
-    UserController-->>-Funcionario: Mostra erro na tela
-end
-
-```
-
-###### Buscar Usuário
-
-A Figura 11 refere-se ao diagrama de sequência da parte de busca de usuário.
-
-Figura 11
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario  
-
-Funcionario->>+UserController: Route::get($uri, $action)
-alt $request preenchido
-UserController->>+DB: search(Request $request)
-DB-->>-UserController: retorna funcionário buscado
-else $request vazio
-UserController->>+DB: search(Request $request)
-DB-->>-UserController: retorna todos os funcionários
-end
-UserController-->>-Funcionario: Mostra na tela
-
-```
-
-###### Atualizar Cadastro
-
-A Figura 12 refere-se ao diagrama de sequência da parte de atualização dos dados do usuário.
-
-Figura 12
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario
-
-Funcionario->>+UserController: Route::post($uri, $action)
-UserController->>+DB: update(Request $request, $id)
-DB-->>-UserController: response
-alt success response
-    UserController-->>Funcionario: Redireciona para a tela User/Index.vue
-else error response
-    UserController-->>-Funcionario: Mostra erro na tela
-end
-
-```
+[UC001_GERENCIAR_USUARIO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC001_gerenciar_usuario.md)
 
 #### UC002_GERENCIAR_PEDIDO_DO_EXAME
 
-O caso de uso UC002_gerenciar_pedido_do_exame, permite o gerenciamento dos pedidos dos exames, onde apenas o admin e o recepcionista tem acesso.
+O caso de uso UC002_gerenciar_pedido_do_exame internamente se divide em pedidos de paternidade e pedidos de exame de sangue e permite o gerenciamento dos pedidos dos exames.
+
+
+Apenas o admin tem acesso aos pedidos de paternidade e o admin e recepcionista tem acesso aos pedidos de exames de sangue.
+
+
+No caso dos pacientes, eles podem apenas visualizar os pedidos de exames que estão ligados à eles.
 
 ##### Telas
 
-A Figura 13 refere-se à tela de busca de pedidos de exames sem ter pesquisado nenhum CPF.
+###### Exames de sangue
+
+**Index**
+
+A Figura 8 é onde é exibido os pedidos dos exames de sangue.
+
+Figura 8
+
+![Exibir pedidos](./img/telas/exames_de_sangue/index.png)
+
+**Edit**
+
+A Figura 9 é responsável pela edição do pedido.
+
+Figura 9
+
+![Editar pedido](./img/telas/exames_de_sangue/edit.png)
+
+**Create**
+
+A Figura 10 é responsável pela criação do pedido.
+
+Figura 10
+
+![Cadastrar pedido](./img/telas/exames_de_sangue/create.png)
+
+
+## Exames de paternidade
+
+### Index
+
+A Figura 11 é responsável por exibir os pedidos dos exames de paternidade.
+
+Figura 11
+
+![Exibir](./img/telas/exames_de_paternidade/index.png)
+
+### Edit
+
+A Figura 12 é responsável por editar os pedidos.
 
 Figura 13
 
-![Busca de funcionários](img/telas/UC002_img1.png)
+![Editar](./img/telas/exames_de_paternidade/edit.png)
 
-A Figura 14 refere-se à tela de criação de um novo pedido de exame.
+### Select
+
+A Figura 14 é responsável por selecionar o tipo de teste de paternidade que deseja criar o pedido.
 
 Figura 14
 
-![Busca de funcionários](img/telas/UC002_img2.png)
+![Selecionar o tipo de teste](./img/telas/exames_de_paternidade/select.png)
 
-A Figura 15 refere-se à tela de busca de pedidos de exames tendo feito uma busca dos exames de determinado paciente.
+### Create
+
+As Figuras 15 e 16 são responsáveis por criar os exames de duo e trio.
 
 Figura 15
 
-![Busca de funcionários](img/telas/UC002_img3.png)
-
-A Figura 16 refere-se à tela de edição de um pedido de exame.
+![Criar pedido duo](./img/telas/exames_de_paternidade/create_duo.png)
 
 Figura 16
 
-![Busca de funcionários](img/telas/UC002_img4.png)
-
+![Criar pedido trio](./img/telas/exames_de_paternidade/create_trio.png)
 
 ##### Diagrama de sequência
 
-###### Cadastro de Pedido
-
-A Figura 17 refere-se ao diagrama de sequência da parte cadastro de um novo pedido de exame.
-
-Figura 17
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario
-Funcionario->>+ExamController: Route::Post($uri, $action)
-
-ExamController->>+DB: store(Request $request)
-
-DB-->>-ExamController: response
-
-alt success response
-    ExamController-->>Funcionario: Redireciona para a tela Exam/Index.vue
-else error response
-    ExamController-->>-Funcionario: Mostra erro na tela
-end
-
-```
-
-###### Buscar pedidos caso seja um funcionário
-
-A Figura 18 refere-se ao diagrama de sequência da parte de busca de exames caso seja um funcionário logado.
-
-Figura 18
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario  
-
-Funcionario->>+ExamController: Route::get($uri, $action)
-alt $request preenchido
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: retorna exames do paciente buscado
-else $request vazio
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: não retorna nenhum exame
-end
-ExamController-->>-Funcionario: Mostra na tela
-
-```
-
-###### Buscar pedidos caso seja um paciente
-
-A Figura 19 refere-se ao diagrama de sequência da parte de busca de exames caso seja um paciente logado.
-
-Figura 19
-
-```mermaid
-sequenceDiagram
-
-actor Paciente  
-
-Paciente->>+ExamController: Route::get($uri, $action)
-alt $request tem exames
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: retorna exames do paciente
-else $request não tem exames
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: retorna vazio
-end
-ExamController-->>-Paciente: Mostra na tela
-
-```
-
-###### Atualizar Pedido
-
-A Figura 20 refere-se ao diagrama de sequência da parte de edição dos dados do pedido.
-
-Figura 20
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario
-
-Funcionario->>+ExamController: Route::post($uri, $action)
-ExamController->>+DB: update(Request $request, $id)
-DB-->>-ExamController: response
-alt success response
-    ExamController-->>Funcionario: Redireciona para a tela Exam/Index.vue
-else error response
-    ExamController-->>-Funcionario: Mostra erro na tela
-end
-
-```
+[UC002_GERENCIAR_PEDIDO_DO_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame.md)
 
 #### UC003_GERENCIAR_MEDICO
 
-O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos cadastrados no sistema, apenas o admin e o recepcionista tem acesso ao caso de uso.
+O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos no sistema, apenas o admin e o recepcionista tem acesso ao caso de uso.
 
 ##### Telas
 
-A Figura 21 refere-se à tela de busca de pedidos de médicos cadastrados.
+##### Diagrama de sequência
 
-Figura 21
+[UC003_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC003_gerenciar_medico.md)
 
-![Busca de funcionários](img/telas/UC003_img1.png)
+#### UC004_GERENCIAR_TIPO_DE_EXAME
 
-A Figura 22 refere-se à tela de criação de cadastro de médico.
+O caso de uso UC004_gerenciar_tipo_de_exame permite o gerenciamento dos tipos de exame no sistema, as *roles* admin, biomédico e recepcionista tem acesso ao caso de uso.
 
-Figura 22
-
-![Busca de funcionários](img/telas/UC003_img2.png)
-
-A Figura 23 refere-se à tela de edição dos dados de um médico.
-
-Figura 23
-
-![Busca de funcionários](img/telas/UC003_img3.png)
+##### Telas
 
 ##### Diagrama de sequência
 
-###### Cadastrar médico
+[UC004_GERENCIAR_TIPO_DE_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC004_gerenciar_tipo_de_exame.md)
 
-A Figura 24 refere-se ao diagrama de sequência da parte cadastro de um médico.
+#### UC005_GERENCIAR_LAUDO
 
-Figura 24
+O caso de uso UC005_gerenciar_laudo permite o gerenciamento dos laudos dos exames de paternidade e de sangue.
+Para os exames de sangue as *roles* biomédico e admin tem acesso.
+Para os testes de paternidade apenas os admin tem acesso.
+Os pacientes podem fazer o download dos laudos registrados nos pedidos deles.
 
-```mermaid
-sequenceDiagram
+##### Telas
 
-actor Funcionario
-Funcionario->>+DoctorController: Route::Post($uri, $action)
+##### Diagrama de sequência
 
-DoctorController->>+DB: store(Request $request)
-
-DB-->>-DoctorController: response
-
-alt success response
-    DoctorController-->>Funcionario: Redireciona para a tela Doctor/Index.vue
-else error response
-    DoctorController-->>-Funcionario: Mostra erro na tela
-end
-
-```
-
-###### Buscar médico
-
-A Figura 25 refere-se ao diagrama de sequência da parte de buscar um médico no sistema.
-
-Figura 25
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario  
-
-Funcionario->>+DoctorController: Route::get($uri, $action)
-alt $request preenchido
-DoctorController->>+DB: search(Request $request)
-DB-->>-DoctorController: retorna o(s) médico(s) procurado(s)
-else $request vazio
-DoctorController->>+DB: search(Request $request)
-DB-->>-DoctorController: retorna todos os médicos cadastrados(se houver) em ordem decrescente baseado no id
-end
-DoctorController-->>-Funcionario: Mostra na tela
-
-```
-
-###### Atualizar cadastro de um médico
-
-A Figura 26 refere-se ao diagrama de sequência da parte de edição dos dados de um médico.
-
-Figura 26
-
-```mermaid
-sequenceDiagram
-
-actor Funcionario
-
-Funcionario->>+DoctorController: Route::post($uri, $action)
-DoctorController->>+DB: update(Request $request, $id)
-DB-->>-DoctorController: response
-alt success response
-    DoctorController-->>Funcionario: Redireciona para a tela Doctor/Index.vue
-else error response
-    DoctorController-->>-Funcionario: Mostra erro na tela
-end
-
-```
+[UC005_GERENCIAR_LAUDO]()
 
 ## CONCLUSÕES E TRABALHOS FUTUROS
 
@@ -680,13 +365,9 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 - ##### [UC003_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC003_gerenciar_medico.md)
 
-- ##### [UC004_GERENCIAR_TIPO_DE_EXAME]()
+- ##### [UC004_GERENCIAR_TIPO_DE_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC004_gerenciar_tipo_de_exame.md)
 
-- ##### [UC005_INSERIR_DADOS_DO_TESTE_DE_PATERNIDADE]()
-
-- ##### [UC006_IMPORTAR_CSV]()
-
-- ##### [UC007_GERAR_LAUDO]()
+- ##### [UC005_GERENCIAR_LAUDO]()
 
 #### [Glossário](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/glossario.md)
 
@@ -714,9 +395,13 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 - ##### [UC003_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC003_gerenciar_medico.md)
 
+- ##### [UC004_GERENCIAR_TIPO_DE_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC004_gerenciar_tipo_de_exame.md)
+
+- ##### [UC005_GERENCIAR_LAUDO]()
+
 #### [Workflow AS-IS](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/workflow_asis.md)
 
-#### [Workflow TO-BE](workflow_asis.md)
+#### [Workflow TO-BE](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/workflow_to_be.md)
 
 ---
 

@@ -180,11 +180,9 @@ Este caso de uso não possui subfluxos.
 
 - UC003_gerenciar_medicos
 
-- UC004_gerenciar_laudo
+- UC004_gerenciar_tipo_de_exame
 
-- UC005_consultar_dados_do_aparelho
-
-- UC006_inserir_dados_teste_paternidade
+- UC005_gerenciar_laudo
 
 ## Condições Prévias
 

@@ -97,33 +97,25 @@ O recepcionista é uma *role* de usuário, que está conectado aos casos de uso 
 ### CASOS DE USO
 
 
-#### \<\<CRUD\>\> UC001_gerenciar_usuario
+#### UC001_gerenciar_usuario
 
 O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o admin tem acesso. A única excessão é a *role* paciente, que poderá ser editada pela recepcionista.
 
-#### \<\<CRUD\>\> UC002_gerenciar_pedido_do_exame
+#### UC002_gerenciar_pedido_do_exame
 
 O caso de uso UC002_gerenciar_pedido_do_exame, permite o gerenciamento dos pedidos dos exames, onde apenas o admin e o recepcionista tem acesso.
 
-#### \<\<CRUD\>\> UC003_gerenciar_medico
+#### UC003_gerenciar_medico
 
 O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos cadastrados no sistema, apenas o admin e o recepcionista tem acesso ao caso de uso.
 
-#### \<\<CRUD\>\> UC004_gerenciar_tipos_de_exame
+#### UC004_gerenciar_tipos_de_exame
 
 O caso de uso UC004_gerenciar_tipos_de_exame permite o gerenciamento dos tipos de exame cadastrados no sistema, apenas o admin e o biomédico tem acesso ao caso de uso.
 
-#### UC005_inserir_dados_teste_paternidade
+#### UC005_gerenciar_laudo
 
-O caso de uso UC005_inserir_dados_teste_paternidade permite a inserção de todas as informações necessárias para os calcúlos do teste de paternidade e somente o admin tem a permissão para realizar a inserção. 
-
-#### UC006_importar_csv
-
-O caso de uso UC006_importar_csv é a captura dos dados do exame de sangue que são colhidos do Analisador Hematológico.
-
-#### UC007_gerar_laudo
-
-O caso de uso UC007_gerar_laudo por baixo dos panos estará sendo dividido em gerar laudo do exame de sangue ou do teste de paternidade e depende dos casos de uso UC005_inserir_dados_teste_paternidade e UC006_importar_csv ocorrer.
+O caso de uso UC005_gerenciar_laudo permite o gerenciamento dos laudos do sistema, e depende de ter um pedido ja criado para poder ser gerado e manipulado um laudo. 
 
 ## TELAS
 

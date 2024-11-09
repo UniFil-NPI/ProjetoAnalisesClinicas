@@ -1,3 +1,0 @@
----
-
-[Voltar](README.md)
