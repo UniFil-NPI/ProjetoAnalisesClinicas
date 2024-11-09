@@ -29,6 +29,12 @@ const clearError = () => {
     errorMessage.value = null;
 };
 
+const goBack = () => {
+    if (typeof window !== "undefined") {
+        window.history.back();
+    }
+};
+
 watch(
     () => props.error,
     (newError) => {
@@ -52,7 +58,7 @@ watch(
     <AuthenticatedLayout>
         <template #header>
             <button
-                @click="$inertia.visit(route('exam.index'))"
+                @click="goBack"
                 class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
             >
                 <img

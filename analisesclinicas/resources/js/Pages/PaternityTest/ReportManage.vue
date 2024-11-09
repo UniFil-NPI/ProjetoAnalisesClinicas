@@ -32,7 +32,11 @@ const clearError = () => {
 
 if (message.value) setTimeout(clearMessage, 5000);
 if (errorMessage.value) setTimeout(clearError, 5000);
-
+const goBack = () => {
+    if (typeof window !== "undefined") {
+        window.history.back();
+    }
+};
 watch(
     () => props.error,
     (newError) => {
@@ -50,7 +54,7 @@ watch(
     <AuthenticatedLayout>
         <template #header>
             <button
-                @click="$inertia.visit(route('paternity.index'))"
+                @click="goBack"
                 class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
             >
                 <img
@@ -75,14 +79,24 @@ watch(
                     <div class="grid grid-cols-3 gap-4">
                         <a
                             v-if="participants.length == 1"
-                            :href="route('paternity.report.create.duo', paternityTest.id)"
+                            :href="
+                                route(
+                                    'paternity.report.create.duo',
+                                    paternityTest.id
+                                )
+                            "
                             class="col-span-1 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
                         >
                             Gerar Laudo
                         </a>
                         <a
                             v-if="participants.length == 2"
-                            :href="route('paternity.report.create.trio', paternityTest.id)"
+                            :href="
+                                route(
+                                    'paternity.report.create.trio',
+                                    paternityTest.id
+                                )
+                            "
                             class="col-span-1 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
                         >
                             Gerar Laudo

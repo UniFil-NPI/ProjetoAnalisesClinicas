@@ -11,7 +11,8 @@ class ExamTypeController extends Controller
 {
     public function index()
     {
-        return Inertia::render('ExamType/Index');
+        $exam_types =  ExamType::select("exam_types.*")->orderBy('id', 'desc')->paginate(5);
+        return Inertia::render('ExamType/Index', ['exam_types' => $exam_types]);
     }
 
     public function create()
@@ -47,37 +48,15 @@ class ExamTypeController extends Controller
     
     public function search(Request $request)
     {
-        $result = [];
-
-        if (count(ExamType::all()) == 0) {
-            return [
-                "result" => $result,
-                "status" => "there is no types of exam registered",
-            ];
-        }
-
         if ($request->search == "") {
-            $result = ExamType::select('exam_types.*')
-            ->orderBy('exam_types.updated_at', 'desc')->get();
+            $exam_types =  ExamType::select("exam_types.*")->orderBy('id', 'desc')->paginate(5);
         } else {
             $search = strtolower($request->search);
 
-            $result = ExamType::select('exam_types.*')
-            ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->get();
-
-            if (count($result) == 0) {
-                return [
-                    "result" => $result,
-                    "status" => "exam types not found",
-                ]; 
-            }
+            $exam_types = ExamType::select('exam_types.*')
+            ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->paginate(5);
         }
-
-        return [
-            "result" => $result,
-            "status" => "ok",
-        ];
-        
+        return Inertia::render('ExamType/Index', ['exam_types' => $exam_types]);
     }
 
     public function edit($id)

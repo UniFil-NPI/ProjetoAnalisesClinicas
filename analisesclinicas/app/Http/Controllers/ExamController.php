@@ -23,7 +23,15 @@ class ExamController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Exam/Index');
+        $auth = Auth::user();
+
+        $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+            ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
+            ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
+            ->orderBy('exams.exam_date', 'desc')->paginate(5);
+        return Inertia::render('Exam/Index', ['exams' => $exams]);
     }
 
     public function create()
@@ -88,8 +96,6 @@ class ExamController extends Controller
 
         $auth = Auth::user();
 
-        $result = [];
-
         $query = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
             ->join('users', 'patients.user_id', '=', 'users.id')
             ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
@@ -97,38 +103,29 @@ class ExamController extends Controller
             ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name');
 
         if (!$auth->hasRole(['admin', 'recepcionist', 'biomedic'])) {
-            $result = $query
+            $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
+                ->join('users', 'patients.user_id', '=', 'users.id')
+                ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+                ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
+                ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
                 ->where('users.cpf', $auth->cpf)->orderBy('exams.exam_date', 'desc')->get();
         } else {
             if ($request->search == '') {
-                $result = $query->orderBy('id', 'desc')->get();
+                $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
+                    ->join('users', 'patients.user_id', '=', 'users.id')
+                    ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+                    ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
+                    ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
+                    ->orderBy('exams.exam_date', 'desc')->paginate(5);
             } else {
-                $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
-                    ->select('users.cpf')->where('users.cpf', $request->search)->get();
-
-                if (count($patient) == 0) {
-                    return [
-                        "result" => $result,
-                        "status" => "patient not found"
-                    ];
-                }
-
-                $result = $query
-                    ->where('users.cpf', $request->search)->orderBy('exams.exam_date', 'desc')->get();
+                $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
+                    ->join('users', 'patients.user_id', '=', 'users.id')
+                    ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+                    ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
+                    ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')->where('users.cpf', $request->search)->orderBy('exams.exam_date', 'desc')->paginate(5);
             }
         }
-
-        if (count($result) == 0) {
-            return [
-                "result" => $result,
-                "status" => "exams is empty",
-            ];
-        }
-
-        return [
-            "result" => $result,
-            "status" => "ok",
-        ];
+        return Inertia::render('Exam/Index', ['exams' => $exams]);
     }
 
     public function edit($id)
@@ -187,10 +184,10 @@ class ExamController extends Controller
         $exam = Exam::find($id);
         try {
             $components = Exam::join('exam_types', "exams.exam_type_id", '=', 'exam_types.id')
-            ->select('exam_types.components_info')
-            ->where('exams.exam_type_id', $exam->exam_type_id)
-            ->first();
-            
+                ->select('exam_types.components_info')
+                ->where('exams.exam_type_id', $exam->exam_type_id)
+                ->first();
+
             $components = json_decode($components->components_info, true);
             Excel::import(new PatientExamResultImport, $request->file);
             $info = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
@@ -212,7 +209,7 @@ class ExamController extends Controller
                 )
                 ->where('patient_exam_results.requisition_id', $exam->id)
                 ->first();
-                PatientExamResult::truncate();
+            PatientExamResult::truncate();
 
             return Inertia::render('Exam/PreviewPdf', ['exam' => $exam, 'info' => $info, 'components' => $components]);
         } catch (Exception $e) {

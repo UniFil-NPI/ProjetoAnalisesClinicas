@@ -1,12 +1,13 @@
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps, computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3"; // Supondo que você esteja usando Inertia.js
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     exams: {
-        type: Array,
+        type: Object,
         default: null,
     },
 });
@@ -14,6 +15,14 @@ const page = usePage();
 const user = computed(() => {
     return page.props.auth;
 });
+
+const message = ref(props.flash?.message || null);
+
+const clearMessage = () => {
+    message.value = null;
+};
+
+if (message.value) setTimeout(clearMessage, 5000);
 </script>
 
 <template>
@@ -32,7 +41,7 @@ const user = computed(() => {
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-bold">Pedidos Recentes</h2>
                     </div>
-                    <div class="mt-10" v-if="props.exams.length == 0">
+                    <div class="mt-10" v-if="exams.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
                             Não possui nenhum pedido
                         </p>
@@ -40,7 +49,7 @@ const user = computed(() => {
                     <table class="mt-10">
                         <thead
                             class="border-b-2"
-                            v-show="props.exams.length != 0"
+                            v-show="exams.data.length != 0"
                         >
                             <tr>
                                 <th>ID</th>
@@ -54,7 +63,7 @@ const user = computed(() => {
                         <tbody>
                             <tr
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
-                                v-for="exam in props.exams"
+                                v-for="exam in exams.data"
                                 :key="exam.id"
                             >
                                 <td class="py-4">{{ exam.id }}</td>
@@ -91,16 +100,12 @@ const user = computed(() => {
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="
-                                        !user.isPatient &&
-                                        exam.type == 'blood'
+                                        !user.isPatient && exam.type == 'blood'
                                     "
                                 >
                                     <a
                                         :href="
-                                            route(
-                                                'exam.report.manage',
-                                                exam.id
-                                            )
+                                            route('exam.report.manage', exam.id)
                                         "
                                         >Gerenciar laudo</a
                                     >
@@ -113,14 +118,39 @@ const user = computed(() => {
                                 </td>
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="exam.pdf != null && user.isPatient && exam.type == 'blood'">
-                                    <a :href="route('exam.report.download', exam.id)">Baixar</a>
+                                    v-if="
+                                        exam.pdf != null &&
+                                        user.isPatient &&
+                                        exam.type == 'blood'
+                                    "
+                                >
+                                    <a
+                                        :href="
+                                            route(
+                                                'exam.report.download',
+                                                exam.id
+                                            )
+                                        "
+                                        >Baixar</a
+                                    >
                                 </td>
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="exam.pdf != null && user.isPatient && exam.type == 'blood'"
+                                    v-if="
+                                        exam.pdf != null &&
+                                        user.isPatient &&
+                                        exam.type == 'blood'
+                                    "
                                 >
-                                    <a :href="route('paternity.report.download', exam.id)">Baixar</a>
+                                    <a
+                                        :href="
+                                            route(
+                                                'paternity.report.download',
+                                                exam.id
+                                            )
+                                        "
+                                        >Baixar</a
+                                    >
                                 </td>
                                 <td class="py-4 flex justify-end">
                                     <a
@@ -149,8 +179,15 @@ const user = computed(() => {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="exams.links" />
                 </div>
             </div>
         </div>
     </AuthenticatedLayout>
+    <div
+        v-if="message"
+        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+    >
+        {{ message }}
+    </div>
 </template>

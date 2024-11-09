@@ -1,41 +1,30 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, usePage } from "@inertiajs/vue3";
+import { Head, router, usePage } from "@inertiajs/vue3";
 import { computed, onMounted, ref } from "vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     flash: {
         type: Object,
         default: () => ({}),
     },
+    exam_types: Object,
 });
 
 const search = ref("");
-const examTypes = ref([]);
-const message = ref(
-    props.flash && props.flash.message ? props.flash.message : null
-);
-const status = ref("");
 
 const research = () => {
-    axios
-        .post(route("type.search"), { search: search.value })
-        .then((response) => {
-            examTypes.value = response.data.result;
-            status.value = response.data.status;
-        });
+    router.post(route("type.search"), { search: search.value });
 };
+
+const message = ref(props.flash?.message || null);
 
 const clearMessage = () => {
     message.value = null;
 };
 
-onMounted(() => {
-    research();
-    if (message.value) {
-        setTimeout(clearMessage, 5000);
-    }
-});
+if (message.value) setTimeout(clearMessage, 5000);
 </script>
 
 <template>
@@ -77,6 +66,12 @@ onMounted(() => {
                     placeholder="Nome do tipo de exame"
                     required
                 />
+                <a
+                    :href="route('type.index')"
+                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                >
+                    ✕
+                </a>
                 <button
                     v-on:click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
@@ -101,30 +96,17 @@ onMounted(() => {
                         </a>
                     </div>
 
-                    <div
-                        class="mt-10"
-                        v-if="
-                            examTypes.length == 0 && status == 'there is no types of exam registered'
-                        "
-                    >
+                    <div class="mt-10" v-if="exam_types.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum tipo de exame cadastrado no momento.
-                        </p>
-                    </div>
-
-                    <div
-                        class="mt-10"
-                        v-if="
-                            examTypes.length == 0 && status == 'exam types not found'
-                        "
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum tipo de exame cadastrado que corresponde com sua busca.
+                            Tipo(s) de exame não encontrado
                         </p>
                     </div>
 
                     <table class="mt-10">
-                        <thead class="border-b-2" v-show="examTypes.length != 0">
+                        <thead
+                            class="border-b-2"
+                            v-show="exam_types.data.length != 0"
+                        >
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
@@ -134,7 +116,7 @@ onMounted(() => {
                         <tbody>
                             <tr
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
-                                v-for="type in examTypes"
+                                v-for="type in exam_types.data"
                                 :key="type.id"
                             >
                                 <td class="py-4">{{ type.id }}</td>
@@ -150,6 +132,7 @@ onMounted(() => {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="exam_types.links" />
                 </div>
             </div>
         </div>

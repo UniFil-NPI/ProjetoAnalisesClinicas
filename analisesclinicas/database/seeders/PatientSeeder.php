@@ -15,7 +15,7 @@ class PatientSeeder extends Seeder
     {
         
         Patient::create([
-            'user_id' => 2,
+            'user_id' => 7,
             'phone_number' => '(43)9999-7777',
             'post_code' => '86010-450',
             'street' => 'Pará',
@@ -29,7 +29,7 @@ class PatientSeeder extends Seeder
             'biological_sex' => 'Masculino',
         ]);
         Patient::create([
-            'user_id' => 3,
+            'user_id' => 8,
             'phone_number' => '(43)9999-7777',
             'post_code' => '86010-450',
             'street' => 'Pará',
@@ -43,7 +43,7 @@ class PatientSeeder extends Seeder
             'biological_sex' => 'Feminino',
         ]);
         Patient::create([
-            'user_id' => 4,
+            'user_id' => 9,
             'phone_number' => '(43)9999-7777',
             'post_code' => '86010-450',
             'street' => 'Pará',

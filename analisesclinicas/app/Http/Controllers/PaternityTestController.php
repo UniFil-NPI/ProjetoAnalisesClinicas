@@ -22,7 +22,19 @@ class PaternityTestController extends Controller
 {
     public function index()
     {
-        return Inertia::render('PaternityTest/Index');
+        $auth = Auth::user();
+
+        if ($auth->hasRole(['patient'])) {
+            $paternity_tests = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
+                ->join('users', 'patients.user_id', '=', 'users.id')
+                ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
+                ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
+        } else {
+            $paternity_tests = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
+                ->join('users', 'patients.user_id', '=', 'users.id')
+                ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
+        }
+        return Inertia::render('PaternityTest/Index', ['paternity_tests' => $paternity_tests]);
     }
 
     public function select()
@@ -105,44 +117,25 @@ class PaternityTestController extends Controller
     {
 
         $auth = Auth::user();
-        $result = [];
-        $query = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
-            ->join('users', 'patients.user_id', '=', 'users.id')
-            ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name');
 
         if ($auth->hasRole(['patient'])) {
-            $result = $query
-                ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.updated_at', 'desc')->get();
+            $paternity_tests = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
+                ->join('users', 'patients.user_id', '=', 'users.id')
+                ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
+                ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
         } else {
             if ($request->search == "") {
-                $result = $query->orderBy('paternity_tests.updated_at', 'desc')->get();
+                $paternity_tests = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
+                    ->join('users', 'patients.user_id', '=', 'users.id')
+                    ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
             } else {
-                $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
-                    ->select('users.cpf')->where('users.cpf', $request->search)->get();
-
-                $result = $query
-                    ->where('users.cpf', $request->search)->orderBy('paternity_tests.updated_at', 'desc')->get();
-
-                if (count($patient) == 0) {
-                    return [
-                        "result" => $result,
-                        "status" => "patient not found"
-                    ];
-                }
+                $paternity_tests = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
+                    ->join('users', 'patients.user_id', '=', 'users.id')
+                    ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
+                    ->where('users.cpf', $request->search)->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
             }
         }
-
-        if (count($result) == 0) {
-            return [
-                "result" => $result,
-                "status" => "exams is empty",
-            ];
-        }
-
-        return [
-            "result" => $result,
-            "status" => "ok",
-        ];
+        return Inertia::render('PaternityTest/Index', ['paternity_tests' => $paternity_tests]);
     }
 
     public function edit($id)
@@ -207,7 +200,7 @@ class PaternityTestController extends Controller
 
 
     public function calc_ipc_trio(Request $request, $id)
-    {   
+    {
         try {
             $exclusion = 0;
             $alleles_freq = AlleleFreq::all();
@@ -371,7 +364,7 @@ class PaternityTestController extends Controller
             }
 
             $current_date = Carbon::now()->format('d-m-Y');
-            
+
             $file_name = $id . "-" . $paternityTest->patient_name . '-laudo-' . $current_date . '.pdf';
             $file_path = 'laudos/paternidade/' . $file_name;
 
@@ -397,7 +390,7 @@ class PaternityTestController extends Controller
     }
 
     public function download_report($id)
-    {   
+    {
         $paternityTest = PaternityTest::find($id);
         try {
             return Storage::download($paternityTest->pdf);

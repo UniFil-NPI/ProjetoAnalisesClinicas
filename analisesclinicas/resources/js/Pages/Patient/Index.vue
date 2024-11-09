@@ -12,8 +12,7 @@ const props = defineProps({
     patients: Object,
 });
 
-const search = ref(null);
-const status = ref("");
+const search = ref("");
 
 const research = () => {
     router.post(route("patient.search"), { search: search.value });

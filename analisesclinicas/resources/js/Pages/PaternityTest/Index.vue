@@ -1,48 +1,37 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, usePage } from "@inertiajs/vue3";
+import { Head, router, usePage } from "@inertiajs/vue3";
 import { computed, onMounted, ref, watch } from "vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     flash: {
         type: Object,
         default: () => ({}),
     },
+    paternity_tests: Object,
 });
 
 const page = usePage();
 const user = computed(() => {
     return page.props.auth;
 });
-
 const search = ref("");
-const paternityTests = ref([]);
-const message = ref(
-    props.flash && props.flash.message ? props.flash.message : null
-);
-const status = ref("");
 
 const research = () => {
-    axios
-        .post(route("paternity.search"), { search: search.value })
-        .then((response) => {
-            paternityTests.value = response.data.result;
-            status.value = response.data.status;
-        });
+    router.post(route("paternity.search"), { search: search.value });
 };
+
+const message = ref(props.flash?.message || null);
+
 
 const clearMessage = () => {
     message.value = null;
 };
 
-onMounted(() => {
-    research();
-    if (message.value) {
-        setTimeout(clearMessage, 5000);
-    }
-});
+if (message.value) setTimeout(clearMessage, 5000);
 
-watch(paternityTests, (newValue) => {
+watch(props.paternity_tests.data, (newValue) => {
     newValue.forEach((element) => {
         element.participants = JSON.parse(element.participants);
     });
@@ -88,6 +77,12 @@ watch(paternityTests, (newValue) => {
                     v-mask-cpf
                     required
                 />
+                <a
+                    :href="route('paternity.index')"
+                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                >
+                    ✕
+                </a>
                 <button
                     v-on:click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
@@ -114,24 +109,16 @@ watch(paternityTests, (newValue) => {
                     </div>
                     <div
                         class="mt-10"
-                        v-if="status == 'exams is empty' && !user.isPatient"
+                        v-if="paternity_tests.data.length == 0"
                     >
                         <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum pedido
-                        </p>
-                    </div>
-                    <div
-                        class="mt-10"
-                        v-if="status == 'patient not found' && !user.isPatient"
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Paciente não encontrado
+                            Pedido(s) não encontrado(s).
                         </p>
                     </div>
                     <table class="mt-10">
                         <thead
                             class="border-b-2"
-                            v-show="paternityTests.length != 0"
+                            v-show="paternity_tests.data.length != 0"
                         >
                             <tr>
                                 <th>ID</th>
@@ -146,7 +133,7 @@ watch(paternityTests, (newValue) => {
                         <tbody>
                             <tr
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
-                                v-for="paternityTest in paternityTests"
+                                v-for="paternityTest in paternity_tests.data"
                                 :key="paternityTest.id"
                             >
                                 <td class="py-4">{{ paternityTest.id }}</td>
@@ -171,11 +158,17 @@ watch(paternityTests, (newValue) => {
 
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="
-                                        !user.isPatient
-                                    "
+                                    v-if="!user.isPatient"
                                 >
-                                    <a :href="route('paternity.report.manage', paternityTest.id)">Gerenciar Laudo</a>
+                                    <a
+                                        :href="
+                                            route(
+                                                'paternity.report.manage',
+                                                paternityTest.id
+                                            )
+                                        "
+                                        >Gerenciar Laudo</a
+                                    >
                                 </td>
 
                                 <td
@@ -190,7 +183,10 @@ watch(paternityTests, (newValue) => {
 
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
-                                    v-if="paternityTest.pdf != null && user.isPatient"
+                                    v-if="
+                                        paternityTest.pdf != null &&
+                                        user.isPatient
+                                    "
                                 >
                                     <a
                                         :href="
@@ -222,6 +218,7 @@ watch(paternityTests, (newValue) => {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="paternity_tests.links" />
                 </div>
             </div>
         </div>

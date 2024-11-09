@@ -27,7 +27,7 @@ const save = () => {
 };
 
 const changeStatus = () => {
-    if (props.user.id != 1){
+    if (props.user.id != 1) {
         form.status = !form.status;
     }
 };
@@ -131,14 +131,11 @@ watch(
                                     v-model="form.role"
                                     class="col-span-1 bg-neutral-200 border-none rounded-lg"
                                 >
-                                    <option selected disabled :value=form.role >
-                                        {{form.role}}
-                                    </option>
                                     <option value="admin">admin</option>
                                     <option value="recepcionist">
                                         recepcionista
                                     </option>
-                                    <option value="technician">técnico</option>
+                                    <option value="biomedic">biomédico</option>
                                 </select>
                                 <span
                                     v-if="form.errors.role"

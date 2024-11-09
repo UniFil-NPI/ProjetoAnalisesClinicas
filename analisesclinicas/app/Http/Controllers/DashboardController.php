@@ -52,7 +52,7 @@ class DashboardController extends Controller
             
             $exams = $blood->union($paternity)->orderBy('updated_at', 'desc')
                 ->take(10)
-                ->get();
+                ->paginate(5);
         }
 
         if ($auth->hasRole(['recepcionist', 'biomedic'])) {
@@ -68,7 +68,7 @@ class DashboardController extends Controller
                 'exams.description',
                 'exams.pdf',
                 'exams.updated_at'
-            )->orderBy('exams.updated_at', 'desc')->take(5)->get();
+            )->orderBy('exams.updated_at', 'desc')->take(5)->paginate(5);
         }
 
         if ($auth->hasRole(['admin'])) {
@@ -101,7 +101,7 @@ class DashboardController extends Controller
             
             $exams = $blood->union($paternity)->orderBy('updated_at', 'desc')
                 ->take(10)
-                ->get();
+                ->paginate(5);
         }
 
         return Inertia::render('Dashboard', ['exams' => $exams]);

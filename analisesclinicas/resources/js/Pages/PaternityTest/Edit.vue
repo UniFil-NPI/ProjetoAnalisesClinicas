@@ -20,6 +20,12 @@ const form = useForm({
 
 const errorMessage = ref(null);
 
+const goBack = () => {
+    if (typeof window !== "undefined") {
+        window.history.back();
+    }
+};
+
 const save = () => {
     form.post("/paternitytest/update/" + props.paternityTest.id, form);
     errorMessage.value = props.error;
@@ -27,7 +33,7 @@ const save = () => {
 
 const clearError = () => {
     errorMessage.value = null;
-}
+};
 
 watch(
     () => props.error,
@@ -36,12 +42,15 @@ watch(
     }
 );
 
-watch(() => errorMessage.value, (newError) => {
-    errorMessage.value = newError;
-    if (newError) {
-        setTimeout(clearError, 5000);
+watch(
+    () => errorMessage.value,
+    (newError) => {
+        errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
     }
-});
+);
 </script>
 <template>
     <Head title="Edição dos pedidos de teste de paternidade" />
@@ -49,7 +58,7 @@ watch(() => errorMessage.value, (newError) => {
     <AuthenticatedLayout>
         <template #header>
             <button
-                @click="$inertia.visit(route('paternity.index'))"
+                @click="goBack"
                 class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
             >
                 <img

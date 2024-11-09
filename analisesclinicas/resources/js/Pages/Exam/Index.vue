@@ -1,13 +1,15 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, usePage } from "@inertiajs/vue3";
+import { Head, router, usePage } from "@inertiajs/vue3";
 import { computed, onMounted, ref, watch } from "vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     flash: {
         type: Object,
         default: () => ({}),
     },
+    exams: Object,
 });
 
 const page = usePage();
@@ -15,31 +17,17 @@ const user = computed(() => {
     return page.props.auth;
 });
 const search = ref("");
-const exams = ref([]);
-const message = ref(
-    props.flash && props.flash.message ? props.flash.message : null
-);
-const status = ref("");
 
 const research = () => {
-    axios
-        .post(route("exam.search"), { search: search.value })
-        .then((response) => {
-            exams.value = response.data.result;
-            status.value = response.data.status;
-        });
+    router.post(route("exam.search"), { search: search.value });
 };
+const message = ref(props.flash?.message || null);
 
 const clearMessage = () => {
     message.value = null;
 };
 
-onMounted(() => {
-    research();
-    if (message.value) {
-        setTimeout(clearMessage, 5000);
-    }
-});
+if (message.value) setTimeout(clearMessage, 5000);
 </script>
 <template>
     <Head title="Pedidos de exames" />
@@ -84,6 +72,12 @@ onMounted(() => {
                     v-mask-cpf
                     required
                 />
+                <a
+                    :href="route('exam.index')"
+                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                >
+                    ✕
+                </a>
                 <button
                     v-on:click="research"
                     class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
@@ -108,24 +102,17 @@ onMounted(() => {
                             Novo Pedido
                         </a>
                     </div>
-                    <div
-                        class="mt-10"
-                        v-if="status == 'exams is empty' && !user.isPatient"
-                    >
+                    <div class="mt-10" v-if="exams.data == 0">
                         <p class="text-xl font-bold text-red-600">
-                            Não existe nenhum pedido
+                            Pedido(s) não encontrado(s).
                         </p>
                     </div>
-                    <div
-                        class="mt-10"
-                        v-if="status == 'patient not found' && !user.isPatient"
-                    >
-                        <p class="text-xl font-bold text-red-600">
-                            Paciente não encontrado
-                        </p>
-                    </div>
+
                     <table class="mt-10">
-                        <thead class="border-b-2" v-show="exams.length != 0">
+                        <thead
+                            class="border-b-2"
+                            v-show="exams.data.length != 0"
+                        >
                             <tr>
                                 <th>ID</th>
                                 <th>Nome do paciente</th>
@@ -141,7 +128,7 @@ onMounted(() => {
                         <tbody>
                             <tr
                                 class="text-center hover:bg-gray-200 transition-all duration-300"
-                                v-for="exam in exams"
+                                v-for="exam in exams.data"
                                 :key="exam.id"
                             >
                                 <td class="py-4">{{ exam.id }}</td>
@@ -160,19 +147,28 @@ onMounted(() => {
                                         {{ exam.description }}
                                     </div>
                                 </td>
-                                <td class="py-4" v-if="exam.pdf == null && user.isPatient">
+                                <td
+                                    class="py-4"
+                                    v-if="exam.pdf == null && user.isPatient"
+                                >
                                     Indisponível
                                 </td>
-                                <td class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300" v-if="!user.isPatient">
-                                    <a :href="route('exam.report.manage', exam.id)">Gerenciar laudo</a>
+                                <td
+                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    v-if="!user.isPatient"
+                                >
+                                    <a
+                                        :href="
+                                            route('exam.report.manage', exam.id)
+                                        "
+                                        >Gerenciar laudo</a
+                                    >
                                 </td>
                                 <td
                                     class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
                                     v-if="exam.pdf != null && user.isPatient"
                                 >
-                                    <a href="#" 
-                                        >Baixar</a
-                                    >
+                                    <a href="#">Baixar</a>
                                 </td>
                                 <td class="py-4">{{ exam.state }}</td>
                                 <td class="py-4 flex justify-end">
@@ -190,6 +186,7 @@ onMounted(() => {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="exams.links" />
                 </div>
             </div>
         </div>
