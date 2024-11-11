@@ -1,6 +1,6 @@
 # Diagrama de Sequência
 
-## Cadastro de Pedido
+## Gerar Laudo
 
 ```mermaid
 sequenceDiagram
@@ -20,7 +20,7 @@ end
 
 ```
 
-## Buscar Pedidos
+## Download do Laudo
 
 ### Caso seja um funcionário
 
@@ -41,26 +41,7 @@ ExamController-->>-Funcionario: Mostra na tela
 
 ```
 
-### Caso seja um paciente
-
-```mermaid
-sequenceDiagram
-
-actor Paciente  
-
-Paciente->>+ExamController: Route::get($uri, $action)
-alt $request tem exames
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: retorna exames do paciente
-else $request não tem exames
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: retorna vazio
-end
-ExamController-->>-Paciente: Mostra na tela
-
-```
-
-## Atualizar Pedido
+## Remover Laudo
 
 ```mermaid
 sequenceDiagram
