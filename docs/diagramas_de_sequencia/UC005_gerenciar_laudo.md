@@ -2,6 +2,8 @@
 
 ## Gerar Laudo
 
+### Sangue
+
 ```mermaid
 sequenceDiagram
 
@@ -13,9 +15,29 @@ ExamController->>+DB: store(Request $request)
 DB-->>-ExamController: response
 
 alt success response
-    ExamController-->>Funcionario: Redireciona para a tela Exam/Index.vue
+    ExamController-->>Funcionario: Redireciona para a tela Exam/ReportManage.vue
 else error response
     ExamController-->>-Funcionario: Mostra erro na tela
+end
+
+```
+
+### Paternidade
+
+```mermaid
+sequenceDiagram
+
+actor Funcionario
+Funcionario->>+PaternityTestController: Route::Post($uri, $action)
+
+PaternityTestController->>+DB: store(Request $request)
+
+DB-->>-PaternityTestController: response
+
+alt success response
+    PaternityTestController-->>Funcionario: Redireciona para a tela PaternityTest/ReportManage.vue
+else error response
+    PaternityTestController-->>-Funcionario: Mostra erro na tela
 end
 
 ```
@@ -27,17 +49,17 @@ end
 ```mermaid
 sequenceDiagram
 
-actor Funcionario  
+actor Usuario 
 
-Funcionario->>+ExamController: Route::get($uri, $action)
-alt $request preenchido
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: retorna exames do paciente buscado
-else $request vazio
-ExamController->>+DB: search(Request $request)
-DB-->>-ExamController: não retorna nenhum exame
+Usuario->>+ExamController: Route::get($uri, $action)
+alt success
+ExamController->>+DB: download_report($id)
+DB-->>-ExamController: Realiza download
+else error
+ExamController->>+DB: dowload_report($id)
+DB-->>-ExamController: Retorna mensagem
 end
-ExamController-->>-Funcionario: Mostra na tela
+ExamController-->>-Usuario: Mostra mensagem
 
 ```
 
@@ -46,16 +68,17 @@ ExamController-->>-Funcionario: Mostra na tela
 ```mermaid
 sequenceDiagram
 
-actor Funcionario
+actor Usuario 
 
-Funcionario->>+ExamController: Route::post($uri, $action)
-ExamController->>+DB: update(Request $request, $id)
-DB-->>-ExamController: response
-alt success response
-    ExamController-->>Funcionario: Redireciona para a tela Exam/Index.vue
-else error response
-    ExamController-->>-Funcionario: Mostra erro na tela
+Usuario->>+ExamController: Route::get($uri, $action)
+alt success
+ExamController->>+DB: remove_report($id)
+DB-->>-ExamController: Remove e retorna mensagem
+else error
+ExamController->>+DB: remove_report($id)
+DB-->>-ExamController: Retorna mensagem
 end
+ExamController-->>-Usuario: Mostra mensagem
 
 ```
 

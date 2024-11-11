@@ -10,7 +10,7 @@ Funcionario->>+ExamTypeController: Route::Post($uri, $action)
 
 ExamTypeController->>+DB: store(Request $request)
 
-DB-->>-ExamController: response
+DB-->>-ExamTypeController: response
 
 alt success response
     ExamTypeController-->>Funcionario: Redireciona para a tela ExamType/Index.vue
