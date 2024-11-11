@@ -33,7 +33,7 @@ DoctorController->>+DB: search(Request $request)
 DB-->>-DoctorController: retorna o(s) médico(s) procurado(s)
 else $request vazio
 DoctorController->>+DB: search(Request $request)
-DB-->>-DoctorController: retorna todos os médicos cadastrados(se houver) em ordem decrescente baseado no id
+DB-->>-DoctorController: retorna todos os médicos cadastrados(se houver)
 end
 DoctorController-->>-Funcionario: Mostra na tela
 

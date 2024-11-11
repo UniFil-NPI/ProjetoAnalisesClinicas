@@ -28,19 +28,19 @@ if (message.value) setTimeout(clearMessage, 5000);
 </script>
 
 <template>
-    <Head title="Tipos de exames" />
+    <Head title="Tipos de exame" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Tipos de Exames
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                Tipos de Exame
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto px-10 mt-10">
+        <div class="px-10 mx-auto mt-10 max-w-7xl">
             <div class="relative">
                 <div
-                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                    class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3"
                 >
                     <svg
                         class="w-4 h-4 text-gray-500"
@@ -62,7 +62,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                     type="search"
                     id="search"
                     v-model="search"
-                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Nome do tipo de exame"
                     required
                 />
@@ -82,15 +82,15 @@ if (message.value) setTimeout(clearMessage, 5000);
         </div>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
-                    <div class="flex justify-between items-center">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="flex flex-col p-5 bg-white shadow-sm sm:rounded-lg">
+                    <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Tipos de Exame
                         </h2>
                         <a
                             :href="route('type.create')"
-                            class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
+                            class="px-4 py-2 text-white rounded-lg bg-primary hover:bg-orange-300"
                         >
                             Novo Tipo
                         </a>
@@ -115,16 +115,16 @@ if (message.value) setTimeout(clearMessage, 5000);
                         </thead>
                         <tbody>
                             <tr
-                                class="text-center hover:bg-gray-200 transition-all duration-300"
+                                class="text-center transition-all duration-300 hover:bg-gray-200"
                                 v-for="type in exam_types.data"
                                 :key="type.id"
                             >
                                 <td class="py-4">{{ type.id }}</td>
                                 <td class="py-4">{{ type.name }}</td>
-                                <td class="py-4 flex justify-end">
+                                <td class="flex justify-end py-4">
                                     <a
                                         :href="route('type.edit', type.id)"
-                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="px-4 py-2 mr-4 text-white rounded-lg bg-primary hover:bg-orange-300"
                                     >
                                         Editar
                                     </a>
@@ -139,7 +139,7 @@ if (message.value) setTimeout(clearMessage, 5000);
     </AuthenticatedLayout>
     <div
         v-if="message"
-        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
         {{ message }}
     </div>

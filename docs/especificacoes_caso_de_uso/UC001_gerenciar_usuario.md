@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC001_gerenciar_paciente </br> Versão 1.1
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC001_gerenciar_usuario </br> Versão 1.1
 
 ## Histórico da Revisão
 
@@ -16,43 +16,29 @@
 
 3. [Fluxos Alternativos](#fluxos-alternativos)
 
-    1. [Cadastro de Usuário](#cadastro-de-usuário)
+4. [Cenários Chave](#cenários-chave)
 
-    2. [Busca de Usuário](#busca-de-usuário)
+5. [Condições Posteriores](#condições-posteriores)
 
-    3. [Atualizar Cadastro do Usuário](#atualizar-cadastro-do-usuário)
+6. [Requisitos Especiais](#requisitos-especiais)
 
-4. [Subfluxos](#subfluxos)
+7. [Informações Adicionais](#informações-adicionais)
 
-5. [Cenários Chave](#cenários-chave)
-
-6. [Condições Prévias](#condições-prévias)
-
-7. [Condições Posteriores](#condições-posteriores)
-
-8. [Pontos de Extensão](#pontos-de-extensão)
-
-9. [Requisitos Especiais](#requisitos-especiais)
-
-    1. [Criptografia](#criptografia)
-
-10. [Informações Adicionais](#informações-adicionais)
-
-## Especificação de Caso de Uso: UC001 - gerenciar_usuario
+## Especificação de Caso de Uso: UC001_gerenciar_usuario
 
 Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC001_gerenciar_usuario.
 
 ## Breve Descrição
 
-O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* e *delete*. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin* ou a *role receptionist*.
+O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* e *delete* dos funcionário e pacientes do sistema. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin* ou a *role receptionist*. Somente o *admin* pode gerenciar os funcionários.
 
 ## Fluxo Básico de Eventos
 
-- **Cadastrar usuário**
+### Cadastrar usuário
 
-  - **Cadastrar novo funcionário**
+   - **Cadastrar novo funcionário**
 
-    1. O *admin* ou *recepcionist* seleciona a aba *Funcionários*;
+    1. O ator seleciona a aba *Funcionários*;
 
     2. Clica no botão **Novo funcionário**;
 
@@ -62,9 +48,9 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
     5. Acontecerá um redirecionamento para a aba **Funcionários**.
 
-    - **Cadastrar novo funcionário**
+   - **Cadastrar novo paciente**
 
-    1. O *admin* ou *recepcionist* seleciona a aba *Pacientes*;
+    1. O ator seleciona a aba *Pacientes*;
 
     2. Clica no botão **Novo paciente**;
 
@@ -74,45 +60,29 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
     5. Acontecerá um redirecionamento para a aba **Pacientes**.
 
-- **Buscar usuário**
+### Buscar usuário
 
   - **Buscar funcionário**
 
-    - **Caso não insira nenhum nome no campo de busca**
+    1. O ator seleciona a aba *Funcionários*;
 
-      1. O ator seleciona a aba **Funcionários**;
+    2. Insere o CPF do funcionário que deseja buscar;
 
-      2. Mostrará na tabela alguns funcionários cadastrados recentemente.
+    3. Aperta o botão **Buscar**;
 
-    - **Caso insira um nome no campo de busca**
-
-      1. O *admin* ou *recepcionist* seleciona a aba *Funcionários*;
-
-      2. Insere o CPF do funcionário que deseja buscar;
-
-      3. Aperta o botão **Buscar**;
-
-      4. Será mostrado em uma tabela os dados do funcionário.
+    4. Será mostrado em uma tabela os dados do funcionário.
 
   - **Buscar paciente**
 
-    - **Caso não insira nenhum nome no campo de busca**
+    1. O ator seleciona a aba *Pacientes*;
 
-      1. O ator seleciona a aba **Pacientes**;
+    2. Insere o CPF do paciente que deseja buscar;
 
-      2. Mostrará na tabela alguns pacientes cadastrados recentemente.
+    3. Aperta o botão **Buscar**;
 
-    - **Caso insira um nome no campo de busca**
+    4. Será mostrado em uma tabela os dados do paciente.
 
-      1. O *admin* ou *recepcionist* seleciona a aba *Pacientes*;
-
-      2. Insere o CPF do paciente que deseja buscar;
-
-      3. Aperta o botão **Buscar**;
-
-      4. Será mostrado em uma tabela os dados do paciente.
-
-- **Atualizar cadastro do usuário**
+### Atualizar cadastro do usuário
 
   - **Atualizar cadastro do funcionário**
 
@@ -130,7 +100,7 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
     3. Será enviado de volta para a aba **Pacientes**.
 
-- **Deletar cadastro do usuário**
+### **Deletar cadastro do usuário**
 
   - **Deletar cadastro do funcionário**
 
@@ -153,6 +123,8 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 ### **Cadastro de Usuário:**
 
 - **CPF inválido:** Caso o CPF inserido não seja válido então haverá uma notificação ao clicar enviar e não será realizado nenhuma ação.
+
+- **CPF já existente:** Se for inserido um CPF que já está cadastrado no sistema, será emitido um erro avisando.
   
 - **Campo necessário sem preencher:** Caso algum campo esteja em branco haverá uma notificação ao clicar enviar e não será realizado nenhuma ação.
 
@@ -160,21 +132,17 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
 ### **Busca de Usuário:**
 
-- **Inserção de quaisquer outros dados sem ser um CPF válido:** Quando for executada a busca mostrará uma mensagem que deve ser inserido um CPF.
+- **Busca vazia:** Se o campo de busca estiver vazio ao buscar um usuário, será retornado usuário não encontrado.
 
 - **Usuário não encontrado**: Se o usuário buscado não existir, será emitido uma mensagem avisando que o paciente não foi encontrado.
 
 ### **Atualizar Cadastro do Usuário:**
 
-- **Inserção de tipo de caracteres diferentes em campos que não esperam por esse tipo:** Se for inserido algum caractere inválido dentro de algum campo, por exemplo número no nome, será notificado ao clicar em salvar.
+- **CPF já existente:** Se for necessário atualizar o CPF e for inserido um CPF que já está cadastrado no sistema, será emitido um erro avisando.
 
-## Subfluxos
-
-Este caso de uso não possui subfluxos.
+- **Campo necessário sem preencher:** Caso algum campo esteja em branco haverá uma notificação ao clicar enviar e não será realizado nenhuma ação.
 
 ## Cenários Chave
-
-- UC001_gerenciar_usuario
 
 - UC002_gerenciar_pedido_do_exame
 
@@ -184,17 +152,9 @@ Este caso de uso não possui subfluxos.
 
 - UC005_gerenciar_laudo
 
-## Condições Prévias
-
-Não existe uma condição prévia desse caso de uso.
-
 ## Condições Posteriores
 
-Este caso de uso não exige nenhume condição posterior.
-
-## Pontos de Extensão
-
-Este caso de uso não possui pontos de extensão.
+O usuário possui as permissões adequadas para acessar as funcionalidades designadas
 
 ## Requisitos Especiais
 
@@ -204,7 +164,9 @@ As senhas dos usuários deverão possuir uma criptografia no banco de dados para
 
 ## Informações Adicionais
 
-![gerenciar_usuario](../img/gerenciar_usuario.png)
+[Caso de uso](../caso_de_uso.md)
+
+[Diagrama de sequência](../diagramas_de_sequencia/UC001_gerenciar_usuario.md)
 
 ---
 

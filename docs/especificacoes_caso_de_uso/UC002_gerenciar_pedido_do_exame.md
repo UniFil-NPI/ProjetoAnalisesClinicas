@@ -14,25 +14,13 @@
 
 3. [Fluxos Alternativos](#fluxos-alternativos)
 
-    1. [Cadastro de Pedido](#cadastro-de-pedido)
+4. [Cenários Chave](#cenários-chave)
 
-    2. [Busca de Pedido](#busca-de-pedido)
+5. [Condições Prévias](#condições-prévias)
 
-4. [Subfluxos](#subfluxos)
+6. [Condições Posteriores](#condições-posteriores)
 
-5. [Cenários Chave](#cenários-chave)
-
-6. [Condições Prévias](#condições-prévias)
-
-    1. [Condição Prévia Um](#condição-prévia-um)
-
-7. [Condições Posteriores](#condições-posteriores)
-
-8. [Pontos de Extensão](#pontos-de-extensão)
-
-9. [Requisitos Especiais](#requisitos-especiais)
-
-10. [Informações Adicionais](#informações-adicionais)
+7. [Informações Adicionais](#informações-adicionais)
 
 ## Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame
 
@@ -40,69 +28,97 @@ Neste documento está contida as especificações dos requisitos do caso de uso 
 
 ## Breve Descrição
 
-O UC002_gerenciar_pedido_do_exame engloba as funcionalidades *create*, *read* e *update*. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*, *role patient*, *role biomedic*.
+O UC002_gerenciar_pedido_do_exame engloba as funcionalidades *create*, *read* e *update* dos pedidos de exame de sangue e paternidade do sistema. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*, *role patient*, *role biomedic*. Os pacientes somente poderão visualizar os pedidos vinculados ao seu id.
 
 ## Fluxo Básico de Eventos
 
-- **Cadastrar pedido do exame**
+### Pedidos de Exame de Sangue
 
-  - **Para as *roles admin* e *recepcionist***
+#### Cadastrar pedido
 
-    1. O *admin* ou *recepcionist* seleciona a aba **Exames**;
+1. O ator seleciona a aba **Exames**;
 
-    2. Clica no botão **Novo Exame**;
+2. Clica no botão **Novo Pedido**;
 
-    3. Será aberto uma página para inserção dos dados: Nome ou CPF do paciente, Nome ou CRM do médico, Local de coleta, Convênio, Data do Exame e Descrição do Exame;
+3. Será aberto uma página para inserção dos dados: Nome ou CPF do paciente, Nome ou CRM do médico, Tipo de exame, Local de coleta, Convênio, Data do Exame e Descrição do Exame;
 
-    4. Após a inserção dos dados o ator irá apertar o botão **CRIAR EXAME**;
+4. Após a inserção dos dados o ator irá apertar o botão **CRIAR PEDIDO**;
 
-    5. Acontecerá um redirecionamento para a aba **Exames**.
+5. Acontecerá um redirecionamento para a aba **Exames**.
 
-- **Buscar pedido**
+#### Buscar
 
-  - **Para as *roles admin*, *recepcionist* e *biomedic***
+1. O ator seleciona a aba **Exames**;
 
-    1. O ator seleciona a aba **Exames**;
+2. Dentro da caixa de busca, insere o CPF do paciente que deseja verificar os pedidos e clica no botão **Buscar**;
 
-    2. Dentro da caixa de busca, insere o CPF do paciente que deseja verificar os pedidos e clica no botão **Buscar**;
-
-    3. Será mostrado em uma tabela todos os pedidos do paciente.
+3. Será mostrado em uma tabela todos os pedidos do paciente.
   
-  - **Para a *role patient***
+#### Atualizar
 
-    1. O ator seleciona a aba **Exames**;
+1. Após encontrar o pedido desejado, haverá a possibilidade de alterar os dados do pedido, clicando no botão **Editar** localizado na última coluna da tabela;
 
-    2. Será mostrado em uma tabela todos os pedidos do paciente.
+2. Será redirecionado para a tela de edição;
 
-- **Atualizar informações do pedido**
+3. Depois de feita a alteração, deve ser clicado o botão **SALVAR ALTERAÇÕES**;
 
-  - **Para as *roles admin* e *recepcionist***
+4. Será redirecionado para a aba **Exames**.
 
-    1. Após fazer a busca dos pedidos do paciente desejado, haverá a possibilidade de alterar os dados do pedido, clicando no botão **Editar** localizado na última coluna da tabela;
+### Pedidos de Teste de Paternidade
 
-    2. Será redirecionado para a tela de edição;
+#### Cadastrar pedido
 
-    3. Depois de feita a alteração, deve ser clicado o botão **SALVAR ALTERAÇÕES**;
+1. O ator seleciona a aba **Exames**;
 
-    4. Será redirecionado para a aba **Exames**.
+2. Clica no botão **Novo Pedido**;
+
+3. Será mandado para uma tela onde será possível definir se o teste de paternidade será trio ou duo.
+
+4. Após escolher se será duo ou trio será aberto uma página para inserção dos dados: Nome ou CPF do requerente, Nome ou CPF do outro participante, Nome ou CPF do outro participante(caso seja trio), Local de coleta, Convênio, Data do Exame e Descrição do Exame;
+
+5. Após a inserção dos dados o ator irá apertar o botão **CRIAR PEDIDO**;
+
+6. Acontecerá um redirecionamento para a aba **Exames de Paternidade**.
+
+#### Buscar
+
+1. O ator seleciona a aba **Exames de Paternidade**;
+
+2. Dentro da caixa de busca, insere o CPF do paciente que deseja verificar os pedidos e clica no botão **Buscar**;
+
+3. Será mostrado em uma tabela todos os pedidos do paciente.
+  
+#### Atualizar
+
+1. Após fazer a busca dos pedidos do paciente desejado, haverá a possibilidade de alterar os dados do pedido, clicando no botão **Editar** localizado na última coluna da tabela;
+
+2. Será redirecionado para a tela de edição;
+
+3. Depois de feita a alteração, deve ser clicado o botão **SALVAR ALTERAÇÕES**;
+
+4. Será redirecionado para a aba **Exames**.
 
 ## Fluxos Alternativos
 
-### **Cadastro de pedido:**
+### Para ambos os tipos de pedidos
+
+#### Cadastro de pedido
   
 - **Campo necessário sem preencher:** Caso algum campo esteja em branco haverá uma notificação ao clicar enviar e não será realizada nenhuma ação.
 
-### **Busca de Pedido:**
+#### Busca de Pedido
 
-- **Inserção de quaisquer outros dados sem ser um CPF válido:** Quando for executada a busca não achará nenhum pedido.
+- **Busca vazia:** Caso a busca esteja vazia, será mostrado todos os pedidos cadastrados.
 
-## Subfluxos
+- **Pedido não encontrado:** Ao buscar, se não for encontrado um pedido correspondente ao CPF pesquisado, será mostrado uma mensagem avisando.
 
-Este caso de uso não possui subfluxos.
+#### Atualizar pedido
+  
+- **Campo necessário sem preencher:** Caso algum campo esteja em branco haverá uma notificação ao clicar enviar e não será realizada nenhuma ação.
 
 ## Cenários Chave
 
-- UC004_gerenciar_laudo
+- UC005_gerenciar_laudo
 
 ## Condições Prévias
 
@@ -114,21 +130,19 @@ Para esse caso de uso ser possível, primeiramente deverá existir o cadastro do
 
 Para esse caso de uso ser possível, primeiramente deverá existir o cadastro do médico que será ligado ao pedido.
 
+### Condição Prévia Três
+
+Para esse caso de uso ser possível, primeiramente deverá existir o cadastro do tipo de exame que será ligado ao pedido.
+
 ## Condições Posteriores
 
-Este caso de uso não possui condições posteriores.
-
-## Pontos de Extensão
-
-Este caso de uso não possui pontos de extensão.
-
-## Requisitos Especiais
-
-Este caso de uso não possui nenhum requisito especial até o momento.
+O status do pedido de exame será atualizado para "Analisando".
 
 ## Informações Adicionais
 
-Este caso de uso não possui informações adicionais.
+[Caso de uso](../caso_de_uso.md)
+
+[Diagrama de sequência](../diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame.md)
 
 ---
 
