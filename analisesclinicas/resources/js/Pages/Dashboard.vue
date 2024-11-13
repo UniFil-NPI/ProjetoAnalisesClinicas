@@ -30,15 +30,15 @@ if (message.value) setTimeout(clearMessage, 5000);
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Dashboard
             </h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white flex flex-col shadow-sm sm:rounded-lg p-5">
-                    <div class="flex justify-between items-center">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="flex flex-col p-5 bg-white shadow-sm sm:rounded-lg">
+                    <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-bold">Pedidos Recentes</h2>
                     </div>
                     <div class="mt-10" v-if="exams.data.length == 0">
@@ -62,26 +62,22 @@ if (message.value) setTimeout(clearMessage, 5000);
                         </thead>
                         <tbody>
                             <tr
-                                class="text-center hover:bg-gray-200 transition-all duration-300"
+                                class="text-center transition-all duration-300 hover:bg-gray-200"
                                 v-for="exam in exams.data"
                                 :key="exam.id"
                             >
                                 <td class="py-4">{{ exam.id }}</td>
                                 <td class="py-4">{{ exam.patient_name }}</td>
                                 <td class="py-4">
-                                    {{
-                                        new Date(
-                                            exam.exam_date
-                                        ).toLocaleDateString()
-                                    }}
+                                    {{ exam.exam_date }}
                                 </td>
                                 <td class="py-4 max-w-52">
-                                    <div class="line-clamp-2 break-all mx-auto">
+                                    <div class="mx-auto break-all line-clamp-2">
                                         {{ exam.description }}
                                     </div>
                                 </td>
                                 <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 underline transition-all duration-300 cursor-pointer hover:text-blue-800"
                                     v-if="
                                         !user.isPatient &&
                                         exam.type == 'paternity'
@@ -98,7 +94,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                     >
                                 </td>
                                 <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 underline transition-all duration-300 cursor-pointer hover:text-blue-800"
                                     v-if="
                                         !user.isPatient && exam.type == 'blood'
                                     "
@@ -117,7 +113,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                     Indisponível
                                 </td>
                                 <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 underline transition-all duration-300 cursor-pointer hover:text-blue-800"
                                     v-if="
                                         exam.pdf != null &&
                                         user.isPatient &&
@@ -135,7 +131,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                     >
                                 </td>
                                 <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 underline transition-all duration-300 cursor-pointer hover:text-blue-800"
                                     v-if="
                                         exam.pdf != null &&
                                         user.isPatient &&
@@ -152,7 +148,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                         >Baixar</a
                                     >
                                 </td>
-                                <td class="py-4 flex justify-end">
+                                <td class="flex justify-end py-4">
                                     <a
                                         v-if="
                                             exam &&
@@ -160,7 +156,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                             !user.isPatient
                                         "
                                         :href="route('exam.edit', exam.id)"
-                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="px-4 py-2 mr-4 text-white rounded-lg bg-primary hover:bg-orange-300"
                                     >
                                         Editar
                                     </a>
@@ -171,7 +167,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                             !user.isPatient
                                         "
                                         :href="route('paternity.edit', exam.id)"
-                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="px-4 py-2 mr-4 text-white rounded-lg bg-primary hover:bg-orange-300"
                                     >
                                         Editar
                                     </a>
@@ -186,7 +182,7 @@ if (message.value) setTimeout(clearMessage, 5000);
     </AuthenticatedLayout>
     <div
         v-if="message"
-        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
         {{ message }}
     </div>

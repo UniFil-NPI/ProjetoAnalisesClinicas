@@ -24,7 +24,6 @@ const research = () => {
 
 const message = ref(props.flash?.message || null);
 
-
 const clearMessage = () => {
     message.value = null;
 };
@@ -42,15 +41,15 @@ watch(props.paternity_tests.data, (newValue) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Pedidos
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto px-10 mt-10" v-if="!user.isPatient">
+        <div class="px-10 mx-auto mt-10 max-w-7xl" v-if="!user.isPatient">
             <div class="relative">
                 <div
-                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                    class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3"
                 >
                     <svg
                         class="w-4 h-4 text-gray-500"
@@ -72,7 +71,7 @@ watch(props.paternity_tests.data, (newValue) => {
                     type="search"
                     id="search"
                     v-model="search"
-                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="CPF do paciente"
                     v-mask-cpf
                     required
@@ -93,24 +92,21 @@ watch(props.paternity_tests.data, (newValue) => {
         </div>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white flex flex-col shadow-md sm:rounded-lg p-5">
-                    <div class="flex justify-between items-center">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="flex flex-col p-5 bg-white shadow-md sm:rounded-lg">
+                    <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-bold">
                             Gerenciamento de Pedidos
                         </h2>
                         <a
                             :href="route('paternity.select')"
-                            class="px-4 py-2 rounded-lg text-white bg-primary hover:bg-orange-300"
+                            class="px-4 py-2 text-white rounded-lg bg-primary hover:bg-orange-300"
                             v-if="user.isAdm"
                         >
                             Novo Pedido
                         </a>
                     </div>
-                    <div
-                        class="mt-10"
-                        v-if="paternity_tests.data.length == 0"
-                    >
+                    <div class="mt-10" v-if="paternity_tests.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
                             Pedido(s) não encontrado(s).
                         </p>
@@ -132,7 +128,7 @@ watch(props.paternity_tests.data, (newValue) => {
                         </thead>
                         <tbody>
                             <tr
-                                class="text-center hover:bg-gray-200 transition-all duration-300"
+                                class="text-center transition-all duration-300 hover:bg-gray-200"
                                 v-for="paternityTest in paternity_tests.data"
                                 :key="paternityTest.id"
                             >
@@ -143,21 +139,17 @@ watch(props.paternity_tests.data, (newValue) => {
                                 </td>
 
                                 <td class="py-4">
-                                    {{
-                                        new Date(
-                                            paternityTest.exam_date
-                                        ).toLocaleDateString()
-                                    }}
+                                    {{ paternityTest.exam_date }}
                                 </td>
 
                                 <td class="py-4 max-w-52">
-                                    <div class="line-clamp-2 break-all mx-auto">
+                                    <div class="mx-auto break-all line-clamp-2">
                                         {{ paternityTest.description }}
                                     </div>
                                 </td>
 
                                 <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 underline transition-all duration-300 cursor-pointer hover:text-blue-800"
                                     v-if="!user.isPatient"
                                 >
                                     <a
@@ -182,7 +174,7 @@ watch(props.paternity_tests.data, (newValue) => {
                                 </td>
 
                                 <td
-                                    class="py-4 text-blue-600 hover:text-blue-800 underline cursor-pointer transition-all duration-300"
+                                    class="py-4 text-blue-600 underline transition-all duration-300 cursor-pointer hover:text-blue-800"
                                     v-if="
                                         paternityTest.pdf != null &&
                                         user.isPatient
@@ -201,7 +193,7 @@ watch(props.paternity_tests.data, (newValue) => {
 
                                 <td class="py-4">{{ paternityTest.state }}</td>
 
-                                <td class="py-4 flex justify-end">
+                                <td class="flex justify-end py-4">
                                     <a
                                         v-if="paternityTest && user.isAdm"
                                         :href="
@@ -210,7 +202,7 @@ watch(props.paternity_tests.data, (newValue) => {
                                                 paternityTest.id
                                             )
                                         "
-                                        class="mr-4 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white"
+                                        class="px-4 py-2 mr-4 text-white rounded-lg bg-primary hover:bg-orange-300"
                                     >
                                         Editar
                                     </a>
@@ -225,7 +217,7 @@ watch(props.paternity_tests.data, (newValue) => {
     </AuthenticatedLayout>
     <div
         v-if="message"
-        class="w-full py-4 px-6 bg-green-500 text-white text-lg fixed bottom-0 left-0"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
         {{ message }}
     </div>

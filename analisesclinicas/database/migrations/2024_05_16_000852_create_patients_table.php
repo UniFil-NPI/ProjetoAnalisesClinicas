@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('neighborhood');
             $table->string('city');
             $table->string('state');
-            $table->timestamp('birth_date');
+            $table->date('birth_date');
             $table->string('health_insurance')->nullable();
             $table->string('biological_sex');
             $table->timestamps();

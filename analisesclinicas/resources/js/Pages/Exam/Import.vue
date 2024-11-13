@@ -1,12 +1,10 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, usePage } from "@inertiajs/vue3";
-import { computed, onMounted, ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
 
 const props = defineProps({
-    exam: {
-        type: Object,
-    },
+    exam: Object,
     error: {
         type: String,
         default: null,
@@ -16,37 +14,59 @@ const props = defineProps({
 const form = useForm({
     file: null,
 });
+
 const page = usePage();
-const user = computed(() => {
-    return page.props.auth;
-});
-const errorMessage = ref(props.error || null);
-const submitFile = () => {
-    form.post(`/exam/report/store/import/${props.exam.id}`);
-    errorMessage.value = props.error;
+const user = computed(() => page.props.auth);
+
+const uploadedFile = ref(null);
+
+const onFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    form.file = file;
+    uploadedFile.value = {
+        name: file.name,
+        size: file.size,
+    };
 };
+
+const submitFile = () => {
+    form.post(`/exam/report/store/import/${props.exam.id}`, {
+        onSuccess: () => {
+            form.reset("file");
+            uploadedFile.value = null;
+        },
+    });
+};
+const errorMessage = ref(props.error || null);
 
 const clearError = () => {
     errorMessage.value = null;
 };
 
 if (errorMessage.value) setTimeout(clearError, 5000);
-
 watch(
     () => props.error,
     (newError) => {
         errorMessage.value = newError;
+        if (newError) {
+            setTimeout(clearError, 5000);
+        }
     }
 );
 </script>
+
 <template>
     <Head title="Importar resultado da análise" />
 
     <AuthenticatedLayout>
         <template #header>
             <button
-                @click="$inertia.visit(route('exam.report.manage', props.exam.id))"
-                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+                @click="
+                    $inertia.visit(route('exam.report.manage', props.exam.id))
+                "
+                class="px-4 py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
             >
                 <img
                     src="../../assets/voltar.png"
@@ -57,15 +77,15 @@ watch(
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white flex flex-col shadow-md sm:rounded-lg p-5">
-                    <div class="flex justify-between items-center">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="flex flex-col p-5 bg-white shadow-md sm:rounded-lg">
+                    <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-bold" v-if="!user.isPatient">
                             Importar resultado
                         </h2>
                     </div>
                     <form @submit.prevent="submitFile" class="mt-6">
-                        <div class="col-span-1 flex flex-col gap-2">
+                        <div class="flex flex-col gap-6">
                             <div
                                 class="flex items-center justify-center w-full"
                             >
@@ -101,10 +121,9 @@ watch(
                                     </div>
                                     <input
                                         id="dropzone-file"
-                                        @input="
-                                            form.file = $event.target.files[0]
-                                        "
+                                        @change="onFileSelect"
                                         type="file"
+                                        accept=".csv, .xlsx, .xls"
                                         class="hidden"
                                     />
                                     <span
@@ -114,11 +133,26 @@ watch(
                                     >
                                 </label>
                             </div>
+
+                            <div v-if="uploadedFile" class="mt-4">
+                                <p class="text-sm text-center">
+                                    <strong>Arquivo:</strong>
+                                    {{ uploadedFile.name }}
+                                    <br />
+                                    <strong>Tamanho:</strong>
+                                    {{
+                                        (uploadedFile.size / 1024).toFixed(2)
+                                    }}
+                                    KB
+                                </p>
+                            </div>
+
                             <button
-                                class="col-span-5 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
+                                class="px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary"
+                                :disabled="!form.file"
                                 type="submit"
                             >
-                                Exibir pdf
+                                Exibir PDF
                             </button>
                         </div>
                     </form>
@@ -128,7 +162,7 @@ watch(
     </AuthenticatedLayout>
     <div
         v-if="errorMessage"
-        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-center text-white bg-red-500"
     >
         {{ errorMessage }}
     </div>

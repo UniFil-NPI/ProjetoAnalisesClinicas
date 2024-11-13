@@ -94,7 +94,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::get('/report/download/{id}', [ExamController::class, 'download_report'])->name('report.download')->middleware(EnsureUserHasRole::class.':admin,patient,biomedic');
 
-        Route::post('/report/store/import/{id}', [ExamController::class, 'store_import'])->name('store_file')->middleware(EnsureUserHasRole::class.':admin,biomedic');
+        Route::match(['get', 'post'],'/report/store/import/{id}', [ExamController::class, 'store_import'])->name('store_file')->middleware(EnsureUserHasRole::class.':admin,biomedic');
 
         Route::post('/report/store/{id}', [ExamController::class, 'store_report'])->name('report.pdf')->middleware(EnsureUserHasRole::class.':admin,biomedic');
 

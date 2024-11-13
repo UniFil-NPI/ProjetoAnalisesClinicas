@@ -24,7 +24,7 @@ class PatientSeeder extends Seeder
             'neighborhood' => 'Centro',
             'city' => 'Londrina',
             'state' => 'PR',
-            'birth_date' => fake()->dateTimeThisCentury($max = 'now', $timezone = null),
+            'birth_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'health_insurance' => fake()->randomElement(['Nenhum', 'Unimed', 'Hausey', 'SUS', 'Hospitalar', 'Cassi', 'Sulamérica']),
             'biological_sex' => 'Masculino',
         ]);
@@ -38,7 +38,7 @@ class PatientSeeder extends Seeder
             'neighborhood' => 'Centro',
             'city' => 'Londrina',
             'state' => 'PR',
-            'birth_date' => fake()->dateTimeThisCentury($max = 'now', $timezone = null),
+            'birth_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'health_insurance' => fake()->randomElement(['Nenhum', 'Unimed', 'Hausey', 'SUS', 'Hospitalar', 'Cassi', 'Sulamérica']),
             'biological_sex' => 'Feminino',
         ]);
@@ -52,7 +52,7 @@ class PatientSeeder extends Seeder
             'neighborhood' => 'Centro',
             'city' => 'Londrina',
             'state' => 'PR',
-            'birth_date' => fake()->dateTimeThisCentury($max = 'now', $timezone = null),
+            'birth_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'health_insurance' => fake()->randomElement(['Nenhum', 'Unimed', 'Hausey', 'SUS', 'Hospitalar', 'Cassi', 'Sulamérica']),
             'biological_sex' => 'Masculino',
         ]);

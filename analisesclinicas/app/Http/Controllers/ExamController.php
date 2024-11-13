@@ -181,16 +181,20 @@ class ExamController extends Controller
 
     public function store_import(Request $request, $id)
     {
+        $request->validate([
+            'file' => 'required|file|mimetypes:csv,text/plain,text/csv'
+        ]);
+
         $exam = Exam::find($id);
         try {
             $components = Exam::join('exam_types', "exams.exam_type_id", '=', 'exam_types.id')
                 ->select('exam_types.components_info')
                 ->where('exams.exam_type_id', $exam->exam_type_id)
                 ->first();
-
             $components = json_decode($components->components_info, true);
+
             Excel::import(new PatientExamResultImport, $request->file);
-            $info = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
+            $infos = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
                 ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
                 ->join('doctors', 'doctors.id', '=', 'exams.doctor_id')
                 ->join('patients', 'patients.id', '=', 'exams.patient_id')
@@ -204,14 +208,17 @@ class ExamController extends Controller
                     'doctors.name as doctor_name',
                     'exams.exam_date as exam_date',
                     'patients.biological_sex as sex',
-                    'exam_types.name as exam_name',
+                    'patient_exam_results.exam_type_name as exam_name',
                     'patient_exam_results.exam_value as value',
                 )
                 ->where('patient_exam_results.requisition_id', $exam->id)
-                ->first();
-            PatientExamResult::truncate();
+                ->get();
 
-            return Inertia::render('Exam/PreviewPdf', ['exam' => $exam, 'info' => $info, 'components' => $components]);
+            PatientExamResult::truncate();
+            if (count($infos) == 0) {
+                throw new Exception("Erro na leitura do laudo");
+            }
+            return Inertia::render('Exam/PreviewPdf', ['exam' => $exam, 'infos' => $infos, 'components' => $components]);
         } catch (Exception $e) {
             return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Erro ao gerar o laudo']);
         }
@@ -221,11 +228,10 @@ class ExamController extends Controller
     {
         $exam = Exam::find($id);
         try {
-            $pdf = Pdf::loadview('pdf.exam_report', ['info' => $request->info, 'components' => $request->components, 'conclusion' => $request->conclusion]);
 
+            $pdf = Pdf::loadview('pdf.exam_report', ['infos' => $request->infos, 'components' => $request->components, 'conclusion' => $request->conclusion]);
             $current_date = Carbon::now()->format('d-m-Y');
-
-            $file_name = $id . '-' . $request->info['patient_name'] . '-laudo-' . $current_date . '.pdf';
+            $file_name = $id . '-' . $request->infos[0]['patient_name'] . '-laudo-' . $current_date . '.pdf';
             $file_path = 'laudos/sangue/' . $file_name;
 
             Storage::put($file_path, $pdf->output());
@@ -236,7 +242,7 @@ class ExamController extends Controller
 
             return redirect()->route('exam.report.manage', $id)->with("message", "Laudo gerado com sucesso.");
         } catch (Exception $e) {
-            return Inertia::render('Exam/Import', ["error" => "Não foi possível gerar o laudo.", 'exam' => $exam, 'info' => $request->info, 'components' => $request->components]);
+            return Inertia::render('Exam/Import', ["error" => "Não foi possível gerar o laudo.", 'exam' => $exam, 'infos' => $request->infos, 'components' => $request->components]);
         }
     }
 
