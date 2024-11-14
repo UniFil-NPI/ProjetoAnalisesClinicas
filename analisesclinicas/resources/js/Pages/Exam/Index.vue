@@ -19,7 +19,7 @@ const user = computed(() => {
 const search = ref("");
 
 const research = () => {
-    router.post(route("exam.search"), { search: search.value });
+    router.get(route("exam.search", search.value));
 };
 const message = ref(props.flash?.message || null);
 

@@ -46,12 +46,12 @@ class ExamTypeController extends Controller
     }
     
     
-    public function search(Request $request)
+    public function search($search_value=null)
     {
-        if ($request->search == "") {
+        if ($search_value == null) {
             $exam_types =  ExamType::select("exam_types.*")->orderBy('id', 'desc')->paginate(5);
         } else {
-            $search = strtolower($request->search);
+            $search = strtolower($search_value);
 
             $exam_types = ExamType::select('exam_types.*')
             ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->paginate(5);

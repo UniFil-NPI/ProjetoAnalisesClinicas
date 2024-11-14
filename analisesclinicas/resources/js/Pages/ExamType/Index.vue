@@ -15,7 +15,7 @@ const props = defineProps({
 const search = ref("");
 
 const research = () => {
-    router.post(route("type.search"), { search: search.value });
+    router.get(route("type.search", search.value));
 };
 
 const message = ref(props.flash?.message || null);

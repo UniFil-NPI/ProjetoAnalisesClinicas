@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
@@ -18,7 +19,7 @@ class UserController extends Controller
 
         $users = User::withoutRole('patient')->with('roles')->orderBy('id', 'desc')->paginate(5);
 
-        return Inertia::render('User/Index', ['users' => $users]);
+        return Inertia::render('User/Index', ['users' => $users, 'showInactive' => false]);
     }
 
     public function create()
@@ -88,7 +89,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'cpf' => $request->cpf,
-                'status' => $request->status,
+                'is_active' => $request->is_active,
             ]);
 
 
@@ -100,13 +101,21 @@ class UserController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($show_inactive, $search_value=null)
     {
-        if ($request->search == '') {
-            $users = User::withoutRole('patient')->with('roles')->orderBy('id', 'desc')->paginate(5);
+        if ($show_inactive == 'false') {
+            if ($search_value == null) {
+                $users = User::withoutRole('patient')->with('roles')->where('is_active', true)->orderBy('id', 'desc')->paginate(5);
+            } else {
+                $users = User::withoutRole('patient')->with('roles')->where('cpf', $search_value)->where('is_active', true)->orderBy('id', 'desc')->paginate(5);
+            }
         } else {
-            $users = User::withoutRole('patient')->with('roles')->where('cpf', $request->search)->orderBy('id', 'desc')->paginate(1);
+            if ($search_value == null) {
+                $users = User::withoutRole('patient')->with('roles')->where('is_active', false)->orderBy('id', 'desc')->paginate(5);
+            } else {
+                $users = User::withoutRole('patient')->with('roles')->where('cpf', $search_value)->where('is_active', false)->orderBy('id', 'desc')->paginate(5);
+            }
         }
-        return Inertia::render('User/Index', ['users' => $users]);
+        return Inertia::render('User/Index', ['users' => $users, 'showInactive' => filter_var($show_inactive, FILTER_VALIDATE_BOOLEAN)]);
     }
 }

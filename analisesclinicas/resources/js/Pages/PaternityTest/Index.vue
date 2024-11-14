@@ -19,7 +19,7 @@ const user = computed(() => {
 const search = ref("");
 
 const research = () => {
-    router.post(route("paternity.search"), { search: search.value });
+    router.post(route("paternity.search", search.value));
 };
 
 const message = ref(props.flash?.message || null);

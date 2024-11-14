@@ -113,7 +113,7 @@ class PaternityTestController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($search_value=null)
     {
 
         $auth = Auth::user();
@@ -124,7 +124,7 @@ class PaternityTestController extends Controller
                 ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
                 ->where('users.cpf', $auth->cpf)->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
         } else {
-            if ($request->search == "") {
+            if ($search_value == null) {
                 $paternity_tests = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
                     ->join('users', 'patients.user_id', '=', 'users.id')
                     ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
@@ -132,7 +132,7 @@ class PaternityTestController extends Controller
                 $paternity_tests = PaternityTest::join('patients', 'paternity_tests.patient_id', '=', 'patients.id')
                     ->join('users', 'patients.user_id', '=', 'users.id')
                     ->select('paternity_tests.*', 'users.cpf', 'users.name as patient_name')
-                    ->where('users.cpf', $request->search)->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
+                    ->where('users.cpf', $search_value)->orderBy('paternity_tests.updated_at', 'desc')->paginate(5);
             }
         }
         return Inertia::render('PaternityTest/Index', ['paternity_tests' => $paternity_tests]);

@@ -41,12 +41,12 @@ class DoctorController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($search_value=null)
     {
-        if ($request->search == '') {
+        if ($search_value == null) {
             $doctors = Doctor::select('doctors.*')->orderBy('id', 'desc')->paginate(5);
         } else {
-            $search = strtolower($request->search);
+            $search = strtolower($search_value);
 
             $doctors = Doctor::select('doctors.*')
                 ->whereRaw('LOWER(doctors.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->paginate(5);

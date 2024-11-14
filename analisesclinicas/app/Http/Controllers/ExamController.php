@@ -91,7 +91,7 @@ class ExamController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($search_value=null)
     {
 
         $auth = Auth::user();
@@ -110,7 +110,7 @@ class ExamController extends Controller
                 ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
                 ->where('users.cpf', $auth->cpf)->orderBy('exams.exam_date', 'desc')->get();
         } else {
-            if ($request->search == '') {
+            if ($search_value == null) {
                 $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
                     ->join('users', 'patients.user_id', '=', 'users.id')
                     ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
@@ -122,7 +122,7 @@ class ExamController extends Controller
                     ->join('users', 'patients.user_id', '=', 'users.id')
                     ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
                     ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
-                    ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')->where('users.cpf', $request->search)->orderBy('exams.exam_date', 'desc')->paginate(5);
+                    ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')->where('users.cpf', $search_value)->orderBy('exams.exam_date', 'desc')->paginate(5);
             }
         }
         return Inertia::render('Exam/Index', ['exams' => $exams]);

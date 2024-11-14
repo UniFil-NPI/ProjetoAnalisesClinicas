@@ -55,7 +55,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
 
-        Route::post('/search', [UserController::class, 'search'])->name('search');
+        Route::get('/search/{show_inactive}/{search_value?}', [UserController::class, 'search'])->name('search');
     })->middleware(EnsureUserHasRole::class.':admin');
 
     //Patients Routes
@@ -71,7 +71,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/update/{id}', [PatientController::class, 'update'])->name('update');
 
-        Route::post('/search', [PatientController::class, 'search'])->name('search');
+        Route::get('/search/{search_value?}', [PatientController::class, 'search'])->name('search');
     })->middleware(EnsureUserHasRole::class.':admin,recepcionist');
 
     //Exam Routes
@@ -82,7 +82,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/store', [ExamController::class, 'store'])->name('store')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
-        Route::post('/search', [ExamController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
+        Route::get('/search/{search_value?}', [ExamController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
         Route::get('/edit/{id}', [ExamController::class, 'edit'])->name('edit')->middleware(EnsureUserHasRole::class.':admin,biomedic,recepcionist');
 
@@ -110,7 +110,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/store', [DoctorController::class, 'store'])->name('store');
 
-        Route::post('/search', [DoctorController::class, 'search'])->name('search');
+        Route::get('/search/{search_value?}', [DoctorController::class, 'search'])->name('search');
 
         Route::get('/edit/{id}', [DoctorController::class, 'edit'])->name('edit');
 
@@ -131,7 +131,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/store/{type}', [PaternityTestController::class, 'store'])->name('store')->middleware(EnsureUserHasRole::class.':admin');
 
-        Route::post('/search', [PaternityTestController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin');
+        Route::get('/search/{search_value?}', [PaternityTestController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin');
         
         Route::get('/edit/{id}', [PaternityTestController::class, 'edit'])->name('edit')->middleware(EnsureUserHasRole::class.':admin');
         
@@ -167,7 +167,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
         
             Route::post('/store', [ExamTypeController::class, 'store'])->name('store');
         
-            Route::post('/search', [ExamTypeController::class, 'search'])->name('search');
+            Route::get('/search/{search_value?}', [ExamTypeController::class, 'search'])->name('search');
         
             Route::get('/edit/{id}', [ExamTypeController::class, 'edit'])->name('edit');
         

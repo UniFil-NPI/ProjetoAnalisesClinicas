@@ -132,7 +132,7 @@ class PatientController extends Controller
                 'email' => $request->email,
                 'cpf' => $request->cpf,
                 'password' => Hash::make(substr($request->cpf, 0, 4)),
-                'status' => $request->status,
+                'is_active' => $request->is_active,
             ]);
 
             $user_id = User::find($patient->user_id)->id;
@@ -162,15 +162,15 @@ class PatientController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($search_value=null)
     {
-        if ($request->search == '') {
+        if ($search_value == null) {
             $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->orderBy('patient_id', 'desc')
                 ->paginate(5);
         } else {
             $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
                 ->select('patients.id as patient_id', 'patients.*', 'users.*')
-                ->where('users.cpf', $request->search)
+                ->where('users.cpf', $search_value)
                 ->orderBy('patient_id', 'desc')
                 ->paginate(1);
         }

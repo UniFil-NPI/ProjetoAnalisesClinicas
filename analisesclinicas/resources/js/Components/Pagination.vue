@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="flex justify-center space-x-2 mt-4">
+    <div class="flex justify-center mt-4 space-x-2">
         <component
             :is="link.url ? 'a' : 'span'"
             v-for="(link, i) in links"
