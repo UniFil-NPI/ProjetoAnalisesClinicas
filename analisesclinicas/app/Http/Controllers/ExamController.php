@@ -83,15 +83,11 @@ class ExamController extends Controller
             ]);
             return redirect()->route('exam.index')->with("message", "Pedido cadastrado com sucesso.");
         } catch (Exception $e) {
-            $patients = Patient::all();
-            $doctors = Doctor::all();
-            $exam_types = ExamType::all();
-
-            return Inertia::render('Exam/Create', ["error" => "Não foi possível realizar o cadastro do pedido.", 'patients' => $patients, 'doctors' => $doctors, 'examTypes' => $exam_types]);
+            return redirect()->route('exam.create')->with("error", "Não foi possível realizar o cadastro do pedido.");
         }
     }
 
-    public function search($search_value=null)
+    public function search($search_value = null)
     {
 
         $auth = Auth::user();
@@ -155,9 +151,7 @@ class ExamController extends Controller
 
             return redirect()->route('exam.index')->with("message", "Dados do pedido atualizados com sucesso.");
         } catch (Exception $e) {
-            $exam = Exam::find($id);
-
-            return Inertia::render('Exam/Edit', ["error" => "Não foi possível realizar a atualização dos dados.", 'exam' => $exam]);
+            return redirect()->route('exam.edit', $id)->with("error", "Não foi possível realizar a atualização dos dados.");
         }
     }
 
@@ -173,7 +167,7 @@ class ExamController extends Controller
         $exam = Exam::find($id);
 
         if ($exam->pdf != null) {
-            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro.']);
+            return redirect()->route('exam.report.manage', $id)->with("error", "Esse pedido já possui um laudo, por favor exclua o antigo para poder gerar outro");
         }
 
         return Inertia::render('Exam/Import', ['exam' => $exam]);
@@ -184,7 +178,17 @@ class ExamController extends Controller
         $request->validate([
             'file' => 'required|file|mimetypes:csv,text/plain,text/csv'
         ]);
+        try {
+            Excel::import(new PatientExamResultImport, $request->file);
+            return redirect()->route('exam.report.preview', $id);
+        } catch (Exception $e) {
+            PatientExamResult::truncate();
+            return redirect()->route('exam.import', $id)->with("error", "Não foi possível importar o CSV.");
+        }
+    }
 
+    public function preview_pdf($id)
+    {
         $exam = Exam::find($id);
         try {
             $components = Exam::join('exam_types', "exams.exam_type_id", '=', 'exam_types.id')
@@ -193,7 +197,6 @@ class ExamController extends Controller
                 ->first();
             $components = json_decode($components->components_info, true);
 
-            Excel::import(new PatientExamResultImport, $request->file);
             $infos = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
                 ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
                 ->join('doctors', 'doctors.id', '=', 'exams.doctor_id')
@@ -214,13 +217,14 @@ class ExamController extends Controller
                 ->where('patient_exam_results.requisition_id', $exam->id)
                 ->get();
 
-            PatientExamResult::truncate();
             if (count($infos) == 0) {
-                throw new Exception("Erro na leitura do laudo");
+                throw new Exception("");
             }
             return Inertia::render('Exam/PreviewPdf', ['exam' => $exam, 'infos' => $infos, 'components' => $components]);
         } catch (Exception $e) {
-            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Erro ao gerar o laudo']);
+            return redirect()->route('exam.import', $id)->with("error", "Não foi possível visualizar o PDF.");
+        } finally {
+            PatientExamResult::truncate();
         }
     }
 
@@ -242,7 +246,7 @@ class ExamController extends Controller
 
             return redirect()->route('exam.report.manage', $id)->with("message", "Laudo gerado com sucesso.");
         } catch (Exception $e) {
-            return Inertia::render('Exam/Import', ["error" => "Não foi possível gerar o laudo.", 'exam' => $exam, 'infos' => $request->infos, 'components' => $request->components]);
+            return redirect()->route('exam.import', $id)->with("error", "Não foi possível gerar o laudo.");
         }
     }
 
@@ -252,7 +256,7 @@ class ExamController extends Controller
         try {
             return Storage::download($exam->pdf);
         } catch (Error | Exception $e) {
-            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Não foi possível fazer o download, não existe nenhum laudo nesse pedido']);
+            return redirect()->route('exam.report.manage', $id)->with("error", "Não foi possível fazer o download, não existe nenhum laudo nesse pedido.");
         }
     }
 
@@ -268,7 +272,7 @@ class ExamController extends Controller
                 ]);
             return redirect()->route('exam.report.manage', $id)->with("message", "Sucesso ao remover o Pdf.");
         } catch (Exception | Error $e) {
-            return Inertia::render('Exam/ReportManage', ['exam' => $exam, 'error' => 'Não foi possível remover o laudo, não existe nenhum laudo nesse pedido.']);
+            return redirect()->route('exam.report.manage', $id)->with("error", "Não foi possível remover o laudo, não existe nenhum laudo nesse pedido.");
         }
     }
 }

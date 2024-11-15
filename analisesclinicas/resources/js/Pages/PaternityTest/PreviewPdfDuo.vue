@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head } from "@inertiajs/vue3";
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     ipc: {
@@ -22,10 +22,6 @@ const props = defineProps({
     paternityTest: {
         type: Object,
     },
-    error: {
-        type: String,
-        default: null,
-    },
 });
 
 const form = useForm({
@@ -40,29 +36,6 @@ const form = useForm({
 const generatePdf = () => {
     form.post(`/paternitytest/report/store/${props.paternityTest.id}/duo`);
 };
-
-const errorMessage = ref(null);
-
-const clearError = () => {
-    errorMessage.value = null;
-};
-
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
-
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
 </script>
 
 <template>
@@ -193,12 +166,6 @@ watch(
             <div class="button-container">
                 <button @click="generatePdf">Gerar PDF</button>
             </div>
-        </div>
-        <div
-            v-if="errorMessage"
-            class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-center text-white bg-red-500"
-        >
-            {{ errorMessage }}
         </div>
     </AuthenticatedLayout>
 </template>

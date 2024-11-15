@@ -41,7 +41,7 @@ class ExamTypeController extends Controller
             return redirect()->route('type.index')->with("message", "Novo tipo de exame cadastrado com sucesso.");
         } catch (Exception $e) {
             $error_message = $this->is_error_in_the_list($e);
-            return Inertia::render('ExamType/Create', ["error" => $error_message == "" ? "Não foi possível realizar o cadastro do tipo." : $error_message]);
+            return redirect()->route('type.create')->with("error", $error_message == "" ? "Não foi possível realizar o cadastro do tipo." : $error_message);
         }
     }
     
@@ -92,7 +92,7 @@ class ExamTypeController extends Controller
             return redirect()->route('type.index')->with("message", "Dados do tipo de exame atualizados com sucesso.");
         } catch (Exception $e) {
             $error_message = $this->is_error_in_the_list($e);
-            return Inertia::render('ExamType/Edit', ['exam_type' => $exam_type ,"error" => $error_message == "" ? "Não foi possível salvar as alterações." : $error_message]);
+            return redirect()->route('type.edit', $id)->with("error", $error_message == "" ? "Não foi possível salvar as alterações." : $error_message);
         }
     }
 

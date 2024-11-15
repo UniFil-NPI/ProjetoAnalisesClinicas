@@ -1,12 +1,12 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import { ref, watch } from "vue";
+import { onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
-    error: {
-        type: String,
-        default: null,
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
 });
 
@@ -16,33 +16,18 @@ const form = useForm({
     cpf: "",
     role: 0,
 });
-const errorMessage = ref(null);
 
 const save = () => {
     form.post("/user/store");
-    errorMessage.value = props.error;
 };
 
 const clearError = () => {
-    errorMessage.value = null;
+    props.flash.error = null;
 };
 
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
-
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
+onUpdated(() => {
+    if (props.flash.error) setTimeout(clearError, 5000);
+});
 </script>
 <template>
     <Head title="Usuários" />
@@ -51,7 +36,7 @@ watch(
         <template #header>
             <button
                 @click="$inertia.visit(route('user.index'))"
-                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+                class="px-4 py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
             >
                 <img
                     src="../../assets/voltar.png"
@@ -62,20 +47,20 @@ watch(
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-5 shadow-md sm:rounded-lg p-5"
+                    class="flex flex-col gap-5 p-5 bg-white shadow-md sm:rounded-lg"
                 >
                     <h2 class="text-2xl font-bold">Novo Funcionário</h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">Nome</label>
                                 <input
                                     type="text"
                                     v-model="form.name"
                                     placeholder="Seu Nome"
-                                    class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                    class="col-span-1 border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.name"
@@ -83,13 +68,13 @@ watch(
                                     >{{ form.errors.name }}</span
                                 >
                             </div>
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">E-mail</label>
                                 <input
                                     type="email"
                                     v-model="form.email"
                                     placeholder="Seu Email"
-                                    class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                    class="col-span-1 border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.email"
@@ -97,13 +82,13 @@ watch(
                                     >{{ form.errors.email }}</span
                                 >
                             </div>
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">CPF</label>
                                 <input
                                     type="text"
                                     v-model="form.cpf"
                                     placeholder="Seu CPF"
-                                    class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                    class="col-span-1 border-none rounded-lg bg-neutral-200"
                                     v-mask-cpf
                                 />
                                 <span
@@ -112,11 +97,11 @@ watch(
                                     >{{ form.errors.cpf }}</span
                                 >
                             </div>
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">Cargo</label>
                                 <select
                                     v-model="form.role"
-                                    class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                    class="col-span-1 border-none rounded-lg bg-neutral-200"
                                 >
                                     <option selected disabled value="0">
                                         Selecione
@@ -134,7 +119,7 @@ watch(
                                 >
                             </div>
                             <button
-                                class="px-4 py-2 rounded-lg bg-primary text-white col-span-2 text-xl uppercase text-center font-semibold"
+                                class="col-span-2 px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary"
                                 type="submit"
                             >
                                 Criar Funcionário
@@ -146,9 +131,9 @@ watch(
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="errorMessage"
-        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+        v-if="flash.error"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
     >
-        {{ errorMessage }}
+        {{ flash.error }}
     </div>
 </template>

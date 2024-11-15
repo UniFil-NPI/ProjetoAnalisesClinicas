@@ -1,45 +1,32 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { ref, watch } from "vue";
+import { onMounted, onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
     flash: {
         type: Object,
         default: () => ({}),
     },
-    error: {
-        type: String,
-        default: null,
-    },
     exam: {
         type: Object,
     },
 });
 
-const errorMessage = ref(props.error || null);
-const message = ref(props.flash?.message || null);
-
 const clearMessage = () => {
-    message.value = null;
+    props.flash.message = null;
 };
 
 const clearError = () => {
-    errorMessage.value = null;
+    props.flash.error = null;
 };
 
-if (message.value) setTimeout(clearMessage, 5000);
-if (errorMessage.value) setTimeout(clearError, 5000);
-
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
+onUpdated(() => {
+    if (props.flash.error) setTimeout(clearError, 5000);
+    if (props.flash.message) setTimeout(clearMessage, 5000);
+});
+if (props.flash.error) setTimeout(clearError, 5000);
+if (props.flash.message) setTimeout(clearMessage, 5000);
 </script>
 
 <template>
@@ -78,23 +65,13 @@ watch(
                             Gerar Laudo
                         </a>
                         <a
-                            :href="
-                                route(
-                                    'exam.report.download',
-                                    exam.id
-                                )
-                            "
+                            :href="route('exam.report.download', exam.id)"
                             class="col-span-1 px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary hover:bg-orange-300"
                         >
                             Baixar
                         </a>
                         <a
-                            :href="
-                                route(
-                                    'exam.report.remove',
-                                    exam.id
-                                )
-                            "
+                            :href="route('exam.report.remove', exam.id)"
                             class="col-span-1 px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary hover:bg-orange-300"
                         >
                             Remover laudo
@@ -105,15 +82,15 @@ watch(
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="errorMessage"
-        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-center text-white bg-red-500"
+        v-if="flash.error"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
     >
-        {{ errorMessage }}
+        {{ flash.error }}
     </div>
     <div
-        v-if="message"
+        v-if="flash.message"
         class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
-        {{ message }}
+        {{ flash.message }}
     </div>
 </template>

@@ -22,13 +22,11 @@ const research = () => {
     router.post(route("paternity.search", search.value));
 };
 
-const message = ref(props.flash?.message || null);
-
 const clearMessage = () => {
-    message.value = null;
+    props.flash.message = null;
 };
 
-if (message.value) setTimeout(clearMessage, 5000);
+if (props.flash.message) setTimeout(clearMessage, 5000);
 
 watch(props.paternity_tests.data, (newValue) => {
     newValue.forEach((element) => {
@@ -216,9 +214,9 @@ watch(props.paternity_tests.data, (newValue) => {
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="message"
+        v-if="flash.message"
         class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
-        {{ message }}
+        {{ flash.message }}
     </div>
 </template>

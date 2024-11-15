@@ -22,10 +22,6 @@ const props = defineProps({
     paternityTest: {
         type: Object,
     },
-    error: {
-        type: String,
-        default: null,
-    },
 });
 
 const form = useForm({
@@ -40,29 +36,6 @@ const form = useForm({
 const generatePdf = () => {
     form.post(`/paternitytest/report/store/${props.paternityTest.id}/trio`);
 };
-
-const errorMessage = ref(null);
-
-const clearError = () => {
-    errorMessage.value = null;
-};
-
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
-
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
 </script>
 
 <template>
@@ -71,7 +44,7 @@ watch(
         <template #header>
             <button
                 @click="$inertia.visit(route('paternity.index'))"
-                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+                class="px-4 py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
             >
                 <img
                     src="../../assets/voltar.png"
@@ -81,7 +54,7 @@ watch(
             </button>
         </template>
 
-        <br>
+        <br />
 
         <div class="container">
             <div class="header">
@@ -203,12 +176,6 @@ watch(
             </div>
         </div>
     </AuthenticatedLayout>
-    <div
-        v-if="errorMessage"
-        class="fixed bottom-0 left-0 w-full bg-red-500 text-white text-lg py-4 px-6 text-center"
-    >
-        {{ errorMessage }}
-    </div>
 </template>
 
 <style scoped>

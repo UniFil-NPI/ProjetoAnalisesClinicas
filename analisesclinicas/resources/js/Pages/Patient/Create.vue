@@ -1,12 +1,12 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
-    error: {
-        type: String,
-        default: null,
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
 });
 
@@ -27,11 +27,9 @@ const form = useForm({
     biological_sex: 0,
 });
 const currentDate = ref("");
-const errorMessage = ref(null);
 
 const save = () => {
     form.post("/patient/store");
-    errorMessage.value = props.error;
 };
 
 const getCep = async () => {
@@ -62,30 +60,17 @@ const getCurrentDate = () => {
     currentDate.value = yyyy + "-" + mm + "-" + dd;
 };
 
-const clearError = () => {
-    errorMessage.value = null;
-};
-
 onMounted(() => {
     getCurrentDate();
 });
 
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
+const clearError = () => {
+    props.flash.error = null;
+};
 
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
+onUpdated(() => {
+    if (props.flash.error) setTimeout(clearError, 5000);
+});
 </script>
 <template>
     <Head title="Novo Paciente" />
@@ -94,7 +79,7 @@ watch(
 <template #header>
                 <button
                     @click="$inertia.visit(route('patient.index'))"
-                    class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+                    class="px-4 py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
                 >
                      <img
                         src="../../assets/voltar.png"
@@ -105,19 +90,19 @@ watch(
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-8 shadow-md sm:rounded-lg p-5"
+                    class="flex flex-col gap-8 p-5 bg-white shadow-md sm:rounded-lg"
                 >
                     <h2 class="text-2xl font-bold">Novo Paciente</h2>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-                            <div class="col-span-3 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-3 gap-2">
                                 <label for="name">Nome Completo</label>
                                 <input
                                     type="text"
                                     v-model="form.name"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.name"
@@ -126,12 +111,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-2 gap-2">
                                 <label for="cpf">CPF</label>
                                 <input
                                     type="text"
                                     v-model="form.cpf"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                     v-mask-cpf
                                 />
                                 <span
@@ -141,12 +126,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-3 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-3 gap-2">
                                 <label for="name">Email</label>
                                 <input
                                     type="email"
                                     v-model="form.email"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.email"
@@ -155,12 +140,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-2 gap-2">
                                 <label for="name">Celular</label>
                                 <input
                                     type="text"
                                     v-model="form.phone_number"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                     v-mask-phone.br
                                 />
                                 <span
@@ -170,14 +155,14 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">CEP</label>
                                 <input
                                     type="text"
                                     v-model="form.post_code"
                                     v-on:input="getCep"
                                     maxlength="9"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                     v-mask="'#####-###'"
                                 />
                                 <span
@@ -187,12 +172,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-3 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-3 gap-2">
                                 <label for="name">Rua</label>
                                 <input
                                     type="text"
                                     v-model="form.street"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.street"
@@ -201,12 +186,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">Número</label>
                                 <input
                                     type="text"
                                     v-model="form.building_number"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.building_number"
@@ -215,12 +200,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-2 gap-2">
                                 <label for="name">Complemento</label>
                                 <input
                                     type="text"
                                     v-model="form.secondary_address"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.secondary_address"
@@ -229,12 +214,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">Bairro</label>
                                 <input
                                     type="text"
                                     v-model="form.neighborhood"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.neighborhood"
@@ -243,12 +228,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">Cidade</label>
                                 <input
                                     type="text"
                                     v-model="form.city"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.city"
@@ -257,12 +242,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">Estado</label>
                                 <input
                                     type="text"
                                     v-model="form.state"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.state"
@@ -271,13 +256,13 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-2 gap-2">
                                 <label for="name">Data de Nascimento</label>
                                 <input
                                     type="date"
                                     v-model="form.birth_date"
                                     :max="currentDate"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.birth_date"
@@ -286,11 +271,11 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-2 gap-2">
                                 <label for="name">Convênio</label>
                                 <select
                                     v-model="form.health_insurance"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 >
                                     <option selected disabled value="0">
                                         Convênio
@@ -314,11 +299,11 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="name">Sexo biológico</label>
                                 <select
                                     v-model="form.biological_sex"
-                                    class="col-span-1 bg-neutral-200 border-none rounded-lg"
+                                    class="col-span-1 border-none rounded-lg bg-neutral-200"
                                 >
                                     <option selected disabled value="0">
                                         Sexo biológico
@@ -334,7 +319,7 @@ watch(
                             </div>
 
                             <button
-                                class="col-span-5 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
+                                class="col-span-5 px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary"
                                 type="submit"
                             >
                                 Criar Paciente
@@ -346,9 +331,9 @@ watch(
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="errorMessage"
-        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+        v-if="flash.error"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
     >
-        {{ errorMessage }}
+        {{ flash.error }}
     </div>
 </template>

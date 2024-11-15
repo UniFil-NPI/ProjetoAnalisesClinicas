@@ -1,13 +1,13 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import { ref, watch } from "vue";
+import { onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
     user: Object,
-    error: {
-        type: String,
-        default: null,
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
 });
 
@@ -19,11 +19,9 @@ const form = useForm({
     is_active: props.user.is_active,
 });
 
-const errorMessage = ref(null);
-
 const save = () => {
     form.post("/user/update/" + props.user.id, form);
-    errorMessage.value = props.error;
+
 };
 
 const changeStatus = () => {
@@ -33,25 +31,12 @@ const changeStatus = () => {
 };
 
 const clearError = () => {
-    errorMessage.value = null;
+    props.flash.error = null;
 };
 
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
-
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
+onUpdated(() => {
+    if (props.flash.error) setTimeout(clearError, 5000);
+});
 </script>
 <template>
     <Head title="Usuários" />
@@ -191,11 +176,10 @@ watch(
             </div>
         </div>
     </AuthenticatedLayout>
-
     <div
-        v-if="errorMessage"
+        v-if="flash.error"
         class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
     >
-        {{ errorMessage }}
+        {{ flash.error }}
     </div>
 </template>

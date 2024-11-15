@@ -1,16 +1,12 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head, router } from "@inertiajs/vue3";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
     infos: Array,
     components: Array,
     exam: Object,
-    error: {
-        type: String,
-        default: null,
-    },
 });
 
 const form = useForm({
@@ -47,29 +43,6 @@ const currentDate = ref(
 const generatePdf = () => {
     form.post(`/exam/report/store/${props.exam.id}`);
 };
-
-const errorMessage = ref(null);
-
-const clearError = () => {
-    errorMessage.value = null;
-};
-
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
-
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
 </script>
 
 <template>
@@ -257,7 +230,6 @@ watch(
                 ></textarea>
             </section>
 
-            <!-- Centralizar o botão no meio -->
             <div class="flex justify-center">
                 <button
                     @click="generatePdf"

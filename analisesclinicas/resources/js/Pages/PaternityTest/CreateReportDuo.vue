@@ -2,12 +2,12 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import AutoComplete from "primevue/autocomplete";
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, onUpdated, reactive, ref, watch } from "vue";
 
 const props = defineProps({
-    error: {
-        type: String,
-        default: null,
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
     paternityTest: {
         type: Object,
@@ -111,33 +111,20 @@ const form = useForm({
     loci: inputData,
 });
 
-const errorMessage = ref(null);
-
 const save = () => {
     form.get(`/paternitytest/duo/calc/${props.paternityTest.id}`);
-    errorMessage.value = props.error;
+
 };
 
 const clearError = () => {
-    errorMessage.value = null;
+    props.flash.error = null;
 };
 
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
+if (props.flash.error) setTimeout(clearError, 5000);
 
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
+onUpdated(() => {
+    if (props.flash.error) setTimeout(clearError, 5000);
+});
 </script>
 
 <template>
@@ -147,7 +134,7 @@ watch(
         <template #header>
             <button
                 @click="$inertia.visit(route('paternity.report.manage', paternityTest.id))"
-                class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold flex items-center"
+                class="flex items-center px-4 py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
             >
                 <img
                     src="../../assets/voltar.png"
@@ -159,55 +146,55 @@ watch(
         </template>
 
         <div class="py-12">
-            <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
-                <h2 class="text-2xl font-bold text-center mb-6">
+            <div class="max-w-3xl p-6 mx-auto bg-white rounded-lg shadow-md">
+                <h2 class="mb-6 text-2xl font-bold text-center">
                     Gerar o laudo
                 </h2>
 
                 <form @submit.prevent="save">
-                    <div class="overflow-x-auto mb-6">
+                    <div class="mb-6 overflow-x-auto">
                         <table class="min-w-full border border-gray-300">
                             <thead>
                                 <tr>
                                     <th
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100 font-semibold"
+                                        class="px-4 py-2 font-semibold bg-gray-100 border border-gray-300"
                                     >
                                         Marcador
                                     </th>
                                     <th
                                         colspan="2"
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100 font-semibold"
+                                        class="px-4 py-2 font-semibold bg-gray-100 border border-gray-300"
                                     >
                                         Criança
                                     </th>
                                     <th
                                         colspan="2"
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100 font-semibold"
+                                        class="px-4 py-2 font-semibold bg-gray-100 border border-gray-300"
                                     >
                                         Pai
                                     </th>
                                 </tr>
                                 <tr>
                                     <th
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100"
+                                        class="px-4 py-2 bg-gray-100 border border-gray-300"
                                     ></th>
                                     <th
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100"
+                                        class="px-4 py-2 bg-gray-100 border border-gray-300"
                                     >
                                         Alelo 1
                                     </th>
                                     <th
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100"
+                                        class="px-4 py-2 bg-gray-100 border border-gray-300"
                                     >
                                         Alelo 2
                                     </th>
                                     <th
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100"
+                                        class="px-4 py-2 bg-gray-100 border border-gray-300"
                                     >
                                         Alelo 1
                                     </th>
                                     <th
-                                        class="px-4 py-2 border border-gray-300 bg-gray-100"
+                                        class="px-4 py-2 bg-gray-100 border border-gray-300"
                                     >
                                         Alelo 2
                                     </th>
@@ -272,7 +259,7 @@ watch(
 
                     <button
                         type="submit"
-                        class="w-full bg-primary hover:bg-orange-300 text-white font-semibold py-2 rounded-lg"
+                        class="w-full py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
                     >
                         Exibir o laudo
                     </button>
@@ -282,9 +269,9 @@ watch(
     </AuthenticatedLayout>
 
     <div
-        v-if="errorMessage"
-        class="fixed bottom-0 left-0 w-full bg-red-500 text-white text-lg py-4 px-6 text-center"
+        v-if="flash.error"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
     >
-        {{ errorMessage }}
+        {{ flash.error }}
     </div>
 </template>

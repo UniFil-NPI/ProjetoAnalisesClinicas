@@ -20,7 +20,7 @@ class PatientExamResultImport implements ToModel
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
-    {
+    {   
         return new PatientExamResult([
             'patient_id' => $row[1],
             'requisition_id' => $row[2],

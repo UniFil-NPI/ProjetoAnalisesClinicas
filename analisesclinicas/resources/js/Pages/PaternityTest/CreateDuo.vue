@@ -2,12 +2,12 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import AutoComplete from "primevue/autocomplete";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
-    error: {
-        type: String,
-        default: null,
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
     patients: {
         type: Array,
@@ -26,11 +26,8 @@ const form = useForm({
 const valuePatientInput = ref("");
 const items = ref([]);
 
-const errorMessage = ref(null);
-
 const save = () => {
     form.post("/paternitytest/store/duo");
-    errorMessage.value = props.error;
 };
 
 const searchPatients = (event) => {
@@ -52,32 +49,20 @@ const updateParticipant = (update, index) => {
     form.participants[index].cpf = value;
 };
 
-const clearError = () => {
-    errorMessage.value = null;
-};
-
 watch(valuePatientInput, (newValue) => {
     if (newValue) {
         form.cpf = newValue.value;
     }
 });
 
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-    }
-);
+const clearError = () => {
+    props.flash.error = null;
+};
 
-watch(
-    () => errorMessage.value,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
+if (props.flash.error) setTimeout(clearError, 5000);
+onUpdated(() => {
+    if (props.flash.error) setTimeout(clearError, 5000);
+});
 </script>
 
 <template>
@@ -87,7 +72,7 @@ watch(
         <template #header>
             <button
                     @click="$inertia.visit(route('paternity.select'))"
-                    class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+                    class="px-4 py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
                 >
                      <img
                         src="../../assets/voltar.png"
@@ -98,9 +83,9 @@ watch(
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-8 shadow-md sm:rounded-lg p-5"
+                    class="flex flex-col gap-8 p-5 bg-white shadow-md sm:rounded-lg"
                 >
                     <div class="grid grid-cols-5 gap-4">
                         <h2 class="col-span-4 text-2xl font-bold">
@@ -109,20 +94,20 @@ watch(
                     </div>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-                            <div class="col-span-5 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-5 gap-2">
                                 <label for="cpf"
                                     >Nome ou CPF do requerente</label
                                 >
 
                                 <div
-                                    class="focus-within:border-blue-600 focus-within:border h-full rounded-lg w-full relative"
+                                    class="relative w-full h-full rounded-lg focus-within:border-blue-600 focus-within:border"
                                 >
                                     <AutoComplete
                                         v-model="valuePatientInput"
                                         :suggestions="items"
                                         optionLabel="label"
                                         @complete="searchPatients"
-                                        class="bg-neutral-200 rounded-lg w-full h-full px-3 autocomplete-custom"
+                                        class="w-full h-full px-3 rounded-lg bg-neutral-200 autocomplete-custom"
                                     />
                                 </div>
 
@@ -137,21 +122,21 @@ watch(
                                     participant, index
                                 ) in form.participants"
                                 :key="index"
-                                class="col-span-5 flex flex-col gap-2"
+                                class="flex flex-col col-span-5 gap-2"
                             >
                                 <label :for="`cpf-${index}`"
                                     >Nome ou CPF do outro participante</label
                                 >
 
                                 <div
-                                    class="focus-within:border-blue-600 focus-within:border h-full rounded-lg w-full relative"
+                                    class="relative w-full h-full rounded-lg focus-within:border-blue-600 focus-within:border"
                                 >
                                     <AutoComplete
                                         v-model="participant.cpf"
                                         :suggestions="items"
                                         optionLabel="label"
                                         @complete="searchPatients"
-                                        class="bg-neutral-200 rounded-lg w-full h-full px-3 autocomplete-custom"
+                                        class="w-full h-full px-3 rounded-lg bg-neutral-200 autocomplete-custom"
                                     />
                                 </div>
 
@@ -162,12 +147,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-2 gap-2">
                                 <label for="name">Local de coleta</label>
                                 <input
                                     type="text"
                                     v-model="form.lab"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.lab"
@@ -176,11 +161,11 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-2 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-2 gap-2">
                                 <label for="name">Convênio</label>
                                 <select
                                     v-model="form.health_insurance"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 >
                                     <option selected disabled value="0">
                                         Convênio
@@ -204,12 +189,12 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-1 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-1 gap-2">
                                 <label for="date">Data do Exame</label>
                                 <input
                                     type="date"
                                     v-model="form.exam_date"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 />
                                 <span
                                     v-if="form.errors.exam_date"
@@ -218,11 +203,11 @@ watch(
                                 >
                             </div>
 
-                            <div class="col-span-5 flex flex-col gap-2">
+                            <div class="flex flex-col col-span-5 gap-2">
                                 <label>Descrição do Exame</label>
                                 <textarea
                                     v-model="form.description"
-                                    class="bg-neutral-200 border-none rounded-lg"
+                                    class="border-none rounded-lg bg-neutral-200"
                                 ></textarea>
                                 <span
                                     v-if="form.errors.description"
@@ -233,7 +218,7 @@ watch(
                             </div>
 
                             <button
-                                class="col-span-5 px-4 py-2 rounded-lg bg-primary text-white text-xl uppercase text-center font-semibold"
+                                class="col-span-5 px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary"
                                 type="submit"
                             >
                                 Criar pedido
@@ -246,10 +231,10 @@ watch(
     </AuthenticatedLayout>
 
     <div
-        v-if="errorMessage"
-        class="w-full py-4 px-6 bg-red-500 text-white text-lg fixed bottom-0 left-0"
+        v-if="flash.error"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
     >
-        {{ errorMessage }}
+        {{ flash.error }}
     </div>
 </template>
 

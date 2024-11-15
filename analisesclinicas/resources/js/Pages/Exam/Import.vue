@@ -1,13 +1,13 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, usePage } from "@inertiajs/vue3";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onUpdated } from "vue";
 
 const props = defineProps({
     exam: Object,
-    error: {
-        type: String,
-        default: null,
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
 });
 
@@ -39,22 +39,14 @@ const submitFile = () => {
         },
     });
 };
-const errorMessage = ref(props.error || null);
 
 const clearError = () => {
-    errorMessage.value = null;
+    props.flash.error = null;
 };
 
-if (errorMessage.value) setTimeout(clearError, 5000);
-watch(
-    () => props.error,
-    (newError) => {
-        errorMessage.value = newError;
-        if (newError) {
-            setTimeout(clearError, 5000);
-        }
-    }
-);
+onUpdated(() => {
+    if (props.flash.error) setTimeout(clearError, 5000);
+});
 </script>
 
 <template>
@@ -161,9 +153,9 @@ watch(
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="errorMessage"
-        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-center text-white bg-red-500"
+        v-if="flash.error"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
     >
-        {{ errorMessage }}
+        {{ flash.error }}
     </div>
 </template>

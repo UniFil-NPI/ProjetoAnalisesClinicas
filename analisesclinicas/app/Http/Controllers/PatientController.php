@@ -83,7 +83,7 @@ class PatientController extends Controller
             return redirect()->route('patient.index')->with("message", "Paciente cadastrado com sucesso.");
         } catch (Exception $e) {
             DB::rollBack();
-            return Inertia::render('Patient/Create', ["error" => "Não foi possível realizar o cadastro do paciente."]);
+            return redirect()->route('patient.create')->with("error", "Não foi possível realizar o cadastro do paciente.");
         }
     }
 
@@ -154,15 +154,11 @@ class PatientController extends Controller
 
             return redirect()->route('patient.index')->with("message", "Dados do paciente atualizados com sucesso.");
         } catch (Exception $e) {
-            $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')
-                ->where('patients.id', $id)
-                ->select('patients.id as patient_id', 'patients.*', 'users.*')->first();
-
-            return Inertia::render('Patient/Edit', ['patient' => $patient, "error" => "Não foi possível alterar os dados do paciente."]);
+            return redirect()->route('patient.edit', $id)->with("error", "Não foi possível alterar os dados do paciente.");
         }
     }
 
-    public function search($search_value=null)
+    public function search($search_value = null)
     {
         if ($search_value == null) {
             $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->orderBy('patient_id', 'desc')

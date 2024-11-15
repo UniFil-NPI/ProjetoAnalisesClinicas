@@ -94,26 +94,16 @@ class PaternityTestController extends Controller
 
             return redirect()->route('paternity.index')->with("message", "Pedido cadastrado com sucesso.");
         } catch (Exception $e) {
-
-            $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-                ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
-                ->get();
             if ($type == 'duo') {
-                return Inertia::render('PaternityTest/CreateDuo', [
-                    'error' => $e->getMessage() == "Não foi adicionado nenhum participante." ? $e->getMessage() : 'Não foi possível salvar o novo pedido.',
-                    'patients' => $patients,
-                ]);
+                return redirect()->route('paternity.create.duo')->with("error", $e->getMessage() == "Não foi adicionado nenhum participante." ? $e->getMessage() : 'Não foi possível salvar o novo pedido.');
             }
             if ($type == 'trio') {
-                return Inertia::render('PaternityTest/CreateTrio', [
-                    'error' => $e->getMessage() == "Não foi adicionado nenhum participante." ? $e->getMessage() : 'Não foi possível salvar o novo pedido.',
-                    'patients' => $patients,
-                ]);
+                return redirect()->route('paternity.create.trio')->with("error", $e->getMessage() == "Não foi adicionado nenhum participante." ? $e->getMessage() : 'Não foi possível salvar o novo pedido.');
             }
         }
     }
 
-    public function search($search_value=null)
+    public function search($search_value = null)
     {
 
         $auth = Auth::user();
@@ -165,9 +155,7 @@ class PaternityTestController extends Controller
 
             return redirect()->route('paternity.index')->with("message", "Dados do pedido atualizados com sucesso.");
         } catch (Exception $e) {
-            $paternityTest = PaternityTest::find($id);
-
-            return Inertia::render('PaternityTest/Edit', ["error" => "Não foi possível realizar a atualização dos dados.", 'paternityTest' => $paternityTest]);
+            return redirect()->route('paternity.edit', $id)->with("error", "Não foi possível realizar a atualização dos dados.");
         }
     }
 
@@ -182,22 +170,19 @@ class PaternityTestController extends Controller
     {
         $paternityTest = PaternityTest::find($id);
         if ($paternityTest->pdf != null) {
-            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro']);
+            return redirect()->route('paternity.report.manage', $id)->with("error", "Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro.");
         }
         return Inertia::render('PaternityTest/CreateReportDuo', ['paternityTest' => $paternityTest]);
     }
-
 
     public function create_trio_report($id)
     {
         $paternityTest = PaternityTest::find($id);
         if ($paternityTest->pdf != null) {
-            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro.']);
+            return redirect()->route('paternity.report.manage', $id)->with("error", "Esse pedido já tem um laudo, por favor remova o laudo para poder gerar outro.");
         }
         return Inertia::render('PaternityTest/CreateReportTrio', ['paternityTest' => $paternityTest]);
     }
-
-
 
     public function calc_ipc_trio(Request $request, $id)
     {
@@ -286,65 +271,68 @@ class PaternityTestController extends Controller
             $paternityTest = PaternityTest::find($id);
             return Inertia::render('PaternityTest/PreviewPdfTrio', ['ipa' => $ipa, 'pp' => $pp, 'exclusion' => $exclusion, 'ips' => $ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest]);
         } catch (Exception $e) {
-            $paternityTest = PaternityTest::find($id);
-            return Inertia::render('PaternityTest/CreateReportTrio', ['paternityTest' => $paternityTest, 'error' => 'Erro ao realizar o calculo']);
+            return redirect()->route('paternity.report.create.trio', $id)->with("error", "Erro ao realizar o cálculo.");
         }
     }
 
     public function calc_ipc_duo(Request $request, $id)
     {
-        $exclusion = 0;
-        $alleles_freq = AlleleFreq::all();
-        $ips = [];
-        foreach ($request->loci as $locus => $value) {
-            $allele1_child = (float) str_replace(',', '.', $value["crianca_alelo1"]);
-            $allele2_child = (float) str_replace(',', '.', $value["crianca_alelo2"]);
-            $allele1_father = (float) str_replace(',', '.', $value["pai_alelo1"]);
-            $allele2_father = (float) str_replace(',', '.', $value["pai_alelo2"]);
+        try {
+            $exclusion = 0;
+            $alleles_freq = AlleleFreq::all();
+            $ips = [];
+            foreach ($request->loci as $locus => $value) {
+                $allele1_child = (float) str_replace(',', '.', $value["crianca_alelo1"]);
+                $allele2_child = (float) str_replace(',', '.', $value["crianca_alelo2"]);
+                $allele1_father = (float) str_replace(',', '.', $value["pai_alelo1"]);
+                $allele2_father = (float) str_replace(',', '.', $value["pai_alelo2"]);
 
-            $child_has_father_allele = $allele1_father == $allele1_child || $allele1_father == $allele2_child || $allele2_father == $allele1_child || $allele2_father == $allele2_child;
+                $child_has_father_allele = $allele1_father == $allele1_child || $allele1_father == $allele2_child || $allele2_father == $allele1_child || $allele2_father == $allele2_child;
 
-            if ($allele1_father != $allele2_father) {
-                if ($child_has_father_allele) {
-                    $allele1_freq = 0;
-                    $allele2_freq = 0;
-                    foreach ($alleles_freq as $allele) {
-                        if ($allele1_father == $allele['Alelo']) {
-                            $allele1_freq = $allele[$locus];
+                if ($allele1_father != $allele2_father) {
+                    if ($child_has_father_allele) {
+                        $allele1_freq = 0;
+                        $allele2_freq = 0;
+                        foreach ($alleles_freq as $allele) {
+                            if ($allele1_father == $allele['Alelo']) {
+                                $allele1_freq = $allele[$locus];
+                            }
+                            if ($allele2_father == $allele['Alelo']) {
+                                $allele2_freq = $allele[$locus];
+                            }
                         }
-                        if ($allele2_father == $allele['Alelo']) {
-                            $allele2_freq = $allele[$locus];
-                        }
+                        $ips[$locus] = 0.5 / ($allele1_freq + $allele2_freq);
+                    } else {
+                        $ips[$locus] = 1;
+                        $exclusion++;
                     }
-                    $ips[$locus] = 0.5 / ($allele1_freq + $allele2_freq);
                 } else {
-                    $ips[$locus] = 1;
-                    $exclusion++;
-                }
-            } else {
-                if ($child_has_father_allele) {
-                    $allele1_freq = 0;
-                    foreach ($alleles_freq as $allele) {
-                        if ($allele1_father == $allele['Alelo']) {
-                            $allele1_freq = $allele[$locus];
+                    if ($child_has_father_allele) {
+                        $allele1_freq = 0;
+                        foreach ($alleles_freq as $allele) {
+                            if ($allele1_father == $allele['Alelo']) {
+                                $allele1_freq = $allele[$locus];
+                            }
                         }
+                        $ips[$locus] = 1 / $allele1_freq;
+                    } else {
+                        $ips[$locus] = 1;
+                        $exclusion++;
                     }
-                    $ips[$locus] = 1 / $allele1_freq;
-                } else {
-                    $ips[$locus] = 1;
-                    $exclusion++;
                 }
             }
-        }
-        $sum = 0;
-        foreach ($ips as $ip) {
-            $sum += log($ip, 10);
-        }
-        $ipc = pow(10, $sum);
-        $pp = $ipc / ($ipc + 1) * 100;
+            $sum = 0;
+            foreach ($ips as $ip) {
+                $sum += log($ip, 10);
+            }
+            $ipc = pow(10, $sum);
+            $pp = $ipc / ($ipc + 1) * 100;
 
-        $paternityTest = PaternityTest::find($id);
-        return Inertia::render('PaternityTest/PreviewPdfDuo', ['ipc' => $ipc, 'pp' => $pp, 'exclusion' => $exclusion, 'ips' => $ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest]);
+            $paternityTest = PaternityTest::find($id);
+            return Inertia::render('PaternityTest/PreviewPdfDuo', ['ipc' => $ipc, 'pp' => $pp, 'exclusion' => $exclusion, 'ips' => $ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest]);
+        } catch (Exception $e) {
+            return redirect()->route('paternity.report.create.duo', $id)->with("error", "Erro ao realizar o cálculo.");
+        }
     }
 
     public function store_report(Request $request, $id, $type)
@@ -379,12 +367,11 @@ class PaternityTestController extends Controller
 
             return redirect()->route('paternity.report.manage', $id)->with("message", "Sucesso ao gerar o Pdf.");
         } catch (Exception $e) {
-            $paternityTest = PaternityTest::find($id);
             if ($type == 'trio') {
-                return Inertia::render('PaternityTest/PreviewPdfTrio', ['ipa' => $request->ipa, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ips' => $request->ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
+                return redirect()->route('paternity.report.create.trio', $id)->with("error", "Erro ao gerar o PDF.");
             }
             if ($type == 'duo') {
-                return Inertia::render('PaternityTest/PreviewPdfDuo', ['ipc' => $request->ipc, 'pp' => $request->pp, 'exclusion' => $request->exclusion, 'ips' => $request->ips, 'loci' => $request->loci, 'paternityTest' => $paternityTest, 'error' => "Erro ao gerar o Pdf."]);
+                return redirect()->route('paternity.report.create.duo', $id)->with("error", "Erro ao gerar o PDF.");
             }
         }
     }
@@ -395,7 +382,7 @@ class PaternityTestController extends Controller
         try {
             return Storage::download($paternityTest->pdf);
         } catch (Error | Exception $e) {
-            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Não foi possível fazer o download, não existe nenhum laudo nesse pedido']);
+            return redirect()->route('paternity.report.manage', $id)->with("error", "Não foi possível fazer o download, não existe nenhum laudo nesse pedido.");
         }
     }
 
@@ -411,7 +398,7 @@ class PaternityTestController extends Controller
                 ]);
             return redirect()->route('paternity.report.manage', $id)->with("message", "Sucesso ao remover o Pdf.");
         } catch (Exception | Error $e) {
-            return Inertia::render('PaternityTest/ReportManage', ['paternityTest' => $paternityTest, 'error' => 'Não foi possível remover o laudo, não existe nenhum laudo nesse pedido.']);
+            return redirect()->route('paternity.report.manage', $id)->with("error", "Não foi possível remover o laudo, não existe nenhum laudo nesse pedido.");
         }
     }
 }

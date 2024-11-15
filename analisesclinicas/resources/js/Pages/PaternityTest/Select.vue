@@ -11,7 +11,7 @@ import { Head } from "@inertiajs/vue3";
         <template #header>
                 <button
                     @click="$inertia.visit(route('paternity.index'))"
-                    class="bg-primary hover:bg-orange-300 text-white px-4 py-2 rounded-lg font-semibold"
+                    class="px-4 py-2 font-semibold text-white rounded-lg bg-primary hover:bg-orange-300"
                 >
                      <img
                         src="../../assets/voltar.png"
@@ -22,9 +22,9 @@ import { Head } from "@inertiajs/vue3";
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div
-                    class="bg-white flex flex-col gap-8 shadow-md sm:rounded-lg p-5"
+                    class="flex flex-col gap-8 p-5 bg-white shadow-md sm:rounded-lg"
                 >
                     <div class="grid grid-cols-5 gap-4">
                         <h2 class="col-span-4 text-2xl font-bold">
@@ -34,12 +34,12 @@ import { Head } from "@inertiajs/vue3";
 
                     <div class="grid grid-cols-4 gap-4">
                         <a  :href="route('paternity.create.duo')"
-                            class="col-span-2 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
+                            class="col-span-2 px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary hover:bg-orange-300"
                         >
                             Duo
                         </a>
                         <a  :href="route('paternity.create.trio')"
-                            class="col-span-2 px-4 py-2 rounded-lg bg-primary hover:bg-orange-300 text-white text-xl uppercase text-center font-semibold"
+                            class="col-span-2 px-4 py-2 text-xl font-semibold text-center text-white uppercase rounded-lg bg-primary hover:bg-orange-300"
                         >
                             Trio
                         </a>

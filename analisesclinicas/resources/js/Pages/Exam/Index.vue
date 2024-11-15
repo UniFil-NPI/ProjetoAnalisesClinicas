@@ -24,10 +24,10 @@ const research = () => {
 const message = ref(props.flash?.message || null);
 
 const clearMessage = () => {
-    message.value = null;
+    props.flash.message = null;
 };
 
-if (message.value) setTimeout(clearMessage, 5000);
+if (props.flash.message) setTimeout(clearMessage, 5000);
 </script>
 <template>
     <Head title="Pedidos de exames" />
@@ -190,9 +190,9 @@ if (message.value) setTimeout(clearMessage, 5000);
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="message"
+        v-if="flash.message"
         class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
-        {{ message }}
+        {{ flash.message }}
     </div>
 </template>

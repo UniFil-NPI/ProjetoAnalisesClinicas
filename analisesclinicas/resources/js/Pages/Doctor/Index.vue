@@ -2,7 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { Head, router } from "@inertiajs/vue3";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
     flash: {
@@ -18,13 +18,11 @@ const research = () => {
     router.get(route("doctor.search", search.value));
 };
 
-const message = ref(props.flash?.message || null);
-
 const clearMessage = () => {
-    message.value = null;
+    props.flash.message = null;
 };
 
-if (message.value) setTimeout(clearMessage, 5000);
+if (props.flash.message) setTimeout(clearMessage, 5000);
 </script>
 <template>
     <Head title="Medicos" />
@@ -141,9 +139,9 @@ if (message.value) setTimeout(clearMessage, 5000);
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="message"
+        v-if="flash.message"
         class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
-        {{ message }}
+        {{ flash.message }}
     </div>
 </template>
