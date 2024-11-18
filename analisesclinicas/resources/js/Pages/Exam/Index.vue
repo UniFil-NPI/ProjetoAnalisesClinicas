@@ -74,7 +74,7 @@ if (props.flash.message) setTimeout(clearMessage, 5000);
                     type="search"
                     id="search"
                     v-model="search"
-                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-orange-300 focus:border-orange-300"
                     placeholder="CPF do paciente"
                     v-mask-cpf
                     required
@@ -87,7 +87,7 @@ if (props.flash.message) setTimeout(clearMessage, 5000);
                 </a>
                 <button
                     v-on:click="research"
-                    class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+                    class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:outline-none font-medium rounded-lg text-sm px-4 py-2"
                 >
                     Buscar
                 </button>

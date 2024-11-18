@@ -105,6 +105,7 @@ onUpdated(() => {
                                 >
                                     <AutoComplete
                                         v-model="valuePatientInput"
+                                        dropdown
                                         :suggestions="items"
                                         optionLabel="label"
                                         @complete="searchPatients"
@@ -134,6 +135,7 @@ onUpdated(() => {
                                 >
                                     <AutoComplete
                                         v-model="participant.cpf"
+                                        dropdown
                                         :suggestions="items"
                                         optionLabel="label"
                                         @complete="searchPatients"

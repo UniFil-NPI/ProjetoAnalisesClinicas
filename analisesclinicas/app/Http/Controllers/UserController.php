@@ -99,21 +99,27 @@ class UserController extends Controller
         }
     }
 
-    public function search($show_inactive, $search_value=null)
+    public function search($selected_filter, $search_value=null)
     {
-        if ($show_inactive == 'false') {
+        if ($selected_filter == 'active') {
             if ($search_value == null) {
                 $users = User::withoutRole('patient')->with('roles')->where('is_active', true)->orderBy('id', 'desc')->paginate(5);
             } else {
                 $users = User::withoutRole('patient')->with('roles')->where('cpf', $search_value)->where('is_active', true)->orderBy('id', 'desc')->paginate(5);
             }
-        } else {
+        } else if ($selected_filter == 'inactive') {
             if ($search_value == null) {
                 $users = User::withoutRole('patient')->with('roles')->where('is_active', false)->orderBy('id', 'desc')->paginate(5);
             } else {
                 $users = User::withoutRole('patient')->with('roles')->where('cpf', $search_value)->where('is_active', false)->orderBy('id', 'desc')->paginate(5);
             }
+        } else {
+            if ($search_value == null) {
+                $users = User::withoutRole('patient')->with('roles')->orderBy('id', 'desc')->paginate(5);
+            } else {
+                $users = User::withoutRole('patient')->with('roles')->where('cpf', $search_value)->orderBy('id', 'desc')->paginate(5);
+            }
         }
-        return Inertia::render('User/Index', ['users' => $users, 'showInactive' => filter_var($show_inactive, FILTER_VALIDATE_BOOLEAN)]);
+        return Inertia::render('User/Index', ['users' => $users, 'selectedFilter' => $selected_filter]);
     }
 }

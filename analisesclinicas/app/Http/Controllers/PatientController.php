@@ -158,19 +158,48 @@ class PatientController extends Controller
         }
     }
 
-    public function search($search_value = null)
+    public function search($selected_filter, $search_value = null)
     {
-        if ($search_value == null) {
-            $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->orderBy('patient_id', 'desc')
-                ->paginate(5);
+        if ($selected_filter == 'active') {
+            if ($search_value == null) {
+                $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->where('users.is_active', true)
+                    ->orderBy('patient_id', 'desc')
+                    ->paginate(5);
+            } else {
+                $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+                    ->select('patients.id as patient_id', 'patients.*', 'users.*')
+                    ->where('users.is_active', true)
+                    ->where('users.cpf', $search_value)
+                    ->orderBy('patient_id', 'desc')
+                    ->paginate(1);
+            }
+        } else if ($selected_filter == 'inactive') {
+            if ($search_value == null) {
+                $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')->where('users.is_active', false)
+                    ->orderBy('patient_id', 'desc')
+                    ->paginate(5);
+            } else {
+                $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+                    ->select('patients.id as patient_id', 'patients.*', 'users.*')
+                    ->where('users.is_active', false)
+                    ->where('users.cpf', $search_value)
+                    ->orderBy('patient_id', 'desc')
+                    ->paginate(1);
+            }
         } else {
-            $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-                ->select('patients.id as patient_id', 'patients.*', 'users.*')
-                ->where('users.cpf', $search_value)
-                ->orderBy('patient_id', 'desc')
-                ->paginate(1);
+            if ($search_value == null) {
+                $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id as patient_id', 'patients.*', 'users.*')
+                    ->orderBy('patient_id', 'desc')
+                    ->paginate(5);
+            } else {
+                $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+                    ->select('patients.id as patient_id', 'patients.*', 'users.*')
+                    ->where('users.cpf', $search_value)
+                    ->orderBy('patient_id', 'desc')
+                    ->paginate(1);
+            }
         }
 
-        return Inertia::render('Patient/Index', ['patients' => $patients]);
+        return Inertia::render('Patient/Index', ['patients' => $patients, 'selectedFilter' => $selected_filter]);
     }
 }

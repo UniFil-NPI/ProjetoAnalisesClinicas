@@ -136,6 +136,7 @@ onUpdated(() => {
                                 >
                                     <AutoComplete
                                         v-model="valuePatientInput"
+                                        dropdown
                                         :suggestions="items"
                                         optionLabel="label"
                                         @complete="searchPatients"
@@ -157,6 +158,7 @@ onUpdated(() => {
                                 >
                                     <AutoComplete
                                         v-model="valueDoctorInput"
+                                        dropdown
                                         :suggestions="items"
                                         optionLabel="label"
                                         @complete="searchDoctors"
@@ -177,6 +179,7 @@ onUpdated(() => {
                                 >
                                     <AutoComplete
                                         v-model="valueTypeInput"
+                                        dropdown
                                         :suggestions="items"
                                         optionLabel="label"
                                         @complete="searchExamTypes"

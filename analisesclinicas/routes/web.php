@@ -55,7 +55,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
 
-        Route::get('/search/{show_inactive}/{search_value?}', [UserController::class, 'search'])->name('search');
+        Route::get('/search/{selected_filter}/{search_value?}', [UserController::class, 'search'])->name('search');
     })->middleware(EnsureUserHasRole::class.':admin');
 
     //Patients Routes
@@ -71,7 +71,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::post('/update/{id}', [PatientController::class, 'update'])->name('update');
 
-        Route::get('/search/{search_value?}', [PatientController::class, 'search'])->name('search');
+        Route::get('/search/{selected_filter}/{search_value?}', [PatientController::class, 'search'])->name('search');
     })->middleware(EnsureUserHasRole::class.':admin,recepcionist');
 
     //Exam Routes

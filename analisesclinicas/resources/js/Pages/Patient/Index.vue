@@ -10,12 +10,17 @@ const props = defineProps({
         default: () => ({}),
     },
     patients: Object,
+    selectedFilter: {
+        type: String,
+        default: 'all',
+    },
 });
 
-const search = ref("");
+const search = ref(null);
+const selectedFilter = ref(props.selectedFilter);
 
 const research = () => {
-    router.get(route("patient.search", search.value));
+    router.get(route("patient.search", [selectedFilter.value, search.value]));
 };
 
 const clearMessage = () => {
@@ -63,7 +68,7 @@ if (props.flash.error) setTimeout(clearError, 5000);
                 <input
                     type="search"
                     id="search"
-                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-orange-300 focus:border-orange-300"
                     placeholder="CPF do paciente"
                     v-model="search"
                     v-mask-cpf
@@ -71,16 +76,28 @@ if (props.flash.error) setTimeout(clearError, 5000);
                 />
                 <a
                     :href="route('patient.index')"
-                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                    class="pr-[7.5rem] text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
                 >
                     ✕
                 </a>
-                <button
-                    v-on:click="research"
-                    class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+                <div
+                    class="flex items-center absolute end-2.5 bottom-2.5 gap-2"
                 >
-                    Buscar
-                </button>
+                    <button
+                        @click="research"
+                        class="px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary hover:bg-orange-300 focus:outline-none"
+                    >
+                        Buscar
+                    </button>
+                    <select
+                        v-model="selectedFilter"
+                        class="px-4 py-2 pr-8 text-sm font-medium text-white border-none rounded-lg bg-primary hover:bg-orange-300 focus:outline-none focus:ring-0"
+                    >
+                        <option value="all">Todos</option>
+                        <option value="active">Ativos</option>
+                        <option value="inactive">Inativos</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -162,3 +179,19 @@ if (props.flash.error) setTimeout(clearError, 5000);
         {{ flash.error }}
     </div>
 </template>
+
+<style scoped>
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: primary;
+    color: white;
+    padding-right: 2rem;
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06-.02L10 10.67l3.71-3.48a.75.75 0 011.06 1.06l-4 3.75a.75.75 0 01-1.06 0l-4-3.75a.75.75 0 01-.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1rem;
+}
+</style>

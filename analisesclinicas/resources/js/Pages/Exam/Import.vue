@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, usePage } from "@inertiajs/vue3";
-import { ref, computed, watch, onUpdated } from "vue";
+import { ref, computed, onUpdated } from "vue";
 
 const props = defineProps({
     exam: Object,

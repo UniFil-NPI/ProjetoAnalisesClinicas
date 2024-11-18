@@ -13,6 +13,7 @@ const page = usePage();
 const isAdm = computed(() => page.props.auth.isAdm);
 const isRecepcionist = computed(() => page.props.auth.isRecepcionist);
 const isPatient = computed(() => page.props.auth.isPatient);
+const isBiomedic = computed(() => page.props.auth.isBiomedic);
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -39,34 +40,34 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('exam.index')" :active="route().current('exam.index')">
+                                <NavLink :href="route('exam.index')" :active="route().current('exam.*')">
                                     Exames
                                 </NavLink>
                                 <NavLink
                                     :href="route('paternity.index')"
-                                    :active="route().current('paternity.index')"
+                                    :active="route().current('paternity.*')"
                                     v-if="isAdm || isPatient"
                                 >
                                     Exames de Paternidade
                                 </NavLink>
                                 <NavLink
                                     :href="route('patient.index')"
-                                    :active="route().current('patient.index')"
+                                    :active="route().current('patient.*')"
                                     v-if="isAdm || isRecepcionist"
                                 >
                                     Pacientes
                                 </NavLink>
                                 <NavLink
                                     :href="route('doctor.index')"
-                                    :active="route().current('doctor.index')"
+                                    :active="route().current('doctor.*')"
                                     v-if="isAdm || isRecepcionist"
                                 >
                                     Médicos
                                 </NavLink>
-                                <NavLink :href="route('user.index')" :active="route().current('user.index')" v-if="isAdm">
+                                <NavLink :href="route('user.index')" :active="route().current('user.*')" v-if="isAdm">
                                     Funcionários
                                 </NavLink>
-                                <NavLink :href="route('type.index')" :active="route().current('type.index')" v-if="isAdm">
+                                <NavLink :href="route('type.index')" :active="route().current('type.*')" v-if="isAdm || isBiomedic">
                                     Tipos de Exames
                                 </NavLink>
                             </div>
