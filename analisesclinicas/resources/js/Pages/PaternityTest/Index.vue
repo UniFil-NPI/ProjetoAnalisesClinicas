@@ -18,6 +18,13 @@ const user = computed(() => {
 });
 const search = ref("");
 
+const calculateExamDate = (examDate) => {
+    const [year, month, day] = examDate.split("-");
+    const examDateFormated = new Date(Number(year), Number(month) - 1, Number(day));
+
+    return examDateFormated.toLocaleDateString('pt-BR');
+};
+
 const research = () => {
     router.post(route("paternity.search", search.value));
 };
@@ -137,7 +144,7 @@ watch(props.paternity_tests.data, (newValue) => {
                                 </td>
 
                                 <td class="py-4">
-                                    {{ paternityTest.exam_date }}
+                                    {{ calculateExamDate(paternityTest.exam_date) }}
                                 </td>
 
                                 <td class="py-4 max-w-52">

@@ -15,6 +15,14 @@ const form = useForm({
     conclusion: "",
 });
 
+const calculateExamDate = () => {
+    const [year, month, day] = props.infos[0].exam_date.split("-");
+    console.log(day)
+    const examDate = new Date(Number(year), Number(month) - 1, Number(day));
+
+    return examDate.toLocaleDateString('pt-BR');
+};
+
 const calculateAge = () => {
     const [day, month, year] = props.infos[0].birth_date.split("-");
 
@@ -113,7 +121,7 @@ const generatePdf = () => {
                     </p>
                     <p>
                         <span class="font-bold">Data do Exame:</span>
-                        {{ infos[0].exam_date }}
+                        {{ calculateExamDate() }}
                     </p>
                     <p>
                         <span class="font-bold">Data de Emissão do Laudo:</span>

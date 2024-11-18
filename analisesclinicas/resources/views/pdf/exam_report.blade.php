@@ -95,7 +95,7 @@
         <h2>Informações do Exame</h2>
         <div class="grid">
             <p><span class="font-bold">Médico Solicitante:</span> {{ $infos[0]['doctor_name'] }}</p>
-            <p><span class="font-bold">Data do Exame:</span> {{ $infos[0]['exam_date'] }}</p>
+            <p><span class="font-bold">Data do Exame:</span> {{ \Carbon\Carbon::parse($infos[0]['exam_date'])->format('d/m/Y') }}</p>
             <p><span class="font-bold">Data de Emissão do Laudo:</span> {{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
         </div>
     </section>

@@ -195,8 +195,8 @@ class ExamController extends Controller
                 ->select('exam_types.components_info')
                 ->where('exams.exam_type_id', $exam->exam_type_id)
                 ->first();
-            $components = json_decode($components->components_info, true);
-
+                $components = json_decode($components->components_info, true);
+                
             $infos = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
                 ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
                 ->join('doctors', 'doctors.id', '=', 'exams.doctor_id')
@@ -204,6 +204,7 @@ class ExamController extends Controller
                 ->join('users', 'users.id', '=', 'patients.user_id')
                 ->select(
                     'patient_exam_results.requisition_id as requisition_id',
+                    'patient_exam_results.patient_id as patient_id',
                     'users.name as patient_name',
                     'patients.birth_date as birth_date',
                     'exams.health_insurance as health_insurance',
@@ -215,6 +216,7 @@ class ExamController extends Controller
                     'patient_exam_results.exam_value as value',
                 )
                 ->where('patient_exam_results.requisition_id', $exam->id)
+                ->where('patient_exam_results.patient_id', $exam->patient_id)
                 ->get();
 
             if (count($infos) == 0) {
@@ -222,7 +224,7 @@ class ExamController extends Controller
             }
             return Inertia::render('Exam/PreviewPdf', ['exam' => $exam, 'infos' => $infos, 'components' => $components]);
         } catch (Exception $e) {
-            return redirect()->route('exam.import', $id)->with("error", "Não foi possível visualizar o PDF.");
+            return redirect()->route('exam.import', $id)->with("error", "Não foi possível visualizar o PDF, importe o arquivo novamente.");
         } finally {
             PatientExamResult::truncate();
         }

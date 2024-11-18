@@ -18,6 +18,13 @@ const user = computed(() => {
 });
 const search = ref("");
 
+const calculateExamDate = (examDate) => {
+    const [year, month, day] = examDate.split("-");
+    const examDateFormated = new Date(Number(year), Number(month) - 1, Number(day));
+
+    return examDateFormated.toLocaleDateString('pt-BR');
+};
+
 const research = () => {
     router.get(route("exam.search", search.value));
 };
@@ -137,7 +144,7 @@ if (props.flash.message) setTimeout(clearMessage, 5000);
                                 <td class="py-4">{{ exam.exam_type_name }}</td>
                                 <td class="py-4">
                                     {{
-                                        exam.exam_date
+                                        calculateExamDate(exam.exam_date)
                                     }}
                                 </td>
                                 <td class="py-4 max-w-52">

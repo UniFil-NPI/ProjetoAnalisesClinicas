@@ -32,7 +32,7 @@ class Exam extends Model
     protected function casts(): array
     {
         return [
-            'exam_date' => 'datetime:d-m-Y',
+            'exam_date' => 'datetime:Y-m-d',
         ];
     }
 

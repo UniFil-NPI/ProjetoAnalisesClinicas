@@ -22,8 +22,8 @@ class PatientExamResult extends Model
     protected function casts(): array
     {
         return [
-            'start_date' => 'datetime:d-m-Y H:i:s',
-            'end_date' => 'datetime:d-m-Y H:i:s'
+            'start_date' => 'datetime:Y-m-d H:i:s',
+            'end_date' => 'datetime:Y-m-d H:i:s'
         ];
     }
 

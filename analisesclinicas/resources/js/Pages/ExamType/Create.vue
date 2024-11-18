@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import { onUpdated } from "vue";
+import { onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
     flash: {
@@ -23,6 +23,8 @@ const form = useForm({
         },
     ],
 });
+
+const isButtonDisabled = ref(form.components_info.length == 1);
 
 const save = () => {
     form.post("/typeofexam/store");
@@ -53,6 +55,9 @@ const clearError = () => {
 
 onUpdated(() => {
     if (props.flash.error) setTimeout(clearError, 5000);
+});
+watch(form.components_info, () => {
+    isButtonDisabled.value = form.components_info.length == 1;
 });
 </script>
 
@@ -220,6 +225,7 @@ onUpdated(() => {
                                     </div>
                                 </div>
                                 <button
+                                    :disabled="isButtonDisabled"
                                     @click="removeComponent(index)"
                                     class="absolute top-0 right-0 z-10 p-2 mr-2 -mt-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
                                 >

@@ -16,6 +16,13 @@ const user = computed(() => {
     return page.props.auth;
 });
 
+const calculateExamDate = (examDate) => {
+    const [year, month, day] = examDate.split("-");
+    const examDateFormated = new Date(Number(year), Number(month) - 1, Number(day));
+
+    return examDateFormated.toLocaleDateString('pt-BR');
+};
+
 const message = ref(props.flash?.message || null);
 
 const clearMessage = () => {
@@ -69,7 +76,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                 <td class="py-4">{{ exam.id }}</td>
                                 <td class="py-4">{{ exam.patient_name }}</td>
                                 <td class="py-4">
-                                    {{ exam.exam_date }}
+                                    {{ calculateExamDate(exam.exam_date) }}
                                 </td>
                                 <td class="py-4 max-w-52">
                                     <div class="mx-auto break-all line-clamp-2">
