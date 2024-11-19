@@ -169,7 +169,7 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
         
             Route::post('/store', [ExamTypeController::class, 'store'])->name('store');
         
-            Route::get('/search/{search_value?}', [ExamTypeController::class, 'search'])->name('search');
+            Route::get('/search/{selected_filter}/{search_value?}', [ExamTypeController::class, 'search'])->name('search');
         
             Route::get('/edit/{id}', [ExamTypeController::class, 'edit'])->name('edit');
         

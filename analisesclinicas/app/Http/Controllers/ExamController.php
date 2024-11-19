@@ -37,7 +37,7 @@ class ExamController extends Controller
     public function create()
     {
         $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
+            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf', 'users.is_active')
             ->get();
 
         $doctors = Doctor::all();

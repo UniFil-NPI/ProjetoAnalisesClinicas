@@ -11,12 +11,8 @@ use Error;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use LaravelLegends\PtBrValidator\Rules\Cpf;
-
-use function PHPUnit\Framework\throwException;
 
 class PaternityTestController extends Controller
 {
@@ -45,7 +41,7 @@ class PaternityTestController extends Controller
     public function create_duo()
     {
         $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
+            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf', 'users.is_active')
             ->get();
 
         return Inertia::render('PaternityTest/CreateDuo', ['patients' => $patients]);
@@ -54,7 +50,7 @@ class PaternityTestController extends Controller
     public function create_trio()
     {
         $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
-            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf')
+            ->select('patients.id', 'users.id as user_id', 'users.name as patient_name', 'users.cpf', 'users.is_active')
             ->get();
 
         return Inertia::render('PaternityTest/CreateTrio', ['patients' => $patients]);

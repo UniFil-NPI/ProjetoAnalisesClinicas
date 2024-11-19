@@ -14,6 +14,7 @@ const props = defineProps({
 const form = useForm({
     name: props.exam_type.name,
     components_info: JSON.parse(props.exam_type.components_info),
+    is_active: props.exam_type.is_active,
 });
 
 const save = () => {
@@ -37,6 +38,10 @@ const updateComponent = (index, field, value) => {
 
 const removeComponent = (index) => {
     form.components_info.splice(index, 1);
+};
+
+const changeStatus = () => {
+    form.is_active = !form.is_active;
 };
 
 const clearError = () => {
@@ -82,7 +87,7 @@ onUpdated(() => {
                     </div>
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
-                            <div class="flex flex-col col-span-2 gap-2">
+                            <div class="flex flex-col col-span-3 gap-2">
                                 <label for="name">Nome do tipo de exame</label>
                                 <input
                                     type="text"
@@ -95,7 +100,41 @@ onUpdated(() => {
                                     >{{ form.errors.name }}</span
                                 >
                             </div>
-
+                            <div class="flex flex-col col-span-1 gap-2">
+                                <label>Status</label>
+                                <label
+                                    class="inline-flex items-center h-10 cursor-pointer"
+                                >
+                                    <input
+                                        v-if="exam_type.is_active === true"
+                                        type="checkbox"
+                                        value=""
+                                        class="sr-only peer"
+                                        @click="changeStatus()"
+                                        checked
+                                    />
+                                    <input
+                                        v-if="exam_type.is_active === false"
+                                        type="checkbox"
+                                        value=""
+                                        class="sr-only peer"
+                                        @click="changeStatus()"
+                                    />
+                                    <div
+                                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 dark:peer-focus:ring-primary rounded-full peer dark:bg-gray-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-300 peer-checked:bg-primary"
+                                    ></div>
+                                    <span
+                                        v-if="form.is_active === true"
+                                        class="text-sm font-medium text-gray-900 ms-3 dark:text-gray-300"
+                                        >Ativo</span
+                                    >
+                                    <span
+                                        v-if="form.is_active === false"
+                                        class="text-sm font-medium text-gray-900 ms-3 dark:text-gray-300"
+                                        >Inativo</span
+                                    >
+                                </label>
+                            </div>
                             <div
                                 v-for="(
                                     component, index

@@ -13,6 +13,7 @@ class ExamType extends Model
     protected $fillable = [
         'name',
         'components_info',
+        'is_active',
     ];
 
     public function exams(): HasMany

@@ -10,12 +10,18 @@ const props = defineProps({
         default: () => ({}),
     },
     exam_types: Object,
+    selectedFilter: {
+        type: String,
+        default: 'all',
+    },
 });
 
-const search = ref("");
+const search = ref(null);
+const selectedFilter = ref(props.selectedFilter);
 
 const research = () => {
-    router.get(route("type.search", search.value));
+    router.get(route("type.search", [selectedFilter.value, search.value]));
+
 };
 
 const clearMessage = () => {
@@ -66,16 +72,28 @@ if (props.flash.message) setTimeout(clearMessage, 5000);
                 />
                 <a
                     :href="route('type.index')"
-                    class="pr-4 text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
+                    class="pr-[7.5rem] text-gray-500 absolute end-20 bottom-2.5 bg-transparent hover:text-gray-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-2"
                 >
                     ✕
                 </a>
-                <button
-                    v-on:click="research"
-                    class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-orange-300  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2"
+                <div
+                    class="flex items-center absolute end-2.5 bottom-2.5 gap-2"
                 >
-                    Buscar
-                </button>
+                    <button
+                        @click="research"
+                        class="px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary hover:bg-orange-300 focus:outline-none"
+                    >
+                        Buscar
+                    </button>
+                    <select
+                        v-model="selectedFilter"
+                        class="px-4 py-2 pr-8 text-sm font-medium text-white border-none rounded-lg bg-primary hover:bg-orange-300 focus:outline-none focus:ring-0"
+                    >
+                        <option value="all">Todos</option>
+                        <option value="active">Ativos</option>
+                        <option value="inactive">Inativos</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -108,6 +126,7 @@ if (props.flash.message) setTimeout(clearMessage, 5000);
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -119,6 +138,9 @@ if (props.flash.message) setTimeout(clearMessage, 5000);
                             >
                                 <td class="py-4">{{ type.id }}</td>
                                 <td class="py-4">{{ type.name }}</td>
+                                <td class="py-4">
+                                    {{ type.is_active ? "ativo" : "inativo" }}
+                                </td>
                                 <td class="flex justify-end py-4">
                                     <a
                                         :href="route('type.edit', type.id)"

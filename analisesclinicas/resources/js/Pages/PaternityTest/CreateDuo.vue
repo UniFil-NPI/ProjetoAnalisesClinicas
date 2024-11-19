@@ -33,11 +33,14 @@ const save = () => {
 const searchPatients = (event) => {
     items.value = props.patients
         .filter(
-            (patient) =>
-                patient.patient_name
-                    .toLowerCase()
-                    .includes(event.query.toLowerCase()) ||
-                patient.cpf.includes(event.query.toLowerCase())
+            (patient) => {
+                if (patient.is_active == true){
+                    return patient.patient_name
+                        .toLowerCase()
+                        .includes(event.query.toLowerCase()) ||
+                    patient.cpf.includes(event.query.toLowerCase())
+                }
+            }
         )
         .map((patient) => ({
             label: `${patient.patient_name} - ${patient.cpf}`,

@@ -46,17 +46,37 @@ class ExamTypeController extends Controller
     }
     
     
-    public function search($search_value=null)
+    public function search($selected_filter, $search_value=null)
     {
-        if ($search_value == null) {
-            $exam_types =  ExamType::select("exam_types.*")->orderBy('id', 'desc')->paginate(5);
+        if ($selected_filter == 'active') {
+            if ($search_value == null) {
+                $exam_types =  ExamType::select("exam_types.*")->where('exam_types.is_active', true)->orderBy('id', 'desc')->paginate(5);
+            } else {
+                $search = strtolower($search_value);
+    
+                $exam_types = ExamType::select('exam_types.*')
+                ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->where('exam_types.is_active', true)->orderBy('id', 'desc')->paginate(5);
+            }
+        } else if ($selected_filter == 'inactive') {
+            if ($search_value == null) {
+                $exam_types =  ExamType::select("exam_types.*")->where('exam_types.is_active', false)->orderBy('id', 'desc')->paginate(5);
+            } else {
+                $search = strtolower($search_value);
+    
+                $exam_types = ExamType::select('exam_types.*')
+                ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->where('exam_types.is_active', false)->orderBy('id', 'desc')->paginate(5);
+            }
         } else {
-            $search = strtolower($search_value);
-
-            $exam_types = ExamType::select('exam_types.*')
-            ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->paginate(5);
+            if ($search_value == null) {
+                $exam_types =  ExamType::select("exam_types.*")->orderBy('id', 'desc')->paginate(5);
+            } else {
+                $search = strtolower($search_value);
+    
+                $exam_types = ExamType::select('exam_types.*')
+                ->whereRaw('LOWER(exam_types.name) LIKE ?', '%' . $search . '%')->orderBy('id', 'desc')->paginate(5);
+            }
         }
-        return Inertia::render('ExamType/Index', ['exam_types' => $exam_types]);
+        return Inertia::render('ExamType/Index', ['exam_types' => $exam_types, 'selectedFilter' => $selected_filter]);
     }
 
     public function edit($id)
@@ -87,6 +107,7 @@ class ExamTypeController extends Controller
             $exam_type->updateOrFail([
                 'name' => $request->name,
                 'components_info' => $components_json,
+                'is_active' => $request->is_active,
             ]);
             
             return redirect()->route('type.index')->with("message", "Dados do tipo de exame atualizados com sucesso.");
