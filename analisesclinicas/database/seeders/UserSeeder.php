@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'guilherme.vieira@edu.unifil.br',
             'cpf' => '618.837.920-29',
             'password' => Hash::make('123')
         ])->assignRole('admin');
