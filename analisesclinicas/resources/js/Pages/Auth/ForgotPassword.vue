@@ -23,7 +23,7 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Forgot Password" />
+        <Head title="Esqueci Minha Senha" />
 
         <div class="mb-4 text-sm text-gray-600">
             Esqueceu sua senha? Sem problemas. Somente deixe-nos saber seu endereço de email e nós enviaremos para você um link para resetar a senha que permitirá você a escolher uma nova.

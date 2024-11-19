@@ -28,25 +28,25 @@ export default {
 <template>
     <footer class="bg-white max">
         <div class="container px-4 mx-auto">
-            <div class="pt-24 pb-11 mx-auto max-w-6xl">
-                <a class="flex md:mx-auto mb-5 max-w-max" href="#">
+            <div class="max-w-6xl pt-24 mx-auto pb-11">
+                <a class="flex mb-5 md:mx-auto max-w-max" href="#">
                     <img
                     draggable="false"
-                        src="../assets/UniFil_Logo Isolado Horizontal-01.png"
-                        class="h-16"
+                        src="../assets/UniFil_Logo.png"
+                        class="h-[75px]"
                         alt="Clinica Logo"
                     />
                     
                 </a>
-                <div class="flex flex-wrap justify-center gap-2 w-full">
+                <div class="flex flex-wrap justify-center w-full gap-2">
                     <div
                         v-for="(item, i) in menuItems"
                         :key="i"
-                        class="cursor-pointer gluten w-full md:w-auto p-3 md:px-6"
+                        class="w-full p-3 cursor-pointer gluten md:w-auto md:px-6"
                     >
                         <a
                             v-scroll-to="`${item.link}`"
-                            class="inline-block text-lg text-gray-500 hover:text-gray-600 font-medium"
+                            class="inline-block text-lg font-medium text-gray-500 hover:text-gray-600"
                             >{{ item.name }}</a
                         >
                     </div>
@@ -57,7 +57,7 @@ export default {
         <div class="border-b border-gray-100"></div>
         <div class="container px-4 mx-auto">
             <p
-                class="py-10 md:pb-20 text-md text-gray-400 font-medium text-center"
+                class="py-10 font-medium text-center text-gray-400 md:pb-20 text-md"
             >
                 © 2024
                 <span>UniFil</span
