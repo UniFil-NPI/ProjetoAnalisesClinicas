@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head, router } from "@inertiajs/vue3";
+import { computed } from "vue";
 import { onMounted, onUpdated, ref, watch } from "vue";
 
 const props = defineProps({
@@ -17,10 +18,9 @@ const form = useForm({
 
 const calculateExamDate = () => {
     const [year, month, day] = props.infos[0].exam_date.split("-");
-    console.log(day)
     const examDate = new Date(Number(year), Number(month) - 1, Number(day));
 
-    return examDate.toLocaleDateString('pt-BR');
+    return examDate.toLocaleDateString("pt-BR");
 };
 
 const calculateAge = () => {
@@ -50,6 +50,12 @@ const currentDate = ref(
 
 const generatePdf = () => {
     form.post(`/exam/report/store/${props.exam.id}`);
+};
+
+const filteredInfos = (component) => {
+    return props.infos.filter(
+        (info) => component.name.toLowerCase() === info.exam_name.toLowerCase()
+    );
 };
 </script>
 
@@ -129,104 +135,58 @@ const generatePdf = () => {
                     </p>
                 </div>
             </section>
-            <div v-for="(info, i) in infos" :key="i">
-                <section
-                    v-if="info.sex == 'Feminino'"
-                    class="pb-6 border-b border-gray-300"
+            <section class="pb-6 border-b border-gray-300">
+                <h2 class="mb-6 text-2xl font-semibold text-gray-700">
+                    Resultados dos Exames
+                </h2>
+                <div
+                    v-for="(component, index) in components"
+                    :key="index"
+                    class="mb-4"
                 >
-                    <h2 class="mb-6 text-2xl font-semibold text-gray-700">
-                        Resultados dos Exames
-                    </h2>
-                    <div
-                        v-for="(component, index) in components"
-                        :key="index"
-                        class="mb-4"
+                    <h3 class="mb-3 text-lg font-semibold text-primary">
+                        {{ component.name }}
+                    </h3>
+                    <table
+                        class="w-full overflow-hidden border border-gray-200 rounded-lg shadow-sm"
                     >
-                        <h3 class="mb-3 text-lg font-semibold text-primary">
-                            {{ component.name }}
-                        </h3>
-                        <table
-                            class="w-full overflow-hidden border border-gray-200 rounded-lg shadow-sm"
-                        >
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th
-                                        class="px-4 py-3 font-medium text-left text-gray-700"
-                                    >
-                                        Resultado
-                                    </th>
-                                    <th
-                                        class="px-4 py-3 font-medium text-left text-gray-700"
-                                    >
-                                        Valores de Referência
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="component.name == info.exam_name">
-                                    <td class="px-4 py-3 border-t">
-                                        {{ info.value }}
-                                        {{ component.metric }}
-                                    </td>
-                                    <td class="px-4 py-3 border-t">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th
+                                    class="px-4 py-3 font-medium text-left text-gray-700"
+                                >
+                                    Resultado
+                                </th>
+                                <th
+                                    class="px-4 py-3 font-medium text-left text-gray-700"
+                                >
+                                    Valores de Referência
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                v-for="(info, i) in filteredInfos(component)"
+                                :key="i"
+                            >
+                                <td class="px-4 py-3 border-t">
+                                    {{ info.value }} {{ component.metric }}
+                                </td>
+                                <td class="px-4 py-3 border-t">
+                                    <span v-if="info.sex === 'Feminino'">
                                         Mínimo: {{ component.min_female }} -
                                         Máximo: {{ component.max_female }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <section
-                    v-if="info.sex == 'Masculino'"
-                    class="pb-6 border-b border-gray-300"
-                >
-                    <h2 class="mb-6 text-2xl font-semibold text-gray-700">
-                        Resultados dos Exames
-                    </h2>
-                    <div
-                        v-for="(component, index) in components"
-                        :key="index"
-                        class="mb-4"
-                    >
-                        <h3 class="mb-3 text-lg font-semibold text-primary">
-                            {{ component.name }}
-                        </h3>
-                        <table
-                            class="w-full overflow-hidden border border-gray-200 rounded-lg shadow-sm"
-                        >
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th
-                                        class="px-4 py-3 font-medium text-left text-gray-700"
-                                    >
-                                        Resultado
-                                    </th>
-                                    <th
-                                        class="px-4 py-3 font-medium text-left text-gray-700"
-                                    >
-                                        Valores de Referência
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="component.name == info.exam_name">
-                                    <td class="px-4 py-3 border-t">
-                                        {{ info.value }}
-                                        {{ component.metric }}
-                                    </td>
-                                    <td class="px-4 py-3 border-t">
+                                    </span>
+                                    <span v-else-if="info.sex === 'Masculino'">
                                         Mínimo: {{ component.min_male }} -
                                         Máximo: {{ component.max_male }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            </div>
-
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
             <section>
                 <h2 class="mb-4 text-2xl font-semibold text-gray-700">
                     Conclusão

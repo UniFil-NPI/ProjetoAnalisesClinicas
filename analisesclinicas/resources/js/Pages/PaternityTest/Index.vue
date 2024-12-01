@@ -100,13 +100,13 @@ watch(props.paternity_tests.data, (newValue) => {
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex flex-col p-5 bg-white shadow-md sm:rounded-lg">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-2xl font-bold">
+                        <h2 class="text-2xl font-bold" v-if="!user.isPatient">
                             Gerenciamento de Pedidos
                         </h2>
                         <a
                             :href="route('paternity.select')"
                             class="px-4 py-2 text-white rounded-lg bg-primary hover:bg-orange-300"
-                            v-if="user.isAdm"
+                            v-if="user.isAdm || user.isRecepcionist"
                         >
                             Novo Pedido
                         </a>
@@ -200,7 +200,7 @@ watch(props.paternity_tests.data, (newValue) => {
 
                                 <td class="flex justify-end py-4">
                                     <a
-                                        v-if="paternityTest && user.isAdm"
+                                        v-if="paternityTest && (user.isAdm || user.isRecepcionist) "
                                         :href="
                                             route(
                                                 'paternity.edit',

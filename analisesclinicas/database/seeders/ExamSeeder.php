@@ -32,5 +32,16 @@ class ExamSeeder extends Seeder
             'exam_date' => fake()->date($format = 'Y-m-d', $min = 'now'),
             'description' => 'Creatinina',
         ]);
+
+        Exam::create([
+            'patient_id' => 1,
+            'doctor_id' => 2,
+            'exam_type_id' => 4,
+            'lab' => 'UniFil Lab',
+            'health_insurance' => 'Hospitalar',
+            'exam_date' => fake()->date($format = 'Y-m-d', $min = 'now'),
+            'description' => 'Ureia + Glicose',
+        ]);
+
     }
 }

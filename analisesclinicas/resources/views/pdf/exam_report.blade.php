@@ -95,64 +95,44 @@
         <h2>Informações do Exame</h2>
         <div class="grid">
             <p><span class="font-bold">Médico Solicitante:</span> {{ $infos[0]['doctor_name'] }}</p>
-            <p><span class="font-bold">Data do Exame:</span> {{ \Carbon\Carbon::parse($infos[0]['exam_date'])->format('d/m/Y') }}</p>
+            <p><span class="font-bold">Data do Exame:</span>
+                {{ \Carbon\Carbon::parse($infos[0]['exam_date'])->format('d/m/Y') }}</p>
             <p><span class="font-bold">Data de Emissão do Laudo:</span> {{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
         </div>
     </section>
 
     <section>
         <h2>Resultados dos Exames</h2>
-        @foreach ($infos as $info)
-            @if ($info['sex'] == 'Masculino')
-                @foreach ($components as $component)
-                    <div>
-                        <h3>{{ $component['name'] }}</h3>
-                        <table>
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th>Resultado</th>
-                                    <th>Valores de Referência</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($info['exam_name'] == $component['name'])
-                                    <tr>
-                                        <td>{{ $info['value'] }} {{ $component['metric'] }}</td>
-                                        <td>Mínimo: {{ $component['min_male'] }} - Máximo:
+        @foreach ($components as $component)
+            <div>
+                <h3>{{ $component['name'] }}</h3>
+                <table>
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th>Resultado</th>
+                            <th>Valores de Referência</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($infos as $info)
+                            @if (strtolower($info['exam_name']) === strtolower($component['name']))
+                                <tr>
+                                    <td>{{ $info['value'] }} {{ $component['metric'] }}</td>
+                                    <td>
+                                        @if ($info['sex'] === 'Feminino')
+                                            Mínimo: {{ $component['min_female'] }} - Máximo:
+                                            {{ $component['max_female'] }}
+                                        @elseif ($info['sex'] === 'Masculino')
+                                            Mínimo: {{ $component['min_male'] }} - Máximo:
                                             {{ $component['max_male'] }}
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                        <p class="text-gray-700"><span class="font-bold">Nota:</span></p>
-                    </div>
-                @endforeach
-            @endif
-            @if ($info['sex'] == 'Feminino')
-                @foreach ($components as $component)
-                    <div>
-                        <h3>{{ $component['name'] }}</h3>
-                        <table>
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th>Resultado</th>
-                                    <th>Valores de Referência</th>
+                                        @endif
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @if ($info['exam_name'] == $component['name'])
-                                    <tr>
-                                        <td>{{ $info['value'] }} {{ $component['metric'] }}</td>
-                                        <td>Mínimo: {{ $component['min_female'] }} - Máximo:
-                                            {{ $component['max_female'] }}</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                @endforeach
-            @endif
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         @endforeach
     </section>
     @if ($conclusion != null)

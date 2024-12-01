@@ -53,6 +53,27 @@ class ExamTypeSeeder extends Seeder
                     ]
                 ]),
             ],
+            [
+                'name' => 'URE + GLI',
+                'components_info' => json_encode([
+                    [
+                        'name' => 'Glicose',
+                        'min_female' => 70.0,
+                        'max_female' => 99.0,
+                        'min_male' => 70.0,
+                        'max_male' => 99.0,
+                        'metric' => 'mg/dL'
+                    ],
+                    [
+                        'name' => 'Ureia',
+                        'min_female' => 15.0,
+                        'max_female' => 45.0,
+                        'min_male' => 15.0,
+                        'max_male' => 45.0,
+                        'metric' => 'mg/dL'
+                    ]
+                ]),
+            ],
         ];
 
         foreach ($exams as $exam) {

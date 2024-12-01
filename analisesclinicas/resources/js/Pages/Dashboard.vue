@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, computed, ref } from "vue";
+import { defineProps, computed, ref, onUpdated } from "vue";
 import { usePage } from "@inertiajs/vue3"; // Supondo que você esteja usando Inertia.js
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
@@ -9,6 +9,10 @@ const props = defineProps({
     exams: {
         type: Object,
         default: null,
+    },
+    flash: {
+        type: Object,
+        default: () => ({}),
     },
 });
 const page = usePage();
@@ -23,13 +27,18 @@ const calculateExamDate = (examDate) => {
     return examDateFormated.toLocaleDateString('pt-BR');
 };
 
-const message = ref(props.flash?.message || null);
-
 const clearMessage = () => {
-    message.value = null;
+    props.flash.message = null;
 };
 
-if (message.value) setTimeout(clearMessage, 5000);
+const clearError = () => {
+    props.flash.error = null;
+};
+
+onUpdated(() => {
+    if (props.flash.message) setTimeout(clearMessage, 5000);
+    if (props.flash.error) setTimeout(clearError, 5000);
+});
 </script>
 
 <template>
@@ -50,7 +59,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                     </div>
                     <div class="mt-10" v-if="exams.data.length == 0">
                         <p class="text-xl font-bold text-red-600">
-                            Não possui nenhum pedido
+                            Pedido(s) não encontrado(s).
                         </p>
                     </div>
                     <table class="mt-10">
@@ -59,7 +68,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                             v-show="exams.data.length != 0"
                         >
                             <tr>
-                                <th>ID</th>
+                                <th>Tipo</th>
                                 <th>Nome do paciente</th>
                                 <th>Data do exame</th>
                                 <th>Descrição do exame</th>
@@ -73,7 +82,8 @@ if (message.value) setTimeout(clearMessage, 5000);
                                 v-for="exam in exams.data"
                                 :key="exam.id"
                             >
-                                <td class="py-4">{{ exam.id }}</td>
+                                <td v-if="exam.type == 'blood'" class="py-4">{{ "Sangue" }}</td>
+                                <td v-if="exam.type == 'paternity'" class="py-4">{{ "Paternidade" }}</td>
                                 <td class="py-4">{{ exam.patient_name }}</td>
                                 <td class="py-4">
                                     {{ calculateExamDate(exam.exam_date) }}
@@ -142,7 +152,7 @@ if (message.value) setTimeout(clearMessage, 5000);
                                     v-if="
                                         exam.pdf != null &&
                                         user.isPatient &&
-                                        exam.type == 'blood'
+                                        exam.type == 'paternity'
                                     "
                                 >
                                     <a
@@ -188,9 +198,15 @@ if (message.value) setTimeout(clearMessage, 5000);
         </div>
     </AuthenticatedLayout>
     <div
-        v-if="message"
+        v-if="flash.message"
         class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-green-500"
     >
-        {{ message }}
+        {{ flash.message }}
+    </div>
+    <div
+        v-if="flash.error"
+        class="fixed bottom-0 left-0 w-full px-6 py-4 text-lg text-white bg-red-500"
+    >
+        {{ flash.error }}
     </div>
 </template>

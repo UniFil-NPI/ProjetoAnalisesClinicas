@@ -25,12 +25,22 @@ class ExamController extends Controller
     {
         $auth = Auth::user();
 
-        $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
-            ->join('users', 'patients.user_id', '=', 'users.id')
-            ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
-            ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
-            ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
-            ->orderBy('exams.exam_date', 'desc')->paginate(5);
+        if ($auth->hasRole(['patient'])) {
+            $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
+                ->join('users', 'patients.user_id', '=', 'users.id')
+                ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+                ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
+                ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
+                ->where('users.cpf', $auth->cpf)->orderBy('exams.exam_date', 'desc')->paginate(5);
+        } else {
+            $exams = Exam::join('patients', 'exams.patient_id', '=', 'patients.id')
+                ->join('users', 'patients.user_id', '=', 'users.id')
+                ->join('doctors', 'exams.doctor_id', '=', 'doctors.id')
+                ->join('exam_types', 'exams.exam_type_id', 'exam_types.id')
+                ->select('exams.*', 'exam_types.name as exam_type_name', 'users.cpf', 'users.name as patient_name', 'doctors.name as doctor_name')
+                ->orderBy('exams.exam_date', 'desc')->paginate(5);
+        }
+
         return Inertia::render('Exam/Index', ['exams' => $exams]);
     }
 
@@ -195,8 +205,8 @@ class ExamController extends Controller
                 ->select('exam_types.components_info')
                 ->where('exams.exam_type_id', $exam->exam_type_id)
                 ->first();
-                $components = json_decode($components->components_info, true);
-                
+            $components = json_decode($components->components_info, true);
+
             $infos = Exam::join('patient_exam_results', 'patient_exam_results.requisition_id', '=', 'exams.id')
                 ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
                 ->join('doctors', 'doctors.id', '=', 'exams.doctor_id')

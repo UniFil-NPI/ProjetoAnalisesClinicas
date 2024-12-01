@@ -13,10 +13,11 @@ class EnsureUserHasRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (! $request->user()->hasRole($role)) {
-            return redirect(route('dashboard'));
+        $user = $request->user();
+        if (!$user || !$user->hasAnyRole($roles)) {
+            return redirect(route('dashboard'))->with(['error' => 'Você não possui permissão']);
         }
         return $next($request);
     }
