@@ -1,6 +1,6 @@
 CURSO DE BACHARELADO EM ENGENHARIA DE SOFTWARE\
 GUILHERME RAFAEL FARACO VIEIRA\
-Mario Henrique Akihiko da Costa Adaniya\
+Mário Henrique Akihiko da Costa Adaniya\
 PROJETO DE ANÁLISES CLÍNICAS\
 Londrina\
 2024
@@ -48,9 +48,9 @@ Londrina\
 
 Neste momento de conclusão do meu estágio, sinto-me profundamente grato por todo o apoio e orientação que recebi ao longo dessa jornada.
 
-Primeiramente, gostaria de expressar meu sincero agradecimento ao meu professor orientador, Mario. Sua orientação, paciência e conselhos valiosos foram fundamentais para o desenvolvimento deste trabalho e para meu crescimento pessoal e profissional. Agradeço pelo tempo dedicado, e por todo o apoio durante esse ano. 
+Primeiramente, gostaria de expressar meu sincero agradecimento ao meu professor orientador, Mário. Sua orientação, paciência e conselhos valiosos foram fundamentais para o desenvolvimento deste trabalho e para meu crescimento pessoal e profissional. Agradeço pelo tempo dedicado e por todo o apoio durante esse ano. 
 
-Aos meus colegas da área, meu muito obrigado. Que durante os tempos difíceis estivemos em contato ajudando uns aos outros.
+Aos meus colegas da área, meu mais sincero obrigado. Que durante os tempos difíceis estivemos em contato ajudando uns aos outros.
 
 Por fim, agradeço a Deus por me guiar e iluminar em todos os momentos desta jornada.
 
