@@ -98,7 +98,7 @@ onUpdated(() => {
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
                             <div class="flex flex-col col-span-3 gap-2">
-                                <label for="name">Nome Completo</label>
+                                <label for="name">Nome Completo *</label>
                                 <input
                                     type="text"
                                     v-model="form.name"
@@ -112,7 +112,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="cpf">CPF</label>
+                                <label for="cpf">CPF *</label>
                                 <input
                                     type="text"
                                     v-model="form.cpf"
@@ -127,7 +127,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-3 gap-2">
-                                <label for="name">Email</label>
+                                <label for="name">Email *</label>
                                 <input
                                     type="email"
                                     v-model="form.email"
@@ -141,7 +141,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Celular</label>
+                                <label for="name">Celular *</label>
                                 <input
                                     type="text"
                                     v-model="form.phone_number"
@@ -156,7 +156,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">CEP</label>
+                                <label for="name">CEP *</label>
                                 <input
                                     type="text"
                                     v-model="form.post_code"
@@ -173,7 +173,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-3 gap-2">
-                                <label for="name">Rua</label>
+                                <label for="name">Rua *</label>
                                 <input
                                     type="text"
                                     v-model="form.street"
@@ -187,7 +187,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Número</label>
+                                <label for="name">Número *</label>
                                 <input
                                     type="text"
                                     v-model="form.building_number"
@@ -215,7 +215,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Bairro</label>
+                                <label for="name">Bairro *</label>
                                 <input
                                     type="text"
                                     v-model="form.neighborhood"
@@ -229,7 +229,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Cidade</label>
+                                <label for="name">Cidade *</label>
                                 <input
                                     type="text"
                                     v-model="form.city"
@@ -243,7 +243,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Estado</label>
+                                <label for="name">Estado *</label>
                                 <input
                                     type="text"
                                     v-model="form.state"
@@ -257,7 +257,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Data de Nascimento</label>
+                                <label for="name">Data de Nascimento *</label>
                                 <input
                                     type="date"
                                     v-model="form.birth_date"
@@ -272,7 +272,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Convênio</label>
+                                <label for="name">Convênio *</label>
                                 <select
                                     v-model="form.health_insurance"
                                     class="border-none rounded-lg bg-neutral-200"
@@ -300,7 +300,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Sexo biológico</label>
+                                <label for="name">Sexo biológico *</label>
                                 <select
                                     v-model="form.biological_sex"
                                     class="col-span-1 border-none rounded-lg bg-neutral-200"

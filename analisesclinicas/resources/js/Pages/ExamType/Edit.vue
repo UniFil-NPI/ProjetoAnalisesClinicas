@@ -88,7 +88,7 @@ onUpdated(() => {
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
                             <div class="flex flex-col col-span-3 gap-2">
-                                <label for="name">Nome do tipo de exame</label>
+                                <label for="name">Nome do tipo de exame *</label>
                                 <input
                                     type="text"
                                     v-model="form.name"
@@ -142,10 +142,11 @@ onUpdated(() => {
                                 :key="index"
                                 class="relative flex flex-col col-span-5 gap-2 pt-4"
                             >
+                                <b class="text-lg">Componente {{ index + 1 }}</b>
                                 <div class="grid grid-cols-3 gap-4">
                                     <div class="flex flex-col gap-2">
                                         <label for="`name-${index}`"
-                                            >Nome do componente</label
+                                            >Nome do componente *</label
                                         >
                                         <input
                                             type="text"
@@ -162,7 +163,7 @@ onUpdated(() => {
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="`min_female-${index}`"
-                                            >Min. Feminino</label
+                                            >Min. Feminino *</label
                                         >
                                         <input
                                             type="number"
@@ -180,7 +181,7 @@ onUpdated(() => {
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="`max_female-${index}`"
-                                            >Max. Feminino</label
+                                            >Max. Feminino *</label
                                         >
                                         <input
                                             type="number"
@@ -198,7 +199,7 @@ onUpdated(() => {
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="`min_male-${index}`"
-                                            >Min. Masculino</label
+                                            >Min. Masculino *</label
                                         >
                                         <input
                                             type="number"
@@ -216,7 +217,7 @@ onUpdated(() => {
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="`max_male-${index}`"
-                                            >Max. Masculino</label
+                                            >Max. Masculino *</label
                                         >
                                         <input
                                             type="number"
@@ -234,7 +235,7 @@ onUpdated(() => {
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="`metric-${index}`"
-                                            >Unidade de Medida</label
+                                            >Unidade de Medida *</label
                                         >
                                         <input
                                             type="text"
@@ -251,6 +252,8 @@ onUpdated(() => {
                                     </div>
                                 </div>
                                 <button
+                                    v-if="form.components_info.length > 1"
+                                    type="button"
                                     @click="removeComponent(index)"
                                     class="absolute top-0 right-0 z-10 p-2 mr-2 -mt-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
                                 >

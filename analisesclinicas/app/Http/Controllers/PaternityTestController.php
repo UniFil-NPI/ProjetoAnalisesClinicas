@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use TypeError;
 
 class PaternityTestController extends Controller
 {
@@ -60,7 +61,7 @@ class PaternityTestController extends Controller
     {
 
         $request->validate([
-            'cpf' => 'required|cpf|formato_cpf',
+            'cpf' => 'cpf|formato_cpf',
             'lab' => 'required',
             'health_insurance' => 'required|not_in:0',
             'exam_date' => 'required',
@@ -68,7 +69,6 @@ class PaternityTestController extends Controller
         ]);
         try {
             $patient = Patient::join('users', 'patients.user_id', '=', 'users.id')->select('patients.id', 'users.id as user_id', 'users.name', 'users.cpf')->where('users.cpf', $request->cpf)->firstOrFail();
-
 
             $formated_participants_list = [];
 
@@ -89,7 +89,7 @@ class PaternityTestController extends Controller
             ]);
 
             return redirect()->route('paternity.index')->with("message", "Pedido cadastrado com sucesso.");
-        } catch (Exception $e) {
+        } catch (Exception | TypeError $e) {
             if ($type == 'duo') {
                 return redirect()->route('paternity.create.duo')->with("error", $e->getMessage() == "Não foi adicionado nenhum participante." ? $e->getMessage() : 'Não foi possível salvar o novo pedido.');
             }

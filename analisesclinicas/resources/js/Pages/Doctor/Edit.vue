@@ -56,7 +56,7 @@ onUpdated(() => {
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
                             <div class="flex flex-col col-span-3 gap-2">
-                                <label for="name">Nome do médico</label>
+                                <label for="name">Nome do médico *</label>
                                 <input
                                     type="text"
                                     v-model="form.name"
@@ -71,7 +71,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">CRM</label>
+                                <label for="name">CRM *</label>
                                 <input
                                     type="text"
                                     v-model="form.crm"

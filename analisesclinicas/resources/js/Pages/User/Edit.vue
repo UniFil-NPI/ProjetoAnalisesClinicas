@@ -66,7 +66,7 @@ onUpdated(() => {
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-4 gap-4">
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Nome Completo</label>
+                                <label for="name">Nome Completo *</label>
                                 <input
                                     type="text"
                                     v-model="form.name"
@@ -81,7 +81,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="email">Email</label>
+                                <label for="email">Email *</label>
                                 <input
                                     type="email"
                                     v-model="form.email"
@@ -96,7 +96,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="cpf">CPF</label>
+                                <label for="cpf">CPF *</label>
                                 <input
                                     type="text"
                                     v-model="form.cpf"
@@ -111,7 +111,7 @@ onUpdated(() => {
                                 >
                             </div>
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Cargo</label>
+                                <label for="name">Cargo *</label>
                                 <select
                                     v-model="form.role"
                                     class="col-span-1 border-none rounded-lg bg-neutral-200"

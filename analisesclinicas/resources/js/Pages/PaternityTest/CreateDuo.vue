@@ -99,7 +99,7 @@ onUpdated(() => {
                         <div class="grid grid-cols-5 gap-4">
                             <div class="flex flex-col col-span-5 gap-2">
                                 <label for="cpf"
-                                    >Nome ou CPF do requerente</label
+                                    >Nome ou CPF do requerente *</label
                                 >
 
                                 <div
@@ -129,7 +129,7 @@ onUpdated(() => {
                                 class="flex flex-col col-span-5 gap-2"
                             >
                                 <label :for="`cpf-${index}`"
-                                    >Nome ou CPF do outro participante</label
+                                    >Nome ou CPF do outro participante *</label
                                 >
 
                                 <div
@@ -153,7 +153,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Local de coleta</label>
+                                <label for="name">Local de coleta *</label>
                                 <input
                                     type="text"
                                     v-model="form.lab"
@@ -167,7 +167,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Convênio</label>
+                                <label for="name">Convênio *</label>
                                 <select
                                     v-model="form.health_insurance"
                                     class="border-none rounded-lg bg-neutral-200"
@@ -195,7 +195,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="date">Data do Exame</label>
+                                <label for="date">Data do Exame *</label>
                                 <input
                                     type="date"
                                     v-model="form.exam_date"
@@ -209,7 +209,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-5 gap-2">
-                                <label>Descrição do Exame</label>
+                                <label>Descrição do Exame *</label>
                                 <textarea
                                     v-model="form.description"
                                     class="border-none rounded-lg bg-neutral-200"

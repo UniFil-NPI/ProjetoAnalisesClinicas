@@ -136,7 +136,7 @@ onUpdated(() => {
                     <form @submit.prevent="save">
                         <div class="grid grid-cols-5 gap-4">
                             <div class="flex flex-col col-span-3 gap-2">
-                                <label for="cpf">Nome ou CPF do paciente</label>
+                                <label for="cpf">Nome ou CPF do paciente *</label>
 
                                 <div
                                     class="relative w-full h-full rounded-lg focus-within:border-blue-600 focus-within:border"
@@ -159,7 +159,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Nome ou CRM do médico</label>
+                                <label for="name">Nome ou CRM do médico *</label>
                                 <div
                                     class="relative w-full h-full rounded-lg focus-within:border-blue-600 focus-within:border"
                                 >
@@ -180,7 +180,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-2 gap-2">
-                                <label for="name">Tipo de exame</label>
+                                <label for="name">Tipo de exame *</label>
                                 <div
                                     class="relative w-full h-full rounded-lg focus-within:border-blue-600 focus-within:border"
                                 >
@@ -201,7 +201,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Local de coleta</label>
+                                <label for="name">Local de coleta *</label>
                                 <input
                                     type="text"
                                     v-model="form.lab"
@@ -215,7 +215,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="name">Convênio</label>
+                                <label for="name">Convênio *</label>
                                 <select
                                     v-model="form.health_insurance"
                                     class="border-none rounded-lg bg-neutral-200"
@@ -243,7 +243,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-1 gap-2">
-                                <label for="date">Data do Exame</label>
+                                <label for="date">Data do Exame *</label>
                                 <input
                                     type="date"
                                     v-model="form.exam_date"
@@ -257,7 +257,7 @@ onUpdated(() => {
                             </div>
 
                             <div class="flex flex-col col-span-5 gap-2">
-                                <label>Descrição do Exame</label>
+                                <label>Descrição do Exame *</label>
                                 <textarea
                                     v-model="form.description"
                                     class="border-none rounded-lg bg-neutral-200"
