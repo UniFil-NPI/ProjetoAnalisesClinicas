@@ -223,6 +223,7 @@ return [
         'lab' => 'laboratório',
         'exam_date' => 'data do exame',
         'state' => 'estado',
+        'exam_type_name' => 'tipo de exame',
 
     ],
 

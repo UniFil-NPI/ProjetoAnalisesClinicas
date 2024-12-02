@@ -19,13 +19,12 @@ const form = useForm({
 const calculateExamDate = () => {
     const [year, month, day] = props.infos[0].exam_date.split("-");
     const examDate = new Date(Number(year), Number(month) - 1, Number(day));
-
     return examDate.toLocaleDateString("pt-BR");
 };
 
 const calculateAge = () => {
-    const [day, month, year] = props.infos[0].birth_date.split("-");
-
+    const [year, month, day] = props.infos[0].birth_date.split("-");
+    
     const birthDate = new Date(`${year}-${month}-${day}`);
 
     const today = new Date();
