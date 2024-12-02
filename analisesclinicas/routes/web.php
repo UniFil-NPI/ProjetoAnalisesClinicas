@@ -125,19 +125,19 @@ Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
 
         Route::get('/', [PaternityTestController::class, 'index'])->name('index');
 
-        Route::get('/select', [PaternityTestController::class, 'select'])->name('select')->middleware(EnsureUserHasRole::class.':admin,recepcionist');
+        Route::get('/select', [PaternityTestController::class, 'select'])->name('select')->middleware(EnsureUserHasRole::class.':admin,recepcionist,biomedic');
 
-        Route::get('/new/duo', [PaternityTestController::class, 'create_duo'])->name('create.duo')->middleware(EnsureUserHasRole::class.':admin,recepcionist');
+        Route::get('/new/duo', [PaternityTestController::class, 'create_duo'])->name('create.duo')->middleware(EnsureUserHasRole::class.':admin,recepcionist,biomedic');
 
-        Route::get('/new/trio', [PaternityTestController::class, 'create_trio'])->name('create.trio')->middleware(EnsureUserHasRole::class.':admin,recepcionist');
+        Route::get('/new/trio', [PaternityTestController::class, 'create_trio'])->name('create.trio')->middleware(EnsureUserHasRole::class.':admin,recepcionist,biomedic');
 
-        Route::post('/store/{type}', [PaternityTestController::class, 'store'])->name('store')->middleware(EnsureUserHasRole::class.':admin,recepcionist');
+        Route::post('/store/{type}', [PaternityTestController::class, 'store'])->name('store')->middleware(EnsureUserHasRole::class.':admin,recepcionist,biomedic');
 
-        Route::get('/search/{search_value?}', [PaternityTestController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin,recepcionist');
+        Route::get('/search/{search_value?}', [PaternityTestController::class, 'search'])->name('search')->middleware(EnsureUserHasRole::class.':admin,recepcionist,biomedic');
         
-        Route::get('/edit/{id}', [PaternityTestController::class, 'edit'])->name('edit')->middleware(EnsureUserHasRole::class.':admin,recepcionist');
+        Route::get('/edit/{id}', [PaternityTestController::class, 'edit'])->name('edit')->middleware(EnsureUserHasRole::class.':admin,recepcionist, biomedic');
         
-        Route::post('/update/{id}', [PaternityTestController::class, 'update'])->name('update')->middleware(EnsureUserHasRole::class.':admin,recepcionist');
+        Route::post('/update/{id}', [PaternityTestController::class, 'update'])->name('update')->middleware(EnsureUserHasRole::class.':admin,recepcionist,biomedic');
         
         Route::get('/duo/calc/{id}', [PaternityTestController::class, 'calc_ipc_duo'])->name('calc.duo')->middleware(EnsureUserHasRole::class.':admin');
         

@@ -46,7 +46,6 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink
                                     :href="route('paternity.index')"
                                     :active="route().current('paternity.*')"
-                                    v-if="isAdm || isPatient || isRecepcionist"
                                 >
                                     Exames de Paternidade
                                 </NavLink>
