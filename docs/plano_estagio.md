@@ -101,21 +101,25 @@ O recepcionista é uma *role* de usuário, que está conectado aos casos de uso 
 
 O caso de uso gerenciar_usuario, permite o gerenciamento de todos as roles de usuário, onde apenas o admin tem acesso. A única excessão é a *role* paciente, que poderá ser editada pela recepcionista.
 
-#### UC002_gerenciar_pedido_do_exame
+#### UC002_gerenciar_pedido_do_exame_de_sangue
 
-O caso de uso UC002_gerenciar_pedido_do_exame, permite o gerenciamento dos pedidos dos exames, onde apenas o admin e o recepcionista tem acesso.
+O caso de uso UC002_gerenciar_pedido_do_exame_de_sangue, permite o gerenciamento dos pedidos dos exames de sangue.
 
-#### UC003_gerenciar_medico
+#### UC003_gerenciar_pedido_do_exame_de_paternidade
 
-O caso de uso UC003_gerenciar_medico permite o gerenciamento dos médicos cadastrados no sistema, apenas o admin e o recepcionista tem acesso ao caso de uso.
+O caso de uso UC003_gerenciar_pedido_do_exame_de_paternidade, permite o gerenciamento dos pedidos dos exames de paternidade.
 
-#### UC004_gerenciar_tipos_de_exame
+#### UC004_gerenciar_medico
 
-O caso de uso UC004_gerenciar_tipos_de_exame permite o gerenciamento dos tipos de exame cadastrados no sistema, apenas o admin e o biomédico tem acesso ao caso de uso.
+O caso de uso UC004_gerenciar_medico permite o gerenciamento dos médicos cadastrados no sistema, apenas o admin e o recepcionista tem acesso ao caso de uso.
 
-#### UC005_gerenciar_laudo
+#### UC005_gerenciar_tipos_de_exame
 
-O caso de uso UC005_gerenciar_laudo permite o gerenciamento dos laudos do sistema, e depende de ter um pedido ja criado para poder ser gerado e manipulado um laudo. 
+O caso de uso UC005_gerenciar_tipos_de_exame permite o gerenciamento dos tipos de exame cadastrados no sistema, apenas o admin e o biomédico tem acesso ao caso de uso.
+
+#### UC006_gerenciar_laudo
+
+O caso de uso UC006_gerenciar_laudo permite o gerenciamento dos laudos do sistema, e depende de ter um pedido ja criado para poder ser gerado e manipulado um laudo. 
 
 ## TELAS
 

@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC004_gerenciar_tipo_de_exame </br> Versão 1.0
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC005_gerenciar_tipo_de_exame </br> Versão 1.0
 
 ## Histórico da Revisão
 
@@ -21,13 +21,13 @@
 
 6.  [Informações Adicionais](#informações-adicionais)
 
-## Especificação de Caso de Uso: UC004_gerenciar_tipo_de_exame
+## Especificação de Caso de Uso: UC005_gerenciar_tipo_de_exame
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC004_gerenciar_tipo_de_exame.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC005_gerenciar_tipo_de_exame.
 
 ## Breve Descrição
 
-O UC004_gerenciar_tipo_de_exame engloba as funcionalidades *create*, *read*, *update* e *delete* dos tipos de exame do sistema. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin* ou a *role biomedic*.
+O UC005_gerenciar_tipo_de_exame engloba as funcionalidades *create*, *read*, *update* e *delete* dos tipos de exame do sistema. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin* ou a *role biomedic*.
 
 ## Fluxo Básico de Eventos
 
@@ -81,11 +81,11 @@ O UC004_gerenciar_tipo_de_exame engloba as funcionalidades *create*, *read*, *up
 
 ## Cenários Chave
 
-- UC002_gerenciar_pedido_do_exame
+- UC002_gerenciar_pedido_do_exame_de_sangue
 
-- UC004_gerenciar_tipo_de_exame
+- UC005_gerenciar_tipo_de_exame
 
-- UC005_gerenciar_laudo
+- UC006_gerenciar_laudo
 
 
 ## Condições Posteriores
@@ -96,7 +96,7 @@ Todos os tipos de exame ativos estão disponíveis para seleção no momento de 
 
 [Caso de uso](../caso_de_uso.md)
 
-[Diagrama de sequência](../diagramas_de_sequencia/UC004_gerenciar_tipo_de_exame.md)
+[Diagrama de sequência](../diagramas_de_sequencia/UC005_gerenciar_tipo_de_exame.md)
 
 ---
 

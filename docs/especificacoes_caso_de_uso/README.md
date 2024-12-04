@@ -2,13 +2,13 @@
 
 - [UC001_gerenciar_paciente](UC001_gerenciar_usuario.md)
 
-- [UC002_gerenciar_pedido_do_exame](UC002_gerenciar_pedido_do_exame.md)
+- [UC002_gerenciar_pedido_do_exame_de_sangue](UC002_gerenciar_pedido_do_exame_de_sangue.md)
 
-- [UC003_gerenciar_medico](UC003_gerenciar_medico.md)
+- [UC004_gerenciar_medico](UC004_gerenciar_medico.md)
 
-- [UC004_gerenciar_tipo_de_exame](UC004_gerenciar_tipo_de_exame.md)
+- [UC005_gerenciar_tipo_de_exame](UC005_gerenciar_tipo_de_exame.md)
 
-- [UC005_gerenciar_laudo](UC005_gerenciar_laudo.md)
+- [UC006_gerenciar_laudo](UC006_gerenciar_laudo.md)
 
 ---
 

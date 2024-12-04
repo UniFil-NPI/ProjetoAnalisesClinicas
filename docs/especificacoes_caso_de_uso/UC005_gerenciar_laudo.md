@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC005_gerenciar_laudo </br> Versão 1.0
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC006_gerenciar_laudo </br> Versão 1.0
 
 ## Histórico da Revisão
 
@@ -25,13 +25,13 @@
 
 8. [Informações Adicionais](#informações-adicionais)
 
-## Especificação de Caso de Uso: UC005_gerenciar_laudo
+## Especificação de Caso de Uso: UC006_gerenciar_laudo
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC005_gerenciar_laudo.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC006_gerenciar_laudo.
 
 ## Breve Descrição
 
-O UC005_gerenciar_laudo engloba as funcionalidades *create*, *read* e *delete* dos laudos do sistema. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin*, *role biomedic* ou *role patient*.
+O UC006_gerenciar_laudo engloba as funcionalidades *create*, *read* e *delete* dos laudos do sistema. Os atores que interagem com este caso de uso são os usuários que possuem a *role admin*, *role biomedic* ou *role patient*.
 Somente o *admin* poderá gerenciar os laudos de paternidade e os pacientes poderão fazer o download do laudo de pedidos pertencentes a ele.
 
 ## Fluxo Básico de Eventos
@@ -106,7 +106,7 @@ Somente o *admin* poderá gerenciar os laudos de paternidade e os pacientes pode
 
 ## Cenários Chave
 
-- UC002_gerenciar_pedido_do_exame
+- UC002_gerenciar_pedido_do_exame_de_sangue
 
 
 ## Condições Prévias
@@ -131,7 +131,7 @@ Os laudos dos exames de sangue só poderão ser acessados pelo admin, biomédico
 
 [Caso de uso](../caso_de_uso.md)
 
-[Diagrama de sequência](../diagramas_de_sequencia/UC005_gerenciar_laudo.md)
+[Diagrama de sequência](../diagramas_de_sequencia/UC006_gerenciar_laudo.md)
 
 ---
 

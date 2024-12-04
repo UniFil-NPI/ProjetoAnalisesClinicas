@@ -1,4 +1,4 @@
-# Diagrama de Estado UC002
+# Diagrama de Estado UC003
 
 ```mermaid
 stateDiagram-v2

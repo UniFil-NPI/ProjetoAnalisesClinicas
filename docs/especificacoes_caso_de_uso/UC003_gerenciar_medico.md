@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC003_gerenciar_medico </br> Versão 1.0
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC004_gerenciar_medico </br> Versão 1.0
 
 ## Histórico da Revisão
 
@@ -18,13 +18,13 @@
 
 5. [Informações Adicionais](#informações-adicionais)
 
-## Especificação de Caso de Uso: UC003_gerenciar_medico
+## Especificação de Caso de Uso: UC004_gerenciar_medico
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC003_gerenciar_medico.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC004_gerenciar_medico.
 
 ## Breve Descrição
 
-O UC003_gerenciar_medico engloba as funcionalidades *create*, *read* e *update* dos médicos do sistema. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*.
+O UC004_gerenciar_medico engloba as funcionalidades *create*, *read* e *update* dos médicos do sistema. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*.
 
 ## Fluxo Básico de Eventos
 
@@ -82,13 +82,13 @@ O UC003_gerenciar_medico engloba as funcionalidades *create*, *read* e *update* 
 
 ## Cenários Chave
 
-- UC002_gerenciar_pedido_do_exame
+- UC002_gerenciar_pedido_do_exame_de_sangue
 
 ## Informações Adicionais
 
 [Caso de uso](../caso_de_uso.md)
 
-[Diagrama de sequência](../diagramas_de_sequencia/UC003_gerenciar_medico.md)
+[Diagrama de sequência](../diagramas_de_sequencia/UC004_gerenciar_medico.md)
 
 ---
 

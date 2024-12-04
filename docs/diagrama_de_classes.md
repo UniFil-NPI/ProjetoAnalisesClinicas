@@ -9,19 +9,19 @@ classDiagram
 direction RL
 
 
-User "1" *-- "0..1" Patient
+User --  Patient
 
-Patient "1" *-- "0..n" PaternityTest
+Patient -- PaternityTest
 
-Patient "0..n" --* "1" PatientExamResult
+Patient -- PatientExamResult
 
-Patient "1" *-- "0..n" Exam
+Patient -- Exam
 
-ExamType "1" *-- "0..n" Exam
+ExamType -- Exam
 
-Doctor "1" *-- "0..n" Exam
+Doctor -- Exam
 
-Exam "1" *-- "0..1" PatientExamResult
+Exam -- PatientExamResult
 
 class User {
     #id id

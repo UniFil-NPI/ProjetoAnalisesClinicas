@@ -144,13 +144,13 @@ O UC001_gerenciar_usuario engloba as funcionalidades *create*, *read*, *update* 
 
 ## Cenários Chave
 
-- UC002_gerenciar_pedido_do_exame
+- UC002_gerenciar_pedido_do_exame_de_sangue
 
-- UC003_gerenciar_medicos
+- UC004_gerenciar_medicos
 
-- UC004_gerenciar_tipo_de_exame
+- UC005_gerenciar_tipo_de_exame
 
-- UC005_gerenciar_laudo
+- UC006_gerenciar_laudo
 
 ## Condições Posteriores
 

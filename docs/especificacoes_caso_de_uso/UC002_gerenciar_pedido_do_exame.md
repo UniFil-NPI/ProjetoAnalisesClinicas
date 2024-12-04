@@ -1,4 +1,4 @@
-# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame </br> Versão 1.0
+# Núcleo de Práticas em Informática - NPI </br> Projeto de Análises Clinicas </br> Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame_de_sangue </br> Versão 1.0
 
 ## Histórico da Revisão
 
@@ -22,13 +22,13 @@
 
 7. [Informações Adicionais](#informações-adicionais)
 
-## Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame
+## Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame_de_sangue
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC002_gerenciar_pedido_do_exame.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC002_gerenciar_pedido_do_exame_de_sangue.
 
 ## Breve Descrição
 
-O UC002_gerenciar_pedido_do_exame engloba as funcionalidades *create*, *read* e *update* dos pedidos de exame de sangue e paternidade do sistema. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*, *role patient*, *role biomedic*. Os pacientes somente poderão visualizar os pedidos vinculados ao seu id.
+O UC002_gerenciar_pedido_do_exame_de_sangue engloba as funcionalidades *create*, *read* e *update* dos pedidos de exame de sangue e paternidade do sistema. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*, *role patient*, *role biomedic*. Os pacientes somente poderão visualizar os pedidos vinculados ao seu id.
 
 ## Fluxo Básico de Eventos
 
@@ -118,7 +118,7 @@ O UC002_gerenciar_pedido_do_exame engloba as funcionalidades *create*, *read* e 
 
 ## Cenários Chave
 
-- UC005_gerenciar_laudo
+- UC006_gerenciar_laudo
 
 ## Condições Prévias
 
@@ -142,7 +142,7 @@ O status do pedido de exame será atualizado para "Analisando".
 
 [Caso de uso](../caso_de_uso.md)
 
-[Diagrama de sequência](../diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame.md)
+[Diagrama de sequência](../diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame_de_sangue.md)
 
 ---
 
