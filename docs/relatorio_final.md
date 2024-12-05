@@ -1193,7 +1193,7 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 - ##### [UC002_gerenciar_pedido_do_exame_de_sangue](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC002_gerenciar_pedido_do_exame_de_sangue.md)
 
-- ##### [UC002_gerenciar_pedido_do_exame_de_paternidade](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC002_gerenciar_pedido_do_exame_de_sangue.md)
+- ##### [UC003_gerenciar_pedido_do_exame_de_paternidade](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC003_gerenciar_pedido_do_exame_de_paternidade.md)
 
 - ##### [UC004_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC004_gerenciar_medico.md)
 
@@ -1217,6 +1217,8 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 - ##### [UC002_gerenciar_pedido_do_exame_de_sangue](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_estado/UC002_gerenciar_pedido_do_exame_de_sangue.md)
 
+- ##### [UC003_gerenciar_pedido_do_exame_de_paternidade](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_estado/UC003_gerenciar_pedido_do_exame.md)
+
 #### [Diagrama de Implantação](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagrama_de_implantacao.md)
 
 #### Diagramas de Sequência:
@@ -1224,6 +1226,8 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 - ##### [UC001_GERENCIAR_USUARIO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC001_gerenciar_usuario.md)
 
 - ##### [UC002_gerenciar_pedido_do_exame_de_sangue](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC002_gerenciar_pedido_do_exame_de_sangue.md)
+  
+- ##### [UC003_gerenciar_pedido_do_exame_de_paternidade](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC003_gerenciar_pedido_do_exame_de_paternidade.md)
 
 - ##### [UC004_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/diagramas_de_sequencia/UC004_gerenciar_medico.md)
 
