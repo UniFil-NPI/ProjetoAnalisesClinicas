@@ -1193,6 +1193,8 @@ TYBEL, D. Diagrama de classes (UML): Orientações básicas na elaboração. Dis
 
 - ##### [UC002_gerenciar_pedido_do_exame_de_sangue](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC002_gerenciar_pedido_do_exame_de_sangue.md)
 
+- ##### [UC002_gerenciar_pedido_do_exame_de_paternidade](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC002_gerenciar_pedido_do_exame_de_sangue.md)
+
 - ##### [UC004_GERENCIAR_MEDICO](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC004_gerenciar_medico.md)
 
 - ##### [UC005_GERENCIAR_TIPO_DE_EXAME](https://github.com/UniFil-NPI/projeto_analises_clinicas-GuilhermeRFVieira/blob/main/docs/especificacoes_caso_de_uso/UC005_gerenciar_tipo_de_exame.md)

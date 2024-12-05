@@ -4,7 +4,7 @@
 
 | Data | Versão | Descrição | Autor |
 | ---- | ------ | --------- | ----- |
-| 26/08/2024 | 1.0 | Criação do documento | Guilherme Rafael Faraco Vieira |
+| 4/12/2024 | 1.0 | Criação do documento | Guilherme Rafael Faraco Vieira |
 
 ## Índice
 
@@ -21,16 +21,16 @@
 6. [Condições Posteriores](#condições-posteriores)
 
 7. [Condições de Extensão](#condições-de-extensão)
-
+ 
 8. [Informações Adicionais](#informações-adicionais)
 
 ## Especificação de Caso de Uso: UC002_gerenciar_pedido_do_exame_de_sangue
 
-Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC002_gerenciar_pedido_do_exame_de_sangue.
+Neste documento está contida as especificações dos requisitos do caso de uso estudado: UC003_gerenciar_pedido_do_exame_de_paternidade.
 
 ## Breve Descrição
 
-O UC002_gerenciar_pedido_do_exame_de_sangue engloba as funcionalidades *create*, *read* e *update* dos pedidos de exame de sangue e paternidade do sistema. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*, *role patient*, *role biomedic*. Os pacientes somente poderão visualizar os pedidos vinculados ao seu id.
+O UC003_gerenciar_pedido_do_exame_de_paternidade engloba as funcionalidades *create*, *read* e *update* dos pedidos de exame de paternidade do sistema. Os atores que interagem com este caso de uso são os usuários que possuem alguma das *roles* à seguir: *role admin*, *role recepcionist*, *role patient*, *role biomedic*. Os pacientes somente poderão visualizar os pedidos vinculados ao seu id.
 
 ## Fluxo Básico de Eventos
 
